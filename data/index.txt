@@ -1,0 +1,560 @@
+Using existing virtual environment...
+[RUN] Running Converter ...
+
+========================================================================
+METADATA
+========================================================================
+title: FedRAMP Consolidated Rules for 2026
+description: This datafile contains the Consolidated Rules for FedRAMP in structured machine-readable text. It includes definitions, requirements, recommendations, and key security indicators.
+version: 2026.07.06.01
+last_updated: 2026-07-06
+default_artifacts: {'FRR': ['Explanation of how the rule is followed, or an explanation of the reason and resulting risk to customers for not following the rule.', 'Verification that the implementation is appropriate for the rule, or that the reason for not implementing is accepted by a senior official.', 'Validation that the implementation is in place and working as intended, or that the reason for not implementing is accepted by a senior official.', 'Independent verification.', 'Independent validation.'], 'KSI': ['Explanation of measures (and their objectives) that demonstrate the Key Security Indicator, or an explanation of the reason and resulting risk to customers for not having measures available for that Key Security Indicator.', 'Explanation of the cycle for any measures that are implemented persistently (if applicable).', 'Verification that the measures demonstrate the Key Security Indicator, or that the reason for not having them is accepted.', 'Verification that the automation in place is accurate and sufficient to demonstrate appropriate measures for the Key Security Indicator, or that automation is not necessary for each measure.', 'Validation that the measures are accurately produced and are in place and working as intended, or that the reason for not having them is valid.']}
+
+Catalog written to: /work/rr/frr2oscal/data/FedRAMP_2026_OSCAL_catalog.json
+Catalog written to: /work/rr/frr2oscal/data/FedRAMP_2026_OSCAL_catalog.xml
+Catalog written to: /work/rr/frr2oscal/data/FedRAMP_2026_OSCAL_catalog.yaml
+
+========================================================================
+FRD — FedRAMP Definitions
+========================================================================
+FRD-ACV: Accepted Vulnerability
+FRD-ADP: Adaptive Change
+FRD-ADV: Advisor
+FRD-AGY: Agency
+FRD-AAP: All Affected Parties
+FRD-ANA: All Necessary Assessors
+FRD-ANP: All Necessary Parties
+FRD-ART: Artifacts
+FRD-ASR: Assessor
+FRD-CCL: Certification Class
+FRD-CCC: Certification Class Change
+FRD-CRD: Certification Data
+FRD-CRP: Certification Package
+FRD-CPH: Certification Path
+FRD-CPF: Certification Profile
+FRD-CTY: Certification Type
+FRD-CSO: Cloud Service Offering
+FRD-DCE: Debilitating Customer Effect
+FRD-DTM: Deterministic Telemetry
+FRD-DCF: Disruptive Customer Effect
+FRD-DFT: Drift
+FRD-FPV: False Positive Vulnerability
+FRD-FCD: Federal Customer Data
+FRD-FCR: FedRAMP Certification Report
+FRD-FCT: FedRAMP Certified
+FRD-FIN: FedRAMP Independent Assessment
+FRD-FPR: FedRAMP Practices
+FRD-FRA: FedRAMP Recognized
+FRD-FRI: FedRAMP Reportable Incident
+FRD-FSI: FedRAMP Security Inbox
+FRD-FIR: Final Incident Report (FIR)
+FRD-FMV: Fully Mitigated Vulnerability
+FRD-HAN: Handle
+FRD-INT: Incident
+FRD-IRS: Information Resource
+FRD-INC: Initial Certification
+FRD-IFA: Initial FedRAMP Assessment
+FRD-IIR: Initial Incident Report (IIR)
+FRD-IRV: Internet-Reachable Vulnerability (IRV)
+FRD-KEV: Known Exploited Vulnerability (KEV)
+FRD-LKY: Likely
+FRD-LEV: Likely Exploitable Vulnerability (LEV)
+FRD-MBI: Machine-Based (Information Resources)
+FRD-MGN: Machine-Generated
+FRD-MRD: Machine-Readable
+FRD-MCE: Minimal Customer Effect
+FRD-NCE: Narrow Customer Effect
+FRD-ONC: Ongoing Certification
+FRD-OCR: Ongoing Certification Report (OCR)
+FRD-OIR: Ongoing Incident Report (OIR)
+FRD-ODV: Overdue Vulnerability
+FRD-PMV: Partially Mitigated Vulnerability
+FRD-PFA: Persistent FedRAMP Assessment
+FRD-PER: Persistently
+FRD-PAI: Potential Agency Impact
+FRD-PAC: Privileged Account
+FRD-PRO: Promptly
+FRD-PRV: Provider
+FRD-QTR: Quarterly Review
+FRD-RGL: Regularly
+FRD-RMV: Remediated Vulnerability
+FRD-RSP: Responsibly
+FRD-RTR: Routine Recurring Change
+FRD-SCT: Security Category
+FRD-SDR: Security Decision Record (SDR)
+FRD-SGC: Significant Change
+FRD-TPR: Third-Party Information Resource
+FRD-TLA: Top-Level Administrative Account
+FRD-TRF: Transformative Change
+FRD-TRC: Trust Center
+FRD-VLN: Validation
+FRD-VRF: Verification
+FRD-VUL: Vulnerability
+FRD-VLD: Vulnerability Detection
+FRD-VLR: Vulnerability Response
+
+========================================================================
+FRR — FedRAMP Rules
+========================================================================
+
+--- AFC: Addressing FedRAMP Communication ---
+AFC-FRP-VRE: Verified Emails
+AFC-FRP-CDS: Criticality Designators
+AFC-FRP-UFS: Use FedRAMP_Security Email in Emergencies
+AFC-FRP-PNT: Public Notice of Emergency Tests
+AFC-FRP-RQA: Required Actions
+AFC-FRP-ERT: Elevated Reaction Timeframes
+AFC-FRP-COR: Explain Corrective Actions
+AFC-FRP-RPM: Reaction Metrics
+AFC-CSO-INB: Maintain a FedRAMP Security Inbox
+AFC-CSO-NOC: Notification of Changes
+AFC-CSO-TFG: Trust @fedramp.gov and @gsa.gov
+AFC-CSO-RCV: Receive Email Without Disruption
+AFC-CSO-CRA: Complete Required Actions
+AFC-CSO-EMR: Emergency Message Routing
+AFC-CSO-IMA: Important Message Actions
+AFC-CSO-ACK: Acknowledge Receipt
+
+--- AGU: Agency Use of FedRAMP Certified Cloud Services ---
+AGU-AGC-AIP: Agency Internal Policies
+AGU-AGC-NAA: Notify FedRAMP After Authorization
+AGU-AGC-GRC: Governance, Risk, and Compliance Tools
+AGU-AGC-NAI: Notify Additional Information Requests
+AGU-AGC-NAR: No Additional Security Requirements
+AGU-AGC-TPP: No Certification Type or Path Preferences
+AGU-AGC-WKG: FedRAMP Working Groups
+AGU-AGC-LIA: Agency Liaison Program
+AGU-AGC-SIN: Shared FedRAMP Inbox
+AGU-USE-ABU: Authorization Before Use
+AGU-USE-RCF: Resolve Certification Package Conflicts
+AGU-USE-RSG: Review Secure Configuration Guides
+AGU-USE-AFR: Accept FedRAMP Rules
+AGU-USE-NFC: Notify FedRAMP of Monitoring Concerns
+AGU-USE-ROR: Review Ongoing Certification Reports
+AGU-USE-DSO: Designate Senior Official
+AGU-USE-NPC: Notify Provider of Concerns
+AGU-USE-RIR: Review All Information Resources
+AGU-USE-CLA: Using FedRAMP Class A Certifications
+AGU-SPN-MRC: Most Recent Consolidated Rules  [path: Rev5]
+
+--- CCM: Collaborative Continuous Monitoring ---
+CCM-AGM-ROR: Review Ongoing Reports
+CCM-AGM-CSC: Consider Security Category
+CCM-OCR-AVL: Report Availability
+CCM-OCR-NRD: Next Report Date
+CCM-OCR-FBM: Feedback Mechanism
+CCM-OCR-AFS: Anonymized Feedback Summary
+CCM-OCR-LSI: Limit Sensitive Information
+CCM-OCR-SOR: Spread Out Reports
+CCM-OCR-RPS: Responsible Public Certification Report Sharing
+CCM-QTR-MTG: Quarterly Review Meeting  [classes: A, B, C, D]
+CCM-QTR-REG: Meeting Registration Info
+CCM-QTR-NRD: Next Review Date
+CCM-QTR-NID: No Irresponsible Disclosure
+CCM-QTR-SAR: Schedule Around Reports
+CCM-QTR-ACT: Additional Content
+CCM-QTR-RTR: Record/Transcribe Reviews
+CCM-QTR-RTP: Restrict Third Parties
+CCM-QTR-SRR: Share Recordings Responsibly
+CCM-QTR-SCR: Share Content Responsibly
+
+--- CDS: Certification Data Sharing ---
+CDS-CSO-PUB: Public Information
+CDS-CSO-SVC: Public Service List
+CDS-CSO-FID: Always Include FedRAMP ID
+CDS-CSO-FRC: FedRAMP Certification Reports
+CDS-CSO-AVR: Availability Reporting  [classes: A, B, C, D]
+CDS-CSO-UTC: Use Trust Centers
+CDS-CSO-CBF: Consistency Between Formats
+CDS-CSO-RIS: Responsible Information Sharing
+CDS-CSO-IRP: Include Relevant Policies
+CDS-CSO-HAD: Historical FedRAMP Certification Data
+CDS-CSO-PSM: Per-Service Certification Materials  [classes: A, B, C, D]
+CDS-CSO-RPS: Responsible Public Package Sharing
+CDS-TRC-USH: Uninterrupted Sharing
+CDS-TRC-PAC: Programmatic Access
+CDS-TRC-AAI: Agency Access Inventory
+CDS-TRC-ACL: Access Logging
+CDS-TRC-HMR: Human and Machine-Readable Certification Data
+CDS-TRC-SSM: Self-Service Access Management
+CDS-UTC-AAD: Agency Access Denial
+CDS-UTC-AGA: Agency Access
+CDS-CSF-TCM: Trust Center Migration  [path: Rev5]
+
+--- CMU: Cryptographic Module Use ---
+CMU-CSO-CMD: Cryptographic Module Documentation
+CMU-CSO-UVM: Using Validated Cryptographic Modules  [classes: A, B, C, D]
+CMU-CSO-CAT: Configuration of Agency Tenants
+
+--- CPO: Certification Package Overview ---
+CPO-CSO-OVR: Overview of the Cloud Service Offering
+CPO-CSO-MTD: Certification Package Overview Metadata
+CPO-CSO-OSA: Overall Summary of Assessment in Certification Package  [classes: A, B, C, D]
+CPO-CSX-CPM: Certification Package Maintenance for 20x  [classes: A, B, C, D; path: 20x]
+CPO-CSF-CPM: Certification Package Maintenance for Rev5  [classes: A, B, C, D; path: Rev5]
+
+--- FRC: FedRAMP Certification ---
+FRC-CSO-FCP: FedRAMP Certification Profile
+FRC-CSO-PKG: FedRAMP Certification Package
+FRC-CSO-JSN: FedRAMP JSON Schemas
+FRC-CSO-MRA: Maintain Responsibility and Accountability
+FRC-CSO-POP: Pick One Program Certification Type
+FRC-CLA-ASF: Approved Alternative Security Frameworks  [path: 20x]
+FRC-CLA-EAM: External Assessment Materials  [path: 20x]
+FRC-CLA-MFR: Mandatory FedRAMP Rules for Class A  [path: 20x]
+FRC-CLA-RFR: Recommended FedRAMP Rules for Class A  [path: 20x]
+FRC-CLA-OFR: Address Optional FedRAMP Rules for Class A  [path: 20x]
+FRC-CLA-IVV: Optional Independent Verification and Validation  [path: 20x]
+FRC-APP-MLF: Marketplace Listing First
+FRC-APP-AFC: Applying for FedRAMP Certification
+FRC-APP-FCP: Fresh FedRAMP Certification Package
+FRC-APP-FIA: Fresh Independent Assessment  [classes: A, B, C, D]
+FRC-APP-NTP: No Third-Party Applicants
+FRC-APP-USA: Updating Stale Assessments
+FRC-APS-ATO: Agency Authorization to Operate  [path: Rev5]
+FRC-CCL-UCC: Upgrading Certification Class  [path: Rev5]
+FRC-CCL-DCC: Downgrading Certification Class  [path: Rev5]
+FRC-CCL-DNP: Downgrade Notification Period  [path: Rev5]
+FRC-CSX-VVK: Automated Verification and Validation of Key Security Indicators  [classes: A, B, C, D; path: 20x]
+FRC-CSX-MOT: Metrics Over Time for Key Security Indicators  [classes: A, B, C, D; path: 20x]
+FRC-CSX-VVR: Automated Verification and Validation of FedRAMP Rules  [classes: A, B, C, D; path: 20x]
+FRC-CSX-MAS: Application within MAS  [path: 20x]
+FRC-CSF-BSL: FedRAMP Rev5 Baselines  [classes: B, C, D; path: Rev5]
+FRC-CSF-ACP: Assign Control Parameters  [path: Rev5]
+FRC-CSF-FFG: Follow FedRAMP Rev5 Controls Guidance  [path: Rev5]
+FRC-CSF-RDY: FedRAMP Ready Conversion  [path: Rev5]
+
+--- IEC: Incident Evaluation and Communication ---
+IEC-FRP-ORV: Ongoing Review
+IEC-CSO-EFR: Evaluate FedRAMP Reportability
+IEC-CSO-DPR: Default PAIN Rating
+IEC-CSO-IIR: Initial Incident Report  [classes: A, B, C, D]
+IEC-CSO-OIR: Ongoing Incident Reports  [classes: A, B, C, D]
+IEC-CSO-FIR: Final Incident Report  [classes: A, B, C, D]
+IEC-CSO-EFI: Estimate Federal Impact
+IEC-CSO-AIR: Automated Incident Reporting
+
+--- IVV: Independent Verification and Validation ---
+IVV-CSO-FIA: FedRAMP Independent Assessments  [classes: A, B, C, D]
+IVV-CSO-SEI: Supply Evidence of Implementation
+IVV-CSO-SEE: Supply Evidence of Effectiveness
+IVV-CSO-ICP: Inclusion in Certification Package
+IVV-CSO-DUS: Document Use of Representative Samples
+IVV-CSO-STE: Supply Technical Explanations
+IVV-CSO-USR: Use Representative Samples
+IVV-CSO-RAA: Receiving Assessor Advice
+IVV-IAS-VIM: Verify Implementation
+IVV-IAS-VEF: Validate Effectiveness
+IVV-IAS-SUM: Assessment Summary
+IVV-IAS-OSA: Overall Summary of Assessment
+IVV-IAS-VIP: Verify Inclusion in Certification Package
+IVV-IAS-EPX: Engage Provider Experts
+IVV-IAS-SHA: Sharing Advice
+IVV-CSX-AIA: Annual Independent Assessments for 20x  [classes: A, B, C, D; path: 20x]
+IVV-CSF-AIA: Annual Independent Assessments for Rev5  [classes: B, C, D; path: Rev5]
+IVV-CSF-MCA: Mandatory Control Assessment  [path: Rev5]
+IVV-CSF-ACF: Assessment of Rev5 Controls with Findings  [path: Rev5]
+IVV-CSF-PCA: Preferred Control Assessment  [path: Rev5]
+
+--- MAS: Minimum Assessment Scope ---
+MAS-CSO-IIR: Identify Information Resources
+MAS-CSO-FLO: Information Flows and Security Categories
+MAS-CSO-TPR: Third-Party Information Resources
+MAS-CSO-MDI: Metadata Inclusion
+MAS-CSO-SUP: Supplemental Information
+
+--- MKT: Marketplace Listing ---
+MKT-FRP-SOF: Scope of FedRAMP
+MKT-CSO-MLR: Marketplace Listing Requirements
+MKT-CSO-PML: Provider Marketplace Listing Requests
+MKT-IAS-OFR: Only FedRAMP Recognized Assessors
+MKT-IAS-WEB: Website Requirements for Assessors
+MKT-IAS-LRQ: Listing Requests for Assessors
+MKT-CAS-WEB: Website Requirements for Advisors
+MKT-CAS-LRQ: Listing Requests for Advisors
+MKT-CAS-RFR: Advisor Responses to FedRAMP
+MKT-IIP-AGU: Agency Use Cases
+MKT-IIP-DCP: Demonstrating Continuous Progress
+MKT-IIP-DLA: Deadline for Assessment
+
+--- REC: FedRAMP Recognition of Independent Assessment Services ---
+REC-FRP-FOC: Foreign Ownership Collection
+REC-FRP-RAO: Recognized Assessors Only
+REC-FRP-DRD: Double Revocation Disqualification
+REC-IAS-ACC: A2LA Accreditation
+REC-IAS-ADA: Actually Do Assessments
+REC-IAS-PSC: Policy and Standards Compliance
+REC-IAS-ANR: Annual Surveillance Assessment
+REC-IAS-RAS: Full A2LA Reassessment
+REC-IAS-RAR: Re-entry after Revocation
+REC-IAS-RQU: Roles and Qualifications
+REC-IAS-AFI: Annual Foreign Interest Reports
+REC-IAS-CFI: Changes in Foreign Interest
+REC-IAS-PST: Performance Standards
+REC-IAS-CAP: Corrective Action Plan
+REC-IAS-INV: Invalid Deliverables
+REC-IAS-SEP: Advisory Separation
+
+--- SCG: Secure Configuration Guide ---
+SCG-CSO-RSC: Recommended Secure Configuration
+SCG-CSO-AUP: Use Instructions
+SCG-CSO-PUB: Public Secure Configuration Guidance
+SCG-CSO-SDF: Secure Defaults
+SCG-ENH-CMP: Comparison Capability
+SCG-ENH-EXP: Export Capability
+SCG-ENH-API: API Capability
+SCG-ENH-MRG: Machine-Readable Guidance
+SCG-ENH-VRH: Versioning and Release History
+
+--- SCN: Significant Change Notification ---
+SCN-FRP-CAP: Corrective Action Plan Conditions
+SCN-CSO-EVA: Evaluate Changes
+SCN-CSO-MAR: Maintain Audit Records
+SCN-CSO-INF: Required Information
+SCN-CSO-HIS: Historical Notifications
+SCN-CSO-HRM: Human and Machine-Readable Notifications
+SCN-CSO-ARI: Additional Relevant Information
+SCN-CSO-NOM: Notification Mechanisms
+SCN-CSO-EMG: Emergency Changes
+SCN-ADP-NTF: Notification Requirements
+SCN-RTR-NNR: No Notification Requirements
+SCN-TRF-NIP: Notification of Initial Plans
+SCN-TRF-NFP: Notification of Final Plans
+SCN-TRF-NAF: Notification After Finishing
+SCN-TRF-NAV: Notification After Verification
+SCN-TRF-UPD: Update Documentation
+SCN-TRF-TPR: Third-Party Review
+
+--- SDR: Security Decision Record ---
+SDR-CSO-FRR: FedRAMP Rules
+SDR-CSO-MTD: Security Decision Record Metadata
+SDR-CSX-KSI: Key Security Indicators  [path: 20x]
+SDR-CSX-KMT: Key Security Indicator Metrics  [classes: A, B, C, D; path: 20x]
+SDR-CSF-CTF: Rev5 Controls  [path: Rev5]
+
+--- VDR: Vulnerability Detection and Response ---
+VDR-CSO-DET: Vulnerability Detection
+VDR-CSO-RES: Vulnerability Response
+VDR-CSO-FAV: Failures Are Vulnerabilities
+VDR-CSO-DFR: Design For Resilience
+VDR-CSO-ADT: Automate Detection
+VDR-CSO-DAC: Detect After Changes
+VDR-CSO-MSP: Maintain Security
+VDR-CSO-AKE: Avoid KEVs
+VDR-CSO-SIR: Sampling
+VDR-TFR-NMV: Non-Machine Verification and Validation
+VDR-TFR-PDD: Persistent Drift Detection  [classes: A, B, C, D]
+VDR-TFR-PCD: Persistently Complete Detection  [classes: A, B, C, D]
+VDR-TFR-PVR: Mitigation and Remediation Expectations  [classes: A, B, C, D]
+VDR-TFR-RMN: Remaining Vulnerabilities
+VDR-TFR-KEV: Remediate KEVs
+VDR-TFR-PSD: Persistent Sample Detection  [classes: A, B, C, D]
+VDR-TFR-MVX: Persistent Machine Verification and Validation for 20x  [classes: A, B, C; path: 20x]
+VDR-TFR-MVF: Persistent Machine Verification and Validation for Rev5  [classes: B, C, D; path: Rev5]
+
+--- VER: Vulnerability Evaluation and Reporting ---
+VER-FRP-ARP: Additional Requirements
+VER-FRP-ADV: Sensitive Details
+VER-AGM-RVR: Review Vulnerability Reports
+VER-AGM-MAP: Maintain Agency Plans of Action and Milestones
+VER-EVA-ELX: Evaluate Exploitability
+VER-EVA-EIR: Evaluate Internet-Reachability
+VER-EVA-EPA: Estimate Potential Agency Impact
+VER-EVA-AIA: Assume It's Automatable
+VER-EVA-GRV: Group Vulnerabilities
+VER-EVA-EFP: Evaluate False Positives
+VER-EVA-EFA: Evaluation Factors
+VER-RPT-PER: Persistent Reporting
+VER-RPT-VDT: Vulnerability Details
+VER-RPT-AVI: Accepted Vulnerability Info
+VER-RPT-NID: Responsible Disclosure
+VER-RPT-HLO: High-Level Overviews
+VER-RPT-RPD: Responsible Public Disclosure
+VER-TFR-MHR: Monthly Activity Report
+VER-TFR-MAV: Mark Accepted Vulnerabilities
+VER-TFR-MRH: Historical Activity  [classes: A, B, C, D]
+VER-TFR-EVU: Evaluate Vulnerabilities Quickly  [classes: A, B, C, D]
+VER-TFR-IRI: Internet-Reachable Incidents  [classes: A, B, C, D]
+VER-TFR-NRI: Non-Internet-Reachable Incidents  [classes: A, B, C, D]
+
+========================================================================
+KSI — Key Security Indicators
+========================================================================
+
+--- KSI-CED: Cybersecurity Education ---
+KSI-CED-RAT: Reviewing All Training
+
+--- KSI-CMT: Change Management ---
+KSI-CMT-LMC: Logging Changes
+KSI-CMT-RMV: Redeploying vs Modifying
+KSI-CMT-RVP: Reviewing Change Procedures
+KSI-CMT-VTD: Validating Throughout Deployment
+
+--- KSI-CNA: Cloud Native Architecture ---
+KSI-CNA-DFP: Defining Functionality and Privileges
+KSI-CNA-EIS: Enforcing Intended State  [classes: B, C]
+KSI-CNA-IBP: Implementing Best Practices
+KSI-CNA-MAT: Minimizing Attack Surface
+KSI-CNA-OFA: Optimizing for Availability
+KSI-CNA-RNT: Restricting Network Traffic
+KSI-CNA-RVP: Reviewing Protections
+KSI-CNA-ULN: Using Logical Networking
+
+--- KSI-IAM: Identity and Access Management ---
+KSI-IAM-AAM: Automating Account Management
+KSI-IAM-APM: Adopting Passwordless Methods
+KSI-IAM-ELP: Ensuring Least Privilege
+KSI-IAM-JIT: Authorizing Just-in-Time
+KSI-IAM-SNU: Securing Non-User Authentication
+KSI-IAM-SUS: Responding to Suspicious Activity
+
+--- KSI-INR: Incident Response ---
+KSI-INR-AAR: Generating After Action Reports
+KSI-INR-RIR: Reviewing Incident Response Procedures
+KSI-INR-RPI: Reviewing Past Incidents
+
+--- KSI-MLA: Monitoring, Logging, and Auditing ---
+KSI-MLA-ALA: Authorizing Log Access  [classes: B, C]
+KSI-MLA-EVC: Evaluating Configurations
+KSI-MLA-LET: Logging Event Types
+KSI-MLA-OSM: Operating SIEM Capability
+KSI-MLA-RVL: Reviewing Logs
+
+--- KSI-PIY: Policy and Inventory ---
+KSI-PIY-GIV: Generating Inventories
+KSI-PIY-RES: Reviewing Executive Support
+KSI-PIY-RIS: Reviewing Investments in Security
+KSI-PIY-RSD: Reviewing Security in the SDLC
+KSI-PIY-RVD: Reviewing Vulnerability Disclosures
+
+--- KSI-RPL: Recovery Planning ---
+KSI-RPL-ABO: Aligning Backups with Objectives
+KSI-RPL-ARP: Aligning Recovery Plan
+KSI-RPL-RRO: Reviewing Recovery Objectives
+KSI-RPL-TRC: Testing Recovery Capabilities
+
+--- KSI-SCR: Supply Chain Risk ---
+KSI-SCR-MIT: Mitigating Supply Chain Risk
+KSI-SCR-MON: Monitoring Supply Chain Risk
+
+--- KSI-SVC: Service Configuration ---
+KSI-SVC-ACM: Automating Configuration Management
+KSI-SVC-ASM: Automating Secret Management
+KSI-SVC-EIS: Evaluating and Improving Security
+KSI-SVC-PRR: Preventing Residual Risk  [classes: B, C]
+KSI-SVC-RUD: Removing Unwanted Data  [classes: B, C]
+KSI-SVC-SIN: Securing Information
+KSI-SVC-VCM: Validating Communications  [classes: B, C]
+KSI-SVC-VRI: Validating Resource Integrity
+
+========================================================================
+CTL — Control Overlay Guidance (FedRAMP-added parameters/guidance)
+========================================================================
+
+--- AC ---
+AC-06-01
+AC-20
+AC-06-02
+AC-06-08
+
+--- AU ---
+AU-06
+AU-06-05
+AU-10
+AU-12
+
+--- CA ---
+CA-07
+CA-08
+CA-02
+CA-02-03
+
+--- CM ---
+CM-01
+CM-08
+CM-11
+CM-12
+CM-12-01
+CM-14
+
+--- CP ---
+CP-07-01
+CP-02-03
+CP-10-04
+
+--- IA ---
+IA-02
+IA-02-01
+IA-02-02
+IA-02-08
+IA-05  [classes: B, C, D]
+IA-02-06
+IA-04-04
+
+--- IR ---
+IR-01
+IR-02
+IR-02-01
+IR-02-02
+IR-03
+IR-03-02
+IR-04
+IR-04-01
+IR-04-02
+IR-04-04
+IR-04-06
+IR-04-11
+IR-05
+IR-05-01
+IR-06
+IR-06-01
+IR-06-03
+IR-07
+IR-07-01
+IR-08
+IR-09
+IR-09-02
+IR-09-03
+IR-09-04
+
+--- MA ---
+MA-05
+MA-05-01
+
+--- PS ---
+PS-07
+
+--- RA ---
+RA-05
+RA-05-02
+RA-05-03
+RA-05-04
+RA-05-05
+RA-05-08
+RA-05-11
+RA-07
+
+--- SA ---
+SA-05
+SA-09-05  [classes: C, D]
+SA-09-02
+
+--- SC ---
+SC-07
+SC-13
+
+--- SI ---
+SI-02
+SI-02-02
+SI-04
+SI-04-01
+SI-04-02
+SI-04-04
+SI-04-05
+SI-05
+SI-08
+
+--- SR ---
+SR-03
+SR-08
+
