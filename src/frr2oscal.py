@@ -1,16 +1,11 @@
 """
-Converts FedRAMP's consolidated rules JSON to an OSCAL catalog and prints
-metadata followed by every section (in the order they appear in the file),
-listing each entry's ID and title. Entries whose statement text is
-conditioned on Certification Class (via a `varies_by_class` block) or on
-Certification Path (an entry that only exists under the 20x-only or
-Rev5-only side of an FRR ruleset, rather than the shared "all" side) are
-annotated with which classes/paths have conditions. Statement/guidance
-text itself is intentionally not printed.
+Converts FedRAMP's consolidated rules JSON to an OSCAL catalog and writes it
+in JSON, XML, and YAML formats. Progress and a summary are printed while the
+catalog is built; pass --silent to suppress those messages. Pass --refresh to
+force a fresh download of the source JSON even when a local copy exists.
 
 The source JSON is cached locally in ./data on first download and reused on
-subsequent runs to avoid repeated network requests. Pass --refresh to attempt
-a fresh download even when a local copy exists.
+subsequent runs to avoid repeated network requests.
 
 Source: https://github.com/FedRAMP/rules
 """
@@ -102,105 +97,62 @@ def _refresh_fallback_hint(refresh: bool, has_local: bool) -> None:
         print("A local copy is available. Re-run without --refresh to use it.")
 
 
-def class_conditions(entry: dict) -> list[str]:
-    """Classes (A/B/C/D) that have distinct conditional text, if any."""
-    vbc = entry.get("varies_by_class") if isinstance(entry, dict) else None
-    if not vbc:
-        return []
-    return sorted(k.upper() for k in vbc.keys())
+_VERBOSE: bool = True
+_STATS: dict = {"groups": 0, "controls": 0}
 
 
-def path_conditions_for_rule(scope: str, subset_types: list | None) -> list[str]:
+def _emit(msg: str = "", end: str = "\n") -> None:
+    """Print msg when verbose mode is active.
+
+    Args:
+        msg (str, optional): Text to print. Defaults to empty string.
+        end (str, optional): Line terminator passed to print(). Defaults to newline.
     """
-    Which certification path(s) this FRR rule instance's text applies to.
-    scope is the top-level data bucket the rule was found under: 'all',
-    '20x', or 'rev5'. subset_types is the applicability.types list declared
-    on the rule's subset (None if that metadata wasn't found).
-    """
-    if scope == "20x":
-        return ["20x"]
-    if scope == "rev5":
-        return ["Rev5"]
-    if subset_types is None:
-        return ["20x", "Rev5"]  # no restriction found -> treat as universal
-    return [p for p in ("20x", "Rev5") if p in subset_types]
+    if _VERBOSE:
+        print(msg, end=end, flush=True)
 
 
-def format_conditions(classes: list[str], paths: list[str],
-                       universal_paths=("20x", "Rev5")) -> str:
-    parts = []
-    if classes:
-        parts.append(f"classes: {', '.join(classes)}")
-    if paths and set(paths) != set(universal_paths):
-        parts.append(f"path: {', '.join(paths)}")
-    return f"  [{'; '.join(parts)}]" if parts else ""
-
-
-def print_header(title: str) -> None:
-    print("\n" + "=" * 72)
-    print(title)
-    print("=" * 72)
+def _emit_dot() -> None:
+    """Print a single progress dot with no newline when verbose mode is active."""
+    if _VERBOSE:
+        print(".", end="", flush=True)
 
 
 def print_metadata(data: dict) -> None:
-    print_header("METADATA")
-    for k, v in data.get("info", {}).items():
-        print(f"{k}: {v}")
+    """Print the top-level source file info (title, version, last_updated).
 
-
-def print_frd(data: dict) -> None:
-    print_header("FRD — FedRAMP Definitions")
-    for fid, entry in data.get("FRD", {}).get("data", {}).get("all", {}).items():
-        cond = format_conditions(class_conditions(entry), [])
-        print(f"{fid}: {entry.get('term', '')}{cond}")
-
-
-def print_frr(data: dict) -> None:
-    print_header("FRR — FedRAMP Rules")
-    for rsk, rsv in data.get("FRR", {}).items():
-        rsinfo = rsv.get("info", {})
-        print(f"\n--- {rsk}: {rsinfo.get('name', '')} ---")
-        subset_meta = rsinfo.get("subsets", {})
-        for scope, subsets in rsv.get("data", {}).items():
-            for subk, rules in subsets.items():
-                subset_types = subset_meta.get(subk, {}).get("applicability", {}).get("types")
-                for rid, rule in rules.items():
-                    classes = class_conditions(rule)
-                    paths = path_conditions_for_rule(scope, subset_types)
-                    cond = format_conditions(classes, paths)
-                    print(f"{rid}: {rule.get('name', '')}{cond}")
-
-
-def print_ksi(data: dict) -> None:
-    print_header("KSI — Key Security Indicators")
-    for tk, tv in data.get("KSI", {}).items():
-        print(f"\n--- {tv.get('id', tk)}: {tv.get('name', '')} ---")
-        for iid, iv in tv.get("indicators", {}).items():
-            cond = format_conditions(class_conditions(iv), [])
-            print(f"{iid}: {iv.get('name', '')}{cond}")
-
-
-def print_ctl(data: dict) -> None:
-    # CTL (FedRAMP parameter/guidance overlays on specific NIST 800-53
-    # controls) has no title field per entry -- it's keyed as
-    # family -> control_id -> {parameters, guidance, varies_by_class}.
-    # There's no "title" to print, so we list the control IDs themselves.
-    print_header("CTL — Control Overlay Guidance (FedRAMP-added parameters/guidance)")
-    for fam, controls in data.get("CTL", {}).items():
-        print(f"\n--- {fam} ---")
-        for cid, entry in controls.items():
-            cond = format_conditions(class_conditions(entry), [])
-            print(f"{cid}{cond}")
-
-
-SECTION_PRINTERS = {
-    "FRD": print_frd,
-    "FRR": print_frr,
-    "KSI": print_ksi,
-    "CTL": print_ctl,
-}
+    Args:
+        data (dict, required): The full parsed FedRAMP consolidated-rules JSON.
+    """
+    info = data.get("info", {})
+    _emit(f"Title:        {info.get('title', '')}")
+    _emit(f"Version:      {info.get('version', '')}")
+    _emit(f"Last Updated: {info.get('last_updated', '')}")
 
 FRR_NS = "http://fedramp.gov/ns/oscal"
+
+UNHANDLED: list = []
+
+UNHANDLED_OUTPUT = os.path.join(
+    os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+    "data", "unhandled.json",
+)
+
+# Keys consumed by each processing function; anything else is unhandled.
+_HANDLED_RULE_KEYS = frozenset({
+    "name", "statement", "danger", "notes", "note",
+    "related", "force", "affects", "artifacts",
+    "corrective_actions", "examples", "schema", "following_information", "updated",
+})
+_HANDLED_VARIES_RULE_KEYS = frozenset({
+    "name", "related", "affects", "varies_by_class",
+    "note", "notes",
+    "corrective_actions", "examples", "schema", "following_information", "updated",
+})
+_HANDLED_CLASS_KEYS = frozenset({
+    "statement", "force", "related", "note", "notes", "artifacts",
+    "following_information", "corrective_actions", "examples", "schema",
+})
 
 CATALOG_OUTPUT_STEM = os.path.join(
     os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
@@ -215,6 +167,20 @@ def _date_to_datetime(date_str: str) -> str:
     if date_str and "T" not in date_str:
         return f"{date_str}T00:00:00Z"
     return date_str
+
+
+def _track_unhandled(obj: dict, handled: frozenset) -> None:
+    """Record any keys in obj that are not in handled into the global UNHANDLED list.
+
+    Preserves insertion order and avoids duplicates.
+
+    Args:
+        obj (dict, required): Rule or class-variant dict to inspect.
+        handled (frozenset, required): Set of key names already processed by the caller.
+    """
+    for key in obj:
+        if key not in handled and key not in UNHANDLED:
+            UNHANDLED.append(key)
 
 
 def _set_part_title(obj: dict, part_name: str, title: str) -> None:
@@ -254,21 +220,132 @@ def _notes_text(rule: dict) -> str:
     return "\n\n".join(raw)
 
 
+def _guidance_part(key: str, content) -> dict:
+    """Build a guidance part dict for examples, schema, or following_information.
+
+    Args:
+        key (str, required): Field name ('examples', 'schema', 'following_information').
+        content (required): Field value from the rule dict.
+
+    Returns:
+        dict: OSCAL part dict with name='guidance', class=key, title=Title Case, prose.
+    """
+    title = key.replace("_", " ").title()
+    if key == "schema":
+        prose = f"{content.get('name', '')}\n{content.get('url', '')}"
+    elif key == "following_information":
+        prose = "\n\n".join(content) if isinstance(content, list) else str(content)
+    elif key == "examples":
+        blocks = []
+        for ex in content:
+            lines = []
+            if ex.get("id"):
+                lines.append(f"**{ex['id']}**")
+            if ex.get("key_tests"):
+                lines.append("Key tests:")
+                lines.extend(f"- {t}" for t in ex["key_tests"])
+            if ex.get("examples"):
+                lines.append("Examples:")
+                lines.extend(f"- {e}" for e in ex["examples"])
+            blocks.append("\n".join(lines))
+        prose = "\n\n".join(blocks)
+    else:
+        prose = str(content)
+    return {"name": "guidance", "class": key, "title": title, "prose": prose}
+
+
+def _assessment_method_part(artifacts: list, path: str) -> dict:
+    """Build an assessment-method part with a path prop for one artifact scope.
+
+    Args:
+        artifacts (list, required): List of artifact description strings.
+        path (str, required): Scope name ('all', '20x', or 'rev5').
+
+    Returns:
+        dict: OSCAL assessment-method part dict.
+    """
+    return {
+        "name": "assessment-method",
+        "props": [
+            {"name": "method", "value": "EXAMINE"},
+            {"name": "path", "value": path, "ns": FRR_NS},
+        ],
+        "parts": [{"name": "assessment-objects", "prose": a} for a in artifacts],
+    }
+
+
+def _append_artifact_parts(parts: list, artifacts_dict: dict) -> None:
+    """Append assessment-method parts for each scope present in artifacts_dict.
+
+    Args:
+        parts (list, required): Mutable parts list to append to.
+        artifacts_dict (dict, required): Artifacts dict with optional 'all', '20x', 'rev5' keys.
+    """
+    for scope in ("all", "20x", "rev5"):
+        items = artifacts_dict.get(scope) or []
+        if items:
+            parts.append(_assessment_method_part(items, scope))
+
+
+def _append_extra_parts(parts: list, rule: dict) -> None:
+    """Append remediation and supplemental guidance parts for known extra fields.
+
+    Handles: corrective_actions → remediation part (FedRAMP namespace);
+    examples, schema, following_information → guidance parts with class and title.
+
+    Args:
+        parts (list, required): Mutable parts list to append to.
+        rule (dict, required): Rule or class-variant dict from the FRR JSON source.
+    """
+    ca = rule.get("corrective_actions") or []
+    if ca:
+        parts.append({"name": "remediation", "ns": FRR_NS, "prose": "\n\n".join(ca)})
+    for key in ("examples", "schema", "following_information"):
+        content = rule.get(key)
+        if content:
+            parts.append(_guidance_part(key, content))
+
+
+def _updated_props(rule: dict) -> list:
+    """Return a list of 'updated' props from a rule's updated array.
+
+    Each entry in the updated list becomes one prop in the FedRAMP namespace
+    with name='updated', value=date-as-datetime, and remarks=comment.
+
+    Args:
+        rule (dict, required): Rule or class-variant dict from the FRR JSON source.
+
+    Returns:
+        list: List of OSCAL prop dicts (may be empty).
+    """
+    result = []
+    for entry in (rule.get("updated") or []):
+        result.append({
+            "name": "updated",
+            "ns": FRR_NS,
+            "value": _date_to_datetime(entry.get("date", "")),
+            "remarks": entry.get("comment", ""),
+        })
+    return result
+
+
 def _build_frr_simple_control(
     catalog: Catalog, parent_id: str, ctrl_id: str,
-    rule: dict, label: str = ""
+    rule: dict, label: str = "", path: str = "all"
 ) -> None:
-    """Create a single OSCAL control from a rule or class-variant dict.
+    """Create a single OSCAL control from a rule dict.
 
     Handles statement, danger/guidance, notes/guidance, related links,
-    force/affects props, and assessment-method/objects parts.
+    force/affects/path props, assessment-method/objects parts for each artifact
+    scope, remediation, supplemental guidance, and updated props.
 
     Args:
         catalog (Catalog, required): The OSCAL catalog being built.
         parent_id (str, required): ID of the parent group for this control.
         ctrl_id (str, required): Identifier for the new control (used as id).
-        rule (dict, required): Rule or class-variant data dict.
+        rule (dict, required): Rule data dict from the FRR JSON source.
         label (str, optional): Label prop value. Defaults to ctrl_id.
+        path (str, optional): Data scope ('all', '20x', or 'rev5'). Defaults to 'all'.
     """
     label = label or ctrl_id
 
@@ -277,7 +354,7 @@ def _build_frr_simple_control(
         for rid in (rule.get("related") or [])
     ]
 
-    props = []
+    props = [{"name": "path", "value": path, "ns": FRR_NS}]
     if rule.get("force"):
         props.append({"name": "force", "value": rule["force"], "ns": FRR_NS})
     for affect in (rule.get("affects") or []):
@@ -300,12 +377,14 @@ def _build_frr_simple_control(
     if control is None:
         return
 
+    _STATS["controls"] += 1
+    _emit_dot()
+
     # Library gap: create_control does not support a title on the guidance part.
     # Set it directly on the returned dict until the library adds this support.
     if danger:
         _set_part_title(control, "guidance", "Danger")
 
-    # Notes become a separate guidance part rather than remarks.
     notes = _notes_text(rule)
     if notes:
         control.setdefault("parts", []).append(
@@ -313,18 +392,19 @@ def _build_frr_simple_control(
         )
 
     # Library gap: create_control's 'objects' parameter is not yet implemented.
-    # assessment-objects parts are wrapped in an assessment-method parent part.
-    artifacts = (rule.get("artifacts") or {}).get("all") or []
-    if artifacts:
-        control.setdefault("parts", []).append({
-            "name": "assessment-method",
-            "props": [{"name": "method", "value": "EXAMINE"}],
-            "parts": [{"name": "assessment-objects", "prose": a} for a in artifacts],
-        })
+    # Assessment-method/objects structure is built directly on the returned dict.
+    ctrl_parts = control.setdefault("parts", [])
+    _append_artifact_parts(ctrl_parts, rule.get("artifacts") or {})
+    _append_extra_parts(ctrl_parts, rule)
+
+    for prop in _updated_props(rule):
+        control.setdefault("props", []).append(prop)
+
+    _track_unhandled(rule, _HANDLED_RULE_KEYS)
 
 
 def _build_class_control_dict(
-    ctrl_id: str, class_data: dict, label: str
+    ctrl_id: str, class_data: dict, label: str, path: str = "all"
 ) -> dict:
     """Build a class-variant child control dict without inserting it into the catalog.
 
@@ -336,13 +416,17 @@ def _build_class_control_dict(
         ctrl_id (str, required): ID for the new control (e.g. 'CCM-QTR-MTG-a').
         class_data (dict, required): Class-variant data from varies_by_class[key].
         label (str, required): Label prop value (e.g. 'Class A').
+        path (str, optional): Data scope ('all', '20x', or 'rev5'). Defaults to 'all'.
 
     Returns:
         dict: A fully formed OSCAL control dict.
     """
     ctrl: dict = {"id": ctrl_id, "title": label}
 
-    props = [{"name": "label", "value": label}]
+    props = [
+        {"name": "label", "value": label},
+        {"name": "path", "value": path, "ns": FRR_NS},
+    ]
     if class_data.get("force"):
         props.append({"name": "force", "value": class_data["force"], "ns": FRR_NS})
     ctrl["props"] = props
@@ -363,22 +447,18 @@ def _build_class_control_dict(
     if notes:
         parts.append({"name": "guidance", "title": "Notes", "prose": notes})
 
-    artifacts = (class_data.get("artifacts") or {}).get("all") or []
-    if artifacts:
-        parts.append({
-            "name": "assessment-method",
-            "props": [{"name": "method", "value": "EXAMINE"}],
-            "parts": [{"name": "assessment-objects", "prose": a} for a in artifacts],
-        })
+    _append_artifact_parts(parts, class_data.get("artifacts") or {})
+    _append_extra_parts(parts, class_data)
 
     if parts:
         ctrl["parts"] = parts
 
+    _track_unhandled(class_data, _HANDLED_CLASS_KEYS)
     return ctrl
 
 
 def _build_frr_varies_control(
-    catalog: Catalog, parent_id: str, rule_id: str, rule: dict
+    catalog: Catalog, parent_id: str, rule_id: str, rule: dict, path: str = "all"
 ) -> None:
     """Create a parent control for a varies_by_class rule with class-variant child controls.
 
@@ -392,12 +472,13 @@ def _build_frr_varies_control(
         parent_id (str, required): ID of the parent subset group.
         rule_id (str, required): Identifier used as the parent control's id and label.
         rule (dict, required): Rule dict containing a 'varies_by_class' mapping.
+        path (str, optional): Data scope ('all', '20x', or 'rev5'). Defaults to 'all'.
     """
     links = [
         {"rel": "related", "href": f"#{rid}"}
         for rid in (rule.get("related") or [])
     ]
-    props = []
+    props = [{"name": "path", "value": path, "ns": FRR_NS}]
     for affect in (rule.get("affects") or []):
         props.append({"name": "affects", "value": affect, "ns": FRR_NS})
 
@@ -413,17 +494,37 @@ def _build_frr_varies_control(
     if parent_ctrl is None:
         return
 
+    _STATS["controls"] += 1
+    _emit_dot()
+
+    notes = _notes_text(rule)
+    if notes:
+        parent_ctrl.setdefault("parts", []).append(
+            {"name": "guidance", "title": "Notes", "prose": notes}
+        )
+
+    ctrl_parts = parent_ctrl.setdefault("parts", [])
+    _append_extra_parts(ctrl_parts, rule)
+
+    for prop in _updated_props(rule):
+        parent_ctrl.setdefault("props", []).append(prop)
+
     for class_key, class_data in rule["varies_by_class"].items():
         child = _build_class_control_dict(
             ctrl_id=f"{rule_id}-{class_key}",
             class_data=class_data,
             label=f"Class {class_key.upper()}",
+            path=path,
         )
         parent_ctrl.setdefault("controls", []).append(child)
+        _STATS["controls"] += 1
+        _emit_dot()
+
+    _track_unhandled(rule, _HANDLED_VARIES_RULE_KEYS)
 
 
 def _build_frr_control(
-    catalog: Catalog, parent_id: str, rule_id: str, rule: dict
+    catalog: Catalog, parent_id: str, rule_id: str, rule: dict, path: str = "all"
 ) -> None:
     """Dispatch to the appropriate builder for a single FRR rule entry.
 
@@ -435,30 +536,37 @@ def _build_frr_control(
         parent_id (str, required): ID of the parent group.
         rule_id (str, required): Identifier for this rule.
         rule (dict, required): Rule data dict from the FRR JSON source.
+        path (str, optional): Data scope ('all', '20x', or 'rev5'). Defaults to 'all'.
     """
     if rule.get("varies_by_class"):
-        _build_frr_varies_control(catalog, parent_id, rule_id, rule)
+        _build_frr_varies_control(catalog, parent_id, rule_id, rule, path=path)
     else:
-        _build_frr_simple_control(catalog, parent_id, rule_id, rule)
+        _build_frr_simple_control(catalog, parent_id, rule_id, rule, path=path)
 
 
 def _build_frr_subset(
     catalog: Catalog, parent_id: str, frr_key: str,
-    subset_key: str, subset_val: dict
+    subset_key: str, subset_val: dict, path: str = "all"
 ) -> None:
     """Create a child group for one FRR subset and populate its controls.
 
-    The subset ID is used as the group title (no label prop). Title and overview
-    are only added when an 'info' block is present in the source data.
+    The subset ID is used as the group title (no label prop). For the 'all'
+    scope the ID is 'FRR-{key}-{subset}'; for '20x' and 'rev5' scopes a
+    path qualifier is inserted to avoid ID collisions ('FRR-{key}-{path}-{subset}').
 
     Args:
         catalog (Catalog, required): The OSCAL catalog being built.
         parent_id (str, required): ID of the parent FRR ruleset group.
         frr_key (str, required): Top-level FRR key (e.g. 'AFC').
-        subset_key (str, required): Subset key within FRR data.all (e.g. 'FRP').
+        subset_key (str, required): Subset key within the scope (e.g. 'FRP').
         subset_val (dict, required): Subset data dict.
+        path (str, optional): Data scope ('all', '20x', or 'rev5'). Defaults to 'all'.
     """
-    child_id = f"FRR-{frr_key}-{subset_key}"
+    child_id = (
+        f"FRR-{frr_key}-{subset_key}"
+        if path == "all"
+        else f"FRR-{frr_key}-{path}-{subset_key}"
+    )
     info = subset_val.get("info", {})
     purpose = info.get("purpose", "")
 
@@ -471,13 +579,16 @@ def _build_frr_subset(
     if child_group is None:
         return
 
+    _STATS["groups"] += 1
     if purpose:
         _set_part_title(child_group, "overview", "Purpose")
 
+    _emit(f"  {child_id} ", end="")
     for rule_id, rule in subset_val.items():
         if rule_id == "info" or not isinstance(rule, dict):
             continue
-        _build_frr_control(catalog, child_id, rule_id, rule)
+        _build_frr_control(catalog, child_id, rule_id, rule, path=path)
+    _emit()
 
 
 def _build_frr_ruleset(
@@ -505,11 +616,15 @@ def _build_frr_ruleset(
     if group is None:
         return
 
+    _STATS["groups"] += 1
     if purpose:
         _set_part_title(group, "overview", "Purpose")
 
-    for subset_key, subset_val in frr_val.get("data", {}).get("all", {}).items():
-        _build_frr_subset(catalog, group_id, frr_key, subset_key, subset_val)
+    _emit(f"\n{title}")
+    data_block = frr_val.get("data", {})
+    for scope in ("all", "20x", "rev5"):
+        for subset_key, subset_val in data_block.get(scope, {}).items():
+            _build_frr_subset(catalog, group_id, frr_key, subset_key, subset_val, path=scope)
 
 
 def _build_frr(catalog: Catalog, data: dict) -> None:
@@ -519,6 +634,9 @@ def _build_frr(catalog: Catalog, data: dict) -> None:
         catalog (Catalog, required): The OSCAL catalog to populate.
         data (dict, required): The full parsed FedRAMP consolidated-rules JSON.
     """
+    _emit("\n" + "=" * 72)
+    _emit("FRR — FedRAMP Rules")
+    _emit("=" * 72)
     for frr_key, frr_val in data.get("FRR", {}).items():
         _build_frr_ruleset(catalog, frr_key, frr_val)
 
@@ -548,6 +666,8 @@ def build_catalog(data: dict) -> Catalog:
 
 
 def main() -> None:
+    global _VERBOSE
+
     parser = argparse.ArgumentParser(
         description="Convert FedRAMP consolidated rules to an OSCAL catalog."
     )
@@ -556,33 +676,40 @@ def main() -> None:
         action="store_true",
         help="Download a fresh copy of the source JSON even if a local copy exists.",
     )
+    parser.add_argument(
+        "--silent",
+        action="store_true",
+        help="Suppress progress and summary output (errors are always shown).",
+    )
     args = parser.parse_args()
+    _VERBOSE = not args.silent
 
     data = load_rules(refresh=args.refresh)
     if data is None:
         sys.exit(1)
+
     print_metadata(data)
 
     catalog = build_catalog(data)
-    print()
+
+    _emit("\n" + "=" * 72)
+    _emit("Summary")
+    _emit(f"  Groups:   {_STATS['groups']}")
+    _emit(f"  Controls: {_STATS['controls']}")
+    _emit("=" * 72)
+
+    _emit()
     for fmt in CATALOG_FORMATS:
         path = f"{CATALOG_OUTPUT_STEM}.{fmt}"
         if catalog.dump(path, format=fmt, pretty_print=True):
-            print(f"Catalog written to: {path}")
+            _emit(f"Catalog written to: {path}")
         else:
             print(f"ERROR: Failed to write catalog to: {path}")
 
-    # Iterate in the order keys actually appear in the source JSON
-    # (Python dicts preserve insertion order; json.load preserves file order).
-    for key in data.keys():
-        if key == "info":
-            continue
-        printer = SECTION_PRINTERS.get(key)
-        if printer:
-            printer(data)
-        else:
-            print_header(f"{key} — (unrecognized top-level section, raw dump)")
-            print(json.dumps(data[key], indent=2)[:2000])
+    if UNHANDLED:
+        with open(UNHANDLED_OUTPUT, "w", encoding="utf-8") as fh:
+            json.dump(UNHANDLED, fh, indent=2)
+        _emit(f"Unhandled keys written to: {UNHANDLED_OUTPUT}")
 
 
 if __name__ == "__main__":
