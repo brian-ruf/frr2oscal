@@ -1,0 +1,927 @@
+<profile xmlns="http://csrc.nist.gov/ns/oscal/1.0" uuid="2451a336-bf6b-42d1-893a-e5aea19d902f">
+  <metadata>
+    <title>FedRAMP Rev 5 — Tailoring</title>
+    <published>2026-07-06T00:00:00Z</published>
+    <last-modified>2026-09-01T03:01:47Z</last-modified>
+    <version>2026.07.06.01</version>
+    <oscal-version>1.2.3</oscal-version>
+  </metadata>
+  <import href="#dea6ca8c-c796-4970-9c6e-edc158f8b7dd">
+    <include-controls>
+      <with-id>ac-1</with-id>
+      <with-id>ac-10</with-id>
+      <with-id>ac-11</with-id>
+      <with-id>ac-11.1</with-id>
+      <with-id>ac-12</with-id>
+      <with-id>ac-14</with-id>
+      <with-id>ac-17</with-id>
+      <with-id>ac-17.1</with-id>
+      <with-id>ac-17.2</with-id>
+      <with-id>ac-17.3</with-id>
+      <with-id>ac-17.4</with-id>
+      <with-id>ac-18</with-id>
+      <with-id>ac-18.1</with-id>
+      <with-id>ac-18.3</with-id>
+      <with-id>ac-18.4</with-id>
+      <with-id>ac-18.5</with-id>
+      <with-id>ac-19</with-id>
+      <with-id>ac-19.5</with-id>
+      <with-id>ac-2</with-id>
+      <with-id>ac-2.1</with-id>
+      <with-id>ac-2.11</with-id>
+      <with-id>ac-2.12</with-id>
+      <with-id>ac-2.13</with-id>
+      <with-id>ac-2.2</with-id>
+      <with-id>ac-2.3</with-id>
+      <with-id>ac-2.4</with-id>
+      <with-id>ac-2.5</with-id>
+      <with-id>ac-2.7</with-id>
+      <with-id>ac-2.9</with-id>
+      <with-id>ac-20</with-id>
+      <with-id>ac-20.1</with-id>
+      <with-id>ac-20.2</with-id>
+      <with-id>ac-21</with-id>
+      <with-id>ac-22</with-id>
+      <with-id>ac-3</with-id>
+      <with-id>ac-4</with-id>
+      <with-id>ac-4.21</with-id>
+      <with-id>ac-4.4</with-id>
+      <with-id>ac-5</with-id>
+      <with-id>ac-6</with-id>
+      <with-id>ac-6.1</with-id>
+      <with-id>ac-6.10</with-id>
+      <with-id>ac-6.2</with-id>
+      <with-id>ac-6.3</with-id>
+      <with-id>ac-6.5</with-id>
+      <with-id>ac-6.7</with-id>
+      <with-id>ac-6.8</with-id>
+      <with-id>ac-6.9</with-id>
+      <with-id>ac-7</with-id>
+      <with-id>ac-8</with-id>
+      <with-id>at-1</with-id>
+      <with-id>at-2</with-id>
+      <with-id>at-2.2</with-id>
+      <with-id>at-2.3</with-id>
+      <with-id>at-3</with-id>
+      <with-id>at-4</with-id>
+      <with-id>au-1</with-id>
+      <with-id>au-10</with-id>
+      <with-id>au-11</with-id>
+      <with-id>au-12</with-id>
+      <with-id>au-12.1</with-id>
+      <with-id>au-12.3</with-id>
+      <with-id>au-2</with-id>
+      <with-id>au-3</with-id>
+      <with-id>au-3.1</with-id>
+      <with-id>au-4</with-id>
+      <with-id>au-5</with-id>
+      <with-id>au-5.1</with-id>
+      <with-id>au-5.2</with-id>
+      <with-id>au-6</with-id>
+      <with-id>au-6.1</with-id>
+      <with-id>au-6.3</with-id>
+      <with-id>au-6.4</with-id>
+      <with-id>au-6.5</with-id>
+      <with-id>au-6.6</with-id>
+      <with-id>au-6.7</with-id>
+      <with-id>au-7</with-id>
+      <with-id>au-7.1</with-id>
+      <with-id>au-8</with-id>
+      <with-id>au-9</with-id>
+      <with-id>au-9.2</with-id>
+      <with-id>au-9.3</with-id>
+      <with-id>au-9.4</with-id>
+      <with-id>ca-1</with-id>
+      <with-id>ca-2</with-id>
+      <with-id>ca-2.1</with-id>
+      <with-id>ca-2.2</with-id>
+      <with-id>ca-2.3</with-id>
+      <with-id>ca-3</with-id>
+      <with-id>ca-3.6</with-id>
+      <with-id>ca-6</with-id>
+      <with-id>ca-7</with-id>
+      <with-id>ca-7.1</with-id>
+      <with-id>ca-7.4</with-id>
+      <with-id>ca-8</with-id>
+      <with-id>ca-8.1</with-id>
+      <with-id>ca-8.2</with-id>
+      <with-id>ca-9</with-id>
+      <with-id>cm-1</with-id>
+      <with-id>cm-10</with-id>
+      <with-id>cm-11</with-id>
+      <with-id>cm-12</with-id>
+      <with-id>cm-12.1</with-id>
+      <with-id>cm-14</with-id>
+      <with-id>cm-2</with-id>
+      <with-id>cm-2.2</with-id>
+      <with-id>cm-2.3</with-id>
+      <with-id>cm-2.7</with-id>
+      <with-id>cm-3</with-id>
+      <with-id>cm-3.1</with-id>
+      <with-id>cm-3.2</with-id>
+      <with-id>cm-3.4</with-id>
+      <with-id>cm-3.6</with-id>
+      <with-id>cm-4</with-id>
+      <with-id>cm-4.1</with-id>
+      <with-id>cm-4.2</with-id>
+      <with-id>cm-5</with-id>
+      <with-id>cm-5.1</with-id>
+      <with-id>cm-5.5</with-id>
+      <with-id>cm-6</with-id>
+      <with-id>cm-6.1</with-id>
+      <with-id>cm-6.2</with-id>
+      <with-id>cm-7</with-id>
+      <with-id>cm-7.1</with-id>
+      <with-id>cm-7.2</with-id>
+      <with-id>cm-7.5</with-id>
+      <with-id>cm-8</with-id>
+      <with-id>cm-8.1</with-id>
+      <with-id>cm-8.2</with-id>
+      <with-id>cm-8.3</with-id>
+      <with-id>cm-8.4</with-id>
+      <with-id>cm-9</with-id>
+      <with-id>cp-1</with-id>
+      <with-id>cp-10</with-id>
+      <with-id>cp-10.2</with-id>
+      <with-id>cp-10.4</with-id>
+      <with-id>cp-2</with-id>
+      <with-id>cp-2.1</with-id>
+      <with-id>cp-2.2</with-id>
+      <with-id>cp-2.3</with-id>
+      <with-id>cp-2.5</with-id>
+      <with-id>cp-2.8</with-id>
+      <with-id>cp-3</with-id>
+      <with-id>cp-3.1</with-id>
+      <with-id>cp-4</with-id>
+      <with-id>cp-4.1</with-id>
+      <with-id>cp-4.2</with-id>
+      <with-id>cp-6</with-id>
+      <with-id>cp-6.1</with-id>
+      <with-id>cp-6.2</with-id>
+      <with-id>cp-6.3</with-id>
+      <with-id>cp-7</with-id>
+      <with-id>cp-7.1</with-id>
+      <with-id>cp-7.2</with-id>
+      <with-id>cp-7.3</with-id>
+      <with-id>cp-7.4</with-id>
+      <with-id>cp-8</with-id>
+      <with-id>cp-8.1</with-id>
+      <with-id>cp-8.2</with-id>
+      <with-id>cp-8.3</with-id>
+      <with-id>cp-8.4</with-id>
+      <with-id>cp-9</with-id>
+      <with-id>cp-9.1</with-id>
+      <with-id>cp-9.2</with-id>
+      <with-id>cp-9.3</with-id>
+      <with-id>cp-9.5</with-id>
+      <with-id>cp-9.8</with-id>
+      <with-id>ia-1</with-id>
+      <with-id>ia-11</with-id>
+      <with-id>ia-12</with-id>
+      <with-id>ia-12.2</with-id>
+      <with-id>ia-12.3</with-id>
+      <with-id>ia-12.4</with-id>
+      <with-id>ia-12.5</with-id>
+      <with-id>ia-2</with-id>
+      <with-id>ia-2.1</with-id>
+      <with-id>ia-2.12</with-id>
+      <with-id>ia-2.2</with-id>
+      <with-id>ia-2.5</with-id>
+      <with-id>ia-2.6</with-id>
+      <with-id>ia-2.8</with-id>
+      <with-id>ia-3</with-id>
+      <with-id>ia-4</with-id>
+      <with-id>ia-4.4</with-id>
+      <with-id>ia-5</with-id>
+      <with-id>ia-5.1</with-id>
+      <with-id>ia-5.13</with-id>
+      <with-id>ia-5.2</with-id>
+      <with-id>ia-5.6</with-id>
+      <with-id>ia-5.7</with-id>
+      <with-id>ia-5.8</with-id>
+      <with-id>ia-6</with-id>
+      <with-id>ia-7</with-id>
+      <with-id>ia-8</with-id>
+      <with-id>ia-8.1</with-id>
+      <with-id>ia-8.2</with-id>
+      <with-id>ia-8.4</with-id>
+      <with-id>ir-1</with-id>
+      <with-id>ir-2</with-id>
+      <with-id>ir-2.1</with-id>
+      <with-id>ir-2.2</with-id>
+      <with-id>ir-3</with-id>
+      <with-id>ir-3.2</with-id>
+      <with-id>ir-4</with-id>
+      <with-id>ir-4.1</with-id>
+      <with-id>ir-4.11</with-id>
+      <with-id>ir-4.2</with-id>
+      <with-id>ir-4.4</with-id>
+      <with-id>ir-4.6</with-id>
+      <with-id>ir-5</with-id>
+      <with-id>ir-5.1</with-id>
+      <with-id>ir-6</with-id>
+      <with-id>ir-6.1</with-id>
+      <with-id>ir-6.3</with-id>
+      <with-id>ir-7</with-id>
+      <with-id>ir-7.1</with-id>
+      <with-id>ir-8</with-id>
+      <with-id>ir-9</with-id>
+      <with-id>ir-9.2</with-id>
+      <with-id>ir-9.3</with-id>
+      <with-id>ir-9.4</with-id>
+      <with-id>ma-1</with-id>
+      <with-id>ma-2</with-id>
+      <with-id>ma-2.2</with-id>
+      <with-id>ma-3</with-id>
+      <with-id>ma-3.1</with-id>
+      <with-id>ma-3.2</with-id>
+      <with-id>ma-3.3</with-id>
+      <with-id>ma-4</with-id>
+      <with-id>ma-4.3</with-id>
+      <with-id>ma-5</with-id>
+      <with-id>ma-5.1</with-id>
+      <with-id>ma-6</with-id>
+      <with-id>mp-1</with-id>
+      <with-id>mp-2</with-id>
+      <with-id>mp-3</with-id>
+      <with-id>mp-4</with-id>
+      <with-id>mp-5</with-id>
+      <with-id>mp-6</with-id>
+      <with-id>mp-6.1</with-id>
+      <with-id>mp-6.2</with-id>
+      <with-id>mp-6.3</with-id>
+      <with-id>mp-7</with-id>
+      <with-id>pe-1</with-id>
+      <with-id>pe-10</with-id>
+      <with-id>pe-11</with-id>
+      <with-id>pe-11.1</with-id>
+      <with-id>pe-12</with-id>
+      <with-id>pe-13</with-id>
+      <with-id>pe-13.1</with-id>
+      <with-id>pe-13.2</with-id>
+      <with-id>pe-14</with-id>
+      <with-id>pe-14.2</with-id>
+      <with-id>pe-15</with-id>
+      <with-id>pe-15.1</with-id>
+      <with-id>pe-16</with-id>
+      <with-id>pe-17</with-id>
+      <with-id>pe-18</with-id>
+      <with-id>pe-2</with-id>
+      <with-id>pe-3</with-id>
+      <with-id>pe-3.1</with-id>
+      <with-id>pe-4</with-id>
+      <with-id>pe-5</with-id>
+      <with-id>pe-6</with-id>
+      <with-id>pe-6.1</with-id>
+      <with-id>pe-6.4</with-id>
+      <with-id>pe-8</with-id>
+      <with-id>pe-8.1</with-id>
+      <with-id>pe-9</with-id>
+      <with-id>pl-1</with-id>
+      <with-id>pl-10</with-id>
+      <with-id>pl-11</with-id>
+      <with-id>pl-2</with-id>
+      <with-id>pl-4</with-id>
+      <with-id>pl-4.1</with-id>
+      <with-id>pl-8</with-id>
+      <with-id>ps-1</with-id>
+      <with-id>ps-2</with-id>
+      <with-id>ps-3</with-id>
+      <with-id>ps-3.3</with-id>
+      <with-id>ps-4</with-id>
+      <with-id>ps-4.2</with-id>
+      <with-id>ps-5</with-id>
+      <with-id>ps-6</with-id>
+      <with-id>ps-7</with-id>
+      <with-id>ps-8</with-id>
+      <with-id>ps-9</with-id>
+      <with-id>ra-1</with-id>
+      <with-id>ra-2</with-id>
+      <with-id>ra-3</with-id>
+      <with-id>ra-3.1</with-id>
+      <with-id>ra-5</with-id>
+      <with-id>ra-5.11</with-id>
+      <with-id>ra-5.2</with-id>
+      <with-id>ra-5.3</with-id>
+      <with-id>ra-5.4</with-id>
+      <with-id>ra-5.5</with-id>
+      <with-id>ra-5.8</with-id>
+      <with-id>ra-7</with-id>
+      <with-id>ra-9</with-id>
+      <with-id>sa-1</with-id>
+      <with-id>sa-10</with-id>
+      <with-id>sa-11</with-id>
+      <with-id>sa-11.1</with-id>
+      <with-id>sa-11.2</with-id>
+      <with-id>sa-15</with-id>
+      <with-id>sa-15.3</with-id>
+      <with-id>sa-16</with-id>
+      <with-id>sa-17</with-id>
+      <with-id>sa-2</with-id>
+      <with-id>sa-21</with-id>
+      <with-id>sa-22</with-id>
+      <with-id>sa-3</with-id>
+      <with-id>sa-4</with-id>
+      <with-id>sa-4.1</with-id>
+      <with-id>sa-4.10</with-id>
+      <with-id>sa-4.2</with-id>
+      <with-id>sa-4.5</with-id>
+      <with-id>sa-4.9</with-id>
+      <with-id>sa-5</with-id>
+      <with-id>sa-8</with-id>
+      <with-id>sa-9</with-id>
+      <with-id>sa-9.1</with-id>
+      <with-id>sa-9.2</with-id>
+      <with-id>sa-9.5</with-id>
+      <with-id>sc-1</with-id>
+      <with-id>sc-10</with-id>
+      <with-id>sc-12</with-id>
+      <with-id>sc-12.1</with-id>
+      <with-id>sc-13</with-id>
+      <with-id>sc-15</with-id>
+      <with-id>sc-17</with-id>
+      <with-id>sc-18</with-id>
+      <with-id>sc-2</with-id>
+      <with-id>sc-20</with-id>
+      <with-id>sc-21</with-id>
+      <with-id>sc-22</with-id>
+      <with-id>sc-23</with-id>
+      <with-id>sc-24</with-id>
+      <with-id>sc-28</with-id>
+      <with-id>sc-28.1</with-id>
+      <with-id>sc-3</with-id>
+      <with-id>sc-39</with-id>
+      <with-id>sc-4</with-id>
+      <with-id>sc-45</with-id>
+      <with-id>sc-45.1</with-id>
+      <with-id>sc-5</with-id>
+      <with-id>sc-7</with-id>
+      <with-id>sc-7.10</with-id>
+      <with-id>sc-7.12</with-id>
+      <with-id>sc-7.18</with-id>
+      <with-id>sc-7.20</with-id>
+      <with-id>sc-7.21</with-id>
+      <with-id>sc-7.3</with-id>
+      <with-id>sc-7.4</with-id>
+      <with-id>sc-7.5</with-id>
+      <with-id>sc-7.7</with-id>
+      <with-id>sc-7.8</with-id>
+      <with-id>sc-8</with-id>
+      <with-id>sc-8.1</with-id>
+      <with-id>si-1</with-id>
+      <with-id>si-10</with-id>
+      <with-id>si-11</with-id>
+      <with-id>si-12</with-id>
+      <with-id>si-16</with-id>
+      <with-id>si-2</with-id>
+      <with-id>si-2.2</with-id>
+      <with-id>si-2.3</with-id>
+      <with-id>si-3</with-id>
+      <with-id>si-4</with-id>
+      <with-id>si-4.1</with-id>
+      <with-id>si-4.10</with-id>
+      <with-id>si-4.11</with-id>
+      <with-id>si-4.12</with-id>
+      <with-id>si-4.14</with-id>
+      <with-id>si-4.16</with-id>
+      <with-id>si-4.18</with-id>
+      <with-id>si-4.19</with-id>
+      <with-id>si-4.2</with-id>
+      <with-id>si-4.20</with-id>
+      <with-id>si-4.22</with-id>
+      <with-id>si-4.23</with-id>
+      <with-id>si-4.4</with-id>
+      <with-id>si-4.5</with-id>
+      <with-id>si-5</with-id>
+      <with-id>si-5.1</with-id>
+      <with-id>si-6</with-id>
+      <with-id>si-7</with-id>
+      <with-id>si-7.1</with-id>
+      <with-id>si-7.15</with-id>
+      <with-id>si-7.2</with-id>
+      <with-id>si-7.5</with-id>
+      <with-id>si-7.7</with-id>
+      <with-id>si-8</with-id>
+      <with-id>si-8.2</with-id>
+      <with-id>sr-1</with-id>
+      <with-id>sr-10</with-id>
+      <with-id>sr-11</with-id>
+      <with-id>sr-11.1</with-id>
+      <with-id>sr-11.2</with-id>
+      <with-id>sr-12</with-id>
+      <with-id>sr-2</with-id>
+      <with-id>sr-2.1</with-id>
+      <with-id>sr-3</with-id>
+      <with-id>sr-5</with-id>
+      <with-id>sr-6</with-id>
+      <with-id>sr-8</with-id>
+      <with-id>sr-9</with-id>
+      <with-id>sr-9.1</with-id>
+    </include-controls>
+  </import>
+  <merge>
+    <combine method="use-first" />
+    <as-is>true</as-is>
+  </merge>
+  <modify>
+    <set-parameter param-id="ac-06.01_odp.02">
+      <value>all functions not publicly accessible</value>
+    </set-parameter>
+    <set-parameter param-id="ac-06.01_odp.05">
+      <value>all security-relevant information not publicly available</value>
+    </set-parameter>
+    <set-parameter param-id="ac-06.02_odp">
+      <value>all security functions</value>
+    </set-parameter>
+    <set-parameter param-id="ac-06.08_odp">
+      <value>any software except software explicitly documented</value>
+    </set-parameter>
+    <set-parameter param-id="au-10_odp">
+      <value>at least actions including the addition, modification, deletion, approval, sending, or receiving of data</value>
+    </set-parameter>
+    <set-parameter param-id="au-12_odp.01">
+      <value>at least all information system and network components where audit capability is deployed/available</value>
+    </set-parameter>
+    <set-parameter param-id="ca-02_odp.02">
+      <value>individuals or roles to include FedRAMP and agency customers</value>
+    </set-parameter>
+    <set-parameter param-id="ca-02.03_odp.01">
+      <value>any FedRAMP Recognized independent assessment service</value>
+    </set-parameter>
+    <set-parameter param-id="cm-11_odp.03">
+      <value>Continuously (via CM-7 (5))</value>
+    </set-parameter>
+    <set-parameter param-id="cp-02.03_odp.02">
+      <value>time period defined in service provider and organization Service Level Agreements</value>
+    </set-parameter>
+    <set-parameter param-id="cp-10.04_odp">
+      <value>time period consistent with the restoration time-periods defined in the service provider and organization Service Level Agreements</value>
+    </set-parameter>
+    <set-parameter param-id="ia-02.08_odp">
+      <value>privileged accounts; non-privileged accounts</value>
+    </set-parameter>
+    <set-parameter param-id="ia-02.06_odp.01">
+      <value>local, network and remote</value>
+    </set-parameter>
+    <set-parameter param-id="ia-02.06_odp.02">
+      <value>privileged accounts; non-privileged accounts</value>
+    </set-parameter>
+    <set-parameter param-id="ia-04.04_odp">
+      <value>contractors; foreign nationals</value>
+    </set-parameter>
+    <set-parameter param-id="sa-09.02_odp">
+      <value>all external systems where federal customer data is processed or stored</value>
+    </set-parameter>
+    <alter control-id="ac-20">
+      <add position="ending">
+        <part name="guidance">
+          <p>The interrelated controls of AC-20, CA-3, and SA-9 should be differentiated as follows:</p>
+          <p>AC-20 describes system access to and from external systems.</p>
+          <p>CA-3 describes documentation of an agreement between the respective system owners when data is exchanged between the CSO and an external system.</p>
+          <p>SA-9 describes the responsibilities of external system owners. These responsibilities would typically be captured in the agreement required by CA-3.</p>
+        </part>
+      </add>
+    </alter>
+    <alter control-id="au-6">
+      <add position="ending">
+        <part name="guidance">
+          <p>This activity is considered vulnerability detection and is subject to the Vulnerability Detection and Response rules.</p>
+        </part>
+      </add>
+    </alter>
+    <alter control-id="au-6.5">
+      <add position="ending">
+        <part name="guidance">
+          <p>This activity is considered vulnerability detection and is subject to the Vulnerability Detection and Response rules.</p>
+        </part>
+      </add>
+    </alter>
+    <alter control-id="ca-7">
+      <add position="ending">
+        <part name="guidance">
+          <p>Follow the FedRAMP Continuous Collaborative Monitoring, Significant Change Notification, Vulnerability Detection and Response, and Vulnerability Evaluation and Reporting rules.</p>
+        </part>
+      </add>
+    </alter>
+    <alter control-id="ca-8">
+      <add position="ending">
+        <part name="guidance">
+          <p>Penetration testing is part of vulnerability detection and is subject to the Vulnerability Detection and Response rules.</p>
+        </part>
+      </add>
+    </alter>
+    <alter control-id="cm-1">
+      <add position="ending">
+        <part name="guidance">
+          <p>Follow the Significant Change Notification rules.</p>
+        </part>
+      </add>
+    </alter>
+    <alter control-id="cm-8">
+      <add position="ending">
+        <part name="guidance">
+          <p>Follow the FedRAMP Continuous Collaborative Monitoring, Significant Change Notification, Vulnerability Detection and Response, and Vulnerability Evaluation and Reporting rules.</p>
+        </part>
+      </add>
+    </alter>
+    <alter control-id="cm-12">
+      <add position="ending">
+        <part name="guidance">
+          <p>Follow the FedRAMP Minimum Assessment Scope rules.</p>
+        </part>
+      </add>
+    </alter>
+    <alter control-id="cm-12.1">
+      <add position="ending">
+        <part name="guidance">
+          <p>Follow the FedRAMP Minimum Assessment Scope rules.</p>
+        </part>
+      </add>
+    </alter>
+    <alter control-id="cm-14">
+      <add position="ending">
+        <part name="guidance">
+          <p>If digital signatures/certificates are unavailable, alternative cryptographic integrity checks (hashes, self-signed certs, etc.) can be utilized.</p>
+        </part>
+      </add>
+    </alter>
+    <alter control-id="cp-7.1">
+      <add position="ending">
+        <part name="guidance">
+          <p>The service provider may determine what is considered a sufficient degree of separation between the primary and alternate processing sites, based on the types of threats that are of concern. For one particular type of threat (i.e., hostile cyber attack), the degree of separation between sites will be less relevant.</p>
+        </part>
+      </add>
+    </alter>
+    <alter control-id="ia-2">
+      <add position="ending">
+        <part name="guidance">
+          <p>Multi-factor authentication must be phishing-resistant. In accordance with current CISA Guidance. Current CISA guidance can be found here: https://www.cisa.gov/sites/default/files/publications/fact-sheet-implementing-phishing-resistant-mfa-508c.pdf</p>
+        </part>
+      </add>
+    </alter>
+    <alter control-id="ia-2.1">
+      <add position="ending">
+        <part name="guidance">
+          <p>Multi-factor authentication must be phishing-resistant. In accordance with current CISA Guidance. Current CISA guidance can be found here: https://www.cisa.gov/sites/default/files/publications/fact-sheet-implementing-phishing-resistant-mfa-508c.pdf</p>
+        </part>
+      </add>
+    </alter>
+    <alter control-id="ia-2.2">
+      <add position="ending">
+        <part name="guidance">
+          <p>Multi-factor authentication must be phishing-resistant. In accordance with current CISA Guidance. Current CISA guidance can be found here: https://www.cisa.gov/sites/default/files/publications/fact-sheet-implementing-phishing-resistant-mfa-508c.pdf</p>
+        </part>
+      </add>
+    </alter>
+    <alter control-id="ir-1">
+      <add position="ending">
+        <part name="guidance">
+          <p>Follow the FedRAMP Incident Evaluation and Communication rules.</p>
+        </part>
+      </add>
+    </alter>
+    <alter control-id="ir-2">
+      <add position="ending">
+        <part name="guidance">
+          <p>Follow the FedRAMP Incident Evaluation and Communication rules.</p>
+        </part>
+      </add>
+    </alter>
+    <alter control-id="ir-2.1">
+      <add position="ending">
+        <part name="guidance">
+          <p>Follow the FedRAMP Incident Evaluation and Communication rules.</p>
+        </part>
+      </add>
+    </alter>
+    <alter control-id="ir-2.2">
+      <add position="ending">
+        <part name="guidance">
+          <p>Follow the FedRAMP Incident Evaluation and Communication rules.</p>
+        </part>
+      </add>
+    </alter>
+    <alter control-id="ir-3">
+      <add position="ending">
+        <part name="guidance">
+          <p>Follow the FedRAMP Incident Evaluation and Communication rules.</p>
+        </part>
+      </add>
+    </alter>
+    <alter control-id="ir-3.2">
+      <add position="ending">
+        <part name="guidance">
+          <p>Follow the FedRAMP Incident Evaluation and Communication rules.</p>
+        </part>
+      </add>
+    </alter>
+    <alter control-id="ir-4">
+      <add position="ending">
+        <part name="guidance">
+          <p>Follow the FedRAMP Incident Evaluation and Communication rules.</p>
+        </part>
+      </add>
+    </alter>
+    <alter control-id="ir-4.1">
+      <add position="ending">
+        <part name="guidance">
+          <p>Follow the FedRAMP Incident Evaluation and Communication rules.</p>
+        </part>
+      </add>
+    </alter>
+    <alter control-id="ir-4.2">
+      <add position="ending">
+        <part name="guidance">
+          <p>Follow the FedRAMP Incident Evaluation and Communication rules.</p>
+        </part>
+      </add>
+    </alter>
+    <alter control-id="ir-4.4">
+      <add position="ending">
+        <part name="guidance">
+          <p>Follow the FedRAMP Incident Evaluation and Communication rules.</p>
+        </part>
+      </add>
+    </alter>
+    <alter control-id="ir-4.6">
+      <add position="ending">
+        <part name="guidance">
+          <p>Follow the FedRAMP Incident Evaluation and Communication rules.</p>
+        </part>
+      </add>
+    </alter>
+    <alter control-id="ir-4.11">
+      <add position="ending">
+        <part name="guidance">
+          <p>Follow the FedRAMP Incident Evaluation and Communication rules.</p>
+        </part>
+      </add>
+    </alter>
+    <alter control-id="ir-5">
+      <add position="ending">
+        <part name="guidance">
+          <p>Follow the FedRAMP Incident Evaluation and Communication rules.</p>
+        </part>
+      </add>
+    </alter>
+    <alter control-id="ir-5.1">
+      <add position="ending">
+        <part name="guidance">
+          <p>Follow the FedRAMP Incident Evaluation and Communication rules.</p>
+        </part>
+      </add>
+    </alter>
+    <alter control-id="ir-6">
+      <add position="ending">
+        <part name="guidance">
+          <p>Follow the FedRAMP Incident Evaluation and Communication rules.</p>
+        </part>
+      </add>
+    </alter>
+    <alter control-id="ir-6.1">
+      <add position="ending">
+        <part name="guidance">
+          <p>Follow the FedRAMP Incident Evaluation and Communication rules.</p>
+        </part>
+      </add>
+    </alter>
+    <alter control-id="ir-6.3">
+      <add position="ending">
+        <part name="guidance">
+          <p>Follow the FedRAMP Incident Evaluation and Communication rules.</p>
+        </part>
+      </add>
+    </alter>
+    <alter control-id="ir-7">
+      <add position="ending">
+        <part name="guidance">
+          <p>Follow the FedRAMP Incident Evaluation and Communication rules.</p>
+        </part>
+      </add>
+    </alter>
+    <alter control-id="ir-7.1">
+      <add position="ending">
+        <part name="guidance">
+          <p>Follow the FedRAMP Incident Evaluation and Communication rules.</p>
+        </part>
+      </add>
+    </alter>
+    <alter control-id="ir-8">
+      <add position="ending">
+        <part name="guidance">
+          <p>Follow the FedRAMP Incident Evaluation and Communication rules.</p>
+        </part>
+      </add>
+    </alter>
+    <alter control-id="ir-9">
+      <add position="ending">
+        <part name="guidance">
+          <p>Follow the FedRAMP Incident Evaluation and Communication rules.</p>
+        </part>
+      </add>
+    </alter>
+    <alter control-id="ir-9.2">
+      <add position="ending">
+        <part name="guidance">
+          <p>Follow the FedRAMP Incident Evaluation and Communication rules.</p>
+        </part>
+      </add>
+    </alter>
+    <alter control-id="ir-9.3">
+      <add position="ending">
+        <part name="guidance">
+          <p>Follow the FedRAMP Incident Evaluation and Communication rules.</p>
+        </part>
+      </add>
+    </alter>
+    <alter control-id="ir-9.4">
+      <add position="ending">
+        <part name="guidance">
+          <p>Follow the FedRAMP Incident Evaluation and Communication rules.</p>
+        </part>
+      </add>
+    </alter>
+    <alter control-id="ma-5">
+      <add position="ending">
+        <part name="guidance">
+          <p>CSPs should clearly document nationality requirements (or lack of) for maintenance personnel where applicable.</p>
+        </part>
+      </add>
+    </alter>
+    <alter control-id="ma-5.1">
+      <add position="ending">
+        <part name="guidance">
+          <p>Only MA-5 (1) (a) (1) is required by FedRAMP Class C Baseline.</p>
+        </part>
+      </add>
+    </alter>
+    <alter control-id="ps-7">
+      <add position="ending">
+        <part name="guidance">
+          <p>CSPs MUST clearly document any nationality requirements for any account type within its platform. If none exists, this must also be explicitly stated.</p>
+        </part>
+      </add>
+    </alter>
+    <alter control-id="ra-5">
+      <add position="ending">
+        <part name="guidance">
+          <p>Follow the FedRAMP Vulnerability Detection and Response and Vulnerability Evaluation and Reporting rules.</p>
+        </part>
+      </add>
+    </alter>
+    <alter control-id="ra-5.2">
+      <add position="ending">
+        <part name="guidance">
+          <p>Follow the FedRAMP Vulnerability Detection and Response and Vulnerability Evaluation and Reporting rules.</p>
+        </part>
+      </add>
+    </alter>
+    <alter control-id="ra-5.3">
+      <add position="ending">
+        <part name="guidance">
+          <p>Follow the FedRAMP Vulnerability Detection and Response and Vulnerability Evaluation and Reporting rules.</p>
+        </part>
+      </add>
+    </alter>
+    <alter control-id="ra-5.4">
+      <add position="ending">
+        <part name="guidance">
+          <p>Follow the FedRAMP Vulnerability Detection and Response and Vulnerability Evaluation and Reporting rules.</p>
+        </part>
+      </add>
+    </alter>
+    <alter control-id="ra-5.5">
+      <add position="ending">
+        <part name="guidance">
+          <p>Follow the FedRAMP Vulnerability Detection and Response and Vulnerability Evaluation and Reporting rules.</p>
+        </part>
+      </add>
+    </alter>
+    <alter control-id="ra-5.8">
+      <add position="ending">
+        <part name="guidance">
+          <p>Follow the FedRAMP Vulnerability Detection and Response and Vulnerability Evaluation and Reporting rules.</p>
+        </part>
+      </add>
+    </alter>
+    <alter control-id="ra-5.11">
+      <add position="ending">
+        <part name="guidance">
+          <p>Follow the FedRAMP Vulnerability Detection and Response and Vulnerability Evaluation and Reporting rules.</p>
+        </part>
+      </add>
+    </alter>
+    <alter control-id="ra-7">
+      <add position="ending">
+        <part name="guidance">
+          <p>Follow the FedRAMP Vulnerability Detection and Response and Vulnerability Evaluation and Reporting rules.</p>
+        </part>
+      </add>
+    </alter>
+    <alter control-id="sa-5">
+      <add position="ending">
+        <part name="guidance">
+          <p>Follow the FedRAMP Secure Configuration Guide rules.</p>
+        </part>
+      </add>
+    </alter>
+    <alter control-id="sc-7">
+      <add position="ending">
+        <part name="guidance">
+          <p>SC-7 (b) may be met by using any technical capability or complement of capabilities that ensures logical separation between publicly accessible components and internal networks by preventing traversal without inspection and authorization; traffic may not flow unrestricted from publicly accessible components to internal networks.</p>
+        </part>
+      </add>
+    </alter>
+    <alter control-id="sc-13">
+      <add position="ending">
+        <part name="guidance">
+          <p>Follow the FedRAMP Cryptographic Module Use rules.</p>
+        </part>
+      </add>
+    </alter>
+    <alter control-id="si-2">
+      <add position="ending">
+        <part name="guidance">
+          <p>Follow the FedRAMP Vulnerability Detection and Response and Vulnerability Evaluation and Reporting rules.</p>
+        </part>
+      </add>
+    </alter>
+    <alter control-id="si-2.2">
+      <add position="ending">
+        <part name="guidance">
+          <p>Follow the FedRAMP Vulnerability Detection and Response and Vulnerability Evaluation and Reporting rules.</p>
+        </part>
+      </add>
+    </alter>
+    <alter control-id="si-4">
+      <add position="ending">
+        <part name="guidance">
+          <p>Follow all applicable rules within the Vulnerability and Detection Response and Incident Communication Procedure guidance.</p>
+        </part>
+      </add>
+    </alter>
+    <alter control-id="si-4.1">
+      <add position="ending">
+        <part name="guidance">
+          <p>Follow the FedRAMP Vulnerability Detection and Response and Vulnerability Evaluation and Reporting rules.</p>
+        </part>
+      </add>
+    </alter>
+    <alter control-id="si-4.2">
+      <add position="ending">
+        <part name="guidance">
+          <p>Follow the FedRAMP Vulnerability Detection and Response and Vulnerability Evaluation and Reporting rules.</p>
+        </part>
+      </add>
+    </alter>
+    <alter control-id="si-4.4">
+      <add position="ending">
+        <part name="guidance">
+          <p>Follow the FedRAMP Vulnerability Detection and Response and Vulnerability Evaluation and Reporting rules.</p>
+        </part>
+      </add>
+    </alter>
+    <alter control-id="si-4.5">
+      <add position="ending">
+        <part name="guidance">
+          <p>Follow the FedRAMP Vulnerability Detection and Response and Vulnerability Evaluation and Reporting rules.</p>
+        </part>
+      </add>
+    </alter>
+    <alter control-id="si-5">
+      <add position="ending">
+        <part name="guidance">
+          <p>Follow the FedRAMP Addressing FedRAMP Communication rules.</p>
+        </part>
+      </add>
+    </alter>
+    <alter control-id="si-8">
+      <add position="ending">
+        <part name="guidance">
+          <p>When CSO sends email on behalf of the government as part of the business offering, Control Description should include implementation of Domain-based Message Authentication, Reporting &amp; Conformance (DMARC) on the sending domain for outgoing messages as described in DHS Binding Operational Directive (BOD) 18-01. https://www.cisa.gov/news-events/directives</p>
+          <p>SI-8 Guidance: CSPs should confirm DMARC configuration (where appropriate) to ensure that policy=reject and the rua parameter includes reports@dmarc.cyber.dhs.gov.  DMARC compliance should be documented in the SI-08 control implementation solution description, and list the FROM: domain(s) when emails are sent on behalf of the government.</p>
+        </part>
+      </add>
+    </alter>
+    <alter control-id="sr-3">
+      <add position="ending">
+        <part name="guidance">
+          <p>CSO must document and maintain the supply chain custody, including replacement devices, to ensure the integrity of the devices before being introduced to the boundary.</p>
+        </part>
+      </add>
+    </alter>
+    <alter control-id="sr-8">
+      <add position="ending">
+        <part name="guidance">
+          <p>Follow the FedRAMP Incident Evaluation and Communication rules.</p>
+        </part>
+      </add>
+    </alter>
+  </modify>
+  <back-matter>
+    <resource uuid="dea6ca8c-c796-4970-9c6e-edc158f8b7dd">
+      <title>NIST SP 800-53 Revision 5</title>
+      <rlink href="https://raw.githubusercontent.com/usnistgov/oscal-content/refs/heads/main/nist.gov/SP800-53/rev5/json/NIST_SP-800-53_rev5_catalog.json" media-type="application/json" />
+    </resource>
+  </back-matter>
+</profile>
