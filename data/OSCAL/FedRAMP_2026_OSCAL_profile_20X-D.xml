@@ -1,12 +1,12 @@
-<profile xmlns="http://csrc.nist.gov/ns/oscal/1.0" uuid="c88304be-e1b1-4cd8-93ba-5c81656713be">
+<profile xmlns="http://csrc.nist.gov/ns/oscal/1.0" uuid="0976aa02-fec3-4da7-bc3b-bb2a05283996">
   <metadata>
-    <title>FedRAMP Rev 5 — Class B</title>
+    <title>FedRAMP 20X — Class D</title>
     <published>2026-07-06T00:00:00Z</published>
-    <last-modified>2026-09-01T03:01:47Z</last-modified>
+    <last-modified>2026-09-01T14:53:30Z</last-modified>
     <version>2026.07.06.01</version>
     <oscal-version>1.2.3</oscal-version>
   </metadata>
-  <import href="#e448dd44-cf3c-4f1f-9c20-886a7018c8fa">
+  <import href="#b507f648-e17b-4fae-8d09-0ede9b7e066d">
     <include-controls>
       <with-id>AFC-CSO-ACK</with-id>
       <with-id>AFC-CSO-CRA</with-id>
@@ -54,7 +54,7 @@
       <with-id>CCM-OCR-RPS</with-id>
       <with-id>CCM-OCR-SOR</with-id>
       <with-id>CCM-QTR-ACT</with-id>
-      <with-id>CCM-QTR-MTG-b</with-id>
+      <with-id>CCM-QTR-MTG-d</with-id>
       <with-id>CCM-QTR-NID</with-id>
       <with-id>CCM-QTR-NRD</with-id>
       <with-id>CCM-QTR-REG</with-id>
@@ -63,14 +63,13 @@
       <with-id>CCM-QTR-SAR</with-id>
       <with-id>CCM-QTR-SCR</with-id>
       <with-id>CCM-QTR-SRR</with-id>
-      <with-id>CDS-CSF-TCM</with-id>
-      <with-id>CDS-CSO-AVR-b</with-id>
+      <with-id>CDS-CSO-AVR-d</with-id>
       <with-id>CDS-CSO-CBF</with-id>
       <with-id>CDS-CSO-FID</with-id>
       <with-id>CDS-CSO-FRC</with-id>
       <with-id>CDS-CSO-HAD</with-id>
       <with-id>CDS-CSO-IRP</with-id>
-      <with-id>CDS-CSO-PSM-b</with-id>
+      <with-id>CDS-CSO-PSM-d</with-id>
       <with-id>CDS-CSO-PUB</with-id>
       <with-id>CDS-CSO-RIS</with-id>
       <with-id>CDS-CSO-RPS</with-id>
@@ -86,14 +85,14 @@
       <with-id>CDS-UTC-AGA</with-id>
       <with-id>CMU-CSO-CAT</with-id>
       <with-id>CMU-CSO-CMD</with-id>
-      <with-id>CMU-CSO-UVM-b</with-id>
-      <with-id>CPO-CSF-CPM-b</with-id>
+      <with-id>CMU-CSO-UVM-d</with-id>
       <with-id>CPO-CSO-MTD</with-id>
-      <with-id>CPO-CSO-OSA-b</with-id>
+      <with-id>CPO-CSO-OSA-d</with-id>
       <with-id>CPO-CSO-OVR</with-id>
+      <with-id>CPO-CSX-CPM-d</with-id>
       <with-id>FRC-APP-AFC</with-id>
       <with-id>FRC-APP-FCP</with-id>
-      <with-id>FRC-APP-FIA-b</with-id>
+      <with-id>FRC-APP-FIA-d</with-id>
       <with-id>FRC-APP-MLF</with-id>
       <with-id>FRC-APP-NTP</with-id>
       <with-id>FRC-APP-USA</with-id>
@@ -107,35 +106,32 @@
       <with-id>FRC-CLA-MFR</with-id>
       <with-id>FRC-CLA-OFR</with-id>
       <with-id>FRC-CLA-RFR</with-id>
-      <with-id>FRC-CSF-ACP</with-id>
-      <with-id>FRC-CSF-BSL-b</with-id>
-      <with-id>FRC-CSF-FFG</with-id>
-      <with-id>FRC-CSF-RDY</with-id>
       <with-id>FRC-CSO-FCP</with-id>
       <with-id>FRC-CSO-JSN</with-id>
       <with-id>FRC-CSO-MRA</with-id>
       <with-id>FRC-CSO-PKG</with-id>
       <with-id>FRC-CSO-POP</with-id>
+      <with-id>FRC-CSX-MAS</with-id>
+      <with-id>FRC-CSX-MOT-d</with-id>
+      <with-id>FRC-CSX-VVK-d</with-id>
+      <with-id>FRC-CSX-VVR-d</with-id>
       <with-id>IEC-CSO-AIR</with-id>
       <with-id>IEC-CSO-DPR</with-id>
       <with-id>IEC-CSO-EFI</with-id>
       <with-id>IEC-CSO-EFR</with-id>
-      <with-id>IEC-CSO-FIR-b</with-id>
-      <with-id>IEC-CSO-IIR-b</with-id>
-      <with-id>IEC-CSO-OIR-b</with-id>
+      <with-id>IEC-CSO-FIR-d</with-id>
+      <with-id>IEC-CSO-IIR-d</with-id>
+      <with-id>IEC-CSO-OIR-d</with-id>
       <with-id>IEC-FRP-ORV</with-id>
-      <with-id>IVV-CSF-ACF</with-id>
-      <with-id>IVV-CSF-AIA-b</with-id>
-      <with-id>IVV-CSF-MCA</with-id>
-      <with-id>IVV-CSF-PCA</with-id>
       <with-id>IVV-CSO-DUS</with-id>
-      <with-id>IVV-CSO-FIA-b</with-id>
+      <with-id>IVV-CSO-FIA-d</with-id>
       <with-id>IVV-CSO-ICP</with-id>
       <with-id>IVV-CSO-RAA</with-id>
       <with-id>IVV-CSO-SEE</with-id>
       <with-id>IVV-CSO-SEI</with-id>
       <with-id>IVV-CSO-STE</with-id>
       <with-id>IVV-CSO-USR</with-id>
+      <with-id>IVV-CSX-AIA-d</with-id>
       <with-id>IVV-IAS-EPX</with-id>
       <with-id>IVV-IAS-OSA</with-id>
       <with-id>IVV-IAS-SHA</with-id>
@@ -143,6 +139,52 @@
       <with-id>IVV-IAS-VEF</with-id>
       <with-id>IVV-IAS-VIM</with-id>
       <with-id>IVV-IAS-VIP</with-id>
+      <with-id>KSI-CED-RAT</with-id>
+      <with-id>KSI-CMT-LMC</with-id>
+      <with-id>KSI-CMT-RMV</with-id>
+      <with-id>KSI-CMT-RVP</with-id>
+      <with-id>KSI-CMT-VTD</with-id>
+      <with-id>KSI-CNA-DFP</with-id>
+      <with-id>KSI-CNA-EIS</with-id>
+      <with-id>KSI-CNA-IBP</with-id>
+      <with-id>KSI-CNA-MAT</with-id>
+      <with-id>KSI-CNA-OFA</with-id>
+      <with-id>KSI-CNA-RNT</with-id>
+      <with-id>KSI-CNA-RVP</with-id>
+      <with-id>KSI-CNA-ULN</with-id>
+      <with-id>KSI-IAM-AAM</with-id>
+      <with-id>KSI-IAM-APM</with-id>
+      <with-id>KSI-IAM-ELP</with-id>
+      <with-id>KSI-IAM-JIT</with-id>
+      <with-id>KSI-IAM-SNU</with-id>
+      <with-id>KSI-IAM-SUS</with-id>
+      <with-id>KSI-INR-AAR</with-id>
+      <with-id>KSI-INR-RIR</with-id>
+      <with-id>KSI-INR-RPI</with-id>
+      <with-id>KSI-MLA-ALA</with-id>
+      <with-id>KSI-MLA-EVC</with-id>
+      <with-id>KSI-MLA-LET</with-id>
+      <with-id>KSI-MLA-OSM</with-id>
+      <with-id>KSI-MLA-RVL</with-id>
+      <with-id>KSI-PIY-GIV</with-id>
+      <with-id>KSI-PIY-RES</with-id>
+      <with-id>KSI-PIY-RIS</with-id>
+      <with-id>KSI-PIY-RSD</with-id>
+      <with-id>KSI-PIY-RVD</with-id>
+      <with-id>KSI-RPL-ABO</with-id>
+      <with-id>KSI-RPL-ARP</with-id>
+      <with-id>KSI-RPL-RRO</with-id>
+      <with-id>KSI-RPL-TRC</with-id>
+      <with-id>KSI-SCR-MIT</with-id>
+      <with-id>KSI-SCR-MON</with-id>
+      <with-id>KSI-SVC-ACM</with-id>
+      <with-id>KSI-SVC-ASM</with-id>
+      <with-id>KSI-SVC-EIS</with-id>
+      <with-id>KSI-SVC-PRR</with-id>
+      <with-id>KSI-SVC-RUD</with-id>
+      <with-id>KSI-SVC-SIN</with-id>
+      <with-id>KSI-SVC-VCM</with-id>
+      <with-id>KSI-SVC-VRI</with-id>
       <with-id>MAS-CSO-FLO</with-id>
       <with-id>MAS-CSO-IIR</with-id>
       <with-id>MAS-CSO-MDI</with-id>
@@ -202,9 +244,10 @@
       <with-id>SCN-TRF-NIP</with-id>
       <with-id>SCN-TRF-TPR</with-id>
       <with-id>SCN-TRF-UPD</with-id>
-      <with-id>SDR-CSF-CTF</with-id>
       <with-id>SDR-CSO-FRR</with-id>
       <with-id>SDR-CSO-MTD</with-id>
+      <with-id>SDR-CSX-KMT-d</with-id>
+      <with-id>SDR-CSX-KSI</with-id>
       <with-id>VDR-CSO-ADT</with-id>
       <with-id>VDR-CSO-AKE</with-id>
       <with-id>VDR-CSO-DAC</with-id>
@@ -215,12 +258,11 @@
       <with-id>VDR-CSO-RES</with-id>
       <with-id>VDR-CSO-SIR</with-id>
       <with-id>VDR-TFR-KEV</with-id>
-      <with-id>VDR-TFR-MVF-b</with-id>
       <with-id>VDR-TFR-NMV</with-id>
-      <with-id>VDR-TFR-PCD-b</with-id>
-      <with-id>VDR-TFR-PDD-b</with-id>
-      <with-id>VDR-TFR-PSD-b</with-id>
-      <with-id>VDR-TFR-PVR-b</with-id>
+      <with-id>VDR-TFR-PCD-d</with-id>
+      <with-id>VDR-TFR-PDD-d</with-id>
+      <with-id>VDR-TFR-PSD-d</with-id>
+      <with-id>VDR-TFR-PVR-d</with-id>
       <with-id>VDR-TFR-RMN</with-id>
       <with-id>VER-AGM-MAP</with-id>
       <with-id>VER-AGM-RVR</with-id>
@@ -239,195 +281,22 @@
       <with-id>VER-RPT-PER</with-id>
       <with-id>VER-RPT-RPD</with-id>
       <with-id>VER-RPT-VDT</with-id>
-      <with-id>VER-TFR-EVU-b</with-id>
-      <with-id>VER-TFR-IRI-b</with-id>
+      <with-id>VER-TFR-EVU-d</with-id>
+      <with-id>VER-TFR-IRI-d</with-id>
       <with-id>VER-TFR-MAV</with-id>
       <with-id>VER-TFR-MHR</with-id>
-      <with-id>VER-TFR-MRH-b</with-id>
-      <with-id>VER-TFR-NRI-b</with-id>
-    </include-controls>
-  </import>
-  <import href="#2d0d9353-70c9-4212-8e93-fd805a40eb22">
-    <include-controls>
-      <with-id>ac-1</with-id>
-      <with-id>ac-14</with-id>
-      <with-id>ac-17</with-id>
-      <with-id>ac-18</with-id>
-      <with-id>ac-19</with-id>
-      <with-id>ac-2</with-id>
-      <with-id>ac-20</with-id>
-      <with-id>ac-22</with-id>
-      <with-id>ac-3</with-id>
-      <with-id>ac-7</with-id>
-      <with-id>ac-8</with-id>
-      <with-id>at-1</with-id>
-      <with-id>at-2</with-id>
-      <with-id>at-2.2</with-id>
-      <with-id>at-3</with-id>
-      <with-id>at-4</with-id>
-      <with-id>au-1</with-id>
-      <with-id>au-11</with-id>
-      <with-id>au-12</with-id>
-      <with-id>au-2</with-id>
-      <with-id>au-3</with-id>
-      <with-id>au-4</with-id>
-      <with-id>au-5</with-id>
-      <with-id>au-6</with-id>
-      <with-id>au-8</with-id>
-      <with-id>au-9</with-id>
-      <with-id>ca-1</with-id>
-      <with-id>ca-2</with-id>
-      <with-id>ca-2.1</with-id>
-      <with-id>ca-3</with-id>
-      <with-id>ca-6</with-id>
-      <with-id>ca-7</with-id>
-      <with-id>ca-7.4</with-id>
-      <with-id>ca-8</with-id>
-      <with-id>ca-9</with-id>
-      <with-id>cm-1</with-id>
-      <with-id>cm-10</with-id>
-      <with-id>cm-11</with-id>
-      <with-id>cm-2</with-id>
-      <with-id>cm-4</with-id>
-      <with-id>cm-5</with-id>
-      <with-id>cm-6</with-id>
-      <with-id>cm-7</with-id>
-      <with-id>cm-8</with-id>
-      <with-id>cp-1</with-id>
-      <with-id>cp-10</with-id>
-      <with-id>cp-2</with-id>
-      <with-id>cp-3</with-id>
-      <with-id>cp-4</with-id>
-      <with-id>cp-9</with-id>
-      <with-id>ia-1</with-id>
-      <with-id>ia-11</with-id>
-      <with-id>ia-2</with-id>
-      <with-id>ia-2.1</with-id>
-      <with-id>ia-2.12</with-id>
-      <with-id>ia-2.2</with-id>
-      <with-id>ia-2.8</with-id>
-      <with-id>ia-4</with-id>
-      <with-id>ia-5</with-id>
-      <with-id>ia-5.1</with-id>
-      <with-id>ia-6</with-id>
-      <with-id>ia-7</with-id>
-      <with-id>ia-8</with-id>
-      <with-id>ia-8.1</with-id>
-      <with-id>ia-8.2</with-id>
-      <with-id>ia-8.4</with-id>
-      <with-id>ir-1</with-id>
-      <with-id>ir-2</with-id>
-      <with-id>ir-4</with-id>
-      <with-id>ir-5</with-id>
-      <with-id>ir-6</with-id>
-      <with-id>ir-7</with-id>
-      <with-id>ir-8</with-id>
-      <with-id>ma-1</with-id>
-      <with-id>ma-2</with-id>
-      <with-id>ma-4</with-id>
-      <with-id>ma-5</with-id>
-      <with-id>mp-1</with-id>
-      <with-id>mp-2</with-id>
-      <with-id>mp-6</with-id>
-      <with-id>mp-7</with-id>
-      <with-id>pe-1</with-id>
-      <with-id>pe-12</with-id>
-      <with-id>pe-13</with-id>
-      <with-id>pe-14</with-id>
-      <with-id>pe-15</with-id>
-      <with-id>pe-16</with-id>
-      <with-id>pe-2</with-id>
-      <with-id>pe-3</with-id>
-      <with-id>pe-6</with-id>
-      <with-id>pe-8</with-id>
-      <with-id>pl-1</with-id>
-      <with-id>pl-10</with-id>
-      <with-id>pl-11</with-id>
-      <with-id>pl-2</with-id>
-      <with-id>pl-4</with-id>
-      <with-id>pl-4.1</with-id>
-      <with-id>pl-8</with-id>
-      <with-id>ps-1</with-id>
-      <with-id>ps-2</with-id>
-      <with-id>ps-3</with-id>
-      <with-id>ps-4</with-id>
-      <with-id>ps-5</with-id>
-      <with-id>ps-6</with-id>
-      <with-id>ps-7</with-id>
-      <with-id>ps-8</with-id>
-      <with-id>ps-9</with-id>
-      <with-id>ra-1</with-id>
-      <with-id>ra-2</with-id>
-      <with-id>ra-3</with-id>
-      <with-id>ra-3.1</with-id>
-      <with-id>ra-5</with-id>
-      <with-id>ra-5.11</with-id>
-      <with-id>ra-5.2</with-id>
-      <with-id>ra-7</with-id>
-      <with-id>sa-1</with-id>
-      <with-id>sa-2</with-id>
-      <with-id>sa-22</with-id>
-      <with-id>sa-3</with-id>
-      <with-id>sa-4</with-id>
-      <with-id>sa-4.10</with-id>
-      <with-id>sa-5</with-id>
-      <with-id>sa-8</with-id>
-      <with-id>sa-9</with-id>
-      <with-id>sc-1</with-id>
-      <with-id>sc-12</with-id>
-      <with-id>sc-13</with-id>
-      <with-id>sc-15</with-id>
-      <with-id>sc-20</with-id>
-      <with-id>sc-21</with-id>
-      <with-id>sc-22</with-id>
-      <with-id>sc-28</with-id>
-      <with-id>sc-28.1</with-id>
-      <with-id>sc-39</with-id>
-      <with-id>sc-5</with-id>
-      <with-id>sc-7</with-id>
-      <with-id>sc-8</with-id>
-      <with-id>sc-8.1</with-id>
-      <with-id>si-1</with-id>
-      <with-id>si-12</with-id>
-      <with-id>si-2</with-id>
-      <with-id>si-3</with-id>
-      <with-id>si-4</with-id>
-      <with-id>si-5</with-id>
-      <with-id>sr-1</with-id>
-      <with-id>sr-10</with-id>
-      <with-id>sr-11</with-id>
-      <with-id>sr-11.1</with-id>
-      <with-id>sr-11.2</with-id>
-      <with-id>sr-12</with-id>
-      <with-id>sr-2</with-id>
-      <with-id>sr-2.1</with-id>
-      <with-id>sr-3</with-id>
-      <with-id>sr-5</with-id>
-      <with-id>sr-8</with-id>
+      <with-id>VER-TFR-MRH-d</with-id>
+      <with-id>VER-TFR-NRI-d</with-id>
     </include-controls>
   </import>
   <merge>
     <combine method="use-first" />
     <as-is>true</as-is>
   </merge>
-  <modify>
-    <alter control-id="ia-5">
-      <add position="ending">
-        <part name="guidance">
-          <p>Authenticators must be compliant with NIST SP 800-63-3 Digital Identity Guidelines IAL, AAL, FAL level 1. Link https://pages.nist.gov/800-63-3</p>
-          <p>IA-5 Guidance: SP 800-63C Section 6.2.3 Encrypted Assertion requires that authentication assertions be encrypted when passed through third parties, such as a browser. For example, a SAML assertion can be encrypted using XML-Encryption, or an OpenID Connect ID Token can be encrypted using JSON Web Encryption (JWE).</p>
-        </part>
-      </add>
-    </alter>
-  </modify>
   <back-matter>
-    <resource uuid="e448dd44-cf3c-4f1f-9c20-886a7018c8fa">
+    <resource uuid="b507f648-e17b-4fae-8d09-0ede9b7e066d">
       <title>FedRAMP Consolidated Rules OSCAL Catalog</title>
       <rlink href="FedRAMP_2026_OSCAL_catalog.json" media-type="application/json" />
-    </resource>
-    <resource uuid="2d0d9353-70c9-4212-8e93-fd805a40eb22">
-      <title>FedRAMP Rev 5 Tailoring Profile</title>
-      <rlink href="FedRAMP_2026_OSCAL_profile_Rev5-Tailoring.json" media-type="application/json" />
     </resource>
   </back-matter>
 </profile>

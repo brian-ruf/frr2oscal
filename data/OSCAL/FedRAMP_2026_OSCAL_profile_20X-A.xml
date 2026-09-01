@@ -1,12 +1,12 @@
-<profile xmlns="http://csrc.nist.gov/ns/oscal/1.0" uuid="067d147a-8d12-409e-a17c-8ef291a54fc7">
+<profile xmlns="http://csrc.nist.gov/ns/oscal/1.0" uuid="4c9ae947-5f2f-409d-b58d-080c1799cebb">
   <metadata>
-    <title>FedRAMP 20X — Class B</title>
+    <title>FedRAMP 20X — Class A</title>
     <published>2026-07-06T00:00:00Z</published>
-    <last-modified>2026-09-01T03:01:47Z</last-modified>
+    <last-modified>2026-09-01T14:53:30Z</last-modified>
     <version>2026.07.06.01</version>
     <oscal-version>1.2.3</oscal-version>
   </metadata>
-  <import href="#9378f7e4-9acb-41ba-97e9-3d54c659fb28">
+  <import href="#741e32d0-b7f5-40f2-bd2a-9267d63b8f64">
     <include-controls>
       <with-id>AFC-CSO-ACK</with-id>
       <with-id>AFC-CSO-CRA</with-id>
@@ -54,7 +54,7 @@
       <with-id>CCM-OCR-RPS</with-id>
       <with-id>CCM-OCR-SOR</with-id>
       <with-id>CCM-QTR-ACT</with-id>
-      <with-id>CCM-QTR-MTG-b</with-id>
+      <with-id>CCM-QTR-MTG-a</with-id>
       <with-id>CCM-QTR-NID</with-id>
       <with-id>CCM-QTR-NRD</with-id>
       <with-id>CCM-QTR-REG</with-id>
@@ -63,13 +63,13 @@
       <with-id>CCM-QTR-SAR</with-id>
       <with-id>CCM-QTR-SCR</with-id>
       <with-id>CCM-QTR-SRR</with-id>
-      <with-id>CDS-CSO-AVR-b</with-id>
+      <with-id>CDS-CSO-AVR-a</with-id>
       <with-id>CDS-CSO-CBF</with-id>
       <with-id>CDS-CSO-FID</with-id>
       <with-id>CDS-CSO-FRC</with-id>
       <with-id>CDS-CSO-HAD</with-id>
       <with-id>CDS-CSO-IRP</with-id>
-      <with-id>CDS-CSO-PSM-b</with-id>
+      <with-id>CDS-CSO-PSM-a</with-id>
       <with-id>CDS-CSO-PUB</with-id>
       <with-id>CDS-CSO-RIS</with-id>
       <with-id>CDS-CSO-RPS</with-id>
@@ -85,14 +85,14 @@
       <with-id>CDS-UTC-AGA</with-id>
       <with-id>CMU-CSO-CAT</with-id>
       <with-id>CMU-CSO-CMD</with-id>
-      <with-id>CMU-CSO-UVM-b</with-id>
+      <with-id>CMU-CSO-UVM-a</with-id>
       <with-id>CPO-CSO-MTD</with-id>
-      <with-id>CPO-CSO-OSA-b</with-id>
+      <with-id>CPO-CSO-OSA-a</with-id>
       <with-id>CPO-CSO-OVR</with-id>
-      <with-id>CPO-CSX-CPM-b</with-id>
+      <with-id>CPO-CSX-CPM-a</with-id>
       <with-id>FRC-APP-AFC</with-id>
       <with-id>FRC-APP-FCP</with-id>
-      <with-id>FRC-APP-FIA-b</with-id>
+      <with-id>FRC-APP-FIA-a</with-id>
       <with-id>FRC-APP-MLF</with-id>
       <with-id>FRC-APP-NTP</with-id>
       <with-id>FRC-APP-USA</with-id>
@@ -112,26 +112,26 @@
       <with-id>FRC-CSO-PKG</with-id>
       <with-id>FRC-CSO-POP</with-id>
       <with-id>FRC-CSX-MAS</with-id>
-      <with-id>FRC-CSX-MOT-b</with-id>
-      <with-id>FRC-CSX-VVK-b</with-id>
-      <with-id>FRC-CSX-VVR-b</with-id>
+      <with-id>FRC-CSX-MOT-a</with-id>
+      <with-id>FRC-CSX-VVK-a</with-id>
+      <with-id>FRC-CSX-VVR-a</with-id>
       <with-id>IEC-CSO-AIR</with-id>
       <with-id>IEC-CSO-DPR</with-id>
       <with-id>IEC-CSO-EFI</with-id>
       <with-id>IEC-CSO-EFR</with-id>
-      <with-id>IEC-CSO-FIR-b</with-id>
-      <with-id>IEC-CSO-IIR-b</with-id>
-      <with-id>IEC-CSO-OIR-b</with-id>
+      <with-id>IEC-CSO-FIR-a</with-id>
+      <with-id>IEC-CSO-IIR-a</with-id>
+      <with-id>IEC-CSO-OIR-a</with-id>
       <with-id>IEC-FRP-ORV</with-id>
       <with-id>IVV-CSO-DUS</with-id>
-      <with-id>IVV-CSO-FIA-b</with-id>
+      <with-id>IVV-CSO-FIA-a</with-id>
       <with-id>IVV-CSO-ICP</with-id>
       <with-id>IVV-CSO-RAA</with-id>
       <with-id>IVV-CSO-SEE</with-id>
       <with-id>IVV-CSO-SEI</with-id>
       <with-id>IVV-CSO-STE</with-id>
       <with-id>IVV-CSO-USR</with-id>
-      <with-id>IVV-CSX-AIA-b</with-id>
+      <with-id>IVV-CSX-AIA-a</with-id>
       <with-id>IVV-IAS-EPX</with-id>
       <with-id>IVV-IAS-OSA</with-id>
       <with-id>IVV-IAS-SHA</with-id>
@@ -146,7 +146,6 @@
       <with-id>KSI-CMT-VTD</with-id>
       <with-id>KSI-CNA-DFP</with-id>
       <with-id>KSI-CNA-EIS</with-id>
-      <with-id>KSI-CNA-EIS-b</with-id>
       <with-id>KSI-CNA-IBP</with-id>
       <with-id>KSI-CNA-MAT</with-id>
       <with-id>KSI-CNA-OFA</with-id>
@@ -163,7 +162,6 @@
       <with-id>KSI-INR-RIR</with-id>
       <with-id>KSI-INR-RPI</with-id>
       <with-id>KSI-MLA-ALA</with-id>
-      <with-id>KSI-MLA-ALA-b</with-id>
       <with-id>KSI-MLA-EVC</with-id>
       <with-id>KSI-MLA-LET</with-id>
       <with-id>KSI-MLA-OSM</with-id>
@@ -183,12 +181,9 @@
       <with-id>KSI-SVC-ASM</with-id>
       <with-id>KSI-SVC-EIS</with-id>
       <with-id>KSI-SVC-PRR</with-id>
-      <with-id>KSI-SVC-PRR-b</with-id>
       <with-id>KSI-SVC-RUD</with-id>
-      <with-id>KSI-SVC-RUD-b</with-id>
       <with-id>KSI-SVC-SIN</with-id>
       <with-id>KSI-SVC-VCM</with-id>
-      <with-id>KSI-SVC-VCM-b</with-id>
       <with-id>KSI-SVC-VRI</with-id>
       <with-id>MAS-CSO-FLO</with-id>
       <with-id>MAS-CSO-IIR</with-id>
@@ -251,7 +246,7 @@
       <with-id>SCN-TRF-UPD</with-id>
       <with-id>SDR-CSO-FRR</with-id>
       <with-id>SDR-CSO-MTD</with-id>
-      <with-id>SDR-CSX-KMT-b</with-id>
+      <with-id>SDR-CSX-KMT-a</with-id>
       <with-id>SDR-CSX-KSI</with-id>
       <with-id>VDR-CSO-ADT</with-id>
       <with-id>VDR-CSO-AKE</with-id>
@@ -263,12 +258,12 @@
       <with-id>VDR-CSO-RES</with-id>
       <with-id>VDR-CSO-SIR</with-id>
       <with-id>VDR-TFR-KEV</with-id>
-      <with-id>VDR-TFR-MVX-b</with-id>
+      <with-id>VDR-TFR-MVX-a</with-id>
       <with-id>VDR-TFR-NMV</with-id>
-      <with-id>VDR-TFR-PCD-b</with-id>
-      <with-id>VDR-TFR-PDD-b</with-id>
-      <with-id>VDR-TFR-PSD-b</with-id>
-      <with-id>VDR-TFR-PVR-b</with-id>
+      <with-id>VDR-TFR-PCD-a</with-id>
+      <with-id>VDR-TFR-PDD-a</with-id>
+      <with-id>VDR-TFR-PSD-a</with-id>
+      <with-id>VDR-TFR-PVR-a</with-id>
       <with-id>VDR-TFR-RMN</with-id>
       <with-id>VER-AGM-MAP</with-id>
       <with-id>VER-AGM-RVR</with-id>
@@ -287,12 +282,12 @@
       <with-id>VER-RPT-PER</with-id>
       <with-id>VER-RPT-RPD</with-id>
       <with-id>VER-RPT-VDT</with-id>
-      <with-id>VER-TFR-EVU-b</with-id>
-      <with-id>VER-TFR-IRI-b</with-id>
+      <with-id>VER-TFR-EVU-a</with-id>
+      <with-id>VER-TFR-IRI-a</with-id>
       <with-id>VER-TFR-MAV</with-id>
       <with-id>VER-TFR-MHR</with-id>
-      <with-id>VER-TFR-MRH-b</with-id>
-      <with-id>VER-TFR-NRI-b</with-id>
+      <with-id>VER-TFR-MRH-a</with-id>
+      <with-id>VER-TFR-NRI-a</with-id>
     </include-controls>
   </import>
   <merge>
@@ -300,7 +295,7 @@
     <as-is>true</as-is>
   </merge>
   <back-matter>
-    <resource uuid="9378f7e4-9acb-41ba-97e9-3d54c659fb28">
+    <resource uuid="741e32d0-b7f5-40f2-bd2a-9267d63b8f64">
       <title>FedRAMP Consolidated Rules OSCAL Catalog</title>
       <rlink href="FedRAMP_2026_OSCAL_catalog.json" media-type="application/json" />
     </resource>

@@ -1,13 +1,13 @@
 profile:
-  uuid: d0fd241c-7684-4b52-93c9-6b532779c33e
+  uuid: 0976aa02-fec3-4da7-bc3b-bb2a05283996
   metadata:
     title: "FedRAMP 20X \u2014 Class D"
     published: '2026-07-06T00:00:00Z'
-    last-modified: '2026-09-01T03:01:47Z'
+    last-modified: '2026-09-01T14:53:30Z'
     version: 2026.07.06.01
     oscal-version: 1.2.3
   imports:
-  - href: '#da2ad380-e533-4d78-a65d-091ed02286ee'
+  - href: '#b507f648-e17b-4fae-8d09-0ede9b7e066d'
     include-controls:
     - with-ids:
       - AFC-CSO-ACK
@@ -295,7 +295,7 @@ profile:
     as-is: true
   back-matter:
     resources:
-    - uuid: da2ad380-e533-4d78-a65d-091ed02286ee
+    - uuid: b507f648-e17b-4fae-8d09-0ede9b7e066d
       title: FedRAMP Consolidated Rules OSCAL Catalog
       rlinks:
       - href: FedRAMP_2026_OSCAL_catalog.json

@@ -1,13 +1,13 @@
 profile:
-  uuid: 2451a336-bf6b-42d1-893a-e5aea19d902f
+  uuid: e2ab95e8-d5e4-40b4-93ce-faae2db374dd
   metadata:
     title: "FedRAMP Rev 5 \u2014 Tailoring"
     published: '2026-07-06T00:00:00Z'
-    last-modified: '2026-09-01T03:01:47Z'
+    last-modified: '2026-09-01T14:53:31Z'
     version: 2026.07.06.01
     oscal-version: 1.2.3
   imports:
-  - href: '#dea6ca8c-c796-4970-9c6e-edc158f8b7dd'
+  - href: '#0559c41e-247f-41cf-bca2-5e33ffc1d7f8'
     include-controls:
     - with-ids:
       - ac-1
@@ -919,7 +919,7 @@ profile:
           prose: Follow the FedRAMP Incident Evaluation and Communication rules.
   back-matter:
     resources:
-    - uuid: dea6ca8c-c796-4970-9c6e-edc158f8b7dd
+    - uuid: 0559c41e-247f-41cf-bca2-5e33ffc1d7f8
       title: NIST SP 800-53 Revision 5
       rlinks:
       - href: https://raw.githubusercontent.com/usnistgov/oscal-content/refs/heads/main/nist.gov/SP800-53/rev5/json/NIST_SP-800-53_rev5_catalog.json

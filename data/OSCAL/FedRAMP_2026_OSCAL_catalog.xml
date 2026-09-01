@@ -1,8 +1,8 @@
-<catalog xmlns="http://csrc.nist.gov/ns/oscal/1.0" uuid="81c7e983-e910-4857-952d-07a90fde8959">
+<catalog xmlns="http://csrc.nist.gov/ns/oscal/1.0" uuid="ca284188-c4c6-4a5a-b8d7-a820379409ea">
   <metadata>
     <title>FedRAMP Consolidated Rules for 2026</title>
     <published>2026-07-06T00:00:00Z</published>
-    <last-modified>2026-09-01T03:01:45Z</last-modified>
+    <last-modified>2026-09-01T14:53:28Z</last-modified>
     <version>2026.07.06.01</version>
     <oscal-version>1.2.3</oscal-version>
     <remarks>
