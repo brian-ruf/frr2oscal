@@ -1,12 +1,12 @@
-<profile xmlns="http://csrc.nist.gov/ns/oscal/1.0" uuid="938a7d05-f5d2-4cda-93c9-db8fcdeb5810">
+<profile xmlns="http://csrc.nist.gov/ns/oscal/1.0" uuid="a12efb7c-abb5-4ce8-a43f-da02013942e0">
   <metadata>
     <title>FedRAMP Rev 5 — Class D</title>
     <published>2026-07-06T00:00:00Z</published>
-    <last-modified>2026-09-01T14:53:31Z</last-modified>
+    <last-modified>2026-09-01T16:17:56Z</last-modified>
     <version>2026.07.06.01</version>
     <oscal-version>1.2.3</oscal-version>
   </metadata>
-  <import href="#f5afbbd4-6ec6-49af-abf3-75d07373e23f">
+  <import href="#373fad4d-3ad3-41c4-8e1e-e364e106609a">
     <include-controls>
       <with-id>AFC-CSO-ACK</with-id>
       <with-id>AFC-CSO-CRA</with-id>
@@ -247,7 +247,7 @@
       <with-id>VER-TFR-NRI-d</with-id>
     </include-controls>
   </import>
-  <import href="#54cc3929-74e5-4326-b716-eadc39ed7132">
+  <import href="#13ae8a8b-c1e9-466d-94ed-bbb40eba720c">
     <include-controls>
       <with-id>ac-1</with-id>
       <with-id>ac-10</with-id>
@@ -684,11 +684,11 @@
     </alter>
   </modify>
   <back-matter>
-    <resource uuid="f5afbbd4-6ec6-49af-abf3-75d07373e23f">
+    <resource uuid="373fad4d-3ad3-41c4-8e1e-e364e106609a">
       <title>FedRAMP Consolidated Rules OSCAL Catalog</title>
       <rlink href="FedRAMP_2026_OSCAL_catalog.json" media-type="application/json" />
     </resource>
-    <resource uuid="54cc3929-74e5-4326-b716-eadc39ed7132">
+    <resource uuid="13ae8a8b-c1e9-466d-94ed-bbb40eba720c">
       <title>FedRAMP Rev 5 Tailoring Profile</title>
       <rlink href="FedRAMP_2026_OSCAL_profile_Rev5-Tailoring.json" media-type="application/json" />
     </resource>

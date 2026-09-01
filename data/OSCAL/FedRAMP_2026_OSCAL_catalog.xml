@@ -1,8 +1,8 @@
-<catalog xmlns="http://csrc.nist.gov/ns/oscal/1.0" uuid="ca284188-c4c6-4a5a-b8d7-a820379409ea">
+<catalog xmlns="http://csrc.nist.gov/ns/oscal/1.0" uuid="f3e0dbc6-4a23-4273-982e-effdd0a142ef">
   <metadata>
     <title>FedRAMP Consolidated Rules for 2026</title>
     <published>2026-07-06T00:00:00Z</published>
-    <last-modified>2026-09-01T14:53:28Z</last-modified>
+    <last-modified>2026-09-01T16:17:54Z</last-modified>
     <version>2026.07.06.01</version>
     <oscal-version>1.2.3</oscal-version>
     <remarks>
@@ -1759,8 +1759,8 @@ Examples:
         </part>
       </control>
     </group>
-    <group id="FRR-CDS-rev5-CSF">
-      <title>FRR-CDS-rev5-CSF</title>
+    <group id="FRR-CDS-CSF-rev5">
+      <title>FRR-CDS-CSF Rev 5 Path</title>
       <control id="CDS-CSF-TCM">
         <title>Trust Center Migration</title>
         <prop name="label" value="CDS-CSF-TCM" />
@@ -2042,8 +2042,8 @@ https://fedramp.gov/schemas/fedramp-certification-package-overview-schema-2026-0
         </control>
       </control>
     </group>
-    <group id="FRR-CPO-20x-CSX">
-      <title>FRR-CPO-20x-CSX</title>
+    <group id="FRR-CPO-CSX-20x">
+      <title>FRR-CPO-CSX 20X Path</title>
       <control id="CPO-CSX-CPM">
         <title>Certification Package Maintenance for 20x</title>
         <prop name="label" value="CPO-CSX-CPM" />
@@ -2100,8 +2100,8 @@ https://fedramp.gov/schemas/fedramp-certification-package-overview-schema-2026-0
         </control>
       </control>
     </group>
-    <group id="FRR-CPO-rev5-CSF">
-      <title>FRR-CPO-rev5-CSF</title>
+    <group id="FRR-CPO-CSF-rev5">
+      <title>FRR-CPO-CSF Rev 5 Path</title>
       <control id="CPO-CSF-CPM">
         <title>Certification Package Maintenance for Rev5</title>
         <prop name="label" value="CPO-CSF-CPM" />
@@ -2716,8 +2716,8 @@ https://fedramp.gov/schemas/fedramp-certification-package-overview-schema-2026-0
         </part>
       </control>
     </group>
-    <group id="FRR-FRC-20x-CSX">
-      <title>FRR-FRC-20x-CSX</title>
+    <group id="FRR-FRC-CSX-20x">
+      <title>FRR-FRC-CSX 20X Path</title>
       <control id="FRC-CSX-VVK">
         <title>Automated Verification and Validation of Key Security Indicators</title>
         <prop name="label" value="FRC-CSX-VVK" />
@@ -2892,8 +2892,8 @@ https://fedramp.gov/schemas/fedramp-certification-package-overview-schema-2026-0
         </part>
       </control>
     </group>
-    <group id="FRR-FRC-rev5-CSF">
-      <title>FRR-FRC-rev5-CSF</title>
+    <group id="FRR-FRC-CSF-rev5">
+      <title>FRR-FRC-CSF Rev 5 Path</title>
       <control id="FRC-CSF-BSL">
         <title>FedRAMP Rev5 Baselines</title>
         <prop name="label" value="FRC-CSF-BSL" />
@@ -3774,8 +3774,8 @@ https://fedramp.gov/schemas/fedramp-incident-report-schema-2026-06-24.json</p>
         </part>
       </control>
     </group>
-    <group id="FRR-IVV-20x-CSX">
-      <title>FRR-IVV-20x-CSX</title>
+    <group id="FRR-IVV-CSX-20x">
+      <title>FRR-IVV-CSX 20X Path</title>
       <control id="IVV-CSX-AIA">
         <title>Annual Independent Assessments for 20x</title>
         <prop name="label" value="IVV-CSX-AIA" />
@@ -3827,8 +3827,8 @@ https://fedramp.gov/schemas/fedramp-incident-report-schema-2026-06-24.json</p>
         </control>
       </control>
     </group>
-    <group id="FRR-IVV-rev5-CSF">
-      <title>FRR-IVV-rev5-CSF</title>
+    <group id="FRR-IVV-CSF-rev5">
+      <title>FRR-IVV-CSF Rev 5 Path</title>
       <control id="IVV-CSF-AIA">
         <title>Annual Independent Assessments for Rev5</title>
         <prop name="label" value="IVV-CSF-AIA" />
@@ -5510,8 +5510,8 @@ https://fedramp.gov/schemas/fedramp-security-decision-record-schema-2026-06-24.j
         </part>
       </control>
     </group>
-    <group id="FRR-SDR-20x-CSX">
-      <title>FRR-SDR-20x-CSX</title>
+    <group id="FRR-SDR-CSX-20x">
+      <title>FRR-SDR-CSX 20X Path</title>
       <control id="SDR-CSX-KSI">
         <title>Key Security Indicators</title>
         <prop name="label" value="SDR-CSX-KSI" />
@@ -5610,8 +5610,8 @@ https://fedramp.gov/schemas/fedramp-security-decision-record-schema-2026-06-24.j
         </control>
       </control>
     </group>
-    <group id="FRR-SDR-rev5-CSF">
-      <title>FRR-SDR-rev5-CSF</title>
+    <group id="FRR-SDR-CSF-rev5">
+      <title>FRR-SDR-CSF Rev 5 Path</title>
       <control id="SDR-CSF-CTF">
         <title>Rev5 Controls</title>
         <prop name="label" value="SDR-CSF-CTF" />
@@ -6056,8 +6056,8 @@ https://fedramp.gov/schemas/fedramp-security-decision-record-schema-2026-06-24.j
         </control>
       </control>
     </group>
-    <group id="FRR-VDR-20x-TFR">
-      <title>FRR-VDR-20x-TFR</title>
+    <group id="FRR-VDR-TFR-20x">
+      <title>FRR-VDR-TFR 20X Path</title>
       <control id="VDR-TFR-MVX">
         <title>Persistent Machine Verification and Validation for 20x</title>
         <prop name="label" value="VDR-TFR-MVX" />
@@ -6100,8 +6100,8 @@ https://fedramp.gov/schemas/fedramp-security-decision-record-schema-2026-06-24.j
         </control>
       </control>
     </group>
-    <group id="FRR-VDR-rev5-TFR">
-      <title>FRR-VDR-rev5-TFR</title>
+    <group id="FRR-VDR-TFR-rev5">
+      <title>FRR-VDR-TFR Rev 5 Path</title>
       <control id="VDR-TFR-MVF">
         <title>Persistent Machine Verification and Validation for Rev5</title>
         <prop name="label" value="VDR-TFR-MVF" />

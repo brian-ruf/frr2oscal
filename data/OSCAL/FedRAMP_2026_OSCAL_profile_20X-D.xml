@@ -1,12 +1,12 @@
-<profile xmlns="http://csrc.nist.gov/ns/oscal/1.0" uuid="0976aa02-fec3-4da7-bc3b-bb2a05283996">
+<profile xmlns="http://csrc.nist.gov/ns/oscal/1.0" uuid="e5395638-659f-4f50-b880-6284d793dd24">
   <metadata>
     <title>FedRAMP 20X — Class D</title>
     <published>2026-07-06T00:00:00Z</published>
-    <last-modified>2026-09-01T14:53:30Z</last-modified>
+    <last-modified>2026-09-01T16:17:56Z</last-modified>
     <version>2026.07.06.01</version>
     <oscal-version>1.2.3</oscal-version>
   </metadata>
-  <import href="#b507f648-e17b-4fae-8d09-0ede9b7e066d">
+  <import href="#d11f09b5-ff8d-4b41-96bd-c5d57f4792f2">
     <include-controls>
       <with-id>AFC-CSO-ACK</with-id>
       <with-id>AFC-CSO-CRA</with-id>
@@ -294,7 +294,7 @@
     <as-is>true</as-is>
   </merge>
   <back-matter>
-    <resource uuid="b507f648-e17b-4fae-8d09-0ede9b7e066d">
+    <resource uuid="d11f09b5-ff8d-4b41-96bd-c5d57f4792f2">
       <title>FedRAMP Consolidated Rules OSCAL Catalog</title>
       <rlink href="FedRAMP_2026_OSCAL_catalog.json" media-type="application/json" />
     </resource>

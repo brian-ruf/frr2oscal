@@ -1,10 +1,10 @@
 {
   "catalog": {
-    "uuid": "ca284188-c4c6-4a5a-b8d7-a820379409ea",
+    "uuid": "f3e0dbc6-4a23-4273-982e-effdd0a142ef",
     "metadata": {
       "title": "FedRAMP Consolidated Rules for 2026",
       "published": "2026-07-06T00:00:00Z",
-      "last-modified": "2026-09-01T14:53:28Z",
+      "last-modified": "2026-09-01T16:17:54Z",
       "version": "2026.07.06.01",
       "oscal-version": "1.2.3",
       "remarks": "This datafile contains the Consolidated Rules for FedRAMP in structured machine-readable text. It includes definitions, requirements, recommendations, and key security indicators."
@@ -4118,8 +4118,8 @@
             ]
           },
           {
-            "id": "FRR-CDS-rev5-CSF",
-            "title": "FRR-CDS-rev5-CSF",
+            "id": "FRR-CDS-CSF-rev5",
+            "title": "FRR-CDS-CSF Rev 5 Path",
             "controls": [
               {
                 "id": "CDS-CSF-TCM",
@@ -4837,8 +4837,8 @@
             ]
           },
           {
-            "id": "FRR-CPO-20x-CSX",
-            "title": "FRR-CPO-20x-CSX",
+            "id": "FRR-CPO-CSX-20x",
+            "title": "FRR-CPO-CSX 20X Path",
             "controls": [
               {
                 "id": "CPO-CSX-CPM",
@@ -4991,8 +4991,8 @@
             ]
           },
           {
-            "id": "FRR-CPO-rev5-CSF",
-            "title": "FRR-CPO-rev5-CSF",
+            "id": "FRR-CPO-CSF-rev5",
+            "title": "FRR-CPO-CSF Rev 5 Path",
             "controls": [
               {
                 "id": "CPO-CSF-CPM",
@@ -6405,8 +6405,8 @@
             ]
           },
           {
-            "id": "FRR-FRC-20x-CSX",
-            "title": "FRR-FRC-20x-CSX",
+            "id": "FRR-FRC-CSX-20x",
+            "title": "FRR-FRC-CSX 20X Path",
             "controls": [
               {
                 "id": "FRC-CSX-VVK",
@@ -6888,8 +6888,8 @@
             ]
           },
           {
-            "id": "FRR-FRC-rev5-CSF",
-            "title": "FRR-FRC-rev5-CSF",
+            "id": "FRR-FRC-CSF-rev5",
+            "title": "FRR-FRC-CSF Rev 5 Path",
             "controls": [
               {
                 "id": "FRC-CSF-BSL",
@@ -8956,8 +8956,8 @@
             ]
           },
           {
-            "id": "FRR-IVV-20x-CSX",
-            "title": "FRR-IVV-20x-CSX",
+            "id": "FRR-IVV-CSX-20x",
+            "title": "FRR-IVV-CSX 20X Path",
             "controls": [
               {
                 "id": "IVV-CSX-AIA",
@@ -9105,8 +9105,8 @@
             ]
           },
           {
-            "id": "FRR-IVV-rev5-CSF",
-            "title": "FRR-IVV-rev5-CSF",
+            "id": "FRR-IVV-CSF-rev5",
+            "title": "FRR-IVV-CSF Rev 5 Path",
             "controls": [
               {
                 "id": "IVV-CSF-AIA",
@@ -12834,8 +12834,8 @@
             ]
           },
           {
-            "id": "FRR-SDR-20x-CSX",
-            "title": "FRR-SDR-20x-CSX",
+            "id": "FRR-SDR-CSX-20x",
+            "title": "FRR-SDR-CSX 20X Path",
             "controls": [
               {
                 "id": "SDR-CSX-KSI",
@@ -13051,8 +13051,8 @@
             ]
           },
           {
-            "id": "FRR-SDR-rev5-CSF",
-            "title": "FRR-SDR-rev5-CSF",
+            "id": "FRR-SDR-CSF-rev5",
+            "title": "FRR-SDR-CSF Rev 5 Path",
             "controls": [
               {
                 "id": "SDR-CSF-CTF",
@@ -14187,8 +14187,8 @@
             ]
           },
           {
-            "id": "FRR-VDR-20x-TFR",
-            "title": "FRR-VDR-20x-TFR",
+            "id": "FRR-VDR-TFR-20x",
+            "title": "FRR-VDR-TFR 20X Path",
             "controls": [
               {
                 "id": "VDR-TFR-MVX",
@@ -14309,8 +14309,8 @@
             ]
           },
           {
-            "id": "FRR-VDR-rev5-TFR",
-            "title": "FRR-VDR-rev5-TFR",
+            "id": "FRR-VDR-TFR-rev5",
+            "title": "FRR-VDR-TFR Rev 5 Path",
             "controls": [
               {
                 "id": "VDR-TFR-MVF",

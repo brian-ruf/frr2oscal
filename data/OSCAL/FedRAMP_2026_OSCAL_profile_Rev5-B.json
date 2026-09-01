@@ -1,16 +1,16 @@
 {
   "profile": {
-    "uuid": "55490629-3751-4963-9289-e092a13642f3",
+    "uuid": "23de34c1-fb8c-4e3f-ade6-82a7efac2240",
     "metadata": {
       "title": "FedRAMP Rev 5 \u2014 Class B",
       "published": "2026-07-06T00:00:00Z",
-      "last-modified": "2026-09-01T14:53:31Z",
+      "last-modified": "2026-09-01T16:17:56Z",
       "version": "2026.07.06.01",
       "oscal-version": "1.2.3"
     },
     "imports": [
       {
-        "href": "#8379617f-a64d-4331-bb0b-478b311bbb56",
+        "href": "#24761c88-59f5-4b3f-a798-72eeab03ee06",
         "include-controls": [
           {
             "with-ids": [
@@ -256,7 +256,7 @@
         ]
       },
       {
-        "href": "#764a903a-4b3c-49c5-a85b-c71025eda79e",
+        "href": "#64301680-9967-479c-9513-c84a5e19d227",
         "include-controls": [
           {
             "with-ids": [
@@ -447,7 +447,7 @@
     "back-matter": {
       "resources": [
         {
-          "uuid": "8379617f-a64d-4331-bb0b-478b311bbb56",
+          "uuid": "24761c88-59f5-4b3f-a798-72eeab03ee06",
           "title": "FedRAMP Consolidated Rules OSCAL Catalog",
           "rlinks": [
             {
@@ -457,7 +457,7 @@
           ]
         },
         {
-          "uuid": "764a903a-4b3c-49c5-a85b-c71025eda79e",
+          "uuid": "64301680-9967-479c-9513-c84a5e19d227",
           "title": "FedRAMP Rev 5 Tailoring Profile",
           "rlinks": [
             {

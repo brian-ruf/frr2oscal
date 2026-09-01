@@ -1,9 +1,9 @@
 catalog:
-  uuid: ca284188-c4c6-4a5a-b8d7-a820379409ea
+  uuid: f3e0dbc6-4a23-4273-982e-effdd0a142ef
   metadata:
     title: FedRAMP Consolidated Rules for 2026
     published: '2026-07-06T00:00:00Z'
-    last-modified: '2026-09-01T14:53:28Z'
+    last-modified: '2026-09-01T16:17:54Z'
     version: 2026.07.06.01
     oscal-version: 1.2.3
     remarks: This datafile contains the Consolidated Rules for FedRAMP in structured
@@ -2757,8 +2757,8 @@ catalog:
           - name: assessment-objects
             prose: Explanation of how the provider decides whether or not to share
               these materials or other related policies.
-    - id: FRR-CDS-rev5-CSF
-      title: FRR-CDS-rev5-CSF
+    - id: FRR-CDS-CSF-rev5
+      title: FRR-CDS-CSF Rev 5 Path
       controls:
       - id: CDS-CSF-TCM
         title: Trust Center Migration
@@ -3242,8 +3242,8 @@ catalog:
               summary of their FedRAMP independent assessment, supplied by the assessor
               per IVV-IAS-OSA (Overall Summary of Assessment), in their Certification
               Package Overview.
-    - id: FRR-CPO-20x-CSX
-      title: FRR-CPO-20x-CSX
+    - id: FRR-CPO-CSX-20x
+      title: FRR-CPO-CSX 20X Path
       controls:
       - id: CPO-CSX-CPM
         title: Certification Package Maintenance for 20x
@@ -3341,8 +3341,8 @@ catalog:
             prose: Providers with 20x Class D Certifications MUST persistently maintain
               their FedRAMP Certification Package to ensure it is up to date and complete
               at least once every week.
-    - id: FRR-CPO-rev5-CSF
-      title: FRR-CPO-rev5-CSF
+    - id: FRR-CPO-CSF-rev5
+      title: FRR-CPO-CSF Rev 5 Path
       controls:
       - id: CPO-CSF-CPM
         title: Certification Package Maintenance for Rev5
@@ -4377,8 +4377,8 @@ catalog:
             consequences for the provider and their agency customers and should only
             be done after careful consideration and planning... but if it must be
             done, notify all necessary parties as soon as possible.
-    - id: FRR-FRC-20x-CSX
-      title: FRR-FRC-20x-CSX
+    - id: FRR-FRC-CSX-20x
+      title: FRR-FRC-CSX 20X Path
       controls:
       - id: FRC-CSX-VVK
         title: Automated Verification and Validation of Key Security Indicators
@@ -4681,8 +4681,8 @@ catalog:
           prose: Providers SHOULD apply ALL Key Security Indicators to ALL aspects
             of their cloud service offering that are within the FedRAMP Minimum Assessment
             Scope.
-    - id: FRR-FRC-rev5-CSF
-      title: FRR-FRC-rev5-CSF
+    - id: FRR-FRC-CSF-rev5
+      title: FRR-FRC-CSF Rev 5 Path
       controls:
       - id: FRC-CSF-BSL
         title: FedRAMP Rev5 Baselines
@@ -6169,8 +6169,8 @@ catalog:
             or the effectiveness, clarity, and accuracy of their verification, validation
             and reporting procedures, UNLESS doing so is likely to compromise the
             objectivity and integrity of the assessment.
-    - id: FRR-IVV-20x-CSX
-      title: FRR-IVV-20x-CSX
+    - id: FRR-IVV-CSX-20x
+      title: FRR-IVV-CSX 20X Path
       controls:
       - id: IVV-CSX-AIA
         title: Annual Independent Assessments for 20x
@@ -6260,8 +6260,8 @@ catalog:
             prose: Providers with 20x Class D Certifications MUST include all Key
               Security Indicators in a FedRAMP independent assessment at least once
               per year.
-    - id: FRR-IVV-rev5-CSF
-      title: FRR-IVV-rev5-CSF
+    - id: FRR-IVV-CSF-rev5
+      title: FRR-IVV-CSF Rev 5 Path
       controls:
       - id: IVV-CSF-AIA
         title: Annual Independent Assessments for Rev5
@@ -8913,8 +8913,8 @@ catalog:
               2. Date and time of last update
 
               3. Source of update'
-    - id: FRR-SDR-20x-CSX
-      title: FRR-SDR-20x-CSX
+    - id: FRR-SDR-CSX-20x
+      title: FRR-SDR-CSX 20X Path
       controls:
       - id: SDR-CSX-KSI
         title: Key Security Indicators
@@ -9069,8 +9069,8 @@ catalog:
             prose: Providers with 20x Class D Certifications MUST significantly supersede
               the minimum requirements for lower Classes, with specifics to be set
               during the 20x Phase 4 Pilot.
-    - id: FRR-SDR-rev5-CSF
-      title: FRR-SDR-rev5-CSF
+    - id: FRR-SDR-CSF-rev5
+      title: FRR-SDR-CSF Rev 5 Path
       controls:
       - id: SDR-CSF-CTF
         title: Rev5 Controls
@@ -9840,8 +9840,8 @@ catalog:
             prose: Providers with Class D Certifications SHOULD persistently perform
               vulnerability detection on representative samples of similar machine-based
               information resources, at least once per day.
-    - id: FRR-VDR-20x-TFR
-      title: FRR-VDR-20x-TFR
+    - id: FRR-VDR-TFR-20x
+      title: FRR-VDR-TFR 20X Path
       controls:
       - id: VDR-TFR-MVX
         title: Persistent Machine Verification and Validation for 20x
@@ -9914,8 +9914,8 @@ catalog:
             prose: Providers of FedRAMP 20x Class C offerings MUST verify and validate
               the status of machine-based information resources at least once every
               3 days.
-    - id: FRR-VDR-rev5-TFR
-      title: FRR-VDR-rev5-TFR
+    - id: FRR-VDR-TFR-rev5
+      title: FRR-VDR-TFR Rev 5 Path
       controls:
       - id: VDR-TFR-MVF
         title: Persistent Machine Verification and Validation for Rev5
