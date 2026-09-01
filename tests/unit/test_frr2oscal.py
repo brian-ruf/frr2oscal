@@ -571,7 +571,7 @@ class TestBuildFrrSubset:
         groups = data["catalog"]["groups"][0].get("groups", [])
         assert any(g["id"] == "FRR-TST-SUB" for g in groups)
 
-    def test_20x_scope_id_has_path_prefix(self):
+    def test_20x_scope_id_has_path_suffix(self):
         cat = Catalog.new(title="T", version="0.1")
         cat.create_control_group(parent_id="[root]", id="FRR-TST", title="Test")
         subset_val = {
@@ -580,7 +580,27 @@ class TestBuildFrrSubset:
         frr2oscal._build_frr_subset(cat, "FRR-TST", "TST", "SUB", subset_val, path="20x")
         data = json.loads(cat.dumps("json"))
         groups = data["catalog"]["groups"][0].get("groups", [])
-        assert any(g["id"] == "FRR-TST-20x-SUB" for g in groups)
+        assert any(g["id"] == "FRR-TST-SUB-20x" for g in groups)
+
+    def test_20x_scope_title_is_human_readable(self):
+        cat = Catalog.new(title="T", version="0.1")
+        cat.create_control_group(parent_id="[root]", id="FRR-TST", title="Test")
+        subset_val = {"TST-001": {"name": "R", "statement": "S.", "force": "MUST"}}
+        frr2oscal._build_frr_subset(cat, "FRR-TST", "TST", "SUB", subset_val, path="20x")
+        data = json.loads(cat.dumps("json"))
+        groups = data["catalog"]["groups"][0].get("groups", [])
+        grp = next(g for g in groups if g["id"] == "FRR-TST-SUB-20x")
+        assert grp["title"] == "FRR-TST-SUB 20X Path"
+
+    def test_rev5_scope_id_has_path_suffix(self):
+        cat = Catalog.new(title="T", version="0.1")
+        cat.create_control_group(parent_id="[root]", id="FRR-TST", title="Test")
+        subset_val = {"TST-001": {"name": "R", "statement": "S.", "force": "MUST"}}
+        frr2oscal._build_frr_subset(cat, "FRR-TST", "TST", "SUB", subset_val, path="rev5")
+        data = json.loads(cat.dumps("json"))
+        groups = data["catalog"]["groups"][0].get("groups", [])
+        grp = next(g for g in groups if g["id"] == "FRR-TST-SUB-rev5")
+        assert grp["title"] == "FRR-TST-SUB Rev 5 Path"
 
     def test_purpose_overview_part_with_title(self):
         cat = Catalog.new(title="T", version="0.1")
@@ -640,7 +660,7 @@ class TestBuildFrrRuleset:
         data = json.loads(cat.dumps("json"))
         group_ids = [g["id"] for g in data["catalog"]["groups"][0].get("groups", [])]
         assert "FRR-TST-SAME" in group_ids
-        assert "FRR-TST-20x-SAME" in group_ids
+        assert "FRR-TST-SAME-20x" in group_ids
 
     def test_controls_inherit_scope_path_prop(self):
         cat = Catalog.new(title="T", version="0.1")

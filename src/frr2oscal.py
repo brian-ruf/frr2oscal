@@ -931,15 +931,19 @@ def _build_frr_control(
         _build_frr_simple_control(catalog, parent_id, rule_id, rule, path=path)
 
 
+_PATH_SUFFIX: dict = {"20x": "20X Path", "rev5": "Rev 5 Path"}
+
+
 def _build_frr_subset(
     catalog: Catalog, parent_id: str, frr_key: str,
     subset_key: str, subset_val: dict, path: str = "all"
 ) -> None:
     """Create a child group for one FRR subset and populate its controls.
 
-    The subset ID is used as the group title (no label prop). For the 'all'
-    scope the ID is 'FRR-{key}-{subset}'; for '20x' and 'rev5' scopes a
-    path qualifier is inserted to avoid ID collisions ('FRR-{key}-{path}-{subset}').
+    For the 'all' scope the ID is 'FRR-{key}-{subset}' and the title equals
+    the ID. For '20x' and 'rev5' scopes the path qualifier is appended to keep
+    IDs human-readable and collision-free: ID is 'FRR-{key}-{subset}-{path}'
+    and the title is 'FRR-{key}-{subset} 20X Path' or 'FRR-{key}-{subset} Rev 5 Path'.
     The purpose overview part is added via catalog.add_part() with its title set
     directly, so it persists in the catalog's internal state.
 
@@ -951,18 +955,21 @@ def _build_frr_subset(
         subset_val (dict, required): Subset data dict.
         path (str, optional): Data scope ('all', '20x', or 'rev5'). Defaults to 'all'.
     """
-    child_id = (
-        f"FRR-{frr_key}-{subset_key}"
-        if path == "all"
-        else f"FRR-{frr_key}-{path}-{subset_key}"
-    )
+    base_id = f"FRR-{frr_key}-{subset_key}"
+    if path == "all":
+        child_id = base_id
+        child_title = base_id
+    else:
+        child_id = f"{base_id}-{path}"
+        child_title = f"{base_id} {_PATH_SUFFIX.get(path, path)}"
+
     info = subset_val.get("info", {})
     purpose = info.get("purpose", "")
 
     child_group = catalog.create_control_group(
         parent_id=parent_id,
         id=child_id,
-        title=child_id,
+        title=child_title,
     )
     if child_group is None:
         return
