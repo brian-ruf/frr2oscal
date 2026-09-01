@@ -1,12 +1,12 @@
-<profile xmlns="http://csrc.nist.gov/ns/oscal/1.0" uuid="e17a248e-a119-449f-a340-1b7804d3c78d">
+<profile xmlns="http://csrc.nist.gov/ns/oscal/1.0" uuid="938a7d05-f5d2-4cda-93c9-db8fcdeb5810">
   <metadata>
-    <title>FedRAMP Rev 5 — Class C</title>
+    <title>FedRAMP Rev 5 — Class D</title>
     <published>2026-07-06T00:00:00Z</published>
-    <last-modified>2026-09-01T03:01:47Z</last-modified>
+    <last-modified>2026-09-01T14:53:31Z</last-modified>
     <version>2026.07.06.01</version>
     <oscal-version>1.2.3</oscal-version>
   </metadata>
-  <import href="#37c806d7-f339-48e5-bb27-92793b52c3bf">
+  <import href="#f5afbbd4-6ec6-49af-abf3-75d07373e23f">
     <include-controls>
       <with-id>AFC-CSO-ACK</with-id>
       <with-id>AFC-CSO-CRA</with-id>
@@ -54,7 +54,7 @@
       <with-id>CCM-OCR-RPS</with-id>
       <with-id>CCM-OCR-SOR</with-id>
       <with-id>CCM-QTR-ACT</with-id>
-      <with-id>CCM-QTR-MTG-c</with-id>
+      <with-id>CCM-QTR-MTG-d</with-id>
       <with-id>CCM-QTR-NID</with-id>
       <with-id>CCM-QTR-NRD</with-id>
       <with-id>CCM-QTR-REG</with-id>
@@ -64,13 +64,13 @@
       <with-id>CCM-QTR-SCR</with-id>
       <with-id>CCM-QTR-SRR</with-id>
       <with-id>CDS-CSF-TCM</with-id>
-      <with-id>CDS-CSO-AVR-c</with-id>
+      <with-id>CDS-CSO-AVR-d</with-id>
       <with-id>CDS-CSO-CBF</with-id>
       <with-id>CDS-CSO-FID</with-id>
       <with-id>CDS-CSO-FRC</with-id>
       <with-id>CDS-CSO-HAD</with-id>
       <with-id>CDS-CSO-IRP</with-id>
-      <with-id>CDS-CSO-PSM-c</with-id>
+      <with-id>CDS-CSO-PSM-d</with-id>
       <with-id>CDS-CSO-PUB</with-id>
       <with-id>CDS-CSO-RIS</with-id>
       <with-id>CDS-CSO-RPS</with-id>
@@ -86,14 +86,14 @@
       <with-id>CDS-UTC-AGA</with-id>
       <with-id>CMU-CSO-CAT</with-id>
       <with-id>CMU-CSO-CMD</with-id>
-      <with-id>CMU-CSO-UVM-c</with-id>
-      <with-id>CPO-CSF-CPM-c</with-id>
+      <with-id>CMU-CSO-UVM-d</with-id>
+      <with-id>CPO-CSF-CPM-d</with-id>
       <with-id>CPO-CSO-MTD</with-id>
-      <with-id>CPO-CSO-OSA-c</with-id>
+      <with-id>CPO-CSO-OSA-d</with-id>
       <with-id>CPO-CSO-OVR</with-id>
       <with-id>FRC-APP-AFC</with-id>
       <with-id>FRC-APP-FCP</with-id>
-      <with-id>FRC-APP-FIA-c</with-id>
+      <with-id>FRC-APP-FIA-d</with-id>
       <with-id>FRC-APP-MLF</with-id>
       <with-id>FRC-APP-NTP</with-id>
       <with-id>FRC-APP-USA</with-id>
@@ -108,7 +108,7 @@
       <with-id>FRC-CLA-OFR</with-id>
       <with-id>FRC-CLA-RFR</with-id>
       <with-id>FRC-CSF-ACP</with-id>
-      <with-id>FRC-CSF-BSL-c</with-id>
+      <with-id>FRC-CSF-BSL-d</with-id>
       <with-id>FRC-CSF-FFG</with-id>
       <with-id>FRC-CSF-RDY</with-id>
       <with-id>FRC-CSO-FCP</with-id>
@@ -120,16 +120,16 @@
       <with-id>IEC-CSO-DPR</with-id>
       <with-id>IEC-CSO-EFI</with-id>
       <with-id>IEC-CSO-EFR</with-id>
-      <with-id>IEC-CSO-FIR-c</with-id>
-      <with-id>IEC-CSO-IIR-c</with-id>
-      <with-id>IEC-CSO-OIR-c</with-id>
+      <with-id>IEC-CSO-FIR-d</with-id>
+      <with-id>IEC-CSO-IIR-d</with-id>
+      <with-id>IEC-CSO-OIR-d</with-id>
       <with-id>IEC-FRP-ORV</with-id>
       <with-id>IVV-CSF-ACF</with-id>
-      <with-id>IVV-CSF-AIA-c</with-id>
+      <with-id>IVV-CSF-AIA-d</with-id>
       <with-id>IVV-CSF-MCA</with-id>
       <with-id>IVV-CSF-PCA</with-id>
       <with-id>IVV-CSO-DUS</with-id>
-      <with-id>IVV-CSO-FIA-c</with-id>
+      <with-id>IVV-CSO-FIA-d</with-id>
       <with-id>IVV-CSO-ICP</with-id>
       <with-id>IVV-CSO-RAA</with-id>
       <with-id>IVV-CSO-SEE</with-id>
@@ -215,12 +215,12 @@
       <with-id>VDR-CSO-RES</with-id>
       <with-id>VDR-CSO-SIR</with-id>
       <with-id>VDR-TFR-KEV</with-id>
-      <with-id>VDR-TFR-MVF-c</with-id>
+      <with-id>VDR-TFR-MVF-d</with-id>
       <with-id>VDR-TFR-NMV</with-id>
-      <with-id>VDR-TFR-PCD-c</with-id>
-      <with-id>VDR-TFR-PDD-c</with-id>
-      <with-id>VDR-TFR-PSD-c</with-id>
-      <with-id>VDR-TFR-PVR-c</with-id>
+      <with-id>VDR-TFR-PCD-d</with-id>
+      <with-id>VDR-TFR-PDD-d</with-id>
+      <with-id>VDR-TFR-PSD-d</with-id>
+      <with-id>VDR-TFR-PVR-d</with-id>
       <with-id>VDR-TFR-RMN</with-id>
       <with-id>VER-AGM-MAP</with-id>
       <with-id>VER-AGM-RVR</with-id>
@@ -239,17 +239,18 @@
       <with-id>VER-RPT-PER</with-id>
       <with-id>VER-RPT-RPD</with-id>
       <with-id>VER-RPT-VDT</with-id>
-      <with-id>VER-TFR-EVU-c</with-id>
-      <with-id>VER-TFR-IRI-c</with-id>
+      <with-id>VER-TFR-EVU-d</with-id>
+      <with-id>VER-TFR-IRI-d</with-id>
       <with-id>VER-TFR-MAV</with-id>
       <with-id>VER-TFR-MHR</with-id>
-      <with-id>VER-TFR-MRH-c</with-id>
-      <with-id>VER-TFR-NRI-c</with-id>
+      <with-id>VER-TFR-MRH-d</with-id>
+      <with-id>VER-TFR-NRI-d</with-id>
     </include-controls>
   </import>
-  <import href="#2b9c9391-7e79-41ba-87d0-e1a796d4a90e">
+  <import href="#54cc3929-74e5-4326-b716-eadc39ed7132">
     <include-controls>
       <with-id>ac-1</with-id>
+      <with-id>ac-10</with-id>
       <with-id>ac-11</with-id>
       <with-id>ac-11.1</with-id>
       <with-id>ac-12</with-id>
@@ -262,10 +263,13 @@
       <with-id>ac-18</with-id>
       <with-id>ac-18.1</with-id>
       <with-id>ac-18.3</with-id>
+      <with-id>ac-18.4</with-id>
+      <with-id>ac-18.5</with-id>
       <with-id>ac-19</with-id>
       <with-id>ac-19.5</with-id>
       <with-id>ac-2</with-id>
       <with-id>ac-2.1</with-id>
+      <with-id>ac-2.11</with-id>
       <with-id>ac-2.12</with-id>
       <with-id>ac-2.13</with-id>
       <with-id>ac-2.2</with-id>
@@ -282,13 +286,16 @@
       <with-id>ac-3</with-id>
       <with-id>ac-4</with-id>
       <with-id>ac-4.21</with-id>
+      <with-id>ac-4.4</with-id>
       <with-id>ac-5</with-id>
       <with-id>ac-6</with-id>
       <with-id>ac-6.1</with-id>
       <with-id>ac-6.10</with-id>
       <with-id>ac-6.2</with-id>
+      <with-id>ac-6.3</with-id>
       <with-id>ac-6.5</with-id>
       <with-id>ac-6.7</with-id>
+      <with-id>ac-6.8</with-id>
       <with-id>ac-6.9</with-id>
       <with-id>ac-7</with-id>
       <with-id>ac-8</with-id>
@@ -299,26 +306,39 @@
       <with-id>at-3</with-id>
       <with-id>at-4</with-id>
       <with-id>au-1</with-id>
+      <with-id>au-10</with-id>
       <with-id>au-11</with-id>
       <with-id>au-12</with-id>
+      <with-id>au-12.1</with-id>
+      <with-id>au-12.3</with-id>
       <with-id>au-2</with-id>
       <with-id>au-3</with-id>
       <with-id>au-3.1</with-id>
       <with-id>au-4</with-id>
       <with-id>au-5</with-id>
+      <with-id>au-5.1</with-id>
+      <with-id>au-5.2</with-id>
       <with-id>au-6</with-id>
       <with-id>au-6.1</with-id>
       <with-id>au-6.3</with-id>
+      <with-id>au-6.4</with-id>
+      <with-id>au-6.5</with-id>
+      <with-id>au-6.6</with-id>
+      <with-id>au-6.7</with-id>
       <with-id>au-7</with-id>
       <with-id>au-7.1</with-id>
       <with-id>au-8</with-id>
       <with-id>au-9</with-id>
+      <with-id>au-9.2</with-id>
+      <with-id>au-9.3</with-id>
       <with-id>au-9.4</with-id>
       <with-id>ca-1</with-id>
       <with-id>ca-2</with-id>
       <with-id>ca-2.1</with-id>
+      <with-id>ca-2.2</with-id>
       <with-id>ca-2.3</with-id>
       <with-id>ca-3</with-id>
+      <with-id>ca-3.6</with-id>
       <with-id>ca-6</with-id>
       <with-id>ca-7</with-id>
       <with-id>ca-7.1</with-id>
@@ -332,56 +352,76 @@
       <with-id>cm-11</with-id>
       <with-id>cm-12</with-id>
       <with-id>cm-12.1</with-id>
+      <with-id>cm-14</with-id>
       <with-id>cm-2</with-id>
       <with-id>cm-2.2</with-id>
       <with-id>cm-2.3</with-id>
       <with-id>cm-2.7</with-id>
       <with-id>cm-3</with-id>
+      <with-id>cm-3.1</with-id>
       <with-id>cm-3.2</with-id>
       <with-id>cm-3.4</with-id>
+      <with-id>cm-3.6</with-id>
       <with-id>cm-4</with-id>
+      <with-id>cm-4.1</with-id>
       <with-id>cm-4.2</with-id>
       <with-id>cm-5</with-id>
       <with-id>cm-5.1</with-id>
       <with-id>cm-5.5</with-id>
       <with-id>cm-6</with-id>
       <with-id>cm-6.1</with-id>
+      <with-id>cm-6.2</with-id>
       <with-id>cm-7</with-id>
       <with-id>cm-7.1</with-id>
       <with-id>cm-7.2</with-id>
       <with-id>cm-7.5</with-id>
       <with-id>cm-8</with-id>
       <with-id>cm-8.1</with-id>
+      <with-id>cm-8.2</with-id>
       <with-id>cm-8.3</with-id>
+      <with-id>cm-8.4</with-id>
       <with-id>cm-9</with-id>
       <with-id>cp-1</with-id>
       <with-id>cp-10</with-id>
       <with-id>cp-10.2</with-id>
+      <with-id>cp-10.4</with-id>
       <with-id>cp-2</with-id>
       <with-id>cp-2.1</with-id>
+      <with-id>cp-2.2</with-id>
       <with-id>cp-2.3</with-id>
+      <with-id>cp-2.5</with-id>
       <with-id>cp-2.8</with-id>
       <with-id>cp-3</with-id>
+      <with-id>cp-3.1</with-id>
       <with-id>cp-4</with-id>
       <with-id>cp-4.1</with-id>
+      <with-id>cp-4.2</with-id>
       <with-id>cp-6</with-id>
       <with-id>cp-6.1</with-id>
+      <with-id>cp-6.2</with-id>
       <with-id>cp-6.3</with-id>
       <with-id>cp-7</with-id>
       <with-id>cp-7.1</with-id>
       <with-id>cp-7.2</with-id>
       <with-id>cp-7.3</with-id>
+      <with-id>cp-7.4</with-id>
       <with-id>cp-8</with-id>
       <with-id>cp-8.1</with-id>
       <with-id>cp-8.2</with-id>
+      <with-id>cp-8.3</with-id>
+      <with-id>cp-8.4</with-id>
       <with-id>cp-9</with-id>
       <with-id>cp-9.1</with-id>
+      <with-id>cp-9.2</with-id>
+      <with-id>cp-9.3</with-id>
+      <with-id>cp-9.5</with-id>
       <with-id>cp-9.8</with-id>
       <with-id>ia-1</with-id>
       <with-id>ia-11</with-id>
       <with-id>ia-12</with-id>
       <with-id>ia-12.2</with-id>
       <with-id>ia-12.3</with-id>
+      <with-id>ia-12.4</with-id>
       <with-id>ia-12.5</with-id>
       <with-id>ia-2</with-id>
       <with-id>ia-2.1</with-id>
@@ -395,9 +435,11 @@
       <with-id>ia-4.4</with-id>
       <with-id>ia-5</with-id>
       <with-id>ia-5.1</with-id>
+      <with-id>ia-5.13</with-id>
       <with-id>ia-5.2</with-id>
       <with-id>ia-5.6</with-id>
       <with-id>ia-5.7</with-id>
+      <with-id>ia-5.8</with-id>
       <with-id>ia-6</with-id>
       <with-id>ia-7</with-id>
       <with-id>ia-8</with-id>
@@ -406,11 +448,18 @@
       <with-id>ia-8.4</with-id>
       <with-id>ir-1</with-id>
       <with-id>ir-2</with-id>
+      <with-id>ir-2.1</with-id>
+      <with-id>ir-2.2</with-id>
       <with-id>ir-3</with-id>
       <with-id>ir-3.2</with-id>
       <with-id>ir-4</with-id>
       <with-id>ir-4.1</with-id>
+      <with-id>ir-4.11</with-id>
+      <with-id>ir-4.2</with-id>
+      <with-id>ir-4.4</with-id>
+      <with-id>ir-4.6</with-id>
       <with-id>ir-5</with-id>
+      <with-id>ir-5.1</with-id>
       <with-id>ir-6</with-id>
       <with-id>ir-6.1</with-id>
       <with-id>ir-6.3</with-id>
@@ -423,11 +472,13 @@
       <with-id>ir-9.4</with-id>
       <with-id>ma-1</with-id>
       <with-id>ma-2</with-id>
+      <with-id>ma-2.2</with-id>
       <with-id>ma-3</with-id>
       <with-id>ma-3.1</with-id>
       <with-id>ma-3.2</with-id>
       <with-id>ma-3.3</with-id>
       <with-id>ma-4</with-id>
+      <with-id>ma-4.3</with-id>
       <with-id>ma-5</with-id>
       <with-id>ma-5.1</with-id>
       <with-id>ma-6</with-id>
@@ -437,25 +488,35 @@
       <with-id>mp-4</with-id>
       <with-id>mp-5</with-id>
       <with-id>mp-6</with-id>
+      <with-id>mp-6.1</with-id>
+      <with-id>mp-6.2</with-id>
+      <with-id>mp-6.3</with-id>
       <with-id>mp-7</with-id>
       <with-id>pe-1</with-id>
       <with-id>pe-10</with-id>
       <with-id>pe-11</with-id>
+      <with-id>pe-11.1</with-id>
       <with-id>pe-12</with-id>
       <with-id>pe-13</with-id>
       <with-id>pe-13.1</with-id>
       <with-id>pe-13.2</with-id>
       <with-id>pe-14</with-id>
+      <with-id>pe-14.2</with-id>
       <with-id>pe-15</with-id>
+      <with-id>pe-15.1</with-id>
       <with-id>pe-16</with-id>
       <with-id>pe-17</with-id>
+      <with-id>pe-18</with-id>
       <with-id>pe-2</with-id>
       <with-id>pe-3</with-id>
+      <with-id>pe-3.1</with-id>
       <with-id>pe-4</with-id>
       <with-id>pe-5</with-id>
       <with-id>pe-6</with-id>
       <with-id>pe-6.1</with-id>
+      <with-id>pe-6.4</with-id>
       <with-id>pe-8</with-id>
+      <with-id>pe-8.1</with-id>
       <with-id>pe-9</with-id>
       <with-id>pl-1</with-id>
       <with-id>pl-10</with-id>
@@ -469,6 +530,7 @@
       <with-id>ps-3</with-id>
       <with-id>ps-3.3</with-id>
       <with-id>ps-4</with-id>
+      <with-id>ps-4.2</with-id>
       <with-id>ps-5</with-id>
       <with-id>ps-6</with-id>
       <with-id>ps-7</with-id>
@@ -482,7 +544,9 @@
       <with-id>ra-5.11</with-id>
       <with-id>ra-5.2</with-id>
       <with-id>ra-5.3</with-id>
+      <with-id>ra-5.4</with-id>
       <with-id>ra-5.5</with-id>
+      <with-id>ra-5.8</with-id>
       <with-id>ra-7</with-id>
       <with-id>ra-9</with-id>
       <with-id>sa-1</with-id>
@@ -492,13 +556,17 @@
       <with-id>sa-11.2</with-id>
       <with-id>sa-15</with-id>
       <with-id>sa-15.3</with-id>
+      <with-id>sa-16</with-id>
+      <with-id>sa-17</with-id>
       <with-id>sa-2</with-id>
+      <with-id>sa-21</with-id>
       <with-id>sa-22</with-id>
       <with-id>sa-3</with-id>
       <with-id>sa-4</with-id>
       <with-id>sa-4.1</with-id>
       <with-id>sa-4.10</with-id>
       <with-id>sa-4.2</with-id>
+      <with-id>sa-4.5</with-id>
       <with-id>sa-4.9</with-id>
       <with-id>sa-5</with-id>
       <with-id>sa-8</with-id>
@@ -509,6 +577,7 @@
       <with-id>sc-1</with-id>
       <with-id>sc-10</with-id>
       <with-id>sc-12</with-id>
+      <with-id>sc-12.1</with-id>
       <with-id>sc-13</with-id>
       <with-id>sc-15</with-id>
       <with-id>sc-17</with-id>
@@ -518,16 +587,21 @@
       <with-id>sc-21</with-id>
       <with-id>sc-22</with-id>
       <with-id>sc-23</with-id>
+      <with-id>sc-24</with-id>
       <with-id>sc-28</with-id>
       <with-id>sc-28.1</with-id>
+      <with-id>sc-3</with-id>
       <with-id>sc-39</with-id>
       <with-id>sc-4</with-id>
       <with-id>sc-45</with-id>
       <with-id>sc-45.1</with-id>
       <with-id>sc-5</with-id>
       <with-id>sc-7</with-id>
+      <with-id>sc-7.10</with-id>
       <with-id>sc-7.12</with-id>
       <with-id>sc-7.18</with-id>
+      <with-id>sc-7.20</with-id>
+      <with-id>sc-7.21</with-id>
       <with-id>sc-7.3</with-id>
       <with-id>sc-7.4</with-id>
       <with-id>sc-7.5</with-id>
@@ -546,16 +620,27 @@
       <with-id>si-3</with-id>
       <with-id>si-4</with-id>
       <with-id>si-4.1</with-id>
+      <with-id>si-4.10</with-id>
+      <with-id>si-4.11</with-id>
+      <with-id>si-4.12</with-id>
+      <with-id>si-4.14</with-id>
       <with-id>si-4.16</with-id>
       <with-id>si-4.18</with-id>
+      <with-id>si-4.19</with-id>
       <with-id>si-4.2</with-id>
+      <with-id>si-4.20</with-id>
+      <with-id>si-4.22</with-id>
       <with-id>si-4.23</with-id>
       <with-id>si-4.4</with-id>
       <with-id>si-4.5</with-id>
       <with-id>si-5</with-id>
+      <with-id>si-5.1</with-id>
       <with-id>si-6</with-id>
       <with-id>si-7</with-id>
       <with-id>si-7.1</with-id>
+      <with-id>si-7.15</with-id>
+      <with-id>si-7.2</with-id>
+      <with-id>si-7.5</with-id>
       <with-id>si-7.7</with-id>
       <with-id>si-8</with-id>
       <with-id>si-8.2</with-id>
@@ -571,6 +656,8 @@
       <with-id>sr-5</with-id>
       <with-id>sr-6</with-id>
       <with-id>sr-8</with-id>
+      <with-id>sr-9</with-id>
+      <with-id>sr-9.1</with-id>
     </include-controls>
   </import>
   <merge>
@@ -581,24 +668,27 @@
     <set-parameter param-id="sa-09.05_odp.01">
       <value>information processing, information or data, AND system services</value>
     </set-parameter>
+    <set-parameter param-id="sa-09.05_odp.02">
+      <value>U.S./U.S. Territories or geographic locations where there is U.S. jurisdiction</value>
+    </set-parameter>
     <set-parameter param-id="sa-09.05_odp.03">
       <value>all federal customer data</value>
     </set-parameter>
     <alter control-id="ia-5">
       <add position="ending">
         <part name="guidance">
-          <p>Authenticators must be compliant with NIST SP 800-63-3 Digital Identity Guidelines IAL, AAL, FAL level 2. Link https://pages.nist.gov/800-63-3</p>
+          <p>Authenticators must be compliant with NIST SP 800-63-3 Digital Identity Guidelines IAL, AAL, FAL level 3. Link https://pages.nist.gov/800-63-3</p>
           <p>IA-5 Guidance: SP 800-63C Section 6.2.3 Encrypted Assertion requires that authentication assertions be encrypted when passed through third parties, such as a browser. For example, a SAML assertion can be encrypted using XML-Encryption, or an OpenID Connect ID Token can be encrypted using JSON Web Encryption (JWE).</p>
         </part>
       </add>
     </alter>
   </modify>
   <back-matter>
-    <resource uuid="37c806d7-f339-48e5-bb27-92793b52c3bf">
+    <resource uuid="f5afbbd4-6ec6-49af-abf3-75d07373e23f">
       <title>FedRAMP Consolidated Rules OSCAL Catalog</title>
       <rlink href="FedRAMP_2026_OSCAL_catalog.json" media-type="application/json" />
     </resource>
-    <resource uuid="2b9c9391-7e79-41ba-87d0-e1a796d4a90e">
+    <resource uuid="54cc3929-74e5-4326-b716-eadc39ed7132">
       <title>FedRAMP Rev 5 Tailoring Profile</title>
       <rlink href="FedRAMP_2026_OSCAL_profile_Rev5-Tailoring.json" media-type="application/json" />
     </resource>

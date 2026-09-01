@@ -1,10 +1,10 @@
 {
   "catalog": {
-    "uuid": "81c7e983-e910-4857-952d-07a90fde8959",
+    "uuid": "ca284188-c4c6-4a5a-b8d7-a820379409ea",
     "metadata": {
       "title": "FedRAMP Consolidated Rules for 2026",
       "published": "2026-07-06T00:00:00Z",
-      "last-modified": "2026-09-01T03:01:45Z",
+      "last-modified": "2026-09-01T14:53:28Z",
       "version": "2026.07.06.01",
       "oscal-version": "1.2.3",
       "remarks": "This datafile contains the Consolidated Rules for FedRAMP in structured machine-readable text. It includes definitions, requirements, recommendations, and key security indicators."

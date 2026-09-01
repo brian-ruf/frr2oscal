@@ -1,12 +1,12 @@
-<profile xmlns="http://csrc.nist.gov/ns/oscal/1.0" uuid="2451a336-bf6b-42d1-893a-e5aea19d902f">
+<profile xmlns="http://csrc.nist.gov/ns/oscal/1.0" uuid="e2ab95e8-d5e4-40b4-93ce-faae2db374dd">
   <metadata>
     <title>FedRAMP Rev 5 — Tailoring</title>
     <published>2026-07-06T00:00:00Z</published>
-    <last-modified>2026-09-01T03:01:47Z</last-modified>
+    <last-modified>2026-09-01T14:53:31Z</last-modified>
     <version>2026.07.06.01</version>
     <oscal-version>1.2.3</oscal-version>
   </metadata>
-  <import href="#dea6ca8c-c796-4970-9c6e-edc158f8b7dd">
+  <import href="#0559c41e-247f-41cf-bca2-5e33ffc1d7f8">
     <include-controls>
       <with-id>ac-1</with-id>
       <with-id>ac-10</with-id>
@@ -919,7 +919,7 @@
     </alter>
   </modify>
   <back-matter>
-    <resource uuid="dea6ca8c-c796-4970-9c6e-edc158f8b7dd">
+    <resource uuid="0559c41e-247f-41cf-bca2-5e33ffc1d7f8">
       <title>NIST SP 800-53 Revision 5</title>
       <rlink href="https://raw.githubusercontent.com/usnistgov/oscal-content/refs/heads/main/nist.gov/SP800-53/rev5/json/NIST_SP-800-53_rev5_catalog.json" media-type="application/json" />
     </resource>

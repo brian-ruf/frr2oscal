@@ -5,8 +5,8 @@ summary are printed while the catalog is built; pass --silent to suppress
 those messages. Pass --refresh to force a fresh download of the source JSON
 even when a local copy exists.
 
-The source JSON is cached locally in ./data on first download and reused on
-subsequent runs to avoid repeated network requests.
+The source JSON is cached locally in data/raw/ on first download and reused
+on subsequent runs to avoid repeated network requests.
 
 Source: https://github.com/FedRAMP/rules
 
@@ -44,7 +44,7 @@ from oscal import Catalog, Profile
 SOURCE_URL = "https://raw.githubusercontent.com/FedRAMP/rules/main/fedramp-consolidated-rules.json"
 SOURCE_LOCAL = os.path.join(
     os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
-    "data", "fedramp-consolidated-rules.json",
+    "data", "raw", "fedramp-consolidated-rules.json",
 )
 
 FRR_NS = "http://fedramp.gov/ns/oscal"
@@ -61,12 +61,12 @@ TAILORING_HREF = "FedRAMP_2026_OSCAL_profile_Rev5-Tailoring.json"
 
 NIST_LOCAL = os.path.join(
     os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
-    "data", "NIST_SP-800-53_rev5_catalog.json",
+    "data", "raw", "NIST_SP-800-53_rev5_catalog.json",
 )
 
 CATALOG_OUTPUT_STEM = os.path.join(
     os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
-    "data", "FedRAMP_2026_OSCAL_catalog",
+    "data", "OSCAL", "FedRAMP_2026_OSCAL_catalog",
 )
 CATALOG_FORMATS = ("json", "xml", "yaml")
 
@@ -77,7 +77,7 @@ PROFILE_NAMES = ("20X-A", "20X-B", "20X-C", "20X-D", "Rev5-B", "Rev5-C", "Rev5-D
 
 PROFILE_OUTPUT_STEM = os.path.join(
     os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
-    "data", "FedRAMP_2026_OSCAL_profile_",
+    "data", "OSCAL", "FedRAMP_2026_OSCAL_profile_",
 )
 PROFILE_FORMATS = ("json", "xml", "yaml")
 
@@ -85,7 +85,7 @@ UNHANDLED: list = []
 
 UNHANDLED_OUTPUT = os.path.join(
     os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
-    "data", "unhandled.json",
+    "data", "interim", "unhandled.json",
 )
 
 # Keys consumed by each processing function; anything else is unhandled.
