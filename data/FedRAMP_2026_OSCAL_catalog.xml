@@ -1,10 +1,10 @@
-<catalog xmlns="http://csrc.nist.gov/ns/oscal/1.0" uuid="8e38fb28-f88e-4c3b-ac72-c39511a51f65">
+<catalog xmlns="http://csrc.nist.gov/ns/oscal/1.0" uuid="81c7e983-e910-4857-952d-07a90fde8959">
   <metadata>
     <title>FedRAMP Consolidated Rules for 2026</title>
     <published>2026-07-06T00:00:00Z</published>
-    <last-modified>2026-07-09T16:04:27Z</last-modified>
+    <last-modified>2026-09-01T03:01:45Z</last-modified>
     <version>2026.07.06.01</version>
-    <oscal-version>1.2.1</oscal-version>
+    <oscal-version>1.2.3</oscal-version>
     <remarks>
       <p>This datafile contains the Consolidated Rules for FedRAMP in structured machine-readable text. It includes definitions, requirements, recommendations, and key security indicators.</p>
     </remarks>
@@ -50,19 +50,20 @@
         </prop>
         <part id="AFC-FRP-CDS_smt" name="statement">
           <p>FedRAMP MUST convey the criticality of the message in the subject line, IF the message requires an elevated reaction, using one of the following designators:</p>
+          <part name="item">
+            <ol>
+              <li>
+                <strong>Emergency:</strong> There is a potential incident or crisis such that FedRAMP requires an extremely urgent reaction; emergency messages will contain aggressive timeframes for reaction and failure to meet these timeframes will result in corrective action.</li>
+              <li>
+                <strong>Emergency Test:</strong> FedRAMP requires an extremely urgent reaction to confirm the functionality and effectiveness of the FedRAMP Security Inbox; emergency test messages will contain aggressive timeframes for reaction and failure to meet these timeframes will result in corrective action.</li>
+              <li>
+                <strong>Important:</strong> There is an important issue that FedRAMP requires the cloud service provider to address; important messages will contain reasonable timeframes for reaction and failure to meet these timeframes may result in corrective action.</li>
+            </ol>
+          </part>
         </part>
         <part name="guidance">
           <title>Notes</title>
           <p>Messages sent by FedRAMP without one of these designators are considered general communications and do not require an elevated reaction; these may be resolved in the normal course of business by the cloud service provider.</p>
-        </part>
-        <part name="guidance" class="following_information">
-          <title>Following Information</title>
-          <p>
-            <strong>Emergency:</strong> There is a potential incident or crisis such that FedRAMP requires an extremely urgent reaction; emergency messages will contain aggressive timeframes for reaction and failure to meet these timeframes will result in corrective action.</p>
-          <p>
-            <strong>Emergency Test:</strong> FedRAMP requires an extremely urgent reaction to confirm the functionality and effectiveness of the FedRAMP Security Inbox; emergency test messages will contain aggressive timeframes for reaction and failure to meet these timeframes will result in corrective action.</p>
-          <p>
-            <strong>Important:</strong> There is an important issue that FedRAMP requires the cloud service provider to address; important messages will contain reasonable timeframes for reaction and failure to meet these timeframes may result in corrective action.</p>
         </part>
       </control>
       <control id="AFC-FRP-UFS">
@@ -128,21 +129,22 @@
         </prop>
         <part id="AFC-FRP-ERT_smt" name="statement">
           <p>FedRAMP MUST clearly specify the expected timeframe for completing required actions in the body of messages that require an elevated reaction; timeframes for actions will vary depending on the situation but the default timeframes to provide an estimated resolution time for Emergency and Emergency Test designated messages will be as follows:</p>
+          <part name="item">
+            <ol>
+              <li>
+                <strong>Class D:</strong> within 12 hours</li>
+              <li>
+                <strong>Class C:</strong> by 3:00 p.m. Eastern Time on the 2nd business day</li>
+              <li>
+                <strong>Class B:</strong> by 3:00 p.m. Eastern Time on the 3rd business day</li>
+              <li>
+                <strong>Class A:</strong> by 3:00 p.m. Eastern Time on the 5th business day</li>
+            </ol>
+          </part>
         </part>
         <part name="guidance">
           <title>Notes</title>
           <p>FedRAMP Class D Certified cloud service providers are expected to address Emergency messages (including tests) from FedRAMP with a reaction time appropriate to operating a service where failure to react rapidly might have a severe or debilitating customer effect on the U.S. Government; some Emergency messages may require faster reaction and all such messages should be addressed as quickly as possible.</p>
-        </part>
-        <part name="guidance" class="following_information">
-          <title>Following Information</title>
-          <p>
-            <strong>Class D:</strong> within 12 hours</p>
-          <p>
-            <strong>Class C:</strong> by 3:00 p.m. Eastern Time on the 2nd business day</p>
-          <p>
-            <strong>Class B:</strong> by 3:00 p.m. Eastern Time on the 3rd business day</p>
-          <p>
-            <strong>Class A:</strong> by 3:00 p.m. Eastern Time on the 5th business day</p>
         </part>
       </control>
       <control id="AFC-FRP-COR">
@@ -397,11 +399,12 @@
         </prop>
         <part id="AGU-AGC-NAA_smt" name="statement">
           <p>Agencies MUST notify FedRAMP upon authorizing the use of a cloud service within the scope of FedRAMP, supplying at least the following information:</p>
-        </part>
-        <part name="guidance" class="following_information">
-          <title>Following Information</title>
-          <p>A copy of the agency's Authorization to Operate letter for the information system leveraging the cloud service, following agency policy and templates.</p>
-          <p>All other supplemental information requested in the Submit an ATO Letter form by FedRAMP.</p>
+          <part name="item">
+            <ol>
+              <li>A copy of the agency's Authorization to Operate letter for the information system leveraging the cloud service, following agency policy and templates.</li>
+              <li>All other supplemental information requested in the Submit an ATO Letter form by FedRAMP.</li>
+            </ol>
+          </part>
         </part>
       </control>
       <control id="AGU-AGC-GRC">
@@ -417,11 +420,12 @@
         </prop>
         <part id="AGU-AGC-GRC_smt" name="statement">
           <p>Agencies MUST ensure that internal governance, risk, compliance, and inventory tools can produce and ingest machine-readable artifacts using formats identified by FedRAMP, including at least:</p>
-        </part>
-        <part name="guidance" class="following_information">
-          <title>Following Information</title>
-          <p>Open Security Controls Assessment Language (OSCAL)</p>
-          <p>JSON</p>
+          <part name="item">
+            <ol>
+              <li>Open Security Controls Assessment Language (OSCAL)</li>
+              <li>JSON</li>
+            </ol>
+          </part>
         </part>
       </control>
       <control id="AGU-AGC-NAI">
@@ -774,6 +778,18 @@
         </prop>
         <part id="CCM-OCR-AVL_smt" name="statement">
           <p>Providers MUST supply an Ongoing Certification Report to all necessary parties every 3 months, covering the entire period since the previous summary, in a consistent format that is human readable; this report MUST include high-level summaries of at least the following information:</p>
+          <part name="item">
+            <ol>
+              <li>Changes to FedRAMP Certification Data</li>
+              <li>Planned changes to FedRAMP Certification Data during at least the next 3 months</li>
+              <li>Accepted vulnerabilities</li>
+              <li>Transformative changes</li>
+              <li>Updated recommendations or best practices for security, configuration, usage, or similar aspects of the cloud service offering</li>
+              <li>A list of all agencies that are directly using the product</li>
+              <li>FedRAMP Reportable Incidents or an attestation that no such incidents occurred</li>
+              <li>Lessons learned and changes planned or made as a result of FedRAMP Reportable Incidents (if such occurred)</li>
+            </ol>
+          </part>
         </part>
         <part name="assessment-method">
           <prop name="method" value="EXAMINE" />
@@ -789,17 +805,6 @@
           <title>Schema</title>
           <p>FedRAMP Ongoing Certification Report (CCM-OCR-AVL)
 https://fedramp.gov/schemas/fedramp-ongoing-certification-report-schema-2026-06-24.json</p>
-        </part>
-        <part name="guidance" class="following_information">
-          <title>Following Information</title>
-          <p>Changes to FedRAMP Certification Data</p>
-          <p>Planned changes to FedRAMP Certification Data during at least the next 3 months</p>
-          <p>Accepted vulnerabilities</p>
-          <p>Transformative changes</p>
-          <p>Updated recommendations or best practices for security, configuration, usage, or similar aspects of the cloud service offering</p>
-          <p>A list of all agencies that are directly using the product</p>
-          <p>FedRAMP Reportable Incidents or an attestation that no such incidents occurred</p>
-          <p>Lessons learned and changes planned or made as a result of FedRAMP Reportable Incidents (if such occurred)</p>
         </part>
       </control>
       <control id="CCM-OCR-NRD">
@@ -1171,6 +1176,26 @@ https://fedramp.gov/schemas/fedramp-ongoing-certification-report-schema-2026-06-
         <link href="#CCM-OCR-NRD" rel="related" />
         <part id="CDS-CSO-PUB_smt" name="statement">
           <p>Providers MUST publicly share up-to-date information about the cloud service offering in both human-readable and JSON formats, including at least the following information that is available and applicable:</p>
+          <part name="item">
+            <ol>
+              <li>FedRAMP ID</li>
+              <li>Service Model</li>
+              <li>Deployment Model</li>
+              <li>Business Category</li>
+              <li>UEI Number</li>
+              <li>Sales Contact Information</li>
+              <li>Security Contact Information</li>
+              <li>Product Website Link</li>
+              <li>Link to Product Logo</li>
+              <li>Overall Service Description</li>
+              <li>Detailed list of specific services and their security categories (see CDS-CSO-SVC (Public Service List) (Service List))</li>
+              <li>Link to Secure Configuration Guidance</li>
+              <li>Overview of documentation supplied by the provider for the cloud service offering</li>
+              <li>Link to Trust Center landing page that includes instructions on accessing information in the trust center</li>
+              <li>Next Ongoing Certification Report date (see CCM-OCR-NRD (Next Report Date))</li>
+              <li>Current FedRAMP Recognized independent assessment service</li>
+            </ol>
+          </part>
         </part>
         <part name="guidance">
           <title>Notes</title>
@@ -1190,25 +1215,6 @@ https://fedramp.gov/schemas/fedramp-ongoing-certification-report-schema-2026-06-
           <title>Schema</title>
           <p>FedRAMP Certification Overview Package (FRC-CSO-PKG)
 https://fedramp.gov/schemas/fedramp-certification-package-overview-schema-2026-06-24.json</p>
-        </part>
-        <part name="guidance" class="following_information">
-          <title>Following Information</title>
-          <p>FedRAMP ID</p>
-          <p>Service Model</p>
-          <p>Deployment Model</p>
-          <p>Business Category</p>
-          <p>UEI Number</p>
-          <p>Sales Contact Information</p>
-          <p>Security Contact Information</p>
-          <p>Product Website Link</p>
-          <p>Link to Product Logo</p>
-          <p>Overall Service Description</p>
-          <p>Detailed list of specific services and their security categories (see CDS-CSO-SVC (Public Service List) (Service List))</p>
-          <p>Link to Secure Configuration Guidance</p>
-          <p>Overview of documentation supplied by the provider for the cloud service offering</p>
-          <p>Link to Trust Center landing page that includes instructions on accessing information in the trust center</p>
-          <p>Next Ongoing Certification Report date (see CCM-OCR-NRD (Next Report Date))</p>
-          <p>Current FedRAMP Recognized independent assessment service</p>
         </part>
       </control>
       <control id="CDS-CSO-SVC">
@@ -1433,6 +1439,17 @@ Examples:
         </prop>
         <part id="CDS-CSO-IRP_smt" name="statement">
           <p>Providers MUST supply all relevant policies and procedures in the FedRAMP Certification Data, including a human-readable and machine-readable reference that explains at least the following about each included policy and procedure:</p>
+          <part name="item">
+            <ol>
+              <li>Name of policy or procedure</li>
+              <li>Name of file, document, web page, etc.</li>
+              <li>Brief summary of policy or procedure</li>
+              <li>Word count of document</li>
+              <li>Current version</li>
+              <li>Date of last update</li>
+              <li>Related FedRAMP Practices (if applicable)</li>
+            </ol>
+          </part>
         </part>
         <part name="assessment-method">
           <prop name="method" value="EXAMINE" />
@@ -1440,16 +1457,6 @@ Examples:
           <part name="assessment-objects">
             <p>Explanation of how to access this information.</p>
           </part>
-        </part>
-        <part name="guidance" class="following_information">
-          <title>Following Information</title>
-          <p>Name of policy or procedure</p>
-          <p>Name of file, document, web page, etc.</p>
-          <p>Brief summary of policy or procedure</p>
-          <p>Word count of document</p>
-          <p>Current version</p>
-          <p>Date of last update</p>
-          <p>Related FedRAMP Practices (if applicable)</p>
         </part>
       </control>
       <control id="CDS-CSO-HAD">
@@ -1935,6 +1942,19 @@ Examples:
         <link href="#IVV-CSO-ICP" rel="related" />
         <part id="CPO-CSO-OVR_smt" name="statement">
           <p>Providers MUST supply a Certification Package Overview within their FedRAMP Certification Package, in both human-readable and JSON formats, that includes at least all of the information required by the following rules:</p>
+          <part name="item">
+            <ol>
+              <li>Certification Package Overview: CPO-CSO-MTD (Certification Package Overview Metadata)</li>
+              <li>Certification Data Sharing: CDS-CSO-PUB (Public Information)</li>
+              <li>Certification Data Sharing: CDS-CSO-SVC (Public Service List)</li>
+              <li>Certification Data Sharing: CDS-CSO-IRP (Include Relevant Policies)</li>
+              <li>Minimum Assessment Scope: MAS-CSO-IIR (Identify Information Resources)</li>
+              <li>Minimum Assessment Scope: MAS-CSO-FLO (Information Flows and Security Categories)</li>
+              <li>Minimum Assessment Scope: MAS-CSO-TPR (Third-Party Information Resources)</li>
+              <li>Using Cryptographic Modules: CMU-CSO-CMD (Cryptographic Module Documentation)</li>
+              <li>Independent Verification and Validation: IVV-CSO-ICP (Inclusion in Certification Package)</li>
+            </ol>
+          </part>
         </part>
         <part name="guidance">
           <title>Notes</title>
@@ -1945,18 +1965,6 @@ Examples:
           <title>Schema</title>
           <p>FedRAMP Certification Package Overview Schema
 https://fedramp.gov/schemas/fedramp-certification-package-overview-schema-2026-06-24.json</p>
-        </part>
-        <part name="guidance" class="following_information">
-          <title>Following Information</title>
-          <p>Certification Package Overview: CPO-CSO-MTD (Certification Package Overview Metadata)</p>
-          <p>Certification Data Sharing: CDS-CSO-PUB (Public Information)</p>
-          <p>Certification Data Sharing: CDS-CSO-SVC (Public Service List)</p>
-          <p>Certification Data Sharing: CDS-CSO-IRP (Include Relevant Policies)</p>
-          <p>Minimum Assessment Scope: MAS-CSO-IIR (Identify Information Resources)</p>
-          <p>Minimum Assessment Scope: MAS-CSO-FLO (Information Flows and Security Categories)</p>
-          <p>Minimum Assessment Scope: MAS-CSO-TPR (Third-Party Information Resources)</p>
-          <p>Using Cryptographic Modules: CMU-CSO-CMD (Cryptographic Module Documentation)</p>
-          <p>Independent Verification and Validation: IVV-CSO-ICP (Inclusion in Certification Package)</p>
         </part>
       </control>
       <control id="CPO-CSO-MTD">
@@ -1972,13 +1980,14 @@ https://fedramp.gov/schemas/fedramp-certification-package-overview-schema-2026-0
         </prop>
         <part id="CPO-CSO-MTD_smt" name="statement">
           <p>Providers MUST also include the following basic metadata in their Certification Package Overview:</p>
-        </part>
-        <part name="guidance" class="following_information">
-          <title>Following Information</title>
-          <p>Name, title, and contact information of official that is responsible and accountable for the FedRAMP Certification Package</p>
-          <p>Version</p>
-          <p>Date and time of last update</p>
-          <p>Source of update</p>
+          <part name="item">
+            <ol>
+              <li>Name, title, and contact information of official that is responsible and accountable for the FedRAMP Certification Package</li>
+              <li>Version</li>
+              <li>Date and time of last update</li>
+              <li>Source of update</li>
+            </ol>
+          </part>
         </part>
       </control>
       <control id="CPO-CSO-OSA">
@@ -2197,17 +2206,18 @@ https://fedramp.gov/schemas/fedramp-certification-package-overview-schema-2026-0
         <link href="#CCM-OCR-AVL" rel="related" />
         <part id="FRC-CSO-PKG_smt" name="statement">
           <p>Providers seeking a Certification MUST supply a complete FedRAMP Certification Package to FedRAMP for initial certification; the FedRAMP Certification Package MUST include at least the following information:</p>
+          <part name="item">
+            <ol>
+              <li>A Certification Package Overview</li>
+              <li>A Security Decision Record</li>
+              <li>A real or example Ongoing Certification Report following CCM-OCR-AVL (Report Availability)</li>
+            </ol>
+          </part>
         </part>
         <part name="guidance" class="schema">
           <title>Schema</title>
           <p>FedRAMP Certification Overview Package (FRC-CSO-PKG)
 https://fedramp.gov/schemas/fedramp-certification-package-overview-schema-2026-06-24.json</p>
-        </part>
-        <part name="guidance" class="following_information">
-          <title>Following Information</title>
-          <p>A Certification Package Overview</p>
-          <p>A Security Decision Record</p>
-          <p>A real or example Ongoing Certification Report following CCM-OCR-AVL (Report Availability)</p>
         </part>
       </control>
       <control id="FRC-CSO-JSN">
@@ -2279,12 +2289,13 @@ https://fedramp.gov/schemas/fedramp-certification-package-overview-schema-2026-0
         </prop>
         <part id="FRC-CLA-ASF_smt" name="statement">
           <p>Providers seeking a FedRAMP Class A Certification MUST have completed a certification or equivalent process, including an independent assessment if applicable, from one of the following alternative security frameworks within the past 12 months:</p>
-        </part>
-        <part name="guidance" class="following_information">
-          <title>Following Information</title>
-          <p>FedRAMP Rev5 (including FedRAMP Ready) at any historical Impact Level</p>
-          <p>SOC 2 Type II</p>
-          <p>GovRAMP at any Impact Level</p>
+          <part name="item">
+            <ol>
+              <li>FedRAMP Rev5 (including FedRAMP Ready) at any historical Impact Level</li>
+              <li>SOC 2 Type II</li>
+              <li>GovRAMP at any Impact Level</li>
+            </ol>
+          </part>
         </part>
       </control>
       <control id="FRC-CLA-EAM">
@@ -2300,12 +2311,13 @@ https://fedramp.gov/schemas/fedramp-certification-package-overview-schema-2026-0
         </prop>
         <part id="FRC-CLA-EAM_smt" name="statement">
           <p>Providers seeking a FedRAMP Class A Certification MUST supply the following materials from their alternative security framework assessment to all necessary parties:</p>
-        </part>
-        <part name="guidance" class="following_information">
-          <title>Following Information</title>
-          <p>SOC 2 Type II: Complete report, bridge or gap letter (if applicable), verified audit engagement documentation, estimated schedule for upcoming report, supplemental compliance evidence (if applicable)</p>
-          <p>FedRAMP Ready: Readiness Assessment Report, Security Assessment Plan, and any other materials required by FedRAMP.</p>
-          <p>GovRAMP: Readiness Assessment Report, Security Assessment Plan, and any other materials required by GovRAMP.</p>
+          <part name="item">
+            <ol>
+              <li>SOC 2 Type II: Complete report, bridge or gap letter (if applicable), verified audit engagement documentation, estimated schedule for upcoming report, supplemental compliance evidence (if applicable)</li>
+              <li>FedRAMP Ready: Readiness Assessment Report, Security Assessment Plan, and any other materials required by FedRAMP.</li>
+              <li>GovRAMP: Readiness Assessment Report, Security Assessment Plan, and any other materials required by GovRAMP.</li>
+            </ol>
+          </part>
         </part>
       </control>
       <control id="FRC-CLA-MFR">
@@ -2349,38 +2361,39 @@ https://fedramp.gov/schemas/fedramp-certification-package-overview-schema-2026-0
         <link href="#KSI-IAM-APM" rel="related" />
         <part id="FRC-CLA-MFR_smt" name="statement">
           <p>Providers seeking a Class A FedRAMP Certification MUST address all rules in this FedRAMP Class A Certification subset (FRC-CLA) AND the following additional FedRAMP Class A rules; the appropriate artifacts or information mapping for all rules MUST be supplied in the FedRAMP Certification Package.</p>
+          <part name="item">
+            <ol>
+              <li>FedRAMP Certification: FRC-CSO-PKG (FedRAMP Certification Package)</li>
+              <li>FedRAMP Certification: FRC-CSO-JSN (FedRAMP JSON Schemas)</li>
+              <li>FedRAMP Certification: FRC-CSO-POP (Pick One Program Certification Type)</li>
+              <li>Minimum Assessment Scope: MAS-CSO-IIR (Identify Information Resources)</li>
+              <li>Certification Data Sharing: CDS-CSO-PUB (Public Information)</li>
+              <li>Certification Data Sharing: CDS-CSO-UTC (Use Trust Centers)</li>
+              <li>Certification Data Sharing: CDS-UTC-AAD (Agency Access Denial)</li>
+              <li>Addressing FedRAMP Communication: AFC-CSO-INB (Maintain a FedRAMP Security Inbox)</li>
+              <li>Addressing FedRAMP Communication: AFC-CSO-RCV (Receive Email Without Disruption)</li>
+              <li>Addressing FedRAMP Communication: AFC-CSO-CRA (Complete Required Actions)</li>
+              <li>Incident Evaluation and Communication: IEC-CSO-EFR (Evaluate FedRAMP Reportability)</li>
+              <li>Incident Evaluation and Communication: IEC-CSO-FIR (Final Incident Report)</li>
+              <li>Vulnerability Detection and Response: VDR-CSO-DET (Vulnerability Detection)</li>
+              <li>Collaborative Continuous Monitoring: CCM-OCR-AVL (Report Availability)</li>
+              <li>Collaborative Continuous Monitoring: CCM-OCR-NRD (Next Report Date)</li>
+              <li>Independent Verification and Validation: IVV-CSX-AIA (Annual Independent Assessments for 20x)</li>
+              <li>Key Security Indicators: KSI-CMT-LMC (Logging Changes)</li>
+              <li>Key Security Indicators: KSI-CNA-RNT (Restricting Network Traffic)</li>
+              <li>Key Security Indicators: KSI-CED-RAT (Reviewing All Training)</li>
+              <li>Key Security Indicators: KSI-IAM-AAM (Automating Account Management)</li>
+              <li>Key Security Indicators: KSI-IAM-APM (Adopting Passwordless Methods)</li>
+              <li>Key Security Indicators: KSI-INR-RIR (Reviewing Incident Response Procedures)</li>
+              <li>Key Security Indicators: KSI-SVC-SIN (Securing Information)</li>
+            </ol>
+          </part>
         </part>
         <part name="guidance">
           <title>Notes</title>
           <p>Some of these specific FedRAMP rules may not have similar counterparts in external frameworks and providers will need to implement new processes to follow these rules.</p>
           <p>In general, for each of these FedRAMP requirements, providers should include a sufficiently detailed summary that reviewers will not need to dig into the related security framework materials to understand the related decisions - just saying "see SOC 2 report" is not particularly helpful.</p>
           <p>Information about how the provider addresses the included Key Security Indicators are required for both Rev5 and 20x Class A Certifications.</p>
-        </part>
-        <part name="guidance" class="following_information">
-          <title>Following Information</title>
-          <p>FedRAMP Certification: FRC-CSO-PKG (FedRAMP Certification Package)</p>
-          <p>FedRAMP Certification: FRC-CSO-JSN (FedRAMP JSON Schemas)</p>
-          <p>FedRAMP Certification: FRC-CSO-POP (Pick One Program Certification Type)</p>
-          <p>Minimum Assessment Scope: MAS-CSO-IIR (Identify Information Resources)</p>
-          <p>Certification Data Sharing: CDS-CSO-PUB (Public Information)</p>
-          <p>Certification Data Sharing: CDS-CSO-UTC (Use Trust Centers)</p>
-          <p>Certification Data Sharing: CDS-UTC-AAD (Agency Access Denial)</p>
-          <p>Addressing FedRAMP Communication: AFC-CSO-INB (Maintain a FedRAMP Security Inbox)</p>
-          <p>Addressing FedRAMP Communication: AFC-CSO-RCV (Receive Email Without Disruption)</p>
-          <p>Addressing FedRAMP Communication: AFC-CSO-CRA (Complete Required Actions)</p>
-          <p>Incident Evaluation and Communication: IEC-CSO-EFR (Evaluate FedRAMP Reportability)</p>
-          <p>Incident Evaluation and Communication: IEC-CSO-FIR (Final Incident Report)</p>
-          <p>Vulnerability Detection and Response: VDR-CSO-DET (Vulnerability Detection)</p>
-          <p>Collaborative Continuous Monitoring: CCM-OCR-AVL (Report Availability)</p>
-          <p>Collaborative Continuous Monitoring: CCM-OCR-NRD (Next Report Date)</p>
-          <p>Independent Verification and Validation: IVV-CSX-AIA (Annual Independent Assessments for 20x)</p>
-          <p>Key Security Indicators: KSI-CMT-LMC (Logging Changes)</p>
-          <p>Key Security Indicators: KSI-CNA-RNT (Restricting Network Traffic)</p>
-          <p>Key Security Indicators: KSI-CED-RAT (Reviewing All Training)</p>
-          <p>Key Security Indicators: KSI-IAM-AAM (Automating Account Management)</p>
-          <p>Key Security Indicators: KSI-IAM-APM (Adopting Passwordless Methods)</p>
-          <p>Key Security Indicators: KSI-INR-RIR (Reviewing Incident Response Procedures)</p>
-          <p>Key Security Indicators: KSI-SVC-SIN (Securing Information)</p>
         </part>
       </control>
       <control id="FRC-CLA-RFR">
@@ -2407,20 +2420,21 @@ https://fedramp.gov/schemas/fedramp-certification-package-overview-schema-2026-0
         <link href="#VER-TFR-EVU" rel="related" />
         <part id="FRC-CLA-RFR_smt" name="statement">
           <p>Providers seeking a Class A FedRAMP Certification SHOULD address the following additional recommended FedRAMP Class A rules (if applicable):</p>
-        </part>
-        <part name="guidance" class="following_information">
-          <title>Following Information</title>
-          <p>Certification Data Sharing: CDS-CSO-AVR (Availability Reporting)</p>
-          <p>Certification Package Overview: CPO-CSF-CPM (Certification Package Maintenance for Rev5)</p>
-          <p>Certification Package Overview: CPO-CSX-CPM (Certification Package Maintenance for 20x)</p>
-          <p>Incident Evaluation and Communication: IEC-CSO-IIR (Initial Incident Report)</p>
-          <p>Incident Evaluation and Communication: IEC-CSO-OIR (Ongoing Incident Reports)</p>
-          <p>Vulnerability Detection and Response: VDR-TFR-MVX (Persistent Machine Verification and Validation for 20x)</p>
-          <p>Vulnerability Detection and Response: VDR-TFR-PCD (Persistently Complete Detection)</p>
-          <p>Vulnerability Detection and Response: VDR-TFR-PDD (Persistent Drift Detection)</p>
-          <p>Vulnerability Detection and Response: VDR-TFR-PSD (Persistent Sample Detection)</p>
-          <p>Vulnerability Detection and Response: VDR-TFR-PVR (Mitigation and Remediation Expectations)</p>
-          <p>Vulnerability Evaluation and Reporting: VER-TFR-EVU (Evaluate Vulnerabilities Quickly)</p>
+          <part name="item">
+            <ol>
+              <li>Certification Data Sharing: CDS-CSO-AVR (Availability Reporting)</li>
+              <li>Certification Package Overview: CPO-CSF-CPM (Certification Package Maintenance for Rev5)</li>
+              <li>Certification Package Overview: CPO-CSX-CPM (Certification Package Maintenance for 20x)</li>
+              <li>Incident Evaluation and Communication: IEC-CSO-IIR (Initial Incident Report)</li>
+              <li>Incident Evaluation and Communication: IEC-CSO-OIR (Ongoing Incident Reports)</li>
+              <li>Vulnerability Detection and Response: VDR-TFR-MVX (Persistent Machine Verification and Validation for 20x)</li>
+              <li>Vulnerability Detection and Response: VDR-TFR-PCD (Persistently Complete Detection)</li>
+              <li>Vulnerability Detection and Response: VDR-TFR-PDD (Persistent Drift Detection)</li>
+              <li>Vulnerability Detection and Response: VDR-TFR-PSD (Persistent Sample Detection)</li>
+              <li>Vulnerability Detection and Response: VDR-TFR-PVR (Mitigation and Remediation Expectations)</li>
+              <li>Vulnerability Evaluation and Reporting: VER-TFR-EVU (Evaluate Vulnerabilities Quickly)</li>
+            </ol>
+          </part>
         </part>
       </control>
       <control id="FRC-CLA-OFR">
@@ -2445,18 +2459,19 @@ https://fedramp.gov/schemas/fedramp-certification-package-overview-schema-2026-0
         <link href="#VER-TFR-NRI" rel="related" />
         <part id="FRC-CLA-OFR_smt" name="statement">
           <p>Providers seeking a Class A FedRAMP Certification MAY address the following additional optional FedRAMP Class A rules (if applicable):</p>
-        </part>
-        <part name="guidance" class="following_information">
-          <title>Following Information</title>
-          <p>Collaborative Continuous Monitoring: CCM-QTR-MTG (Quarterly Review Meeting)</p>
-          <p>Certification Data Sharing: CDS-CSO-PSM (Per-Service Certification Materials)</p>
-          <p>Cryptographic Module Use: CMU-CSO-UVM (Using Validated Cryptographic Modules)</p>
-          <p>FedRAMP Certification: FRC-APP-FIA (Fresh Independent Assessment)</p>
-          <p>Independent Verification and Validation: IVV-CSO-FIA (FedRAMP Independent Assessments)</p>
-          <p>Security Decision Record: SDR-CSX-KMT (Key Security Indicator Metrics)</p>
-          <p>Vulnerability Evaluation and Reporting: VER-TFR-IRI (Internet-Reachable Incidents)</p>
-          <p>Vulnerability Evaluation and Reporting: VER-TFR-MRH (Historical Activity)</p>
-          <p>Vulnerability Evaluation and Reporting: VER-TFR-NRI (Non-Internet-Reachable Incidents)</p>
+          <part name="item">
+            <ol>
+              <li>Collaborative Continuous Monitoring: CCM-QTR-MTG (Quarterly Review Meeting)</li>
+              <li>Certification Data Sharing: CDS-CSO-PSM (Per-Service Certification Materials)</li>
+              <li>Cryptographic Module Use: CMU-CSO-UVM (Using Validated Cryptographic Modules)</li>
+              <li>FedRAMP Certification: FRC-APP-FIA (Fresh Independent Assessment)</li>
+              <li>Independent Verification and Validation: IVV-CSO-FIA (FedRAMP Independent Assessments)</li>
+              <li>Security Decision Record: SDR-CSX-KMT (Key Security Indicator Metrics)</li>
+              <li>Vulnerability Evaluation and Reporting: VER-TFR-IRI (Internet-Reachable Incidents)</li>
+              <li>Vulnerability Evaluation and Reporting: VER-TFR-MRH (Historical Activity)</li>
+              <li>Vulnerability Evaluation and Reporting: VER-TFR-NRI (Non-Internet-Reachable Incidents)</li>
+            </ol>
+          </part>
         </part>
       </control>
       <control id="FRC-CLA-IVV">
@@ -2494,13 +2509,14 @@ https://fedramp.gov/schemas/fedramp-certification-package-overview-schema-2026-0
         <link href="#MKT-IIP-DCP" rel="related" />
         <part id="FRC-APP-MLF_smt" name="statement">
           <p>Providers MUST be listed in the FedRAMP Marketplace before applying for FedRAMP Certification, including:</p>
-        </part>
-        <part name="guidance" class="following_information">
-          <title>Following Information</title>
-          <p>FedRAMP Marketplace: MKT-CSO-MLR (Marketplace Listing Requirements),</p>
-          <p>FedRAMP Marketplace: MKT-CSO-PML (Provider Marketplace Listing Requests)</p>
-          <p>FedRAMP Marketplace: MKT-IIP-AGU (Agency Use Cases)</p>
-          <p>FedRAMP Marketplace: MKT-IIP-DCP (Demonstrating Continuous Progress)</p>
+          <part name="item">
+            <ol>
+              <li>FedRAMP Marketplace: MKT-CSO-MLR (Marketplace Listing Requirements),</li>
+              <li>FedRAMP Marketplace: MKT-CSO-PML (Provider Marketplace Listing Requests)</li>
+              <li>FedRAMP Marketplace: MKT-IIP-AGU (Agency Use Cases)</li>
+              <li>FedRAMP Marketplace: MKT-IIP-DCP (Demonstrating Continuous Progress)</li>
+            </ol>
+          </part>
         </part>
       </control>
       <control id="FRC-APP-AFC">
@@ -3076,6 +3092,18 @@ https://fedramp.gov/schemas/fedramp-incident-report-schema-2026-06-24.json</p>
           <prop name="force" ns="http://fedramp.gov/ns/oscal" value="SHOULD" />
           <part id="IEC-CSO-IIR-a_smt" name="statement">
             <p>Providers with Class A Certifications SHOULD responsibly notify all affected parties after identifying FedRAMP Reportable Incidents by providing an Initial Incident Report with as much of the following information that is available at the time of reporting and/or the current relevant status for each item:</p>
+            <part name="item">
+              <ol>
+                <li>Contact information for the federal incident response coordinator</li>
+                <li>Provider's internally assigned tracking identifier</li>
+                <li>Description of the incident</li>
+                <li>Timeline of the incident, including start time, time and source of detection, time of completed FedRAMP Reportable Incident evaluation, and other major incident milestones determined by the provider</li>
+                <li>Historically and currently estimated Potential Agency Impact N-rating (PAIN) of the incident, including an explanation of the evaluation following the requirements in IEC-CSO-EFI (Estimate Federal Impact) (if applicable)</li>
+                <li>Functional impact to federal agency customers (include impact to confidentiality and/or integrity and the impacted federal customer data types)</li>
+                <li>Estimated recovery plan, milestones, and timelines</li>
+                <li>List of likely affected customer agencies</li>
+              </ol>
+            </part>
           </part>
           <part name="assessment-method">
             <prop name="method" value="EXAMINE" />
@@ -3083,17 +3111,6 @@ https://fedramp.gov/schemas/fedramp-incident-report-schema-2026-06-24.json</p>
             <part name="assessment-objects">
               <p>An Initial Incident Report for one or more incidents. The report can be from real incidents, simulated incidents, or a combination of sources.</p>
             </part>
-          </part>
-          <part name="guidance" class="following_information">
-            <title>Following Information</title>
-            <p>Contact information for the federal incident response coordinator</p>
-            <p>Provider's internally assigned tracking identifier</p>
-            <p>Description of the incident</p>
-            <p>Timeline of the incident, including start time, time and source of detection, time of completed FedRAMP Reportable Incident evaluation, and other major incident milestones determined by the provider</p>
-            <p>Historically and currently estimated Potential Agency Impact N-rating (PAIN) of the incident, including an explanation of the evaluation following the requirements in IEC-CSO-EFI (Estimate Federal Impact) (if applicable)</p>
-            <p>Functional impact to federal agency customers (include impact to confidentiality and/or integrity and the impacted federal customer data types)</p>
-            <p>Estimated recovery plan, milestones, and timelines</p>
-            <p>List of likely affected customer agencies</p>
           </part>
         </control>
         <control id="IEC-CSO-IIR-b">
@@ -3103,6 +3120,18 @@ https://fedramp.gov/schemas/fedramp-incident-report-schema-2026-06-24.json</p>
           <prop name="force" ns="http://fedramp.gov/ns/oscal" value="MUST" />
           <part id="IEC-CSO-IIR-b_smt" name="statement">
             <p>Providers with Class B Certifications MUST responsibly notify all affected parties after identifying FedRAMP Reportable Incidents by providing an Initial Incident Report with as much of the following information that is available at the time of reporting and/or the current relevant status for each item:</p>
+            <part name="item">
+              <ol>
+                <li>Contact information for the federal incident response coordinator.</li>
+                <li>Provider's internally assigned tracking identifier</li>
+                <li>Description of the incident</li>
+                <li>Timeline of the incident, including start time, time and source of detection, time of completed FedRAMP Reportable Incident evaluation, and other major incident milestones determined by the provider</li>
+                <li>Historically and currently estimated Potential Agency Impact N-rating (PAIN) of the incident, including an explanation of the evaluation following the requirements in IEC-CSO-EFI (Estimate Federal Impact) (if applicable)</li>
+                <li>Functional impact to federal agency customers (include impact to confidentiality and/or integrity and the impacted federal customer data types)</li>
+                <li>Estimated recovery plan, milestones, and timelines</li>
+                <li>List of likely affected customer agencies</li>
+              </ol>
+            </part>
           </part>
           <part name="assessment-method">
             <prop name="method" value="EXAMINE" />
@@ -3110,17 +3139,6 @@ https://fedramp.gov/schemas/fedramp-incident-report-schema-2026-06-24.json</p>
             <part name="assessment-objects">
               <p>An Initial Incident Report for one or more incidents. The report can be from real incidents, simulated incidents, or a combination of sources.</p>
             </part>
-          </part>
-          <part name="guidance" class="following_information">
-            <title>Following Information</title>
-            <p>Contact information for the federal incident response coordinator.</p>
-            <p>Provider's internally assigned tracking identifier</p>
-            <p>Description of the incident</p>
-            <p>Timeline of the incident, including start time, time and source of detection, time of completed FedRAMP Reportable Incident evaluation, and other major incident milestones determined by the provider</p>
-            <p>Historically and currently estimated Potential Agency Impact N-rating (PAIN) of the incident, including an explanation of the evaluation following the requirements in IEC-CSO-EFI (Estimate Federal Impact) (if applicable)</p>
-            <p>Functional impact to federal agency customers (include impact to confidentiality and/or integrity and the impacted federal customer data types)</p>
-            <p>Estimated recovery plan, milestones, and timelines</p>
-            <p>List of likely affected customer agencies</p>
           </part>
         </control>
         <control id="IEC-CSO-IIR-c">
@@ -3130,6 +3148,18 @@ https://fedramp.gov/schemas/fedramp-incident-report-schema-2026-06-24.json</p>
           <prop name="force" ns="http://fedramp.gov/ns/oscal" value="MUST" />
           <part id="IEC-CSO-IIR-c_smt" name="statement">
             <p>Providers with Class C Certifications MUST responsibly notify all affected parties after identifying FedRAMP Reportable Incidents by providing an Initial Incident Report with as much of the following information that is available at the time of reporting and/or the current relevant status for each item:</p>
+            <part name="item">
+              <ol>
+                <li>Contact information for the federal incident response coordinator.</li>
+                <li>Provider's internally assigned tracking identifier</li>
+                <li>Description of the incident</li>
+                <li>Timeline of the incident, including start time, time and source of detection, time of completed FedRAMP Reportable Incident evaluation, and other major incident milestones determined by the provider</li>
+                <li>Historically and currently estimated Potential Agency Impact N-rating (PAIN) of the incident, including an explanation of the evaluation following the requirements in IEC-CSO-EFI (Estimate Federal Impact) (if applicable)</li>
+                <li>Functional impact to federal agency customers (include impact to confidentiality and/or integrity and the impacted federal customer data types)</li>
+                <li>Estimated recovery plan, milestones, and timelines</li>
+                <li>List of likely affected customer agencies</li>
+              </ol>
+            </part>
           </part>
           <part name="assessment-method">
             <prop name="method" value="EXAMINE" />
@@ -3137,17 +3167,6 @@ https://fedramp.gov/schemas/fedramp-incident-report-schema-2026-06-24.json</p>
             <part name="assessment-objects">
               <p>An Initial Incident Report for one or more incidents. The report can be from real incidents, simulated incidents, or a combination of sources.</p>
             </part>
-          </part>
-          <part name="guidance" class="following_information">
-            <title>Following Information</title>
-            <p>Contact information for the federal incident response coordinator.</p>
-            <p>Provider's internally assigned tracking identifier</p>
-            <p>Description of the incident</p>
-            <p>Timeline of the incident, including start time, time and source of detection, time of completed FedRAMP Reportable Incident evaluation, and other major incident milestones determined by the provider</p>
-            <p>Historically and currently estimated Potential Agency Impact N-rating (PAIN) of the incident, including an explanation of the evaluation following the requirements in IEC-CSO-EFI (Estimate Federal Impact) (if applicable)</p>
-            <p>Functional impact to federal agency customers (include impact to confidentiality and/or integrity and the impacted federal customer data types)</p>
-            <p>Estimated recovery plan, milestones, and timelines</p>
-            <p>List of likely affected customer agencies</p>
           </part>
         </control>
         <control id="IEC-CSO-IIR-d">
@@ -3157,6 +3176,18 @@ https://fedramp.gov/schemas/fedramp-incident-report-schema-2026-06-24.json</p>
           <prop name="force" ns="http://fedramp.gov/ns/oscal" value="MUST" />
           <part id="IEC-CSO-IIR-d_smt" name="statement">
             <p>Providers with Class D Certifications MUST responsibly notify all affected parties after identifying FedRAMP Reportable Incidents by providing an Initial Incident Report with as much of the following information that is available at the time of reporting and/or the current relevant status for each item:</p>
+            <part name="item">
+              <ol>
+                <li>Contact information for the federal incident response coordinator.</li>
+                <li>Provider's internally assigned tracking identifier</li>
+                <li>Description of the incident</li>
+                <li>Timeline of the incident, including start time, time and source of detection, time of completed FedRAMP Reportable Incident evaluation, and other major incident milestones determined by the provider</li>
+                <li>Historically and currently estimated Potential Agency Impact N-rating (PAIN) of the incident, including an explanation of the evaluation following the requirements in IEC-CSO-EFI (Estimate Federal Impact) (if applicable)</li>
+                <li>Functional impact to federal agency customers (include impact to confidentiality and/or integrity and the impacted federal customer data types)</li>
+                <li>Estimated recovery plan, milestones, and timelines</li>
+                <li>List of likely affected customer agencies</li>
+              </ol>
+            </part>
           </part>
           <part name="assessment-method">
             <prop name="method" value="EXAMINE" />
@@ -3164,17 +3195,6 @@ https://fedramp.gov/schemas/fedramp-incident-report-schema-2026-06-24.json</p>
             <part name="assessment-objects">
               <p>An Initial Incident Report for one or more incidents. The report can be from real incidents, simulated incidents, or a combination of sources.</p>
             </part>
-          </part>
-          <part name="guidance" class="following_information">
-            <title>Following Information</title>
-            <p>Contact information for the federal incident response coordinator.</p>
-            <p>Provider's internally assigned tracking identifier</p>
-            <p>Description of the incident</p>
-            <p>Timeline of the incident, including start time, time and source of detection, time of completed FedRAMP Reportable Incident evaluation, and other major incident milestones determined by the provider</p>
-            <p>Historically and currently estimated Potential Agency Impact N-rating (PAIN) of the incident, including an explanation of the evaluation following the requirements in IEC-CSO-EFI (Estimate Federal Impact) (if applicable)</p>
-            <p>Functional impact to federal agency customers (include impact to confidentiality and/or integrity and the impacted federal customer data types)</p>
-            <p>Estimated recovery plan, milestones, and timelines</p>
-            <p>List of likely affected customer agencies</p>
           </part>
         </control>
       </control>
@@ -3203,6 +3223,15 @@ https://fedramp.gov/schemas/fedramp-incident-report-schema-2026-06-24.json</p>
           <prop name="force" ns="http://fedramp.gov/ns/oscal" value="SHOULD" />
           <part id="IEC-CSO-OIR-a_smt" name="statement">
             <p>Providers with Class A Certifications SHOULD responsibly notify all affected parties of ongoing activity as new information becomes available during incident response for FedRAMP Reportable Incidents, including updates (or lack of updates) to all previously reported information and as much of the the following additional information that is available and/or the current relevant status for each item:</p>
+            <part name="item">
+              <ol>
+                <li>Observed incident activity</li>
+                <li>Indicators of compromise</li>
+                <li>Related Common Vulnerabilities and Exposures (CVE) identifier (if applicable)</li>
+                <li>Root cause</li>
+                <li>Response and recovery activities</li>
+              </ol>
+            </part>
           </part>
           <part name="assessment-method">
             <prop name="method" value="EXAMINE" />
@@ -3210,14 +3239,6 @@ https://fedramp.gov/schemas/fedramp-incident-report-schema-2026-06-24.json</p>
             <part name="assessment-objects">
               <p>An Ongoing Incident Report for one or more incidents. The report can be from real incidents, simulated incidents, or a combination of sources.</p>
             </part>
-          </part>
-          <part name="guidance" class="following_information">
-            <title>Following Information</title>
-            <p>Observed incident activity</p>
-            <p>Indicators of compromise</p>
-            <p>Related Common Vulnerabilities and Exposures (CVE) identifier (if applicable)</p>
-            <p>Root cause</p>
-            <p>Response and recovery activities</p>
           </part>
         </control>
         <control id="IEC-CSO-OIR-b">
@@ -3227,6 +3248,15 @@ https://fedramp.gov/schemas/fedramp-incident-report-schema-2026-06-24.json</p>
           <prop name="force" ns="http://fedramp.gov/ns/oscal" value="MUST" />
           <part id="IEC-CSO-OIR-b_smt" name="statement">
             <p>Providers with Class B Certifications MUST responsibly notify all affected parties of ongoing activity as new information becomes available during incident response for FedRAMP Reportable Incidents, including updates (or lack of updates) to all previously reported information and as much of the the following additional information that is available and/or the current relevant status for each item:</p>
+            <part name="item">
+              <ol>
+                <li>Observed incident activity</li>
+                <li>Indicators of compromise</li>
+                <li>Related Common Vulnerabilities and Exposures (CVE) identifier, if applicable</li>
+                <li>Root cause</li>
+                <li>Response and recovery activities</li>
+              </ol>
+            </part>
           </part>
           <part name="assessment-method">
             <prop name="method" value="EXAMINE" />
@@ -3234,14 +3264,6 @@ https://fedramp.gov/schemas/fedramp-incident-report-schema-2026-06-24.json</p>
             <part name="assessment-objects">
               <p>An Ongoing Incident Report for one or more incidents. The report can be from real incidents, simulated incidents, or a combination of sources.</p>
             </part>
-          </part>
-          <part name="guidance" class="following_information">
-            <title>Following Information</title>
-            <p>Observed incident activity</p>
-            <p>Indicators of compromise</p>
-            <p>Related Common Vulnerabilities and Exposures (CVE) identifier, if applicable</p>
-            <p>Root cause</p>
-            <p>Response and recovery activities</p>
           </part>
         </control>
         <control id="IEC-CSO-OIR-c">
@@ -3251,6 +3273,15 @@ https://fedramp.gov/schemas/fedramp-incident-report-schema-2026-06-24.json</p>
           <prop name="force" ns="http://fedramp.gov/ns/oscal" value="MUST" />
           <part id="IEC-CSO-OIR-c_smt" name="statement">
             <p>Providers with Class C Certifications MUST responsibly notify all affected parties of ongoing activity as new information becomes available during incident response for FedRAMP Reportable Incidents, including updates (or lack of updates) to all previously reported information and as much of the the following additional information that is available and/or the current relevant status for each item:</p>
+            <part name="item">
+              <ol>
+                <li>Observed incident activity</li>
+                <li>Indicators of compromise</li>
+                <li>Related Common Vulnerabilities and Exposures (CVE) identifier, if applicable</li>
+                <li>Root cause</li>
+                <li>Response and recovery activities</li>
+              </ol>
+            </part>
           </part>
           <part name="assessment-method">
             <prop name="method" value="EXAMINE" />
@@ -3258,14 +3289,6 @@ https://fedramp.gov/schemas/fedramp-incident-report-schema-2026-06-24.json</p>
             <part name="assessment-objects">
               <p>An Ongoing Incident Report for one or more incidents. The report can be from real incidents, simulated incidents, or a combination of sources.</p>
             </part>
-          </part>
-          <part name="guidance" class="following_information">
-            <title>Following Information</title>
-            <p>Observed incident activity</p>
-            <p>Indicators of compromise</p>
-            <p>Related Common Vulnerabilities and Exposures (CVE) identifier, if applicable</p>
-            <p>Root cause</p>
-            <p>Response and recovery activities</p>
           </part>
         </control>
         <control id="IEC-CSO-OIR-d">
@@ -3275,6 +3298,15 @@ https://fedramp.gov/schemas/fedramp-incident-report-schema-2026-06-24.json</p>
           <prop name="force" ns="http://fedramp.gov/ns/oscal" value="MUST" />
           <part id="IEC-CSO-OIR-d_smt" name="statement">
             <p>Providers with Class D Certifications MUST responsibly notify all affected parties of ongoing activity as new information becomes available during incident response for FedRAMP Reportable Incidents, including updates (or lack of updates) to all previously reported information and as much of the the following additional information that is available and/or the current relevant status for each item:</p>
+            <part name="item">
+              <ol>
+                <li>Observed incident activity</li>
+                <li>Indicators of compromise</li>
+                <li>Related Common Vulnerabilities and Exposures (CVE) identifier, if applicable</li>
+                <li>Root cause</li>
+                <li>Response and recovery activities</li>
+              </ol>
+            </part>
           </part>
           <part name="assessment-method">
             <prop name="method" value="EXAMINE" />
@@ -3282,14 +3314,6 @@ https://fedramp.gov/schemas/fedramp-incident-report-schema-2026-06-24.json</p>
             <part name="assessment-objects">
               <p>An Ongoing Incident Report for one or more incidents. The report can be from real incidents, simulated incidents, or a combination of sources.</p>
             </part>
-          </part>
-          <part name="guidance" class="following_information">
-            <title>Following Information</title>
-            <p>Observed incident activity</p>
-            <p>Indicators of compromise</p>
-            <p>Related Common Vulnerabilities and Exposures (CVE) identifier, if applicable</p>
-            <p>Root cause</p>
-            <p>Response and recovery activities</p>
           </part>
         </control>
       </control>
@@ -3987,6 +4011,14 @@ https://fedramp.gov/schemas/fedramp-incident-report-schema-2026-06-24.json</p>
         <link href="#MAS-CSO-IIR" rel="related" />
         <part id="MAS-CSO-TPR_smt" name="statement">
           <p>Providers MUST address the potential impact to federal customer data from third-party information resources used by the cloud service offering, ONLY IF MAS-CSO-IIR (Identify Information Resources) APPLIES, by documenting the following information about each applicable third-party information resource:</p>
+          <part name="item">
+            <ol>
+              <li>General usage and configuration</li>
+              <li>Explanation or justification for use</li>
+              <li>Mitigation measures in place to reduce the potential impact to federal customer data</li>
+              <li>Compensating controls in place to reduce the potential impact to federal customer data</li>
+            </ol>
+          </part>
         </part>
         <part name="assessment-method">
           <prop name="method" value="EXAMINE" />
@@ -4005,13 +4037,6 @@ https://fedramp.gov/schemas/fedramp-incident-report-schema-2026-06-24.json</p>
           <title>Schema</title>
           <p>FedRAMP Certification Overview Package (FRC-CSO-PKG)
 https://fedramp.gov/schemas/fedramp-certification-package-overview-schema-2026-06-24.json</p>
-        </part>
-        <part name="guidance" class="following_information">
-          <title>Following Information</title>
-          <p>General usage and configuration</p>
-          <p>Explanation or justification for use</p>
-          <p>Mitigation measures in place to reduce the potential impact to federal customer data</p>
-          <p>Compensating controls in place to reduce the potential impact to federal customer data</p>
         </part>
       </control>
       <control id="MAS-CSO-MDI">
@@ -4105,10 +4130,11 @@ https://fedramp.gov/schemas/fedramp-certification-package-overview-schema-2026-0
         <link href="#CDS-CSO-PUB" rel="related" />
         <part id="MKT-CSO-MLR_smt" name="statement">
           <p>Providers MUST address at least these FedRAMP rules to apply for a new FedRAMP Marketplace listing OR to request updates to an existing listing:</p>
-        </part>
-        <part name="guidance" class="following_information">
-          <title>Following Information</title>
-          <p>Certification Data Sharing: CDS-CSO-PUB (Public Information)</p>
+          <part name="item">
+            <ol>
+              <li>Certification Data Sharing: CDS-CSO-PUB (Public Information)</li>
+            </ol>
+          </part>
         </part>
       </control>
       <control id="MKT-CSO-PML">
@@ -4161,6 +4187,14 @@ https://fedramp.gov/schemas/fedramp-certification-package-overview-schema-2026-0
         </prop>
         <part id="MKT-IAS-WEB_smt" name="statement">
           <p>Assessors MUST have an appropriate web site that publicly supplies at least the following information in human-readable and JSON formats:</p>
+          <part name="item">
+            <ol>
+              <li>General description of the independent assessment service</li>
+              <li>Contact information</li>
+              <li>Types of independent services offered</li>
+              <li>Optional: Positive attestations from customers or customer references</li>
+            </ol>
+          </part>
         </part>
         <part name="assessment-method">
           <prop name="method" value="EXAMINE" />
@@ -4176,13 +4210,6 @@ https://fedramp.gov/schemas/fedramp-certification-package-overview-schema-2026-0
           <title>Schema</title>
           <p>FedRAMP Assessor Information Schema
 https://fedramp.gov/schemas/fedramp-assessor-information-schema-2026-06-24.json</p>
-        </part>
-        <part name="guidance" class="following_information">
-          <title>Following Information</title>
-          <p>General description of the independent assessment service</p>
-          <p>Contact information</p>
-          <p>Types of independent services offered</p>
-          <p>Optional: Positive attestations from customers or customer references</p>
         </part>
       </control>
       <control id="MKT-IAS-LRQ">
@@ -4216,6 +4243,14 @@ https://fedramp.gov/schemas/fedramp-assessor-information-schema-2026-06-24.json<
         </prop>
         <part id="MKT-CAS-WEB_smt" name="statement">
           <p>Advisors MUST have an appropriate web site that publicly supplies at least the following information in consistent machine-readable and human-readable formats:</p>
+          <part name="item">
+            <ol>
+              <li>General description of the consulting or advisory service</li>
+              <li>Contact information</li>
+              <li>Types of consulting or advisory services offered</li>
+              <li>Optional: Positive attestations from customers or customer references</li>
+            </ol>
+          </part>
         </part>
         <part name="assessment-method">
           <prop name="method" value="EXAMINE" />
@@ -4231,13 +4266,6 @@ https://fedramp.gov/schemas/fedramp-assessor-information-schema-2026-06-24.json<
           <title>Schema</title>
           <p>FedRAMP Advisory Service Information Schema
 https://fedramp.gov/schemas/fedramp-advisor-information-schema-2026-06-24.json</p>
-        </part>
-        <part name="guidance" class="following_information">
-          <title>Following Information</title>
-          <p>General description of the consulting or advisory service</p>
-          <p>Contact information</p>
-          <p>Types of consulting or advisory services offered</p>
-          <p>Optional: Positive attestations from customers or customer references</p>
         </part>
       </control>
       <control id="MKT-CAS-LRQ">
@@ -4292,16 +4320,17 @@ https://fedramp.gov/schemas/fedramp-advisor-information-schema-2026-06-24.json</
         <link href="#MKT-FRP-SOF" rel="related" />
         <part id="MKT-IIP-AGU_smt" name="statement">
           <p>Providers MUST demonstrate that a cloud service offering is intended for one of the following use cases:</p>
+          <part name="item">
+            <ol>
+              <li>Direct Use: The product will be used directly by agency customers for integration into a federal information system that falls within the scope of 44 USC § 3506 and will receive an agency Authorization to Operate.</li>
+              <li>Indirect Use: The product will be included as a third-party information resource in other cloud service offerings that are directly used by agency customers.</li>
+            </ol>
+          </part>
         </part>
         <part name="guidance">
           <title>Notes</title>
           <p>FedRAMP will not list products or services that are outside the explicit statutory scope of FedRAMP; See MKT-FRP-SOF (Scope of FedRAMP).</p>
           <p>Services used by private companies to meet other compliance requirements (such as CMMC) that do not also meet one of the above use cases are outside the scope of FedRAMP.</p>
-        </part>
-        <part name="guidance" class="following_information">
-          <title>Following Information</title>
-          <p>Direct Use: The product will be used directly by agency customers for integration into a federal information system that falls within the scope of 44 USC § 3506 and will receive an agency Authorization to Operate.</p>
-          <p>Indirect Use: The product will be included as a third-party information resource in other cloud service offerings that are directly used by agency customers.</p>
         </part>
       </control>
       <control id="MKT-IIP-DCP">
@@ -4573,16 +4602,17 @@ https://fedramp.gov/schemas/fedramp-advisor-information-schema-2026-06-24.json</
         </prop>
         <part id="REC-IAS-PST_smt" name="statement">
           <p>Assessors MUST meet FedRAMP performance standards for assessor deliverables to support independent, risk-based reviews by FedRAMP and federal agencies, including at least:</p>
-        </part>
-        <part name="guidance" class="following_information">
-          <title>Following Information</title>
-          <p>Complete Assessment Packages: Supplies complete and thoroughly prepared documents on the first submission.</p>
-          <p>Deliverable Quality: Ensures documentation content is clear, complete, concise, and consistent.</p>
-          <p>Deliverable Format: Follows applicable FedRAMP rules.</p>
-          <p>Timeliness and Responsiveness: Delivers documents on time according to the schedule agreed to by the federal government, provider, and assessor.</p>
-          <p>Testing Accuracy and Completeness: Ensures accurate and complete testing of a cloud service offering in accordance with ISO 17020 and FedRAMP security rules.</p>
-          <p>Assessment Integrity: Submits independent assessments of provider security implementations that are not influenced by provider demands.</p>
-          <p>Chain of Custody: Preserves the integrity and chain of custody of assessor-authored documents and provider-supplied evidence used in FedRAMP assessments.</p>
+          <part name="item">
+            <ol>
+              <li>Complete Assessment Packages: Supplies complete and thoroughly prepared documents on the first submission.</li>
+              <li>Deliverable Quality: Ensures documentation content is clear, complete, concise, and consistent.</li>
+              <li>Deliverable Format: Follows applicable FedRAMP rules.</li>
+              <li>Timeliness and Responsiveness: Delivers documents on time according to the schedule agreed to by the federal government, provider, and assessor.</li>
+              <li>Testing Accuracy and Completeness: Ensures accurate and complete testing of a cloud service offering in accordance with ISO 17020 and FedRAMP security rules.</li>
+              <li>Assessment Integrity: Submits independent assessments of provider security implementations that are not influenced by provider demands.</li>
+              <li>Chain of Custody: Preserves the integrity and chain of custody of assessor-authored documents and provider-supplied evidence used in FedRAMP assessments.</li>
+            </ol>
+          </part>
         </part>
       </control>
       <control id="REC-IAS-CAP">
@@ -4657,6 +4687,13 @@ https://fedramp.gov/schemas/fedramp-advisor-information-schema-2026-06-24.json</
         </prop>
         <part id="SCG-CSO-RSC_smt" name="statement">
           <p>Providers MUST create, maintain, and make available recommendations for securely configuring their cloud services (the Secure Configuration Guide) that includes at least the following information:</p>
+          <part name="item">
+            <ol>
+              <li>Required: Instructions on how to securely access, configure, operate, and decommission top-level administrative accounts that control enterprise access to the entire cloud service offering.</li>
+              <li>Required: Explanations of security-related settings that can be operated only by top-level administrative accounts and their security implications.</li>
+              <li>Recommended: Explanations of security-related settings that can be operated only by privileged accounts and their security implications.</li>
+            </ol>
+          </part>
         </part>
         <part name="guidance">
           <title>Notes</title>
@@ -4677,12 +4714,6 @@ https://fedramp.gov/schemas/fedramp-advisor-information-schema-2026-06-24.json</
           <title>Schema</title>
           <p>FedRAMP Certification Overview Package (FRC-CSO-PKG)
 https://fedramp.gov/schemas/fedramp-certification-package-overview-schema-2026-06-24.json</p>
-        </part>
-        <part name="guidance" class="following_information">
-          <title>Following Information</title>
-          <p>Required: Instructions on how to securely access, configure, operate, and decommission top-level administrative accounts that control enterprise access to the entire cloud service offering.</p>
-          <p>Required: Explanations of security-related settings that can be operated only by top-level administrative accounts and their security implications.</p>
-          <p>Recommended: Explanations of security-related settings that can be operated only by privileged accounts and their security implications.</p>
         </part>
       </control>
       <control id="SCG-CSO-AUP">
@@ -4938,6 +4969,15 @@ https://fedramp.gov/schemas/fedramp-certification-package-overview-schema-2026-0
         </prop>
         <part id="SCN-CSO-EVA_smt" name="statement">
           <p>Providers MUST evaluate all potential significant changes to determine the type of significant change and follow the appropriate Significant Change Notification rules.</p>
+          <part name="item">
+            <ol>
+              <li>Is it a significant change? --&gt; Continue evaluation and follow the Significant Change Notification rules.</li>
+              <li>If it is, is it an FedRAMP Certification class change?  --&gt; This requires a new assessment and cannot be done under the Significant Change Notification rules.</li>
+              <li>If it is not, is it a routine recurring change? --&gt; Follow the Routine Recurring Change rules (SCN-RTR Routine Recurring Changes).</li>
+              <li>If it is not, is it a transformative change? --&gt; Follow the Transformative Change rules (SCN-TRF Transformative Changes).</li>
+              <li>If it is not, then it is an adaptive change --&gt; Follow the Adaptive Change rules (SCN-ADP Adaptive Changes).</li>
+            </ol>
+          </part>
         </part>
         <part name="assessment-method">
           <prop name="method" value="EXAMINE" />
@@ -4950,14 +4990,6 @@ https://fedramp.gov/schemas/fedramp-certification-package-overview-schema-2026-0
           <title>Schema</title>
           <p>FedRAMP Significant Change Notification (SCN-CSO-INF)
 https://fedramp.gov/schemas/fedramp-significant-change-notifications-schema-2026-06-24.json</p>
-        </part>
-        <part name="guidance" class="following_information">
-          <title>Following Information</title>
-          <p>Is it a significant change? --&gt; Continue evaluation and follow the Significant Change Notification rules.</p>
-          <p>If it is, is it an FedRAMP Certification class change?  --&gt; This requires a new assessment and cannot be done under the Significant Change Notification rules.</p>
-          <p>If it is not, is it a routine recurring change? --&gt; Follow the Routine Recurring Change rules (SCN-RTR Routine Recurring Changes).</p>
-          <p>If it is not, is it a transformative change? --&gt; Follow the Transformative Change rules (SCN-TRF Transformative Changes).</p>
-          <p>If it is not, then it is an adaptive change --&gt; Follow the Adaptive Change rules (SCN-ADP Adaptive Changes).</p>
         </part>
       </control>
       <control id="SCN-CSO-MAR">
@@ -5000,6 +5032,20 @@ https://fedramp.gov/schemas/fedramp-significant-change-notifications-schema-2026
         </prop>
         <part id="SCN-CSO-INF_smt" name="statement">
           <p>Providers MUST include at least the following information in Significant Change Notifications:</p>
+          <part name="item">
+            <ol>
+              <li>Service Offering FedRAMP ID</li>
+              <li>Assessor Name (if applicable)</li>
+              <li>Related Vulnerability (if applicable)</li>
+              <li>Significant Change type and explanation of categorization</li>
+              <li>Short description of change</li>
+              <li>Reason for change</li>
+              <li>Summary of customer impact, including changes to services and customer configuration responsibilities</li>
+              <li>Plan and timeline for the change, including for the verification, assessment, and/or validation of impacted Key Security Indicators or Rev5 Controls</li>
+              <li>Copy of the business or security impact analysis</li>
+              <li>Name and title of approver</li>
+            </ol>
+          </part>
         </part>
         <part name="guidance">
           <title>Notes</title>
@@ -5016,19 +5062,6 @@ https://fedramp.gov/schemas/fedramp-significant-change-notifications-schema-2026
           <title>Schema</title>
           <p>FedRAMP Significant Change Notification (SCN-CSO-INF)
 https://fedramp.gov/schemas/fedramp-significant-change-notifications-schema-2026-06-24.json</p>
-        </part>
-        <part name="guidance" class="following_information">
-          <title>Following Information</title>
-          <p>Service Offering FedRAMP ID</p>
-          <p>Assessor Name (if applicable)</p>
-          <p>Related Vulnerability (if applicable)</p>
-          <p>Significant Change type and explanation of categorization</p>
-          <p>Short description of change</p>
-          <p>Reason for change</p>
-          <p>Summary of customer impact, including changes to services and customer configuration responsibilities</p>
-          <p>Plan and timeline for the change, including for the verification, assessment, and/or validation of impacted Key Security Indicators or Rev5 Controls</p>
-          <p>Copy of the business or security impact analysis</p>
-          <p>Name and title of approver</p>
         </part>
       </control>
       <control id="SCN-CSO-HIS">
@@ -5164,6 +5197,11 @@ https://fedramp.gov/schemas/fedramp-significant-change-notifications-schema-2026
         </prop>
         <part id="SCN-ADP-NTF_smt" name="statement">
           <p>Providers MUST notify all necessary parties within 10 business days after finishing adaptive changes, also including the following information:</p>
+          <part name="item">
+            <ol>
+              <li>Summary of any new risks identified and/or vulnerabilities resulting from the change (if applicable)</li>
+            </ol>
+          </part>
         </part>
         <part name="guidance">
           <title>Notes</title>
@@ -5191,10 +5229,6 @@ Examples:
 - Changing cryptographic modules where the new module meets the same standards and characteristics of the former
 - Replacing a like-for-like component where some security plan or procedure adjustments are required (e.g., scanning tool or managed database swap)
 - Adding models to existing approved AI services without exposing federal customer data to new services</p>
-        </part>
-        <part name="guidance" class="following_information">
-          <title>Following Information</title>
-          <p>Summary of any new risks identified and/or vulnerabilities resulting from the change (if applicable)</p>
         </part>
       </control>
     </group>
@@ -5328,6 +5362,13 @@ Examples:
         </prop>
         <part id="SCN-TRF-NAV_smt" name="statement">
           <p>Providers MUST notify all necessary parties within 5 business days after completing the verification, assessment, and/or validation of transformative changes, also including the following information:</p>
+          <part name="item">
+            <ol>
+              <li>Updates to all previously sent information</li>
+              <li>Summary of any new risks identified and/or vulnerabilities resulting from the change (if applicable)</li>
+              <li>Copy of the security assessment report (if applicable)</li>
+            </ol>
+          </part>
         </part>
         <part name="assessment-method">
           <prop name="method" value="EXAMINE" />
@@ -5335,12 +5376,6 @@ Examples:
           <part name="assessment-objects">
             <p>At least the most recent after verification SCN notification for a transformative change including the date it was sent and the date the change was applied. Additional examples may be provided. If no transformative SCN notifications have been sent then this artifact is not required.</p>
           </part>
-        </part>
-        <part name="guidance" class="following_information">
-          <title>Following Information</title>
-          <p>Updates to all previously sent information</p>
-          <p>Summary of any new risks identified and/or vulnerabilities resulting from the change (if applicable)</p>
-          <p>Copy of the security assessment report (if applicable)</p>
         </part>
       </control>
       <control id="SCN-TRF-UPD">
@@ -5434,21 +5469,22 @@ Examples:
         </prop>
         <part id="SDR-CSO-FRR_smt" name="statement">
           <p>Providers MUST supply a Security Decision Record, in both human-readable and JSON formats, that includes at least all of the following information for each applicable FedRAMP rule:</p>
+          <part name="item">
+            <ol>
+              <li>Explanation of how the rule is followed, or an explanation of the reason and resulting risk to customers for not following the rule.</li>
+              <li>Verification that the implementation is appropriate for the rule, or that the reason for not implementing is accepted by a senior official.</li>
+              <li>Validation that the implementation is in place and working as intended, or that the reason for not implementing is accepted by a senior official.</li>
+              <li>Independent verification.</li>
+              <li>Independent validation.</li>
+              <li>Any responses or clarifications to the comments in the independent verification or validation.</li>
+              <li>Rule-specific artifacts (if applicable).</li>
+            </ol>
+          </part>
         </part>
         <part name="guidance" class="schema">
           <title>Schema</title>
           <p>FedRAMP Security Decision Record Schema
 https://fedramp.gov/schemas/fedramp-security-decision-record-schema-2026-06-24.json</p>
-        </part>
-        <part name="guidance" class="following_information">
-          <title>Following Information</title>
-          <p>Explanation of how the rule is followed, or an explanation of the reason and resulting risk to customers for not following the rule.</p>
-          <p>Verification that the implementation is appropriate for the rule, or that the reason for not implementing is accepted by a senior official.</p>
-          <p>Validation that the implementation is in place and working as intended, or that the reason for not implementing is accepted by a senior official.</p>
-          <p>Independent verification.</p>
-          <p>Independent validation.</p>
-          <p>Any responses or clarifications to the comments in the independent verification or validation.</p>
-          <p>Rule-specific artifacts (if applicable).</p>
         </part>
       </control>
       <control id="SDR-CSO-MTD">
@@ -5464,12 +5500,13 @@ https://fedramp.gov/schemas/fedramp-security-decision-record-schema-2026-06-24.j
         </prop>
         <part id="SDR-CSO-MTD_smt" name="statement">
           <p>Providers MUST also include the following basic metadata in their Security Decision Record:</p>
-        </part>
-        <part name="guidance" class="following_information">
-          <title>Following Information</title>
-          <p>Version</p>
-          <p>Date and time of last update</p>
-          <p>Source of update</p>
+          <part name="item">
+            <ol>
+              <li>Version</li>
+              <li>Date and time of last update</li>
+              <li>Source of update</li>
+            </ol>
+          </part>
         </part>
       </control>
     </group>
@@ -5488,19 +5525,20 @@ https://fedramp.gov/schemas/fedramp-security-decision-record-schema-2026-06-24.j
         </prop>
         <part id="SDR-CSX-KSI_smt" name="statement">
           <p>Providers MUST also include short and simple high-level summaries of at least the following for each applicable Key Security Indicator:</p>
+          <part name="item">
+            <ol>
+              <li>Explanation of measures (and their objectives) that demonstrate the Key Security Indicator, or an explanation of the reason and resulting risk to customers for not having measures available for that Key Security Indicator.</li>
+              <li>Explanation of the cycle for any measures that are implemented persistently (if applicable).</li>
+              <li>Verification that the measures demonstrate the Key Security Indicator, or that the reason for not having them is accepted.</li>
+              <li>Verification that the automation in place is accurate and sufficient to demonstrate appropriate measures for the Key Security Indicator, or that automation is not necessary for each measure.</li>
+              <li>Validation that the measures are accurately produced and are in place and working as intended, or that the reason for not having them is valid.</li>
+            </ol>
+          </part>
         </part>
         <part name="guidance" class="schema">
           <title>Schema</title>
           <p>FedRAMP Security Decision Record Schema
 https://fedramp.gov/schemas/fedramp-security-decision-record-schema-2026-06-24.json</p>
-        </part>
-        <part name="guidance" class="following_information">
-          <title>Following Information</title>
-          <p>Explanation of measures (and their objectives) that demonstrate the Key Security Indicator, or an explanation of the reason and resulting risk to customers for not having measures available for that Key Security Indicator.</p>
-          <p>Explanation of the cycle for any measures that are implemented persistently (if applicable).</p>
-          <p>Verification that the measures demonstrate the Key Security Indicator, or that the reason for not having them is accepted.</p>
-          <p>Verification that the automation in place is accurate and sufficient to demonstrate appropriate measures for the Key Security Indicator, or that automation is not necessary for each measure.</p>
-          <p>Validation that the measures are accurately produced and are in place and working as intended, or that the reason for not having them is valid.</p>
         </part>
       </control>
       <control id="SDR-CSX-KMT">
@@ -5537,11 +5575,12 @@ https://fedramp.gov/schemas/fedramp-security-decision-record-schema-2026-06-24.j
           <prop name="force" ns="http://fedramp.gov/ns/oscal" value="MUST" />
           <part id="SDR-CSX-KMT-b_smt" name="statement">
             <p>Providers with 20x Class B Certifications MUST also include historical metrics in their Security Decision Record, supplying at least the following information for each applicable Key Security Indicator:</p>
-          </part>
-          <part name="guidance" class="following_information">
-            <title>Following Information</title>
-            <p>Summary of each metric over the past 30 days</p>
-            <p>Summary of metric up to the past year (where available)</p>
+            <part name="item">
+              <ol>
+                <li>Summary of each metric over the past 30 days</li>
+                <li>Summary of metric up to the past year (where available)</li>
+              </ol>
+            </part>
           </part>
         </control>
         <control id="SDR-CSX-KMT-c">
@@ -5551,12 +5590,13 @@ https://fedramp.gov/schemas/fedramp-security-decision-record-schema-2026-06-24.j
           <prop name="force" ns="http://fedramp.gov/ns/oscal" value="MUST" />
           <part id="SDR-CSX-KMT-c_smt" name="statement">
             <p>Providers with 20x Class C Certifications MUST also include historical metrics in their Security Decision Record, supplying at least the following information for each applicable Key Security Indicator:</p>
-          </part>
-          <part name="guidance" class="following_information">
-            <title>Following Information</title>
-            <p>Summary of each metric over the past 30 days</p>
-            <p>Summary of metric up to the past year (where available)</p>
-            <p>All daily metric data up to the past year (where available)</p>
+            <part name="item">
+              <ol>
+                <li>Summary of each metric over the past 30 days</li>
+                <li>Summary of metric up to the past year (where available)</li>
+                <li>All daily metric data up to the past year (where available)</li>
+              </ol>
+            </part>
           </part>
         </control>
         <control id="SDR-CSX-KMT-d">
@@ -5585,18 +5625,19 @@ https://fedramp.gov/schemas/fedramp-security-decision-record-schema-2026-06-24.j
         </prop>
         <part id="SDR-CSF-CTF_smt" name="statement">
           <p>Providers MUST also include short and simple high-level summaries of at least the following for each applicable Rev5 Control:</p>
-        </part>
-        <part name="guidance" class="following_information">
-          <title>Following Information</title>
-          <p>Any organization-defined parameter values.</p>
-          <p>Implementation status, one of Implemented, Partially Implemented, Planned, Alternative Implementation, or Not Applicable.</p>
-          <p>The mechanisms or activities that address the control, including inheritance from another cloud service offering if applicable.</p>
-          <p>The verification that is in place to ensure the implementation is appropriate for the control.</p>
-          <p>The validation that is in place to ensure the implementation is working as intended.</p>
-          <p>Independent verification.</p>
-          <p>Independent validation.</p>
-          <p>Any responses or clarifications to the comments in the independent verification or validation.</p>
-          <p>Control-specific artifacts (if applicable).</p>
+          <part name="item">
+            <ol>
+              <li>Any organization-defined parameter values.</li>
+              <li>Implementation status, one of Implemented, Partially Implemented, Planned, Alternative Implementation, or Not Applicable.</li>
+              <li>The mechanisms or activities that address the control, including inheritance from another cloud service offering if applicable.</li>
+              <li>The verification that is in place to ensure the implementation is appropriate for the control.</li>
+              <li>The validation that is in place to ensure the implementation is working as intended.</li>
+              <li>Independent verification.</li>
+              <li>Independent validation.</li>
+              <li>Any responses or clarifications to the comments in the independent verification or validation.</li>
+              <li>Control-specific artifacts (if applicable).</li>
+            </ol>
+          </part>
         </part>
       </control>
     </group>
@@ -6298,25 +6339,26 @@ https://fedramp.gov/schemas/fedramp-security-decision-record-schema-2026-06-24.j
         </prop>
         <part id="VER-EVA-EFA_smt" name="statement">
           <p>Providers SHOULD consider at least the following factors when considering the context of the cloud service offering to evaluate detected vulnerabilities:</p>
-        </part>
-        <part name="guidance" class="following_information">
-          <title>Following Information</title>
-          <p>
-            <strong>Criticality</strong>: How important are the systems or information that might be impacted by the vulnerability?</p>
-          <p>
-            <strong>Reachability</strong>: How might a threat actor reach the vulnerability and how likely is that?</p>
-          <p>
-            <strong>Exploitability</strong>: How easy is it for a threat actor to exploit the vulnerability and how likely is that?</p>
-          <p>
-            <strong>Detectability</strong>: How easy is it for a threat actor to become aware of the vulnerability and how likely is that?</p>
-          <p>
-            <strong>Prevalence</strong>: How much of the cloud service offering is affected by the vulnerability?</p>
-          <p>
-            <strong>Privilege</strong>: How much privileged authority or access is granted or can be gained from exploiting the vulnerability?</p>
-          <p>
-            <strong>Proximate Vulnerabilities</strong>: How does this vulnerability interact with previously detected vulnerabilities, especially partially or fully mitigated vulnerabilities?</p>
-          <p>
-            <strong>Known Threats</strong>: How might already known threats leverage the vulnerability and how likely is that?</p>
+          <part name="item">
+            <ol>
+              <li>
+                <strong>Criticality</strong>: How important are the systems or information that might be impacted by the vulnerability?</li>
+              <li>
+                <strong>Reachability</strong>: How might a threat actor reach the vulnerability and how likely is that?</li>
+              <li>
+                <strong>Exploitability</strong>: How easy is it for a threat actor to exploit the vulnerability and how likely is that?</li>
+              <li>
+                <strong>Detectability</strong>: How easy is it for a threat actor to become aware of the vulnerability and how likely is that?</li>
+              <li>
+                <strong>Prevalence</strong>: How much of the cloud service offering is affected by the vulnerability?</li>
+              <li>
+                <strong>Privilege</strong>: How much privileged authority or access is granted or can be gained from exploiting the vulnerability?</li>
+              <li>
+                <strong>Proximate Vulnerabilities</strong>: How does this vulnerability interact with previously detected vulnerabilities, especially partially or fully mitigated vulnerabilities?</li>
+              <li>
+                <strong>Known Threats</strong>: How might already known threats leverage the vulnerability and how likely is that?</li>
+            </ol>
+          </part>
         </part>
       </control>
     </group>
@@ -6355,6 +6397,21 @@ https://fedramp.gov/schemas/fedramp-vulnerability-detail-report-schema-2026-06-2
         </prop>
         <part id="VER-RPT-VDT_smt" name="statement">
           <p>Providers MUST include the following information (if applicable) on detected vulnerabilities when reporting on vulnerability detection and response activity, UNLESS it is an accepted vulnerability:</p>
+          <part name="item">
+            <ol>
+              <li>Provider's internally assigned tracking identifier</li>
+              <li>Time and source of the detection</li>
+              <li>Time of completed evaluation</li>
+              <li>Is it an internet-reachable vulnerability or not?</li>
+              <li>Is it a likely exploitable vulnerability or not?</li>
+              <li>Historically and currently estimated Potential Agency Impact N-rating of exploitation</li>
+              <li>Time and Potential Agency Impact N-rating of each completed and evaluated reduction in Potential Agency Impact N-rating</li>
+              <li>Estimated time and target Potential Agency Impact N-rating of next reduction in Potential Agency Impact N-rating</li>
+              <li>Is it currently or is it likely to become an overdue vulnerability or not? If so, explain.</li>
+              <li>Any supplementary information the provider responsibly determines will help federal agencies assess or mitigate the risk to their federal customer data within the cloud service offering resulting from the vulnerability</li>
+              <li>Final disposition of the vulnerability</li>
+            </ol>
+          </part>
         </part>
         <part name="assessment-method">
           <prop name="method" value="EXAMINE" />
@@ -6367,20 +6424,6 @@ https://fedramp.gov/schemas/fedramp-vulnerability-detail-report-schema-2026-06-2
           <title>Schema</title>
           <p>FedRAMP Vulnerability Detail Report (VER-RPT-VDT)
 https://fedramp.gov/schemas/fedramp-vulnerability-detail-report-schema-2026-06-24.json</p>
-        </part>
-        <part name="guidance" class="following_information">
-          <title>Following Information</title>
-          <p>Provider's internally assigned tracking identifier</p>
-          <p>Time and source of the detection</p>
-          <p>Time of completed evaluation</p>
-          <p>Is it an internet-reachable vulnerability or not?</p>
-          <p>Is it a likely exploitable vulnerability or not?</p>
-          <p>Historically and currently estimated Potential Agency Impact N-rating of exploitation</p>
-          <p>Time and Potential Agency Impact N-rating of each completed and evaluated reduction in Potential Agency Impact N-rating</p>
-          <p>Estimated time and target Potential Agency Impact N-rating of next reduction in Potential Agency Impact N-rating</p>
-          <p>Is it currently or is it likely to become an overdue vulnerability or not? If so, explain.</p>
-          <p>Any supplementary information the provider responsibly determines will help federal agencies assess or mitigate the risk to their federal customer data within the cloud service offering resulting from the vulnerability</p>
-          <p>Final disposition of the vulnerability</p>
         </part>
       </control>
       <control id="VER-RPT-AVI">
@@ -6396,6 +6439,18 @@ https://fedramp.gov/schemas/fedramp-vulnerability-detail-report-schema-2026-06-2
         </prop>
         <part id="VER-RPT-AVI_smt" name="statement">
           <p>Providers MUST include the following information on accepted vulnerabilities when reporting on vulnerability detection and response activity:</p>
+          <part name="item">
+            <ol>
+              <li>Provider's internally assigned tracking identifier</li>
+              <li>Time and source of the detection</li>
+              <li>Time of completed evaluation</li>
+              <li>Is it an internet-reachable vulnerability or not?</li>
+              <li>Is it a likely exploitable vulnerability or not?</li>
+              <li>Currently estimated Potential Agency Impact N-rating</li>
+              <li>Explanation of why this is an accepted vulnerability</li>
+              <li>Any supplementary information the provider determines will responsibly help federal agencies assess or mitigate the risk to their federal customer data within the cloud service offering resulting from the accepted vulnerability</li>
+            </ol>
+          </part>
         </part>
         <part name="assessment-method">
           <prop name="method" value="EXAMINE" />
@@ -6408,17 +6463,6 @@ https://fedramp.gov/schemas/fedramp-vulnerability-detail-report-schema-2026-06-2
           <title>Schema</title>
           <p>FedRAMP Accepted Vulnerability Info (VER-RPT-AVI)
 https://fedramp.gov/schemas/fedramp-accepted-vulnerability-info-schema-2026-06-24.json</p>
-        </part>
-        <part name="guidance" class="following_information">
-          <title>Following Information</title>
-          <p>Provider's internally assigned tracking identifier</p>
-          <p>Time and source of the detection</p>
-          <p>Time of completed evaluation</p>
-          <p>Is it an internet-reachable vulnerability or not?</p>
-          <p>Is it a likely exploitable vulnerability or not?</p>
-          <p>Currently estimated Potential Agency Impact N-rating</p>
-          <p>Explanation of why this is an accepted vulnerability</p>
-          <p>Any supplementary information the provider determines will responsibly help federal agencies assess or mitigate the risk to their federal customer data within the cloud service offering resulting from the accepted vulnerability</p>
         </part>
       </control>
       <control id="VER-RPT-NID">
@@ -6751,6 +6795,677 @@ https://fedramp.gov/schemas/fedramp-historical-ver-activity-schema-2026-06-24.js
             <p>Providers with Class D Certifications SHOULD treat likely exploitable vulnerabilities that are NOT internet-reachable where Potential Agency Impact N-rating = 5 as a FedRAMP Reportable Incident until they are partially mitigated vulnerabilities at N4 or below.</p>
           </part>
         </control>
+      </control>
+    </group>
+  </group>
+  <group id="KSI">
+    <title>Key Security Indicators</title>
+    <prop name="label" value="KSI" />
+    <group id="KSI-CED">
+      <title>Cybersecurity Education</title>
+      <prop name="label" value="KSI-CED" />
+      <control id="KSI-CED-RAT">
+        <title>Reviewing All Training</title>
+        <prop name="label" value="KSI-CED-RAT" />
+        <prop name="updated" ns="http://fedramp.gov/ns/oscal" value="2026-06-24T00:00:00Z">
+          <remarks>
+            <p>Official launch of the FedRAMP Consolidated Rules for 2026.</p>
+          </remarks>
+        </prop>
+        <part id="KSI-CED-RAT_smt" name="statement">
+          <p>The effectiveness of relevant cybersecurity education and training is persistently reviewed, including at least general training for all employees, role-specific training for employees in high risk roles, training for development and engineering staff on secure software delivery, and training for staff involved with incident response or disaster recovery.</p>
+        </part>
+      </control>
+    </group>
+    <group id="KSI-CMT">
+      <title>Change Management</title>
+      <prop name="label" value="KSI-CMT" />
+      <control id="KSI-CMT-LMC">
+        <title>Logging Changes</title>
+        <prop name="label" value="KSI-CMT-LMC" />
+        <prop name="updated" ns="http://fedramp.gov/ns/oscal" value="2026-06-24T00:00:00Z">
+          <remarks>
+            <p>Official launch of the FedRAMP Consolidated Rules for 2026.</p>
+          </remarks>
+        </prop>
+        <part id="KSI-CMT-LMC_smt" name="statement">
+          <p>Modifications to the cloud service offering are logged and monitored.</p>
+        </part>
+      </control>
+      <control id="KSI-CMT-RMV">
+        <title>Redeploying vs Modifying</title>
+        <prop name="label" value="KSI-CMT-RMV" />
+        <prop name="updated" ns="http://fedramp.gov/ns/oscal" value="2026-06-24T00:00:00Z">
+          <remarks>
+            <p>Official launch of the FedRAMP Consolidated Rules for 2026.</p>
+          </remarks>
+        </prop>
+        <part id="KSI-CMT-RMV_smt" name="statement">
+          <p>Changes to machine-based information resources are executed through the redeployment of version controlled resources rather than direct modification wherever reasonable.</p>
+        </part>
+      </control>
+      <control id="KSI-CMT-RVP">
+        <title>Reviewing Change Procedures</title>
+        <prop name="label" value="KSI-CMT-RVP" />
+        <prop name="updated" ns="http://fedramp.gov/ns/oscal" value="2026-06-24T00:00:00Z">
+          <remarks>
+            <p>Official launch of the FedRAMP Consolidated Rules for 2026.</p>
+          </remarks>
+        </prop>
+        <part id="KSI-CMT-RVP_smt" name="statement">
+          <p>The effectiveness of documented change management procedures is persistently reviewed.</p>
+        </part>
+      </control>
+      <control id="KSI-CMT-VTD">
+        <title>Validating Throughout Deployment</title>
+        <prop name="label" value="KSI-CMT-VTD" />
+        <prop name="updated" ns="http://fedramp.gov/ns/oscal" value="2026-06-24T00:00:00Z">
+          <remarks>
+            <p>Official launch of the FedRAMP Consolidated Rules for 2026.</p>
+          </remarks>
+        </prop>
+        <part id="KSI-CMT-VTD_smt" name="statement">
+          <p>Persistent testing and validation of changes throughout deployment is automated.</p>
+        </part>
+      </control>
+    </group>
+    <group id="KSI-CNA">
+      <title>Cloud Native Architecture</title>
+      <prop name="label" value="KSI-CNA" />
+      <control id="KSI-CNA-DFP">
+        <title>Defining Functionality and Privileges</title>
+        <prop name="label" value="KSI-CNA-DFP" />
+        <prop name="updated" ns="http://fedramp.gov/ns/oscal" value="2026-06-24T00:00:00Z">
+          <remarks>
+            <p>Official launch of the FedRAMP Consolidated Rules for 2026.</p>
+          </remarks>
+        </prop>
+        <part id="KSI-CNA-DFP_smt" name="statement">
+          <p>The functionality and privileges for infrastructure and services are strictly defined.</p>
+        </part>
+      </control>
+      <control id="KSI-CNA-EIS">
+        <title>Enforcing Intended State</title>
+        <prop name="label" value="KSI-CNA-EIS" />
+        <prop name="updated" ns="http://fedramp.gov/ns/oscal" value="2026-06-24T00:00:00Z">
+          <remarks>
+            <p>Official launch of the FedRAMP Consolidated Rules for 2026.</p>
+          </remarks>
+        </prop>
+        <part id="KSI-CNA-EIS_smt" name="statement">
+          <p>Varies by Class</p>
+        </part>
+        <control id="KSI-CNA-EIS-b">
+          <title>Class B</title>
+          <prop name="label" value="Class B" />
+          <part id="KSI-CNA-EIS-b_smt" name="statement">
+            <p>
+              <strong>Optional:</strong> Automated services are used to persistently assess the security of all machine-based information resources and automatically enforce their intended operational state.</p>
+          </part>
+        </control>
+        <control id="KSI-CNA-EIS-c">
+          <title>Class C</title>
+          <prop name="label" value="Class C" />
+          <part id="KSI-CNA-EIS-c_smt" name="statement">
+            <p>Automated services are used to persistently assess the security of all machine-based information resources and automatically enforce their intended operational state.</p>
+          </part>
+        </control>
+      </control>
+      <control id="KSI-CNA-IBP">
+        <title>Implementing Best Practices</title>
+        <prop name="label" value="KSI-CNA-IBP" />
+        <prop name="updated" ns="http://fedramp.gov/ns/oscal" value="2026-06-24T00:00:00Z">
+          <remarks>
+            <p>Official launch of the FedRAMP Consolidated Rules for 2026.</p>
+          </remarks>
+        </prop>
+        <part id="KSI-CNA-IBP_smt" name="statement">
+          <p>The use and configuration of third-party machine-based information resources is persistently compared against the original provider's best practices and guidance.</p>
+        </part>
+      </control>
+      <control id="KSI-CNA-MAT">
+        <title>Minimizing Attack Surface</title>
+        <prop name="label" value="KSI-CNA-MAT" />
+        <prop name="updated" ns="http://fedramp.gov/ns/oscal" value="2026-06-24T00:00:00Z">
+          <remarks>
+            <p>Official launch of the FedRAMP Consolidated Rules for 2026.</p>
+          </remarks>
+        </prop>
+        <part id="KSI-CNA-MAT_smt" name="statement">
+          <p>Machine-based information resources are persistently reviewed to ensure they have a minimal attack surface and that lateral movement is minimized if compromised.</p>
+        </part>
+      </control>
+      <control id="KSI-CNA-OFA">
+        <title>Optimizing for Availability</title>
+        <prop name="label" value="KSI-CNA-OFA" />
+        <prop name="updated" ns="http://fedramp.gov/ns/oscal" value="2026-06-24T00:00:00Z">
+          <remarks>
+            <p>Official launch of the FedRAMP Consolidated Rules for 2026.</p>
+          </remarks>
+        </prop>
+        <part id="KSI-CNA-OFA_smt" name="statement">
+          <p>Machine-based information resources are persistently reviewed to ensure they are appropriately optimized for high availability and rapid recovery.</p>
+        </part>
+      </control>
+      <control id="KSI-CNA-RNT">
+        <title>Restricting Network Traffic</title>
+        <prop name="label" value="KSI-CNA-RNT" />
+        <prop name="updated" ns="http://fedramp.gov/ns/oscal" value="2026-06-24T00:00:00Z">
+          <remarks>
+            <p>Official launch of the FedRAMP Consolidated Rules for 2026.</p>
+          </remarks>
+        </prop>
+        <part id="KSI-CNA-RNT_smt" name="statement">
+          <p>Machine-based information resources are persistently reviewed to ensure they are appropriately configured to limit inbound and outbound network traffic.</p>
+        </part>
+      </control>
+      <control id="KSI-CNA-RVP">
+        <title>Reviewing Protections</title>
+        <prop name="label" value="KSI-CNA-RVP" />
+        <prop name="updated" ns="http://fedramp.gov/ns/oscal" value="2026-06-24T00:00:00Z">
+          <remarks>
+            <p>Official launch of the FedRAMP Consolidated Rules for 2026.</p>
+          </remarks>
+        </prop>
+        <part id="KSI-CNA-RVP_smt" name="statement">
+          <p>The effectiveness of protection against denial of service attacks and other unwanted activity for machine-based information resources is persistently reviewed.</p>
+        </part>
+      </control>
+      <control id="KSI-CNA-ULN">
+        <title>Using Logical Networking</title>
+        <prop name="label" value="KSI-CNA-ULN" />
+        <prop name="updated" ns="http://fedramp.gov/ns/oscal" value="2026-06-24T00:00:00Z">
+          <remarks>
+            <p>Official launch of the FedRAMP Consolidated Rules for 2026.</p>
+          </remarks>
+        </prop>
+        <part id="KSI-CNA-ULN_smt" name="statement">
+          <p>Logical networking and related capabilities are used and persistently reviewed to enforce traffic flow controls.</p>
+        </part>
+      </control>
+    </group>
+    <group id="KSI-IAM">
+      <title>Identity and Access Management</title>
+      <prop name="label" value="KSI-IAM" />
+      <control id="KSI-IAM-AAM">
+        <title>Automating Account Management</title>
+        <prop name="label" value="KSI-IAM-AAM" />
+        <prop name="updated" ns="http://fedramp.gov/ns/oscal" value="2026-06-24T00:00:00Z">
+          <remarks>
+            <p>Official launch of the FedRAMP Consolidated Rules for 2026.</p>
+          </remarks>
+        </prop>
+        <part id="KSI-IAM-AAM_smt" name="statement">
+          <p>The lifecycle and privileges of all accounts, roles, and groups are securely managed using automation.</p>
+        </part>
+      </control>
+      <control id="KSI-IAM-APM">
+        <title>Adopting Passwordless Methods</title>
+        <prop name="label" value="KSI-IAM-APM" />
+        <prop name="updated" ns="http://fedramp.gov/ns/oscal" value="2026-06-24T00:00:00Z">
+          <remarks>
+            <p>Official launch of the FedRAMP Consolidated Rules for 2026.</p>
+          </remarks>
+        </prop>
+        <part id="KSI-IAM-APM_smt" name="statement">
+          <p>Secure passwordless methods are used for user authentication and authorization when feasible, otherwise strong passwords with phishing-resistant MFA is used.</p>
+        </part>
+      </control>
+      <control id="KSI-IAM-ELP">
+        <title>Ensuring Least Privilege</title>
+        <prop name="label" value="KSI-IAM-ELP" />
+        <prop name="updated" ns="http://fedramp.gov/ns/oscal" value="2026-06-24T00:00:00Z">
+          <remarks>
+            <p>Official launch of the FedRAMP Consolidated Rules for 2026.</p>
+          </remarks>
+        </prop>
+        <part id="KSI-IAM-ELP_smt" name="statement">
+          <p>Identity and access management measures are used and persistently reviewed to ensure each user or device can only access the resources they need.</p>
+        </part>
+      </control>
+      <control id="KSI-IAM-JIT">
+        <title>Authorizing Just-in-Time</title>
+        <prop name="label" value="KSI-IAM-JIT" />
+        <prop name="updated" ns="http://fedramp.gov/ns/oscal" value="2026-06-24T00:00:00Z">
+          <remarks>
+            <p>Official launch of the FedRAMP Consolidated Rules for 2026.</p>
+          </remarks>
+        </prop>
+        <part id="KSI-IAM-JIT_smt" name="statement">
+          <p>A least-privileged, role and attribute-based, and just-in-time security authorization model is used and persistently reviewed for all user and non-user accounts and services.</p>
+        </part>
+      </control>
+      <control id="KSI-IAM-SNU">
+        <title>Securing Non-User Authentication</title>
+        <prop name="label" value="KSI-IAM-SNU" />
+        <prop name="updated" ns="http://fedramp.gov/ns/oscal" value="2026-06-24T00:00:00Z">
+          <remarks>
+            <p>Official launch of the FedRAMP Consolidated Rules for 2026.</p>
+          </remarks>
+        </prop>
+        <part id="KSI-IAM-SNU_smt" name="statement">
+          <p>Appropriately secure authentication methods are used and persistently reviewed for non-user accounts and services.</p>
+        </part>
+      </control>
+      <control id="KSI-IAM-SUS">
+        <title>Responding to Suspicious Activity</title>
+        <prop name="label" value="KSI-IAM-SUS" />
+        <prop name="updated" ns="http://fedramp.gov/ns/oscal" value="2026-06-24T00:00:00Z">
+          <remarks>
+            <p>Official launch of the FedRAMP Consolidated Rules for 2026.</p>
+          </remarks>
+        </prop>
+        <part id="KSI-IAM-SUS_smt" name="statement">
+          <p>Accounts with privileged access are disabled or otherwise secured in response to suspicious activity.</p>
+        </part>
+      </control>
+    </group>
+    <group id="KSI-INR">
+      <title>Incident Response</title>
+      <prop name="label" value="KSI-INR" />
+      <control id="KSI-INR-AAR">
+        <title>Generating After Action Reports</title>
+        <prop name="label" value="KSI-INR-AAR" />
+        <prop name="updated" ns="http://fedramp.gov/ns/oscal" value="2026-06-24T00:00:00Z">
+          <remarks>
+            <p>Official launch of the FedRAMP Consolidated Rules for 2026.</p>
+          </remarks>
+        </prop>
+        <part id="KSI-INR-AAR_smt" name="statement">
+          <p>Incident after action reports are generated and lessons learned are persistently incorporated.</p>
+        </part>
+      </control>
+      <control id="KSI-INR-RIR">
+        <title>Reviewing Incident Response Procedures</title>
+        <prop name="label" value="KSI-INR-RIR" />
+        <prop name="updated" ns="http://fedramp.gov/ns/oscal" value="2026-06-24T00:00:00Z">
+          <remarks>
+            <p>Official launch of the FedRAMP Consolidated Rules for 2026.</p>
+          </remarks>
+        </prop>
+        <part id="KSI-INR-RIR_smt" name="statement">
+          <p>The effectiveness of documented incident response procedures is persistently reviewed.</p>
+        </part>
+      </control>
+      <control id="KSI-INR-RPI">
+        <title>Reviewing Past Incidents</title>
+        <prop name="label" value="KSI-INR-RPI" />
+        <prop name="updated" ns="http://fedramp.gov/ns/oscal" value="2026-06-24T00:00:00Z">
+          <remarks>
+            <p>Official launch of the FedRAMP Consolidated Rules for 2026.</p>
+          </remarks>
+        </prop>
+        <part id="KSI-INR-RPI_smt" name="statement">
+          <p>Past incidents are persistently reviewed for patterns or vulnerabilities that were not previously apparent or identified.</p>
+        </part>
+      </control>
+    </group>
+    <group id="KSI-MLA">
+      <title>Monitoring, Logging, and Auditing</title>
+      <prop name="label" value="KSI-MLA" />
+      <control id="KSI-MLA-ALA">
+        <title>Authorizing Log Access</title>
+        <prop name="label" value="KSI-MLA-ALA" />
+        <prop name="updated" ns="http://fedramp.gov/ns/oscal" value="2026-06-24T00:00:00Z">
+          <remarks>
+            <p>Official launch of the FedRAMP Consolidated Rules for 2026.</p>
+          </remarks>
+        </prop>
+        <part id="KSI-MLA-ALA_smt" name="statement">
+          <p>Varies by Class</p>
+        </part>
+        <control id="KSI-MLA-ALA-b">
+          <title>Class B</title>
+          <prop name="label" value="Class B" />
+          <part id="KSI-MLA-ALA-b_smt" name="statement">
+            <p>
+              <strong>Optional:</strong> A least-privileged, role and attribute-based, and just-in-time access authorization model is used and persistently reviewed for access to log data based on organizationally defined data sensitivity.</p>
+          </part>
+        </control>
+        <control id="KSI-MLA-ALA-c">
+          <title>Class C</title>
+          <prop name="label" value="Class C" />
+          <part id="KSI-MLA-ALA-c_smt" name="statement">
+            <p>A least-privileged, role and attribute-based, and just-in-time access authorization model is used and persistently reviewed for access to log data based on organizationally defined data sensitivity.</p>
+          </part>
+        </control>
+      </control>
+      <control id="KSI-MLA-EVC">
+        <title>Evaluating Configurations</title>
+        <prop name="label" value="KSI-MLA-EVC" />
+        <prop name="updated" ns="http://fedramp.gov/ns/oscal" value="2026-06-24T00:00:00Z">
+          <remarks>
+            <p>Official launch of the FedRAMP Consolidated Rules for 2026.</p>
+          </remarks>
+        </prop>
+        <part id="KSI-MLA-EVC_smt" name="statement">
+          <p>The configuration of machine-based information resources, especially infrastructure as code, is persistently evaluated and tested.</p>
+        </part>
+      </control>
+      <control id="KSI-MLA-LET">
+        <title>Logging Event Types</title>
+        <prop name="label" value="KSI-MLA-LET" />
+        <prop name="updated" ns="http://fedramp.gov/ns/oscal" value="2026-06-24T00:00:00Z">
+          <remarks>
+            <p>Official launch of the FedRAMP Consolidated Rules for 2026.</p>
+          </remarks>
+        </prop>
+        <part id="KSI-MLA-LET_smt" name="statement">
+          <p>A list of information resources and event types that will be logged, monitored, and audited is maintained and persistently reviewed to ensure these activities occur.</p>
+        </part>
+      </control>
+      <control id="KSI-MLA-OSM">
+        <title>Operating SIEM Capability</title>
+        <prop name="label" value="KSI-MLA-OSM" />
+        <prop name="updated" ns="http://fedramp.gov/ns/oscal" value="2026-06-24T00:00:00Z">
+          <remarks>
+            <p>Official launch of the FedRAMP Consolidated Rules for 2026.</p>
+          </remarks>
+        </prop>
+        <part id="KSI-MLA-OSM_smt" name="statement">
+          <p>A Security Information and Event Management (SIEM) or similar system(s) is used and persistently reviewed for centralized, tamper-resistant logging of events, activities, and changes.</p>
+        </part>
+      </control>
+      <control id="KSI-MLA-RVL">
+        <title>Reviewing Logs</title>
+        <prop name="label" value="KSI-MLA-RVL" />
+        <prop name="updated" ns="http://fedramp.gov/ns/oscal" value="2026-06-24T00:00:00Z">
+          <remarks>
+            <p>Official launch of the FedRAMP Consolidated Rules for 2026.</p>
+          </remarks>
+        </prop>
+        <part id="KSI-MLA-RVL_smt" name="statement">
+          <p>Logs are persistently reviewed and audited.</p>
+        </part>
+      </control>
+    </group>
+    <group id="KSI-PIY">
+      <title>Policy and Inventory</title>
+      <prop name="label" value="KSI-PIY" />
+      <control id="KSI-PIY-GIV">
+        <title>Generating Inventories</title>
+        <prop name="label" value="KSI-PIY-GIV" />
+        <prop name="updated" ns="http://fedramp.gov/ns/oscal" value="2026-06-24T00:00:00Z">
+          <remarks>
+            <p>Official launch of the FedRAMP Consolidated Rules for 2026.</p>
+          </remarks>
+        </prop>
+        <part id="KSI-PIY-GIV_smt" name="statement">
+          <p>Authoritative sources are used to automatically generate real-time inventories of all information resources when needed.</p>
+        </part>
+      </control>
+      <control id="KSI-PIY-RES">
+        <title>Reviewing Executive Support</title>
+        <prop name="label" value="KSI-PIY-RES" />
+        <prop name="updated" ns="http://fedramp.gov/ns/oscal" value="2026-06-24T00:00:00Z">
+          <remarks>
+            <p>Official launch of the FedRAMP Consolidated Rules for 2026.</p>
+          </remarks>
+        </prop>
+        <part id="KSI-PIY-RES_smt" name="statement">
+          <p>Executive support for achieving the provider's security goals is persistently reviewed and demonstrated.</p>
+        </part>
+      </control>
+      <control id="KSI-PIY-RIS">
+        <title>Reviewing Investments in Security</title>
+        <prop name="label" value="KSI-PIY-RIS" />
+        <prop name="updated" ns="http://fedramp.gov/ns/oscal" value="2026-06-24T00:00:00Z">
+          <remarks>
+            <p>Official launch of the FedRAMP Consolidated Rules for 2026.</p>
+          </remarks>
+        </prop>
+        <part id="KSI-PIY-RIS_smt" name="statement">
+          <p>The effectiveness of the provider's investments in achieving security goals is persistently reviewed.</p>
+        </part>
+      </control>
+      <control id="KSI-PIY-RSD">
+        <title>Reviewing Security in the SDLC</title>
+        <prop name="label" value="KSI-PIY-RSD" />
+        <prop name="updated" ns="http://fedramp.gov/ns/oscal" value="2026-06-24T00:00:00Z">
+          <remarks>
+            <p>Official launch of the FedRAMP Consolidated Rules for 2026.</p>
+          </remarks>
+        </prop>
+        <part id="KSI-PIY-RSD_smt" name="statement">
+          <p>The effectiveness of building security and privacy considerations into the Software Development Lifecycle and aligning with CISA Secure By Design principles is persistently reviewed.</p>
+        </part>
+      </control>
+      <control id="KSI-PIY-RVD">
+        <title>Reviewing Vulnerability Disclosures</title>
+        <prop name="label" value="KSI-PIY-RVD" />
+        <prop name="updated" ns="http://fedramp.gov/ns/oscal" value="2026-06-24T00:00:00Z">
+          <remarks>
+            <p>Official launch of the FedRAMP Consolidated Rules for 2026.</p>
+          </remarks>
+        </prop>
+        <part id="KSI-PIY-RVD_smt" name="statement">
+          <p>The effectiveness of the provider's vulnerability disclosure program is persistently reviewed.</p>
+        </part>
+      </control>
+    </group>
+    <group id="KSI-RPL">
+      <title>Recovery Planning</title>
+      <prop name="label" value="KSI-RPL" />
+      <control id="KSI-RPL-ABO">
+        <title>Aligning Backups with Objectives</title>
+        <prop name="label" value="KSI-RPL-ABO" />
+        <prop name="updated" ns="http://fedramp.gov/ns/oscal" value="2026-06-24T00:00:00Z">
+          <remarks>
+            <p>Official launch of the FedRAMP Consolidated Rules for 2026.</p>
+          </remarks>
+        </prop>
+        <part id="KSI-RPL-ABO_smt" name="statement">
+          <p>The alignment of machine-based information resource backups with defined recovery objectives is persistently reviewed.</p>
+        </part>
+      </control>
+      <control id="KSI-RPL-ARP">
+        <title>Aligning Recovery Plan</title>
+        <prop name="label" value="KSI-RPL-ARP" />
+        <prop name="updated" ns="http://fedramp.gov/ns/oscal" value="2026-06-24T00:00:00Z">
+          <remarks>
+            <p>Official launch of the FedRAMP Consolidated Rules for 2026.</p>
+          </remarks>
+        </prop>
+        <part id="KSI-RPL-ARP_smt" name="statement">
+          <p>The alignment of recovery plans with defined recovery objectives is persistently reviewed.</p>
+        </part>
+      </control>
+      <control id="KSI-RPL-RRO">
+        <title>Reviewing Recovery Objectives</title>
+        <prop name="label" value="KSI-RPL-RRO" />
+        <prop name="updated" ns="http://fedramp.gov/ns/oscal" value="2026-06-24T00:00:00Z">
+          <remarks>
+            <p>Official launch of the FedRAMP Consolidated Rules for 2026.</p>
+          </remarks>
+        </prop>
+        <part id="KSI-RPL-RRO_smt" name="statement">
+          <p>The desired Recovery Time Objectives (RTO) and Recovery Point Objectives (RPO) are defined and persistently reviewed for alignment with the provider's business needs and capabilities.</p>
+        </part>
+      </control>
+      <control id="KSI-RPL-TRC">
+        <title>Testing Recovery Capabilities</title>
+        <prop name="label" value="KSI-RPL-TRC" />
+        <prop name="updated" ns="http://fedramp.gov/ns/oscal" value="2026-06-24T00:00:00Z">
+          <remarks>
+            <p>Official launch of the FedRAMP Consolidated Rules for 2026.</p>
+          </remarks>
+        </prop>
+        <part id="KSI-RPL-TRC_smt" name="statement">
+          <p>The capability to recover from incidents and contingencies aligned with defined recovery objectives is persistently tested.</p>
+        </part>
+      </control>
+    </group>
+    <group id="KSI-SCR">
+      <title>Supply Chain Risk</title>
+      <prop name="label" value="KSI-SCR" />
+      <control id="KSI-SCR-MIT">
+        <title>Mitigating Supply Chain Risk</title>
+        <prop name="label" value="KSI-SCR-MIT" />
+        <prop name="updated" ns="http://fedramp.gov/ns/oscal" value="2026-06-24T00:00:00Z">
+          <remarks>
+            <p>Official launch of the FedRAMP Consolidated Rules for 2026.</p>
+          </remarks>
+        </prop>
+        <part id="KSI-SCR-MIT_smt" name="statement">
+          <p>Persistently identify, review, and mitigate potential supply chain risks.</p>
+        </part>
+      </control>
+      <control id="KSI-SCR-MON">
+        <title>Monitoring Supply Chain Risk</title>
+        <prop name="label" value="KSI-SCR-MON" />
+        <prop name="updated" ns="http://fedramp.gov/ns/oscal" value="2026-06-24T00:00:00Z">
+          <remarks>
+            <p>Official launch of the FedRAMP Consolidated Rules for 2026.</p>
+          </remarks>
+        </prop>
+        <part id="KSI-SCR-MON_smt" name="statement">
+          <p>Third party software information resources are automatically monitored for upstream vulnerabilities using mechanisms that may include contractual notification requirements or active monitoring services.</p>
+        </part>
+      </control>
+    </group>
+    <group id="KSI-SVC">
+      <title>Service Configuration</title>
+      <prop name="label" value="KSI-SVC" />
+      <control id="KSI-SVC-ACM">
+        <title>Automating Configuration Management</title>
+        <prop name="label" value="KSI-SVC-ACM" />
+        <prop name="updated" ns="http://fedramp.gov/ns/oscal" value="2026-06-24T00:00:00Z">
+          <remarks>
+            <p>Official launch of the FedRAMP Consolidated Rules for 2026.</p>
+          </remarks>
+        </prop>
+        <part id="KSI-SVC-ACM_smt" name="statement">
+          <p>The configuration of machine-based information resources is managed using automation and persistently reviewed for drift.</p>
+        </part>
+      </control>
+      <control id="KSI-SVC-ASM">
+        <title>Automating Secret Management</title>
+        <prop name="label" value="KSI-SVC-ASM" />
+        <prop name="updated" ns="http://fedramp.gov/ns/oscal" value="2026-06-24T00:00:00Z">
+          <remarks>
+            <p>Official launch of the FedRAMP Consolidated Rules for 2026.</p>
+          </remarks>
+        </prop>
+        <part id="KSI-SVC-ASM_smt" name="statement">
+          <p>Management, protection, and regular rotation of digital keys, certificates, and other secrets is automated and persistently reviewed.</p>
+        </part>
+      </control>
+      <control id="KSI-SVC-EIS">
+        <title>Evaluating and Improving Security</title>
+        <prop name="label" value="KSI-SVC-EIS" />
+        <prop name="updated" ns="http://fedramp.gov/ns/oscal" value="2026-06-24T00:00:00Z">
+          <remarks>
+            <p>Official launch of the FedRAMP Consolidated Rules for 2026.</p>
+          </remarks>
+        </prop>
+        <part id="KSI-SVC-EIS_smt" name="statement">
+          <p>Information resources are persistently evaluated for opportunities to improve security and those improvements are persistently made.</p>
+        </part>
+      </control>
+      <control id="KSI-SVC-PRR">
+        <title>Preventing Residual Risk</title>
+        <prop name="label" value="KSI-SVC-PRR" />
+        <prop name="updated" ns="http://fedramp.gov/ns/oscal" value="2026-06-24T00:00:00Z">
+          <remarks>
+            <p>Official launch of the FedRAMP Consolidated Rules for 2026.</p>
+          </remarks>
+        </prop>
+        <part id="KSI-SVC-PRR_smt" name="statement">
+          <p>Varies by Class</p>
+        </part>
+        <control id="KSI-SVC-PRR-b">
+          <title>Class B</title>
+          <prop name="label" value="Class B" />
+          <part id="KSI-SVC-PRR-b_smt" name="statement">
+            <p>
+              <strong>Optional:</strong> Plans, procedures, and the state of information resources are persistently reviewed after making changes to limit and remove unwanted residual elements that would likely negatively affect the confidentiality, integrity, or availability of federal customer data.</p>
+          </part>
+        </control>
+        <control id="KSI-SVC-PRR-c">
+          <title>Class C</title>
+          <prop name="label" value="Class C" />
+          <part id="KSI-SVC-PRR-c_smt" name="statement">
+            <p>Plans, procedures, and the state of information resources are persistently reviewed after making changes to limit and remove unwanted residual elements that would likely negatively affect the confidentiality, integrity, or availability of federal customer data.</p>
+          </part>
+        </control>
+      </control>
+      <control id="KSI-SVC-RUD">
+        <title>Removing Unwanted Data</title>
+        <prop name="label" value="KSI-SVC-RUD" />
+        <prop name="updated" ns="http://fedramp.gov/ns/oscal" value="2026-06-24T00:00:00Z">
+          <remarks>
+            <p>Official launch of the FedRAMP Consolidated Rules for 2026.</p>
+          </remarks>
+        </prop>
+        <part id="KSI-SVC-RUD_smt" name="statement">
+          <p>Varies by Class</p>
+        </part>
+        <control id="KSI-SVC-RUD-b">
+          <title>Class B</title>
+          <prop name="label" value="Class B" />
+          <part id="KSI-SVC-RUD-b_smt" name="statement">
+            <p>
+              <strong>Optional:</strong> Unwanted federal customer data is removed promptly when requested by an agency in alignment with customer agreements, including from backups if appropriate; this typically applies when a customer spills information or when a customer seeks to remove information from a service due to a change in usage.</p>
+          </part>
+        </control>
+        <control id="KSI-SVC-RUD-c">
+          <title>Class C</title>
+          <prop name="label" value="Class C" />
+          <part id="KSI-SVC-RUD-c_smt" name="statement">
+            <p>Unwanted federal customer data is removed promptly when requested by an agency in alignment with customer agreements, including from backups if appropriate; this typically applies when a customer spills information or when a customer seeks to remove information from a service due to a change in usage.</p>
+          </part>
+        </control>
+      </control>
+      <control id="KSI-SVC-SIN">
+        <title>Securing Information</title>
+        <prop name="label" value="KSI-SVC-SIN" />
+        <prop name="updated" ns="http://fedramp.gov/ns/oscal" value="2026-06-24T00:00:00Z">
+          <remarks>
+            <p>Official launch of the FedRAMP Consolidated Rules for 2026.</p>
+          </remarks>
+        </prop>
+        <part id="KSI-SVC-SIN_smt" name="statement">
+          <p>Information is encrypted or otherwise secured from unwanted access or modification.</p>
+        </part>
+      </control>
+      <control id="KSI-SVC-VCM">
+        <title>Validating Communications</title>
+        <prop name="label" value="KSI-SVC-VCM" />
+        <prop name="updated" ns="http://fedramp.gov/ns/oscal" value="2026-06-24T00:00:00Z">
+          <remarks>
+            <p>Official launch of the FedRAMP Consolidated Rules for 2026.</p>
+          </remarks>
+        </prop>
+        <part id="KSI-SVC-VCM_smt" name="statement">
+          <p>Varies by Class</p>
+        </part>
+        <control id="KSI-SVC-VCM-b">
+          <title>Class B</title>
+          <prop name="label" value="Class B" />
+          <part id="KSI-SVC-VCM-b_smt" name="statement">
+            <p>
+              <strong>Optional:</strong> The authenticity and integrity of communications between machine-based information resources is persistently validated using automation.</p>
+          </part>
+        </control>
+        <control id="KSI-SVC-VCM-c">
+          <title>Class C</title>
+          <prop name="label" value="Class C" />
+          <part id="KSI-SVC-VCM-c_smt" name="statement">
+            <p>The authenticity and integrity of communications between machine-based information resources is persistently validated using automation.</p>
+          </part>
+        </control>
+      </control>
+      <control id="KSI-SVC-VRI">
+        <title>Validating Resource Integrity</title>
+        <prop name="label" value="KSI-SVC-VRI" />
+        <prop name="updated" ns="http://fedramp.gov/ns/oscal" value="2026-06-24T00:00:00Z">
+          <remarks>
+            <p>Official launch of the FedRAMP Consolidated Rules for 2026.</p>
+          </remarks>
+        </prop>
+        <part id="KSI-SVC-VRI_smt" name="statement">
+          <p>Use cryptographic methods to validate the integrity of machine-based information resources.</p>
+        </part>
       </control>
     </group>
   </group>

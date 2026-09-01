@@ -1,0 +1,926 @@
+profile:
+  uuid: 2451a336-bf6b-42d1-893a-e5aea19d902f
+  metadata:
+    title: "FedRAMP Rev 5 \u2014 Tailoring"
+    published: '2026-07-06T00:00:00Z'
+    last-modified: '2026-09-01T03:01:47Z'
+    version: 2026.07.06.01
+    oscal-version: 1.2.3
+  imports:
+  - href: '#dea6ca8c-c796-4970-9c6e-edc158f8b7dd'
+    include-controls:
+    - with-ids:
+      - ac-1
+      - ac-10
+      - ac-11
+      - ac-11.1
+      - ac-12
+      - ac-14
+      - ac-17
+      - ac-17.1
+      - ac-17.2
+      - ac-17.3
+      - ac-17.4
+      - ac-18
+      - ac-18.1
+      - ac-18.3
+      - ac-18.4
+      - ac-18.5
+      - ac-19
+      - ac-19.5
+      - ac-2
+      - ac-2.1
+      - ac-2.11
+      - ac-2.12
+      - ac-2.13
+      - ac-2.2
+      - ac-2.3
+      - ac-2.4
+      - ac-2.5
+      - ac-2.7
+      - ac-2.9
+      - ac-20
+      - ac-20.1
+      - ac-20.2
+      - ac-21
+      - ac-22
+      - ac-3
+      - ac-4
+      - ac-4.21
+      - ac-4.4
+      - ac-5
+      - ac-6
+      - ac-6.1
+      - ac-6.10
+      - ac-6.2
+      - ac-6.3
+      - ac-6.5
+      - ac-6.7
+      - ac-6.8
+      - ac-6.9
+      - ac-7
+      - ac-8
+      - at-1
+      - at-2
+      - at-2.2
+      - at-2.3
+      - at-3
+      - at-4
+      - au-1
+      - au-10
+      - au-11
+      - au-12
+      - au-12.1
+      - au-12.3
+      - au-2
+      - au-3
+      - au-3.1
+      - au-4
+      - au-5
+      - au-5.1
+      - au-5.2
+      - au-6
+      - au-6.1
+      - au-6.3
+      - au-6.4
+      - au-6.5
+      - au-6.6
+      - au-6.7
+      - au-7
+      - au-7.1
+      - au-8
+      - au-9
+      - au-9.2
+      - au-9.3
+      - au-9.4
+      - ca-1
+      - ca-2
+      - ca-2.1
+      - ca-2.2
+      - ca-2.3
+      - ca-3
+      - ca-3.6
+      - ca-6
+      - ca-7
+      - ca-7.1
+      - ca-7.4
+      - ca-8
+      - ca-8.1
+      - ca-8.2
+      - ca-9
+      - cm-1
+      - cm-10
+      - cm-11
+      - cm-12
+      - cm-12.1
+      - cm-14
+      - cm-2
+      - cm-2.2
+      - cm-2.3
+      - cm-2.7
+      - cm-3
+      - cm-3.1
+      - cm-3.2
+      - cm-3.4
+      - cm-3.6
+      - cm-4
+      - cm-4.1
+      - cm-4.2
+      - cm-5
+      - cm-5.1
+      - cm-5.5
+      - cm-6
+      - cm-6.1
+      - cm-6.2
+      - cm-7
+      - cm-7.1
+      - cm-7.2
+      - cm-7.5
+      - cm-8
+      - cm-8.1
+      - cm-8.2
+      - cm-8.3
+      - cm-8.4
+      - cm-9
+      - cp-1
+      - cp-10
+      - cp-10.2
+      - cp-10.4
+      - cp-2
+      - cp-2.1
+      - cp-2.2
+      - cp-2.3
+      - cp-2.5
+      - cp-2.8
+      - cp-3
+      - cp-3.1
+      - cp-4
+      - cp-4.1
+      - cp-4.2
+      - cp-6
+      - cp-6.1
+      - cp-6.2
+      - cp-6.3
+      - cp-7
+      - cp-7.1
+      - cp-7.2
+      - cp-7.3
+      - cp-7.4
+      - cp-8
+      - cp-8.1
+      - cp-8.2
+      - cp-8.3
+      - cp-8.4
+      - cp-9
+      - cp-9.1
+      - cp-9.2
+      - cp-9.3
+      - cp-9.5
+      - cp-9.8
+      - ia-1
+      - ia-11
+      - ia-12
+      - ia-12.2
+      - ia-12.3
+      - ia-12.4
+      - ia-12.5
+      - ia-2
+      - ia-2.1
+      - ia-2.12
+      - ia-2.2
+      - ia-2.5
+      - ia-2.6
+      - ia-2.8
+      - ia-3
+      - ia-4
+      - ia-4.4
+      - ia-5
+      - ia-5.1
+      - ia-5.13
+      - ia-5.2
+      - ia-5.6
+      - ia-5.7
+      - ia-5.8
+      - ia-6
+      - ia-7
+      - ia-8
+      - ia-8.1
+      - ia-8.2
+      - ia-8.4
+      - ir-1
+      - ir-2
+      - ir-2.1
+      - ir-2.2
+      - ir-3
+      - ir-3.2
+      - ir-4
+      - ir-4.1
+      - ir-4.11
+      - ir-4.2
+      - ir-4.4
+      - ir-4.6
+      - ir-5
+      - ir-5.1
+      - ir-6
+      - ir-6.1
+      - ir-6.3
+      - ir-7
+      - ir-7.1
+      - ir-8
+      - ir-9
+      - ir-9.2
+      - ir-9.3
+      - ir-9.4
+      - ma-1
+      - ma-2
+      - ma-2.2
+      - ma-3
+      - ma-3.1
+      - ma-3.2
+      - ma-3.3
+      - ma-4
+      - ma-4.3
+      - ma-5
+      - ma-5.1
+      - ma-6
+      - mp-1
+      - mp-2
+      - mp-3
+      - mp-4
+      - mp-5
+      - mp-6
+      - mp-6.1
+      - mp-6.2
+      - mp-6.3
+      - mp-7
+      - pe-1
+      - pe-10
+      - pe-11
+      - pe-11.1
+      - pe-12
+      - pe-13
+      - pe-13.1
+      - pe-13.2
+      - pe-14
+      - pe-14.2
+      - pe-15
+      - pe-15.1
+      - pe-16
+      - pe-17
+      - pe-18
+      - pe-2
+      - pe-3
+      - pe-3.1
+      - pe-4
+      - pe-5
+      - pe-6
+      - pe-6.1
+      - pe-6.4
+      - pe-8
+      - pe-8.1
+      - pe-9
+      - pl-1
+      - pl-10
+      - pl-11
+      - pl-2
+      - pl-4
+      - pl-4.1
+      - pl-8
+      - ps-1
+      - ps-2
+      - ps-3
+      - ps-3.3
+      - ps-4
+      - ps-4.2
+      - ps-5
+      - ps-6
+      - ps-7
+      - ps-8
+      - ps-9
+      - ra-1
+      - ra-2
+      - ra-3
+      - ra-3.1
+      - ra-5
+      - ra-5.11
+      - ra-5.2
+      - ra-5.3
+      - ra-5.4
+      - ra-5.5
+      - ra-5.8
+      - ra-7
+      - ra-9
+      - sa-1
+      - sa-10
+      - sa-11
+      - sa-11.1
+      - sa-11.2
+      - sa-15
+      - sa-15.3
+      - sa-16
+      - sa-17
+      - sa-2
+      - sa-21
+      - sa-22
+      - sa-3
+      - sa-4
+      - sa-4.1
+      - sa-4.10
+      - sa-4.2
+      - sa-4.5
+      - sa-4.9
+      - sa-5
+      - sa-8
+      - sa-9
+      - sa-9.1
+      - sa-9.2
+      - sa-9.5
+      - sc-1
+      - sc-10
+      - sc-12
+      - sc-12.1
+      - sc-13
+      - sc-15
+      - sc-17
+      - sc-18
+      - sc-2
+      - sc-20
+      - sc-21
+      - sc-22
+      - sc-23
+      - sc-24
+      - sc-28
+      - sc-28.1
+      - sc-3
+      - sc-39
+      - sc-4
+      - sc-45
+      - sc-45.1
+      - sc-5
+      - sc-7
+      - sc-7.10
+      - sc-7.12
+      - sc-7.18
+      - sc-7.20
+      - sc-7.21
+      - sc-7.3
+      - sc-7.4
+      - sc-7.5
+      - sc-7.7
+      - sc-7.8
+      - sc-8
+      - sc-8.1
+      - si-1
+      - si-10
+      - si-11
+      - si-12
+      - si-16
+      - si-2
+      - si-2.2
+      - si-2.3
+      - si-3
+      - si-4
+      - si-4.1
+      - si-4.10
+      - si-4.11
+      - si-4.12
+      - si-4.14
+      - si-4.16
+      - si-4.18
+      - si-4.19
+      - si-4.2
+      - si-4.20
+      - si-4.22
+      - si-4.23
+      - si-4.4
+      - si-4.5
+      - si-5
+      - si-5.1
+      - si-6
+      - si-7
+      - si-7.1
+      - si-7.15
+      - si-7.2
+      - si-7.5
+      - si-7.7
+      - si-8
+      - si-8.2
+      - sr-1
+      - sr-10
+      - sr-11
+      - sr-11.1
+      - sr-11.2
+      - sr-12
+      - sr-2
+      - sr-2.1
+      - sr-3
+      - sr-5
+      - sr-6
+      - sr-8
+      - sr-9
+      - sr-9.1
+  merge:
+    combine:
+      method: use-first
+    as-is: true
+  modify:
+    set-parameters:
+    - param-id: ac-06.01_odp.02
+      values:
+      - all functions not publicly accessible
+    - param-id: ac-06.01_odp.05
+      values:
+      - all security-relevant information not publicly available
+    - param-id: ac-06.02_odp
+      values:
+      - all security functions
+    - param-id: ac-06.08_odp
+      values:
+      - any software except software explicitly documented
+    - param-id: au-10_odp
+      values:
+      - at least actions including the addition, modification, deletion, approval,
+        sending, or receiving of data
+    - param-id: au-12_odp.01
+      values:
+      - at least all information system and network components where audit capability
+        is deployed/available
+    - param-id: ca-02_odp.02
+      values:
+      - individuals or roles to include FedRAMP and agency customers
+    - param-id: ca-02.03_odp.01
+      values:
+      - any FedRAMP Recognized independent assessment service
+    - param-id: cm-11_odp.03
+      values:
+      - Continuously (via CM-7 (5))
+    - param-id: cp-02.03_odp.02
+      values:
+      - time period defined in service provider and organization Service Level Agreements
+    - param-id: cp-10.04_odp
+      values:
+      - time period consistent with the restoration time-periods defined in the service
+        provider and organization Service Level Agreements
+    - param-id: ia-02.08_odp
+      values:
+      - privileged accounts; non-privileged accounts
+    - param-id: ia-02.06_odp.01
+      values:
+      - local, network and remote
+    - param-id: ia-02.06_odp.02
+      values:
+      - privileged accounts; non-privileged accounts
+    - param-id: ia-04.04_odp
+      values:
+      - contractors; foreign nationals
+    - param-id: sa-09.02_odp
+      values:
+      - all external systems where federal customer data is processed or stored
+    alters:
+    - control-id: ac-20
+      adds:
+      - position: ending
+        parts:
+        - name: guidance
+          prose: 'The interrelated controls of AC-20, CA-3, and SA-9 should be differentiated
+            as follows:
+
+
+            AC-20 describes system access to and from external systems.
+
+
+            CA-3 describes documentation of an agreement between the respective system
+            owners when data is exchanged between the CSO and an external system.
+
+
+            SA-9 describes the responsibilities of external system owners. These responsibilities
+            would typically be captured in the agreement required by CA-3.'
+    - control-id: au-6
+      adds:
+      - position: ending
+        parts:
+        - name: guidance
+          prose: This activity is considered vulnerability detection and is subject
+            to the Vulnerability Detection and Response rules.
+    - control-id: au-6.5
+      adds:
+      - position: ending
+        parts:
+        - name: guidance
+          prose: This activity is considered vulnerability detection and is subject
+            to the Vulnerability Detection and Response rules.
+    - control-id: ca-7
+      adds:
+      - position: ending
+        parts:
+        - name: guidance
+          prose: Follow the FedRAMP Continuous Collaborative Monitoring, Significant
+            Change Notification, Vulnerability Detection and Response, and Vulnerability
+            Evaluation and Reporting rules.
+    - control-id: ca-8
+      adds:
+      - position: ending
+        parts:
+        - name: guidance
+          prose: Penetration testing is part of vulnerability detection and is subject
+            to the Vulnerability Detection and Response rules.
+    - control-id: cm-1
+      adds:
+      - position: ending
+        parts:
+        - name: guidance
+          prose: Follow the Significant Change Notification rules.
+    - control-id: cm-8
+      adds:
+      - position: ending
+        parts:
+        - name: guidance
+          prose: Follow the FedRAMP Continuous Collaborative Monitoring, Significant
+            Change Notification, Vulnerability Detection and Response, and Vulnerability
+            Evaluation and Reporting rules.
+    - control-id: cm-12
+      adds:
+      - position: ending
+        parts:
+        - name: guidance
+          prose: Follow the FedRAMP Minimum Assessment Scope rules.
+    - control-id: cm-12.1
+      adds:
+      - position: ending
+        parts:
+        - name: guidance
+          prose: Follow the FedRAMP Minimum Assessment Scope rules.
+    - control-id: cm-14
+      adds:
+      - position: ending
+        parts:
+        - name: guidance
+          prose: If digital signatures/certificates are unavailable, alternative cryptographic
+            integrity checks (hashes, self-signed certs, etc.) can be utilized.
+    - control-id: cp-7.1
+      adds:
+      - position: ending
+        parts:
+        - name: guidance
+          prose: The service provider may determine what is considered a sufficient
+            degree of separation between the primary and alternate processing sites,
+            based on the types of threats that are of concern. For one particular
+            type of threat (i.e., hostile cyber attack), the degree of separation
+            between sites will be less relevant.
+    - control-id: ia-2
+      adds:
+      - position: ending
+        parts:
+        - name: guidance
+          prose: 'Multi-factor authentication must be phishing-resistant. In accordance
+            with current CISA Guidance. Current CISA guidance can be found here: https://www.cisa.gov/sites/default/files/publications/fact-sheet-implementing-phishing-resistant-mfa-508c.pdf'
+    - control-id: ia-2.1
+      adds:
+      - position: ending
+        parts:
+        - name: guidance
+          prose: 'Multi-factor authentication must be phishing-resistant. In accordance
+            with current CISA Guidance. Current CISA guidance can be found here: https://www.cisa.gov/sites/default/files/publications/fact-sheet-implementing-phishing-resistant-mfa-508c.pdf'
+    - control-id: ia-2.2
+      adds:
+      - position: ending
+        parts:
+        - name: guidance
+          prose: 'Multi-factor authentication must be phishing-resistant. In accordance
+            with current CISA Guidance. Current CISA guidance can be found here: https://www.cisa.gov/sites/default/files/publications/fact-sheet-implementing-phishing-resistant-mfa-508c.pdf'
+    - control-id: ir-1
+      adds:
+      - position: ending
+        parts:
+        - name: guidance
+          prose: Follow the FedRAMP Incident Evaluation and Communication rules.
+    - control-id: ir-2
+      adds:
+      - position: ending
+        parts:
+        - name: guidance
+          prose: Follow the FedRAMP Incident Evaluation and Communication rules.
+    - control-id: ir-2.1
+      adds:
+      - position: ending
+        parts:
+        - name: guidance
+          prose: Follow the FedRAMP Incident Evaluation and Communication rules.
+    - control-id: ir-2.2
+      adds:
+      - position: ending
+        parts:
+        - name: guidance
+          prose: Follow the FedRAMP Incident Evaluation and Communication rules.
+    - control-id: ir-3
+      adds:
+      - position: ending
+        parts:
+        - name: guidance
+          prose: Follow the FedRAMP Incident Evaluation and Communication rules.
+    - control-id: ir-3.2
+      adds:
+      - position: ending
+        parts:
+        - name: guidance
+          prose: Follow the FedRAMP Incident Evaluation and Communication rules.
+    - control-id: ir-4
+      adds:
+      - position: ending
+        parts:
+        - name: guidance
+          prose: Follow the FedRAMP Incident Evaluation and Communication rules.
+    - control-id: ir-4.1
+      adds:
+      - position: ending
+        parts:
+        - name: guidance
+          prose: Follow the FedRAMP Incident Evaluation and Communication rules.
+    - control-id: ir-4.2
+      adds:
+      - position: ending
+        parts:
+        - name: guidance
+          prose: Follow the FedRAMP Incident Evaluation and Communication rules.
+    - control-id: ir-4.4
+      adds:
+      - position: ending
+        parts:
+        - name: guidance
+          prose: Follow the FedRAMP Incident Evaluation and Communication rules.
+    - control-id: ir-4.6
+      adds:
+      - position: ending
+        parts:
+        - name: guidance
+          prose: Follow the FedRAMP Incident Evaluation and Communication rules.
+    - control-id: ir-4.11
+      adds:
+      - position: ending
+        parts:
+        - name: guidance
+          prose: Follow the FedRAMP Incident Evaluation and Communication rules.
+    - control-id: ir-5
+      adds:
+      - position: ending
+        parts:
+        - name: guidance
+          prose: Follow the FedRAMP Incident Evaluation and Communication rules.
+    - control-id: ir-5.1
+      adds:
+      - position: ending
+        parts:
+        - name: guidance
+          prose: Follow the FedRAMP Incident Evaluation and Communication rules.
+    - control-id: ir-6
+      adds:
+      - position: ending
+        parts:
+        - name: guidance
+          prose: Follow the FedRAMP Incident Evaluation and Communication rules.
+    - control-id: ir-6.1
+      adds:
+      - position: ending
+        parts:
+        - name: guidance
+          prose: Follow the FedRAMP Incident Evaluation and Communication rules.
+    - control-id: ir-6.3
+      adds:
+      - position: ending
+        parts:
+        - name: guidance
+          prose: Follow the FedRAMP Incident Evaluation and Communication rules.
+    - control-id: ir-7
+      adds:
+      - position: ending
+        parts:
+        - name: guidance
+          prose: Follow the FedRAMP Incident Evaluation and Communication rules.
+    - control-id: ir-7.1
+      adds:
+      - position: ending
+        parts:
+        - name: guidance
+          prose: Follow the FedRAMP Incident Evaluation and Communication rules.
+    - control-id: ir-8
+      adds:
+      - position: ending
+        parts:
+        - name: guidance
+          prose: Follow the FedRAMP Incident Evaluation and Communication rules.
+    - control-id: ir-9
+      adds:
+      - position: ending
+        parts:
+        - name: guidance
+          prose: Follow the FedRAMP Incident Evaluation and Communication rules.
+    - control-id: ir-9.2
+      adds:
+      - position: ending
+        parts:
+        - name: guidance
+          prose: Follow the FedRAMP Incident Evaluation and Communication rules.
+    - control-id: ir-9.3
+      adds:
+      - position: ending
+        parts:
+        - name: guidance
+          prose: Follow the FedRAMP Incident Evaluation and Communication rules.
+    - control-id: ir-9.4
+      adds:
+      - position: ending
+        parts:
+        - name: guidance
+          prose: Follow the FedRAMP Incident Evaluation and Communication rules.
+    - control-id: ma-5
+      adds:
+      - position: ending
+        parts:
+        - name: guidance
+          prose: CSPs should clearly document nationality requirements (or lack of)
+            for maintenance personnel where applicable.
+    - control-id: ma-5.1
+      adds:
+      - position: ending
+        parts:
+        - name: guidance
+          prose: Only MA-5 (1) (a) (1) is required by FedRAMP Class C Baseline.
+    - control-id: ps-7
+      adds:
+      - position: ending
+        parts:
+        - name: guidance
+          prose: CSPs MUST clearly document any nationality requirements for any account
+            type within its platform. If none exists, this must also be explicitly
+            stated.
+    - control-id: ra-5
+      adds:
+      - position: ending
+        parts:
+        - name: guidance
+          prose: Follow the FedRAMP Vulnerability Detection and Response and Vulnerability
+            Evaluation and Reporting rules.
+    - control-id: ra-5.2
+      adds:
+      - position: ending
+        parts:
+        - name: guidance
+          prose: Follow the FedRAMP Vulnerability Detection and Response and Vulnerability
+            Evaluation and Reporting rules.
+    - control-id: ra-5.3
+      adds:
+      - position: ending
+        parts:
+        - name: guidance
+          prose: Follow the FedRAMP Vulnerability Detection and Response and Vulnerability
+            Evaluation and Reporting rules.
+    - control-id: ra-5.4
+      adds:
+      - position: ending
+        parts:
+        - name: guidance
+          prose: Follow the FedRAMP Vulnerability Detection and Response and Vulnerability
+            Evaluation and Reporting rules.
+    - control-id: ra-5.5
+      adds:
+      - position: ending
+        parts:
+        - name: guidance
+          prose: Follow the FedRAMP Vulnerability Detection and Response and Vulnerability
+            Evaluation and Reporting rules.
+    - control-id: ra-5.8
+      adds:
+      - position: ending
+        parts:
+        - name: guidance
+          prose: Follow the FedRAMP Vulnerability Detection and Response and Vulnerability
+            Evaluation and Reporting rules.
+    - control-id: ra-5.11
+      adds:
+      - position: ending
+        parts:
+        - name: guidance
+          prose: Follow the FedRAMP Vulnerability Detection and Response and Vulnerability
+            Evaluation and Reporting rules.
+    - control-id: ra-7
+      adds:
+      - position: ending
+        parts:
+        - name: guidance
+          prose: Follow the FedRAMP Vulnerability Detection and Response and Vulnerability
+            Evaluation and Reporting rules.
+    - control-id: sa-5
+      adds:
+      - position: ending
+        parts:
+        - name: guidance
+          prose: Follow the FedRAMP Secure Configuration Guide rules.
+    - control-id: sc-7
+      adds:
+      - position: ending
+        parts:
+        - name: guidance
+          prose: SC-7 (b) may be met by using any technical capability or complement
+            of capabilities that ensures logical separation between publicly accessible
+            components and internal networks by preventing traversal without inspection
+            and authorization; traffic may not flow unrestricted from publicly accessible
+            components to internal networks.
+    - control-id: sc-13
+      adds:
+      - position: ending
+        parts:
+        - name: guidance
+          prose: Follow the FedRAMP Cryptographic Module Use rules.
+    - control-id: si-2
+      adds:
+      - position: ending
+        parts:
+        - name: guidance
+          prose: Follow the FedRAMP Vulnerability Detection and Response and Vulnerability
+            Evaluation and Reporting rules.
+    - control-id: si-2.2
+      adds:
+      - position: ending
+        parts:
+        - name: guidance
+          prose: Follow the FedRAMP Vulnerability Detection and Response and Vulnerability
+            Evaluation and Reporting rules.
+    - control-id: si-4
+      adds:
+      - position: ending
+        parts:
+        - name: guidance
+          prose: Follow all applicable rules within the Vulnerability and Detection
+            Response and Incident Communication Procedure guidance.
+    - control-id: si-4.1
+      adds:
+      - position: ending
+        parts:
+        - name: guidance
+          prose: Follow the FedRAMP Vulnerability Detection and Response and Vulnerability
+            Evaluation and Reporting rules.
+    - control-id: si-4.2
+      adds:
+      - position: ending
+        parts:
+        - name: guidance
+          prose: Follow the FedRAMP Vulnerability Detection and Response and Vulnerability
+            Evaluation and Reporting rules.
+    - control-id: si-4.4
+      adds:
+      - position: ending
+        parts:
+        - name: guidance
+          prose: Follow the FedRAMP Vulnerability Detection and Response and Vulnerability
+            Evaluation and Reporting rules.
+    - control-id: si-4.5
+      adds:
+      - position: ending
+        parts:
+        - name: guidance
+          prose: Follow the FedRAMP Vulnerability Detection and Response and Vulnerability
+            Evaluation and Reporting rules.
+    - control-id: si-5
+      adds:
+      - position: ending
+        parts:
+        - name: guidance
+          prose: Follow the FedRAMP Addressing FedRAMP Communication rules.
+    - control-id: si-8
+      adds:
+      - position: ending
+        parts:
+        - name: guidance
+          prose: 'When CSO sends email on behalf of the government as part of the
+            business offering, Control Description should include implementation of
+            Domain-based Message Authentication, Reporting & Conformance (DMARC) on
+            the sending domain for outgoing messages as described in DHS Binding Operational
+            Directive (BOD) 18-01. https://www.cisa.gov/news-events/directives
+
+
+            SI-8 Guidance: CSPs should confirm DMARC configuration (where appropriate)
+            to ensure that policy=reject and the rua parameter includes reports@dmarc.cyber.dhs.gov.  DMARC
+            compliance should be documented in the SI-08 control implementation solution
+            description, and list the FROM: domain(s) when emails are sent on behalf
+            of the government.'
+    - control-id: sr-3
+      adds:
+      - position: ending
+        parts:
+        - name: guidance
+          prose: CSO must document and maintain the supply chain custody, including
+            replacement devices, to ensure the integrity of the devices before being
+            introduced to the boundary.
+    - control-id: sr-8
+      adds:
+      - position: ending
+        parts:
+        - name: guidance
+          prose: Follow the FedRAMP Incident Evaluation and Communication rules.
+  back-matter:
+    resources:
+    - uuid: dea6ca8c-c796-4970-9c6e-edc158f8b7dd
+      title: NIST SP 800-53 Revision 5
+      rlinks:
+      - href: https://raw.githubusercontent.com/usnistgov/oscal-content/refs/heads/main/nist.gov/SP800-53/rev5/json/NIST_SP-800-53_rev5_catalog.json
+        media-type: application/json

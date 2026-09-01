@@ -1,7 +1,7 @@
 """
 Unit tests for frr2oscal module.
 
-Tests cover pure helper functions (no I/O), the class-variant dict builder,
+Tests cover pure helper functions (no I/O), catalog-integrated part/prop helpers,
 and integration-level control creation using a real Catalog object.
 """
 
@@ -15,22 +15,33 @@ import pytest
 _tests_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 _repo_root  = os.path.dirname(_tests_dir)
 sys.path.insert(0, os.path.join(_repo_root, "src"))
-sys.path.insert(0, os.path.join(_repo_root, "..", "class"))
 
 import frr2oscal
 from frr2oscal import (
     FRR_NS,
-    _append_artifact_parts,
-    _append_extra_parts,
-    _assessment_method_part,
-    _build_class_control_dict,
+    PROFILE_NAMES,
+    TAILORING_HREF,
+    TAILORING_PROFILE_NAME,
+    _add_artifact_parts,
+    _add_extra_parts,
+    _add_following_information,
+    _add_frr_to_profiles,
+    _add_nist_to_profiles,
+    _apply_ctl_guidance,
+    _apply_ctl_params,
+    _apply_ctl_to_profiles,
+    _collect_ctl_param_ids,
+    _ctl_id_to_oscal,
     _date_to_datetime,
     _guidance_part,
     _notes_text,
+    _profile_keys_for,
+    _reset_profile_tracking,
+    _rev5_ctrl_to_oscal,
     _track_unhandled,
     _updated_props,
 )
-from oscal import Catalog
+from oscal import Catalog, Profile
 
 
 # ── Helpers ──────────────────────────────────────────────────────────────────
@@ -39,6 +50,13 @@ def _catalog_with_group(group_id: str = "grp") -> Catalog:
     """Return a minimal catalog with one root group ready for control insertion."""
     cat = Catalog.new(title="Test Catalog", version="0.1")
     cat.create_control_group(parent_id="[root]", id=group_id, title="Test Group")
+    return cat
+
+
+def _catalog_with_control(group_id: str = "grp", ctrl_id: str = "R-001") -> Catalog:
+    """Return a minimal catalog with one group and one control."""
+    cat = _catalog_with_group(group_id)
+    cat.create_control(parent_id=group_id, id=ctrl_id, title="Test Control")
     return cat
 
 
@@ -119,18 +137,6 @@ class TestTrackUnhandled:
 # ── _guidance_part ────────────────────────────────────────────────────────────
 
 class TestGuidancePart:
-    def test_following_information_list(self):
-        part = _guidance_part("following_information", ["line one", "line two"])
-        assert part["name"] == "guidance"
-        assert part["class"] == "following_information"
-        assert part["title"] == "Following Information"
-        assert "line one" in part["prose"]
-        assert "line two" in part["prose"]
-
-    def test_following_information_items_separated_by_blank_line(self):
-        part = _guidance_part("following_information", ["a", "b"])
-        assert part["prose"] == "a\n\nb"
-
     def test_schema_name_and_url(self):
         part = _guidance_part("schema", {"name": "My Schema", "url": "https://example.com"})
         assert part["class"] == "schema"
@@ -157,112 +163,8 @@ class TestGuidancePart:
         assert "B" in part["prose"]
 
     def test_title_converts_underscores_to_spaces(self):
-        part = _guidance_part("following_information", ["x"])
+        part = _guidance_part("examples", [{"id": "E1", "key_tests": [], "examples": []}])
         assert "_" not in part["title"]
-
-
-# ── _assessment_method_part ───────────────────────────────────────────────────
-
-class TestAssessmentMethodPart:
-    def test_name_is_assessment_method(self):
-        part = _assessment_method_part(["a1"], "all")
-        assert part["name"] == "assessment-method"
-
-    def test_method_prop_is_examine(self):
-        part = _assessment_method_part(["a1"], "all")
-        assert _prop_value(part["props"], "method") == "EXAMINE"
-
-    def test_path_prop_ns_and_value(self):
-        part = _assessment_method_part(["a1"], "20x")
-        assert _prop_value(part["props"], "path", ns=FRR_NS) == "20x"
-
-    def test_assessment_objects_parts(self):
-        part = _assessment_method_part(["art one", "art two"], "rev5")
-        assert len(part["parts"]) == 2
-        assert part["parts"][0]["name"] == "assessment-objects"
-        assert part["parts"][0]["prose"] == "art one"
-
-    def test_empty_artifacts_produces_empty_parts(self):
-        part = _assessment_method_part([], "all")
-        assert part["parts"] == []
-
-
-# ── _append_artifact_parts ────────────────────────────────────────────────────
-
-class TestAppendArtifactParts:
-    def test_all_scope_only(self):
-        parts: list = []
-        _append_artifact_parts(parts, {"all": ["a1"]})
-        assert len(parts) == 1
-        assert _prop_value(parts[0]["props"], "path", ns=FRR_NS) == "all"
-
-    def test_three_scopes_in_order(self):
-        parts: list = []
-        _append_artifact_parts(parts, {"all": ["a"], "20x": ["b"], "rev5": ["c"]})
-        assert len(parts) == 3
-        scopes = [_prop_value(p["props"], "path", ns=FRR_NS) for p in parts]
-        assert scopes == ["all", "20x", "rev5"]
-
-    def test_missing_scope_skipped(self):
-        parts: list = []
-        _append_artifact_parts(parts, {"20x": ["b"]})
-        assert len(parts) == 1
-        assert _prop_value(parts[0]["props"], "path", ns=FRR_NS) == "20x"
-
-    def test_empty_dict_produces_no_parts(self):
-        parts: list = []
-        _append_artifact_parts(parts, {})
-        assert parts == []
-
-
-# ── _append_extra_parts ───────────────────────────────────────────────────────
-
-class TestAppendExtraParts:
-    def test_corrective_actions_becomes_remediation(self):
-        parts: list = []
-        _append_extra_parts(parts, {"corrective_actions": ["Fix this", "Do that"]})
-        assert len(parts) == 1
-        assert parts[0]["name"] == "remediation"
-        assert parts[0]["ns"] == FRR_NS
-        assert "Fix this" in parts[0]["prose"]
-        assert "Do that" in parts[0]["prose"]
-
-    def test_corrective_actions_items_joined(self):
-        parts: list = []
-        _append_extra_parts(parts, {"corrective_actions": ["a", "b"]})
-        assert parts[0]["prose"] == "a\n\nb"
-
-    def test_following_information_guidance(self):
-        parts: list = []
-        _append_extra_parts(parts, {"following_information": ["info one"]})
-        assert len(parts) == 1
-        assert parts[0]["class"] == "following_information"
-
-    def test_schema_guidance(self):
-        parts: list = []
-        _append_extra_parts(parts, {"schema": {"name": "S", "url": "http://s"}})
-        assert len(parts) == 1
-        assert parts[0]["class"] == "schema"
-
-    def test_examples_guidance(self):
-        parts: list = []
-        _append_extra_parts(parts, {"examples": [{"id": "E1", "key_tests": [], "examples": []}]})
-        assert len(parts) == 1
-        assert parts[0]["class"] == "examples"
-
-    def test_order_remediation_then_guidance_fields(self):
-        parts: list = []
-        _append_extra_parts(parts, {
-            "corrective_actions": ["fix"],
-            "following_information": ["info"],
-        })
-        assert parts[0]["name"] == "remediation"
-        assert parts[1]["class"] == "following_information"
-
-    def test_empty_rule_produces_no_parts(self):
-        parts: list = []
-        _append_extra_parts(parts, {})
-        assert parts == []
 
 
 # ── _updated_props ────────────────────────────────────────────────────────────
@@ -290,59 +192,161 @@ class TestUpdatedProps:
         assert _updated_props({"updated": []}) == []
 
 
-# ── _build_class_control_dict ─────────────────────────────────────────────────
+# ── _add_artifact_parts ───────────────────────────────────────────────────────
 
-class TestBuildClassControlDict:
-    def test_id_and_title(self):
-        ctrl = _build_class_control_dict("RULE-a", {}, "Class A")
-        assert ctrl["id"] == "RULE-a"
-        assert ctrl["title"] == "Class A"
+class TestAddArtifactParts:
+    def _ctrl_parts(self, cat: Catalog, ctrl_id: str = "R-001") -> list:
+        ctrl = _find_control(cat, ctrl_id)
+        return ctrl.get("parts", [])
 
-    def test_label_prop_present(self):
-        ctrl = _build_class_control_dict("RULE-a", {}, "Class A")
-        assert _prop_value(ctrl["props"], "label") == "Class A"
+    def test_all_scope_produces_one_assessment_method(self):
+        cat = _catalog_with_control()
+        _add_artifact_parts(cat, "R-001", {"all": ["artifact-one"]})
+        am = [p for p in self._ctrl_parts(cat) if p["name"] == "assessment-method"]
+        assert len(am) == 1
 
-    def test_path_prop_default_all(self):
-        ctrl = _build_class_control_dict("RULE-a", {}, "Class A")
-        assert _prop_value(ctrl["props"], "path", ns=FRR_NS) == "all"
+    def test_path_prop_value_and_ns(self):
+        cat = _catalog_with_control()
+        _add_artifact_parts(cat, "R-001", {"20x": ["a-20x"]})
+        am = [p for p in self._ctrl_parts(cat) if p["name"] == "assessment-method"]
+        assert _prop_value(am[0]["props"], "path", ns=FRR_NS) == "20x"
 
-    def test_path_prop_custom(self):
-        ctrl = _build_class_control_dict("RULE-a", {}, "Class A", path="20x")
-        assert _prop_value(ctrl["props"], "path", ns=FRR_NS) == "20x"
+    def test_three_scopes_in_order(self):
+        cat = _catalog_with_control()
+        _add_artifact_parts(cat, "R-001", {"all": ["a"], "20x": ["b"], "rev5": ["c"]})
+        am = [p for p in self._ctrl_parts(cat) if p["name"] == "assessment-method"]
+        assert len(am) == 3
+        scopes = [_prop_value(p["props"], "path", ns=FRR_NS) for p in am]
+        assert scopes == ["all", "20x", "rev5"]
 
-    def test_force_prop(self):
-        ctrl = _build_class_control_dict("RULE-a", {"force": "MUST"}, "Class A")
-        assert _prop_value(ctrl["props"], "force", ns=FRR_NS) == "MUST"
+    def test_missing_scope_skipped(self):
+        cat = _catalog_with_control()
+        _add_artifact_parts(cat, "R-001", {"rev5": ["r"]})
+        am = [p for p in self._ctrl_parts(cat) if p["name"] == "assessment-method"]
+        assert len(am) == 1
+        assert _prop_value(am[0]["props"], "path", ns=FRR_NS) == "rev5"
 
-    def test_statement_part(self):
-        ctrl = _build_class_control_dict("RULE-a", {"statement": "Do this."}, "Class A")
-        smt = next((p for p in ctrl["parts"] if p["name"] == "statement"), None)
-        assert smt is not None
-        assert smt["prose"] == "Do this."
-        assert smt["id"] == "RULE-a_smt"
+    def test_empty_dict_produces_no_parts(self):
+        cat = _catalog_with_control()
+        _add_artifact_parts(cat, "R-001", {})
+        am = [p for p in self._ctrl_parts(cat) if p["name"] == "assessment-method"]
+        assert am == []
 
-    def test_notes_guidance_part(self):
-        ctrl = _build_class_control_dict("RULE-a", {"note": "Be careful."}, "Class A")
-        guidance = next((p for p in ctrl["parts"] if p["name"] == "guidance"), None)
-        assert guidance is not None
-        assert guidance["title"] == "Notes"
-        assert "Be careful." in guidance["prose"]
+    def test_method_prop_is_examine(self):
+        cat = _catalog_with_control()
+        _add_artifact_parts(cat, "R-001", {"all": ["x"]})
+        am = [p for p in self._ctrl_parts(cat) if p["name"] == "assessment-method"]
+        assert _prop_value(am[0]["props"], "method") == "EXAMINE"
 
-    def test_artifacts_multiple_scopes(self):
-        data = {"artifacts": {"all": ["a-all"], "20x": ["a-20x"]}}
-        ctrl = _build_class_control_dict("RULE-a", data, "Class A")
-        am_parts = [p for p in ctrl["parts"] if p["name"] == "assessment-method"]
-        assert len(am_parts) == 2
+    def test_assessment_objects_nested_parts(self):
+        cat = _catalog_with_control()
+        _add_artifact_parts(cat, "R-001", {"all": ["art one", "art two"]})
+        am = [p for p in self._ctrl_parts(cat) if p["name"] == "assessment-method"]
+        obj_parts = am[0].get("parts", [])
+        assert len(obj_parts) == 2
+        assert obj_parts[0]["name"] == "assessment-objects"
+        assert obj_parts[0]["prose"] == "art one"
 
-    def test_following_information(self):
-        data = {"following_information": ["info line"]}
-        ctrl = _build_class_control_dict("RULE-a", data, "Class A")
-        fi = next((p for p in ctrl["parts"] if p.get("class") == "following_information"), None)
-        assert fi is not None
 
-    def test_no_parts_key_when_empty(self):
-        ctrl = _build_class_control_dict("RULE-a", {}, "Class A")
-        assert "parts" not in ctrl
+# ── _add_extra_parts ──────────────────────────────────────────────────────────
+
+class TestAddExtraParts:
+    def _ctrl_parts(self, cat: Catalog, ctrl_id: str = "R-001") -> list:
+        ctrl = _find_control(cat, ctrl_id)
+        return ctrl.get("parts", [])
+
+    def test_corrective_actions_becomes_remediation(self):
+        cat = _catalog_with_control()
+        _add_extra_parts(cat, "R-001", {"corrective_actions": ["Fix this", "Do that"]})
+        parts = self._ctrl_parts(cat)
+        rem = next((p for p in parts if p["name"] == "remediation"), None)
+        assert rem is not None
+        assert rem.get("ns") == FRR_NS
+        assert "Fix this" in rem["prose"]
+
+    def test_corrective_actions_items_joined(self):
+        cat = _catalog_with_control()
+        _add_extra_parts(cat, "R-001", {"corrective_actions": ["a", "b"]})
+        parts = self._ctrl_parts(cat)
+        rem = next(p for p in parts if p["name"] == "remediation")
+        assert rem["prose"] == "a\n\nb"
+
+    def test_schema_guidance(self):
+        cat = _catalog_with_control()
+        _add_extra_parts(cat, "R-001", {"schema": {"name": "S", "url": "http://s"}})
+        parts = self._ctrl_parts(cat)
+        s = next((p for p in parts if p.get("class") == "schema"), None)
+        assert s is not None
+
+    def test_examples_guidance(self):
+        cat = _catalog_with_control()
+        _add_extra_parts(cat, "R-001", {"examples": [{"id": "E1", "key_tests": [], "examples": []}]})
+        parts = self._ctrl_parts(cat)
+        ex = next((p for p in parts if p.get("class") == "examples"), None)
+        assert ex is not None
+
+    def test_empty_rule_produces_no_parts(self):
+        cat = _catalog_with_control()
+        _add_extra_parts(cat, "R-001", {})
+        assert self._ctrl_parts(cat) == []
+
+
+# ── _add_following_information ────────────────────────────────────────────────
+
+class TestAddFollowingInformation:
+    def _statement_item_parts(self, cat: Catalog, ctrl_id: str = "R-001") -> list:
+        ctrl = _find_control(cat, ctrl_id)
+        for part in ctrl.get("parts", []):
+            if part["name"] == "statement":
+                return part.get("parts", [])
+        return []
+
+    def _make_control_with_statement(self, ctrl_id: str = "R-001") -> Catalog:
+        cat = _catalog_with_group()
+        cat.create_control(
+            parent_id="grp", id=ctrl_id, title="T", statements=["Do this."]
+        )
+        return cat
+
+    def test_item_nested_under_statement(self):
+        cat = self._make_control_with_statement()
+        _add_following_information(cat, "R-001", ["Step one.", "Step two."])
+        items = self._statement_item_parts(cat)
+        assert len(items) == 1
+        assert items[0]["name"] == "item"
+
+    def test_numbered_list_format(self):
+        cat = self._make_control_with_statement()
+        _add_following_information(cat, "R-001", ["Alpha", "Beta", "Gamma"])
+        items = self._statement_item_parts(cat)
+        prose = items[0]["prose"]
+        assert "1. Alpha" in prose
+        assert "2. Beta" in prose
+        assert "3. Gamma" in prose
+
+    def test_single_string_wrapped_in_list(self):
+        cat = self._make_control_with_statement()
+        _add_following_information(cat, "R-001", "Just one thing.")
+        items = self._statement_item_parts(cat)
+        assert "1. Just one thing." in items[0]["prose"]
+
+    def test_no_title_on_item_part(self):
+        cat = self._make_control_with_statement()
+        _add_following_information(cat, "R-001", ["Info."])
+        items = self._statement_item_parts(cat)
+        assert "title" not in items[0]
+
+    def test_no_statement_is_noop(self):
+        cat = _catalog_with_control()  # control created without a statement
+        _add_following_information(cat, "R-001", ["Info."])
+        ctrl = _find_control(cat, "R-001")
+        assert ctrl.get("parts", []) == []
+
+    def test_empty_list_is_noop(self):
+        cat = self._make_control_with_statement()
+        _add_following_information(cat, "R-001", [])
+        items = self._statement_item_parts(cat)
+        assert items == []
 
 
 # ── Catalog-integrated: _build_frr_simple_control ────────────────────────────
@@ -352,6 +356,7 @@ class TestBuildFrrSimpleControl:
         frr2oscal._STATS["groups"] = 0
         frr2oscal._STATS["controls"] = 0
         frr2oscal.UNHANDLED.clear()
+        _reset_profile_tracking()
 
     def test_path_prop_value_and_ns(self):
         cat = _catalog_with_group()
@@ -377,7 +382,7 @@ class TestBuildFrrSimpleControl:
         ctrl = _find_control(cat, "R-003")
         rem = next((p for p in ctrl.get("parts", []) if p["name"] == "remediation"), None)
         assert rem is not None
-        assert rem["ns"] == FRR_NS
+        assert rem.get("ns") == FRR_NS
         assert "Fix A" in rem["prose"]
 
     def test_updated_props_appended(self):
@@ -413,6 +418,138 @@ class TestBuildFrrSimpleControl:
         frr2oscal._build_frr_simple_control(cat, "grp", "R-006", rule)
         assert frr2oscal._STATS["controls"] == before + 1
 
+    def test_danger_guidance_part_with_title(self):
+        cat = _catalog_with_group()
+        rule = {"name": "Rule", "statement": "S.", "danger": "Watch out!"}
+        frr2oscal._build_frr_simple_control(cat, "grp", "R-007", rule)
+        ctrl = _find_control(cat, "R-007")
+        gdn = next((p for p in ctrl.get("parts", []) if p["name"] == "guidance"), None)
+        assert gdn is not None
+        assert gdn.get("title") == "Danger"
+        assert "Watch out!" in gdn.get("prose", "")
+
+    def test_following_information_as_statement_item(self):
+        cat = _catalog_with_group()
+        rule = {
+            "name": "Rule", "statement": "Do the thing.",
+            "following_information": ["Point one.", "Point two.", "Point three."],
+        }
+        frr2oscal._build_frr_simple_control(cat, "grp", "R-FI", rule)
+        ctrl = _find_control(cat, "R-FI")
+        smt = next(p for p in ctrl.get("parts", []) if p["name"] == "statement")
+        items = [p for p in smt.get("parts", []) if p["name"] == "item"]
+        assert len(items) == 1
+        prose = items[0]["prose"]
+        assert "1. Point one." in prose
+        assert "2. Point two." in prose
+        assert "3. Point three." in prose
+        assert "title" not in items[0]
+
+    def test_notes_guidance_part(self):
+        cat = _catalog_with_group()
+        rule = {"name": "Rule", "statement": "S.", "note": "Be careful."}
+        frr2oscal._build_frr_simple_control(cat, "grp", "R-008", rule)
+        ctrl = _find_control(cat, "R-008")
+        gdn_parts = [p for p in ctrl.get("parts", []) if p["name"] == "guidance"]
+        notes_part = next((p for p in gdn_parts if p.get("title") == "Notes"), None)
+        assert notes_part is not None
+        assert "Be careful." in notes_part["prose"]
+
+
+# ── Catalog-integrated: _build_frr_varies_control ────────────────────────────
+
+class TestBuildFrrVariesControl:
+    def setup_method(self):
+        frr2oscal._STATS["groups"] = 0
+        frr2oscal._STATS["controls"] = 0
+        frr2oscal.UNHANDLED.clear()
+        frr2oscal._VERBOSE = False
+        _reset_profile_tracking()
+
+    def _get_catalog_json(self, cat: Catalog) -> dict:
+        return json.loads(cat.dumps("json"))
+
+    def test_parent_control_created(self):
+        cat = _catalog_with_group()
+        rule = {
+            "name": "Rule", "varies_by_class": {
+                "a": {"statement": "Class A does this."},
+            },
+        }
+        frr2oscal._build_frr_varies_control(cat, "grp", "RULE-01", rule)
+        data = self._get_catalog_json(cat)
+        ctrl_ids = [c["id"] for c in data["catalog"]["groups"][0].get("controls", [])]
+        assert "RULE-01" in ctrl_ids
+
+    def test_parent_statement_is_varies_by_class(self):
+        cat = _catalog_with_group()
+        rule = {"name": "Rule", "varies_by_class": {"a": {"statement": "S."}}}
+        frr2oscal._build_frr_varies_control(cat, "grp", "RULE-02", rule)
+        data = self._get_catalog_json(cat)
+        parent = next(c for c in data["catalog"]["groups"][0]["controls"] if c["id"] == "RULE-02")
+        smt = next((p for p in parent.get("parts", []) if p["name"] == "statement"), None)
+        assert smt is not None
+        assert "Varies by Class" in smt["prose"]
+
+    def test_class_variant_controls_nested(self):
+        cat = _catalog_with_group()
+        rule = {
+            "name": "Rule",
+            "varies_by_class": {
+                "a": {"statement": "Class A."},
+                "b": {"statement": "Class B."},
+            },
+        }
+        frr2oscal._build_frr_varies_control(cat, "grp", "RULE-03", rule)
+        data = self._get_catalog_json(cat)
+        parent = next(c for c in data["catalog"]["groups"][0]["controls"] if c["id"] == "RULE-03")
+        child_ids = [c["id"] for c in parent.get("controls", [])]
+        assert "RULE-03-a" in child_ids
+        assert "RULE-03-b" in child_ids
+
+    def test_class_variant_label(self):
+        cat = _catalog_with_group()
+        rule = {"name": "Rule", "varies_by_class": {"a": {"statement": "S."}}}
+        frr2oscal._build_frr_varies_control(cat, "grp", "RULE-04", rule)
+        data = self._get_catalog_json(cat)
+        parent = next(c for c in data["catalog"]["groups"][0]["controls"] if c["id"] == "RULE-04")
+        child = parent["controls"][0]
+        assert _prop_value(child.get("props", []), "label") == "Class A"
+
+    def test_path_prop_on_parent_and_variants(self):
+        cat = _catalog_with_group()
+        rule = {"name": "Rule", "varies_by_class": {"a": {"statement": "S."}}}
+        frr2oscal._build_frr_varies_control(cat, "grp", "RULE-05", rule, path="20x")
+        data = self._get_catalog_json(cat)
+        parent = next(c for c in data["catalog"]["groups"][0]["controls"] if c["id"] == "RULE-05")
+        assert _prop_value(parent.get("props", []), "path", ns=FRR_NS) == "20x"
+        child = parent["controls"][0]
+        assert _prop_value(child.get("props", []), "path", ns=FRR_NS) == "20x"
+
+    def test_stats_count_parent_and_variants(self):
+        cat = _catalog_with_group()
+        rule = {
+            "name": "Rule",
+            "varies_by_class": {"a": {"statement": "A."}, "b": {"statement": "B."}},
+        }
+        frr2oscal._STATS["controls"] = 0
+        frr2oscal._build_frr_varies_control(cat, "grp", "RULE-06", rule)
+        assert frr2oscal._STATS["controls"] == 3  # 1 parent + 2 variants
+
+    def test_parent_notes_part(self):
+        cat = _catalog_with_group()
+        rule = {
+            "name": "Rule",
+            "note": "Important note.",
+            "varies_by_class": {"a": {"statement": "S."}},
+        }
+        frr2oscal._build_frr_varies_control(cat, "grp", "RULE-07", rule)
+        data = self._get_catalog_json(cat)
+        parent = next(c for c in data["catalog"]["groups"][0]["controls"] if c["id"] == "RULE-07")
+        notes = next((p for p in parent.get("parts", []) if p.get("title") == "Notes"), None)
+        assert notes is not None
+        assert "Important note." in notes["prose"]
+
 
 # ── Catalog-integrated: _build_frr_subset + _build_frr_ruleset ───────────────
 
@@ -421,6 +558,7 @@ class TestBuildFrrSubset:
         frr2oscal._STATS["groups"] = 0
         frr2oscal._STATS["controls"] = 0
         frr2oscal.UNHANDLED.clear()
+        _reset_profile_tracking()
 
     def test_all_scope_id_has_no_path_prefix(self):
         cat = Catalog.new(title="T", version="0.1")
@@ -444,6 +582,21 @@ class TestBuildFrrSubset:
         groups = data["catalog"]["groups"][0].get("groups", [])
         assert any(g["id"] == "FRR-TST-20x-SUB" for g in groups)
 
+    def test_purpose_overview_part_with_title(self):
+        cat = Catalog.new(title="T", version="0.1")
+        cat.create_control_group(parent_id="[root]", id="FRR-TST", title="Test")
+        subset_val = {
+            "info": {"purpose": "This subset covers X."},
+            "TST-001": {"name": "R", "statement": "S."},
+        }
+        frr2oscal._build_frr_subset(cat, "FRR-TST", "TST", "SUB", subset_val, path="all")
+        data = json.loads(cat.dumps("json"))
+        sub_group = data["catalog"]["groups"][0]["groups"][0]
+        overview = next((p for p in sub_group.get("parts", []) if p["name"] == "overview"), None)
+        assert overview is not None
+        assert overview.get("title") == "Purpose"
+        assert "This subset covers X." in overview["prose"]
+
 
 class TestBuildFrrRuleset:
     def setup_method(self):
@@ -451,6 +604,7 @@ class TestBuildFrrRuleset:
         frr2oscal._STATS["controls"] = 0
         frr2oscal.UNHANDLED.clear()
         frr2oscal._VERBOSE = False
+        _reset_profile_tracking()
 
     def test_processes_all_three_scopes(self):
         cat = Catalog.new(title="T", version="0.1")
@@ -464,7 +618,6 @@ class TestBuildFrrRuleset:
         }
         frr2oscal._build_frr_ruleset(cat, "TST", frr_val)
         data = json.loads(cat.dumps("json"))
-        # Collect all control IDs recursively
         ctrl_ids = set()
         for top_group in data["catalog"]["groups"]:
             for sub_group in top_group.get("groups", []):
@@ -507,3 +660,629 @@ class TestBuildFrrRuleset:
                         ctrl = c
         assert ctrl is not None
         assert _prop_value(ctrl.get("props", []), "path", ns=FRR_NS) == "20x"
+
+    def test_ruleset_purpose_overview_with_title(self):
+        cat = Catalog.new(title="T", version="0.1")
+        frr_val = {
+            "info": {"name": "Test Ruleset", "purpose": "Covers automated checks."},
+            "data": {},
+        }
+        frr2oscal._build_frr_ruleset(cat, "TST", frr_val)
+        data = json.loads(cat.dumps("json"))
+        top_group = data["catalog"]["groups"][0]
+        overview = next((p for p in top_group.get("parts", []) if p["name"] == "overview"), None)
+        assert overview is not None
+        assert overview.get("title") == "Purpose"
+        assert "Covers automated checks." in overview["prose"]
+
+
+# ── _rev5_ctrl_to_oscal ───────────────────────────────────────────────────────
+
+class TestRev5CtrlToOscal:
+    def test_simple_two_part_strips_leading_zero(self):
+        assert _rev5_ctrl_to_oscal("AC-01") == "ac-1"
+
+    def test_two_part_double_digit_unchanged(self):
+        assert _rev5_ctrl_to_oscal("AC-17") == "ac-17"
+
+    def test_enhancement_parenthesis_becomes_dot(self):
+        assert _rev5_ctrl_to_oscal("AC-02 (01)") == "ac-2.1"
+
+    def test_enhancement_strips_zeros_both_segments(self):
+        assert _rev5_ctrl_to_oscal("AC-06 (01)") == "ac-6.1"
+
+    def test_enhancement_double_digit_base(self):
+        assert _rev5_ctrl_to_oscal("AC-17 (01)") == "ac-17.1"
+
+    def test_lowercase_output(self):
+        assert _rev5_ctrl_to_oscal("AU-03 (01)") == "au-3.1"
+
+
+# ── _profile_keys_for ─────────────────────────────────────────────────────────
+
+class TestProfileKeysFor:
+    def test_all_path_no_class_returns_all_seven(self):
+        keys = _profile_keys_for("all")
+        assert sorted(keys) == sorted(PROFILE_NAMES)
+
+    def test_20x_path_no_class_returns_four(self):
+        keys = _profile_keys_for("20x")
+        assert set(keys) == {"20X-A", "20X-B", "20X-C", "20X-D"}
+
+    def test_rev5_path_no_class_returns_three(self):
+        keys = _profile_keys_for("rev5")
+        assert set(keys) == {"Rev5-B", "Rev5-C", "Rev5-D"}
+
+    def test_class_a_all_path_returns_20x_a_only(self):
+        # No Rev5-A profile exists.
+        keys = _profile_keys_for("all", "a")
+        assert keys == ["20X-A"]
+
+    def test_class_b_all_path_returns_20x_b_and_rev5_b(self):
+        keys = _profile_keys_for("all", "b")
+        assert set(keys) == {"20X-B", "Rev5-B"}
+
+    def test_class_c_20x_path_returns_only_20x_c(self):
+        keys = _profile_keys_for("20x", "c")
+        assert keys == ["20X-C"]
+
+    def test_class_d_rev5_path_returns_only_rev5_d(self):
+        keys = _profile_keys_for("rev5", "d")
+        assert keys == ["Rev5-D"]
+
+    def test_unknown_class_yields_empty_if_no_matching_profile(self):
+        keys = _profile_keys_for("rev5", "a")
+        assert keys == []
+
+
+# ── _reset_profile_tracking / _add_frr_to_profiles / _add_nist_to_profiles ───
+
+class TestProfileTracking:
+    def setup_method(self):
+        _reset_profile_tracking()
+
+    def test_reset_clears_all_frr_sets(self):
+        for name in PROFILE_NAMES:
+            assert frr2oscal._PROFILE_FRR[name] == set()
+
+    def test_reset_clears_all_nist_sets(self):
+        for name in ("Rev5-B", "Rev5-C", "Rev5-D"):
+            assert frr2oscal._PROFILE_NIST[name] == set()
+
+    def test_add_frr_all_path_populates_seven_profiles(self):
+        _add_frr_to_profiles("CTRL-1", "all")
+        for name in PROFILE_NAMES:
+            assert "CTRL-1" in frr2oscal._PROFILE_FRR[name]
+
+    def test_add_frr_20x_path_skips_rev5_profiles(self):
+        _add_frr_to_profiles("CTRL-2", "20x")
+        for name in ("Rev5-B", "Rev5-C", "Rev5-D"):
+            assert "CTRL-2" not in frr2oscal._PROFILE_FRR[name]
+
+    def test_add_frr_rev5_path_skips_20x_profiles(self):
+        _add_frr_to_profiles("CTRL-3", "rev5")
+        for name in ("20X-A", "20X-B", "20X-C", "20X-D"):
+            assert "CTRL-3" not in frr2oscal._PROFILE_FRR[name]
+
+    def test_add_frr_with_class_b_all_path(self):
+        _add_frr_to_profiles("CTRL-4", "all", "b")
+        assert "CTRL-4" in frr2oscal._PROFILE_FRR["20X-B"]
+        assert "CTRL-4" in frr2oscal._PROFILE_FRR["Rev5-B"]
+        assert "CTRL-4" not in frr2oscal._PROFILE_FRR["20X-A"]
+        assert "CTRL-4" not in frr2oscal._PROFILE_FRR["20X-C"]
+
+    def test_add_nist_rev5_no_class_populates_three_rev5_profiles(self):
+        _add_nist_to_profiles("AC-06 (01)", "rev5")
+        for name in ("Rev5-B", "Rev5-C", "Rev5-D"):
+            assert "ac-6.1" in frr2oscal._PROFILE_NIST[name]
+
+    def test_add_nist_rev5_class_c_only_rev5_c(self):
+        _add_nist_to_profiles("SA-09", "rev5", "c")
+        assert "sa-9" in frr2oscal._PROFILE_NIST["Rev5-C"]
+        assert "sa-9" not in frr2oscal._PROFILE_NIST["Rev5-B"]
+        assert "sa-9" not in frr2oscal._PROFILE_NIST["Rev5-D"]
+
+    def test_add_nist_does_not_affect_20x_profiles(self):
+        _add_nist_to_profiles("AC-20", "all")
+        for name in ("20X-A", "20X-B", "20X-C", "20X-D"):
+            assert "ac-20" not in frr2oscal._PROFILE_FRR.get(name, set())
+
+
+# ── _build_ksi ────────────────────────────────────────────────────────────────
+
+class TestBuildKsi:
+    def setup_method(self):
+        frr2oscal._STATS["groups"] = 0
+        frr2oscal._STATS["controls"] = 0
+        frr2oscal._VERBOSE = False
+        _reset_profile_tracking()
+
+    def _make_data(self, *, varies=False):
+        ind = {
+            "KSI-TST-IND": {
+                "name": "Test Indicator",
+                "statement": "This is the indicator statement.",
+                "controls": ["ac-2"],
+                "updated": [],
+            }
+        }
+        if varies:
+            ind["KSI-TST-VBC"] = {
+                "name": "Varying Indicator",
+                "statement": "Base statement.",
+                "controls": [],
+                "updated": [],
+                "varies_by_class": {
+                    "b": {"statement": "Class B statement."},
+                    "c": {"statement": "Class C statement."},
+                },
+            }
+        return {
+            "KSI": {
+                "TST": {
+                    "id": "KSI-TST",
+                    "name": "Test Category",
+                    "indicators": ind,
+                }
+            }
+        }
+
+    def test_root_ksi_group_created(self):
+        cat = Catalog.new(title="T", version="0.1")
+        frr2oscal._build_ksi(cat, self._make_data())
+        data = json.loads(cat.dumps("json"))
+        group_ids = [g["id"] for g in data["catalog"].get("groups", [])]
+        assert "KSI" in group_ids
+
+    def test_subgroup_created(self):
+        cat = Catalog.new(title="T", version="0.1")
+        frr2oscal._build_ksi(cat, self._make_data())
+        data = json.loads(cat.dumps("json"))
+        ksi_group = next(g for g in data["catalog"]["groups"] if g["id"] == "KSI")
+        sub_ids = [g["id"] for g in ksi_group.get("groups", [])]
+        assert "KSI-TST" in sub_ids
+
+    def test_simple_indicator_control_created(self):
+        cat = Catalog.new(title="T", version="0.1")
+        frr2oscal._build_ksi(cat, self._make_data())
+        data = json.loads(cat.dumps("json"))
+        ksi_group = next(g for g in data["catalog"]["groups"] if g["id"] == "KSI")
+        tst_group = next(g for g in ksi_group["groups"] if g["id"] == "KSI-TST")
+        ctrl_ids = [c["id"] for c in tst_group.get("controls", [])]
+        assert "KSI-TST-IND" in ctrl_ids
+
+    def test_simple_indicator_added_to_all_20x_profiles(self):
+        cat = Catalog.new(title="T", version="0.1")
+        frr2oscal._build_ksi(cat, self._make_data())
+        for name in ("20X-A", "20X-B", "20X-C", "20X-D"):
+            assert "KSI-TST-IND" in frr2oscal._PROFILE_FRR[name]
+
+    def test_simple_indicator_not_in_rev5_profiles(self):
+        cat = Catalog.new(title="T", version="0.1")
+        frr2oscal._build_ksi(cat, self._make_data())
+        for name in ("Rev5-B", "Rev5-C", "Rev5-D"):
+            assert "KSI-TST-IND" not in frr2oscal._PROFILE_FRR[name]
+
+    def test_varies_parent_in_all_20x(self):
+        cat = Catalog.new(title="T", version="0.1")
+        frr2oscal._build_ksi(cat, self._make_data(varies=True))
+        for name in ("20X-A", "20X-B", "20X-C", "20X-D"):
+            assert "KSI-TST-VBC" in frr2oscal._PROFILE_FRR[name]
+
+    def test_varies_class_b_child_only_in_20x_b(self):
+        cat = Catalog.new(title="T", version="0.1")
+        frr2oscal._build_ksi(cat, self._make_data(varies=True))
+        assert "KSI-TST-VBC-b" in frr2oscal._PROFILE_FRR["20X-B"]
+        assert "KSI-TST-VBC-b" not in frr2oscal._PROFILE_FRR["20X-A"]
+        assert "KSI-TST-VBC-b" not in frr2oscal._PROFILE_FRR["20X-C"]
+
+    def test_empty_ksi_section_does_not_crash(self):
+        cat = Catalog.new(title="T", version="0.1")
+        frr2oscal._build_ksi(cat, {})  # no KSI key
+
+
+# ── rev5_controls_list inline processing ─────────────────────────────────────
+
+class TestRev5ControlsList:
+    """Tests for rev5_controls_list processing inside _build_frr_varies_control."""
+
+    def setup_method(self):
+        frr2oscal._STATS["groups"] = 0
+        frr2oscal._STATS["controls"] = 0
+        frr2oscal._VERBOSE = False
+        _reset_profile_tracking()
+
+    def _rule_with_rcl(self, *, path="rev5"):
+        return {
+            "name": "Rule",
+            "varies_by_class": {
+                "b": {
+                    "statement": "Class B.",
+                    "rev5_controls_list": {
+                        "AC": ["AC-01", "AC-02 (01)"],
+                        "AU": ["AU-03"],
+                    },
+                },
+                "c": {
+                    "statement": "Class C.",
+                    "rev5_controls_list": {
+                        "AC": ["AC-01", "AC-02 (01)", "AC-06 (01)"],
+                        "AU": ["AU-03"],
+                    },
+                },
+            },
+        }
+
+    def test_rev5_controls_registered_for_class_b(self):
+        cat = _catalog_with_group()
+        frr2oscal._build_frr_varies_control(cat, "grp", "RCL-01", self._rule_with_rcl())
+        assert "ac-1" in frr2oscal._PROFILE_NIST["Rev5-B"]
+        assert "ac-2.1" in frr2oscal._PROFILE_NIST["Rev5-B"]
+        assert "au-3" in frr2oscal._PROFILE_NIST["Rev5-B"]
+
+    def test_rev5_controls_not_in_rev5_c_from_b_list(self):
+        cat = _catalog_with_group()
+        frr2oscal._build_frr_varies_control(cat, "grp", "RCL-02", self._rule_with_rcl())
+        # ac-6.1 is only in class c
+        assert "ac-6.1" not in frr2oscal._PROFILE_NIST["Rev5-B"]
+        assert "ac-6.1" in frr2oscal._PROFILE_NIST["Rev5-C"]
+
+    def test_rev5_controls_not_in_20x_profiles(self):
+        cat = _catalog_with_group()
+        frr2oscal._build_frr_varies_control(cat, "grp", "RCL-03", self._rule_with_rcl())
+        for name in ("20X-A", "20X-B", "20X-C", "20X-D"):
+            assert "ac-1" not in frr2oscal._PROFILE_NIST.get(name, set())
+
+    def test_all_path_class_b_goes_to_both_20x_b_and_rev5_b(self):
+        cat = _catalog_with_group()
+        rule = {
+            "name": "Rule",
+            "varies_by_class": {
+                "b": {
+                    "statement": "B.",
+                    "rev5_controls_list": {"AC": ["AC-01"]},
+                },
+            },
+        }
+        frr2oscal._build_frr_varies_control(cat, "grp", "RCL-04", rule, path="all")
+        assert "ac-1" in frr2oscal._PROFILE_NIST["Rev5-B"]
+        # FedRAMP catalog child also registered for both 20X-B and Rev5-B
+        assert "RCL-04-b" in frr2oscal._PROFILE_FRR["20X-B"]
+
+
+# ── build_profiles ────────────────────────────────────────────────────────────
+
+class TestCtlIdToOscal:
+    def test_two_part_strips_leading_zeros(self):
+        assert _ctl_id_to_oscal("IA-05") == "ia-5"
+
+    def test_two_part_no_leading_zeros(self):
+        assert _ctl_id_to_oscal("AC-20") == "ac-20"
+
+    def test_three_part_becomes_dot_notation(self):
+        assert _ctl_id_to_oscal("AC-06-01") == "ac-6.1"
+
+    def test_three_part_strips_zeros_both_segments(self):
+        assert _ctl_id_to_oscal("SA-09-05") == "sa-9.5"
+
+    def test_lowercase_output(self):
+        assert _ctl_id_to_oscal("CM-12-01") == "cm-12.1"
+
+
+class TestApplyCtlParams:
+    def setup_method(self):
+        _reset_profile_tracking()
+
+    def _minimal_profile(self):
+        _add_nist_to_profiles("AC-01", "rev5")
+        p = Profile.new(title="T", version="0.1")
+        import frr2oscal as _f
+        p.add_import(_f.NIST_800_53_REV5_URL, title="NIST")
+        p.set_import_selection(_f.NIST_800_53_REV5_URL, include_all={})
+        return p
+
+    def test_set_parameter_written(self):
+        p = self._minimal_profile()
+        _apply_ctl_params(p, "ac-1", {
+            "parameters": [{"parameterId": "ac-01_odp", "value": "daily"}]
+        })
+        raw = json.loads(p.dumps("json"))
+        setps = raw.get("profile", {}).get("modify", {}).get("set-parameters", [])
+        assert any(sp.get("param-id") == "ac-01_odp" for sp in setps)
+
+    def test_set_parameter_value(self):
+        p = self._minimal_profile()
+        _apply_ctl_params(p, "ac-1", {
+            "parameters": [{"parameterId": "ac-01_odp", "value": "annually"}]
+        })
+        raw = json.loads(p.dumps("json"))
+        setps = raw.get("profile", {}).get("modify", {}).get("set-parameters", [])
+        sp = next(s for s in setps if s.get("param-id") == "ac-01_odp")
+        assert sp.get("values") == ["annually"]
+
+    def test_empty_parameters_is_noop(self):
+        p = self._minimal_profile()
+        _apply_ctl_params(p, "ac-1", {})
+        raw = json.loads(p.dumps("json"))
+        assert "modify" not in raw.get("profile", {})
+
+    def test_multiple_parameters(self):
+        p = self._minimal_profile()
+        _apply_ctl_params(p, "ac-1", {
+            "parameters": [
+                {"parameterId": "ac-01_odp.01", "value": "v1"},
+                {"parameterId": "ac-01_odp.02", "value": "v2"},
+            ]
+        })
+        raw = json.loads(p.dumps("json"))
+        setps = raw.get("profile", {}).get("modify", {}).get("set-parameters", [])
+        ids = {sp["param-id"] for sp in setps}
+        assert "ac-01_odp.01" in ids
+        assert "ac-01_odp.02" in ids
+
+
+class TestApplyCtlGuidance:
+    def setup_method(self):
+        _reset_profile_tracking()
+
+    def _minimal_profile(self):
+        _add_nist_to_profiles("AC-01", "rev5")
+        p = Profile.new(title="T", version="0.1")
+        import frr2oscal as _f
+        p.add_import(_f.NIST_800_53_REV5_URL, title="NIST")
+        p.set_import_selection(_f.NIST_800_53_REV5_URL, include_all={})
+        return p
+
+    def test_guidance_alter_add_created(self):
+        p = self._minimal_profile()
+        _apply_ctl_guidance(p, "ac-1", {"guidance": ["Follow the rules."]})
+        raw = json.loads(p.dumps("json"))
+        alters = raw.get("profile", {}).get("modify", {}).get("alters", [])
+        assert any(a.get("control-id") == "ac-1" for a in alters)
+
+    def test_guidance_prose_joined(self):
+        p = self._minimal_profile()
+        _apply_ctl_guidance(p, "ac-1", {"guidance": ["Line one.", "Line two."]})
+        raw = json.loads(p.dumps("json"))
+        alters = raw.get("profile", {}).get("modify", {}).get("alters", [])
+        alter = next(a for a in alters if a.get("control-id") == "ac-1")
+        add = alter["adds"][0]
+        part = add["parts"][0]
+        assert "Line one." in part["prose"]
+        assert "Line two." in part["prose"]
+
+    def test_guidance_part_name_is_guidance(self):
+        p = self._minimal_profile()
+        _apply_ctl_guidance(p, "ac-2", {"guidance": ["Do this."]})
+        raw = json.loads(p.dumps("json"))
+        alter = raw["profile"]["modify"]["alters"][0]
+        assert alter["adds"][0]["parts"][0]["name"] == "guidance"
+
+    def test_empty_guidance_is_noop(self):
+        p = self._minimal_profile()
+        _apply_ctl_guidance(p, "ac-1", {})
+        raw = json.loads(p.dumps("json"))
+        assert "modify" not in raw.get("profile", {})
+
+
+class TestApplyCtlToProfiles:
+    def setup_method(self):
+        _reset_profile_tracking()
+
+    def _make_profiles(self):
+        import frr2oscal as _f
+        _add_nist_to_profiles("AC-01", "rev5")
+        tailoring = Profile.new(title="Tailoring", version="0.1")
+        tailoring.add_import(_f.NIST_800_53_REV5_URL, title="NIST")
+        tailoring.set_import_selection(_f.NIST_800_53_REV5_URL, include_all={})
+
+        rev5 = {}
+        for cls in ("B", "C", "D"):
+            p = Profile.new(title=f"Rev5-{cls}", version="0.1")
+            p.add_import(_f.NIST_800_53_REV5_URL, title="NIST")
+            p.set_import_selection(_f.NIST_800_53_REV5_URL, include_all={})
+            rev5[f"Rev5-{cls}"] = p
+        return tailoring, rev5
+
+    def _make_data(self, *, vbc=False):
+        if vbc:
+            return {
+                "CTL": {
+                    "IA": {
+                        "IA-05": {
+                            "varies_by_class": {
+                                "b": {"guidance": ["Class B guidance."]},
+                                "c": {"parameters": [{"parameterId": "ia-05_odp", "value": "v2"}]},
+                            }
+                        }
+                    }
+                }
+            }
+        return {
+            "CTL": {
+                "AC": {
+                    "AC-20": {"guidance": ["Differentiate AC-20 from CA-3."]},
+                    "AC-06-01": {
+                        "parameters": [{"parameterId": "ac-06.01_odp.02", "value": "all funcs"}]
+                    },
+                }
+            }
+        }
+
+    def test_non_varies_param_goes_to_tailoring(self):
+        tailoring, rev5 = self._make_profiles()
+        _apply_ctl_to_profiles(self._make_data(), tailoring, rev5)
+        raw = json.loads(tailoring.dumps("json"))
+        setps = raw.get("profile", {}).get("modify", {}).get("set-parameters", [])
+        assert any(sp["param-id"] == "ac-06.01_odp.02" for sp in setps)
+
+    def test_non_varies_guidance_goes_to_tailoring(self):
+        tailoring, rev5 = self._make_profiles()
+        _apply_ctl_to_profiles(self._make_data(), tailoring, rev5)
+        raw = json.loads(tailoring.dumps("json"))
+        alters = raw.get("profile", {}).get("modify", {}).get("alters", [])
+        assert any(a.get("control-id") == "ac-20" for a in alters)
+
+    def test_varies_guidance_goes_to_class_profile(self):
+        tailoring, rev5 = self._make_profiles()
+        _apply_ctl_to_profiles(self._make_data(vbc=True), tailoring, rev5)
+        raw = json.loads(rev5["Rev5-B"].dumps("json"))
+        alters = raw.get("profile", {}).get("modify", {}).get("alters", [])
+        assert any(a.get("control-id") == "ia-5" for a in alters)
+
+    def test_varies_param_goes_to_class_profile(self):
+        tailoring, rev5 = self._make_profiles()
+        _apply_ctl_to_profiles(self._make_data(vbc=True), tailoring, rev5)
+        raw = json.loads(rev5["Rev5-C"].dumps("json"))
+        setps = raw.get("profile", {}).get("modify", {}).get("set-parameters", [])
+        assert any(sp["param-id"] == "ia-05_odp" for sp in setps)
+
+    def test_varies_guidance_not_in_tailoring(self):
+        tailoring, rev5 = self._make_profiles()
+        _apply_ctl_to_profiles(self._make_data(vbc=True), tailoring, rev5)
+        raw = json.loads(tailoring.dumps("json"))
+        modify = raw.get("profile", {}).get("modify", {})
+        alters = modify.get("alters", [])
+        assert not any(a.get("control-id") == "ia-5" for a in alters)
+
+    def test_returns_sorted_param_id_list(self):
+        tailoring, rev5 = self._make_profiles()
+        ids = _apply_ctl_to_profiles(self._make_data(), tailoring, rev5)
+        assert isinstance(ids, list)
+        assert "ac-06.01_odp.02" in ids
+
+
+class TestCollectCtlParamIds:
+    def _make_data(self):
+        return {
+            "CTL": {
+                "AC": {
+                    "AC-20": {
+                        "parameters": [{"parameterId": "ac-20_odp", "value": "v1"}],
+                        "guidance": ["Guidance text."],
+                    }
+                },
+                "IA": {
+                    "IA-05": {
+                        "varies_by_class": {
+                            "b": {"parameters": [{"parameterId": "ia-05_odp.b", "value": "vb"}]},
+                            "c": {"guidance": ["Class C guidance."]},
+                        }
+                    }
+                },
+            }
+        }
+
+    def test_returns_list(self):
+        ids = _collect_ctl_param_ids(self._make_data())
+        assert isinstance(ids, list)
+
+    def test_collects_non_varies_params(self):
+        ids = _collect_ctl_param_ids(self._make_data())
+        assert "ac-20_odp" in ids
+
+    def test_collects_varies_params(self):
+        ids = _collect_ctl_param_ids(self._make_data())
+        assert "ia-05_odp.b" in ids
+
+    def test_sorted_output(self):
+        ids = _collect_ctl_param_ids(self._make_data())
+        assert ids == sorted(ids)
+
+    def test_no_duplicates(self):
+        ids = _collect_ctl_param_ids(self._make_data())
+        assert len(ids) == len(set(ids))
+
+    def test_empty_ctl(self):
+        assert _collect_ctl_param_ids({}) == []
+
+    def test_guidance_only_entry_not_counted(self):
+        data = {"CTL": {"AC": {"AC-01": {"guidance": ["Some text."]}}}}
+        ids = _collect_ctl_param_ids(data)
+        assert ids == []
+
+
+class TestBuildProfiles:
+    def setup_method(self):
+        _reset_profile_tracking()
+        # Seed minimal profile tracking state.
+        _add_frr_to_profiles("CTRL-1", "all")
+        _add_frr_to_profiles("KSI-X", "20x")
+        _add_nist_to_profiles("AC-20", "rev5")
+
+    def _make_data(self):
+        return {
+            "info": {"version": "2026.1", "last_updated": "2026-01-01"},
+            "CTL": {},
+        }
+
+    def test_returns_eight_profiles(self):
+        profiles = frr2oscal.build_profiles(self._make_data())
+        assert len(profiles) == 8
+
+    def test_contains_all_seven_class_profiles_and_tailoring(self):
+        profiles = frr2oscal.build_profiles(self._make_data())
+        assert set(PROFILE_NAMES) | {TAILORING_PROFILE_NAME} == set(profiles.keys())
+
+    def test_each_value_is_profile_instance(self):
+        profiles = frr2oscal.build_profiles(self._make_data())
+        for p in profiles.values():
+            assert isinstance(p, Profile)
+
+    def test_20x_profile_has_only_fedramp_catalog_import(self):
+        # Profile imports use UUID anchors; actual URIs live in back-matter rlinks.
+        profiles = frr2oscal.build_profiles(self._make_data())
+        raw = json.loads(profiles["20X-A"].dumps("json"))
+        bm_hrefs = self._back_matter_hrefs(raw)
+        assert not any(frr2oscal.NIST_800_53_REV5_URL in h for h in bm_hrefs)
+        assert not any(TAILORING_HREF in h for h in bm_hrefs)
+
+    def _back_matter_hrefs(self, raw: dict) -> list:
+        """Return all rlink hrefs from a profile's back-matter resources."""
+        resources = raw.get("profile", {}).get("back-matter", {}).get("resources", [])
+        return [
+            rlink.get("href", "")
+            for res in resources
+            for rlink in res.get("rlinks", [])
+        ]
+
+    def test_tailoring_profile_imports_nist_catalog(self):
+        profiles = frr2oscal.build_profiles(self._make_data())
+        raw = json.loads(profiles[TAILORING_PROFILE_NAME].dumps("json"))
+        bm_hrefs = self._back_matter_hrefs(raw)
+        assert any(frr2oscal.NIST_800_53_REV5_URL in h for h in bm_hrefs)
+
+    def test_rev5_class_profile_imports_tailoring_not_nist_url(self):
+        # Profile imports use UUID anchors (#uuid); actual URIs are in back-matter rlinks.
+        profiles = frr2oscal.build_profiles(self._make_data())
+        raw = json.loads(profiles["Rev5-B"].dumps("json"))
+        bm_hrefs = self._back_matter_hrefs(raw)
+        assert any(TAILORING_HREF in h for h in bm_hrefs)
+        assert not any(frr2oscal.NIST_800_53_REV5_URL in h for h in bm_hrefs)
+
+    def _uuid_for_href(self, raw: dict, href_fragment: str) -> str | None:
+        """Return the UUID anchor for a back-matter resource whose rlink matches href_fragment."""
+        for res in raw.get("profile", {}).get("back-matter", {}).get("resources", []):
+            for rlink in res.get("rlinks", []):
+                if href_fragment in rlink.get("href", ""):
+                    return res.get("uuid")
+        return None
+
+    def test_tailoring_contains_nist_union(self):
+        _add_nist_to_profiles("AC-01", "rev5")
+        profiles = frr2oscal.build_profiles(self._make_data())
+        raw = json.loads(profiles[TAILORING_PROFILE_NAME].dumps("json"))
+        # Imports use UUID anchors — resolve back to the NIST resource via back-matter.
+        nist_uuid = self._uuid_for_href(raw, frr2oscal.NIST_800_53_REV5_URL)
+        assert nist_uuid is not None, "NIST catalog not found in back-matter"
+        imports = raw.get("profile", {}).get("imports", [])
+        nist_import = next(
+            imp for imp in imports if imp.get("href") == f"#{nist_uuid}"
+        )
+        all_ids = [
+            i
+            for block in nist_import.get("include-controls", [])
+            for i in block.get("with-ids", [])
+        ]
+        assert "ac-1" in all_ids
+        assert "ac-20" in all_ids

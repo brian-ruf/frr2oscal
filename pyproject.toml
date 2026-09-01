@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 
 [project]
-name = "FedRAMP Rules (FRR) to OSCAL"
+name = "frr2oscal"
 version = "1.0.0"
 description = "A python module for converting the FedRAMP Rules (FRR) to an OSCAL catalog and supporting profiles."
 requires-python = ">=3.9"
@@ -28,7 +28,7 @@ keywords = ["oscal", "nist", "security", "compliance", "automation", "catalog", 
 
 dependencies = [
     "loguru          >= 0.7.3",
-    "oscal           >= 2.2.0", 
+    "oscal           >= 3.2.2", 
     "ruf-common      >= 2.1.0",
 ]
 

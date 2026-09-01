@@ -20,3 +20,5 @@ dist/
 *.env
 *.DS_Store
 *.lnk
+HOLD/
+OLD/

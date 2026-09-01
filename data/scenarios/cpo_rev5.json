@@ -1,0 +1,98 @@
+{
+  "serviceIdentification": {
+    "fedRampPackageId": "FR3391847502",
+    "ueiNumber": "MC7K9XQ2P4L8",
+    "providerName": "Meridian Cloud Solutions, Inc.",
+    "serviceName": "Meridian Secure Workspace",
+    "serviceAcronym": "MSW",
+    "serviceDescription": "Meridian Secure Workspace (MSW) is a cloud-native SaaS collaboration and document-management platform built on a FedRAMP Certified underlying IaaS platform. MSW provides real-time document co-authoring, secure messaging, and workflow automation for federal agency teams.",
+    "certificationType": "Rev5",
+    "website": "https://www.meridiancloud.example/msw",
+    "logo": "https://www.meridiancloud.example/assets/msw-logo.png"
+  },
+  "serviceProperties": {
+    "serviceType": ["SaaS"],
+    "deploymentModel": "Government Community Cloud",
+    "businessCategory": ["Collaboration", "Content Management System (CMS)"],
+    "trustCenter": {
+      "repositoryType": ["Trust Center"],
+      "url": "https://trust.meridiancloud.example",
+      "repositoryDescription": "Meridian FedRAMP-compatible trust center: certification package, ongoing certification reports, and significant change notifications.",
+      "authenticationRequired": true,
+      "accessRequestInstructions": "Federal agency personnel may request access via the 'Request Access' button on the trust center homepage using a .gov or .mil email address. Access is typically granted within 2 business days."
+    },
+    "secureConfigurationGuidance": {
+      "repositoryType": ["Secure Configuration Guidance"],
+      "url": "https://trust.meridiancloud.example/scg",
+      "repositoryDescription": "Instructions for securely configuring top-level administrative accounts and tenant security settings for Meridian Secure Workspace.",
+      "authenticationRequired": false
+    },
+    "additionalRepositories": [
+      {
+        "repositoryType": ["Assessment Reports"],
+        "url": "https://trust.meridiancloud.example/assessments",
+        "repositoryDescription": "Independent assessment materials, including the most recent annual independent assessment summary.",
+        "authenticationRequired": true,
+        "accessRequestInstructions": "Available to leveraging agencies upon request through the trust center access request form."
+      }
+    ],
+    "nextOngoingCertificationReportDate": "2027-07-26"
+  },
+  "contactInformation": [
+    {
+      "contactType": "Security",
+      "contactName": "Meridian Security Operations",
+      "contactEmail": "security@meridiancloud.example",
+      "contactPhone": "703-555-0142"
+    },
+    {
+      "contactType": "Sales",
+      "contactName": "Meridian Federal Sales",
+      "contactEmail": "fedsales@meridiancloud.example",
+      "contactPhone": "703-555-0198"
+    },
+    {
+      "contactType": "Primary",
+      "contactName": "Dana Whitfield, VP of Compliance",
+      "contactEmail": "dana.whitfield@meridiancloud.example",
+      "contactPhone": "703-555-0101"
+    }
+  ],
+  "assessor": {
+    "name": "Ironclad Assessment Partners, LLC",
+    "assessorID": "104822"
+  },
+  "certifiedServices": [
+    {
+      "serviceName": "Document Co-Authoring",
+      "serviceDescription": "Real-time collaborative document editing with version history and audit trail.",
+      "dateAvailable": "2025-03-01"
+    },
+    {
+      "serviceName": "Secure Messaging",
+      "serviceDescription": "End-to-end encrypted messaging and file sharing between authenticated tenant users.",
+      "dateAvailable": "2025-03-01"
+    },
+    {
+      "serviceName": "Workflow Automation",
+      "serviceDescription": "Configurable approval-routing and task-automation engine for document workflows.",
+      "dateAvailable": "2025-09-15"
+    }
+  ],
+  "thirdPartyInformationResources": {
+    "certified": [
+      {
+        "fedRampCertifiedThirdPartyInformationResource": "FR2210093344",
+        "useCase": "Underlying IaaS platform providing compute, block storage, and virtual networking for all MSW production workloads."
+      }
+    ],
+    "nonCertified": [
+      {
+        "name": "SendGrid Email Delivery API",
+        "provider": "Twilio SendGrid",
+        "website": "https://sendgrid.com",
+        "useCase": "Outbound transactional email notifications only (no federal data content); connection is outbound-only and does not process or store CUI."
+      }
+    ]
+  }
+}

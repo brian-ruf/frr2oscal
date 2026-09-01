@@ -1,0 +1,246 @@
+{
+  "certificationPackageOverviewUri": "https://trust.meridiancloud.example/packages/msw/cpo_20x.json",
+  "portsAndProtocols": [
+    {
+      "serviceName": "MSW Web Application",
+      "portNumber": "443",
+      "transportProtocol": "TCP",
+      "encryption": "TLS 1.2/1.3",
+      "purpose": "Primary web access for end users and API clients."
+    },
+    {
+      "serviceName": "Administrative Bastion",
+      "portNumber": "22",
+      "transportProtocol": "TCP",
+      "encryption": "SSH (public key only)",
+      "purpose": "Break-glass administrative access to production infrastructure; restricted to a named allow-list of source IPs and requires JIT elevation."
+    }
+  ],
+  "fedRampRequirements": [
+    {
+      "frrID": "MAS-CSO-IIR",
+      "frrImplementationStatus": "Implemented",
+      "frrImplementation": [
+        "Meridian maintains an automated asset inventory pipeline that queries the underlying IaaS platform's resource-tagging API every 4 hours to enumerate all compute, storage, and network resources within the MSW authorization boundary."
+      ],
+      "frrValidation": [
+        "The inventory pipeline's output is reconciled weekly against the cloud provider's billing/usage export as an independent cross-check for untagged or orphaned resources."
+      ],
+      "frrAssessment": [
+        "The independent assessor sampled the automated inventory against a manual resource enumeration during the FY26 annual assessment and found no discrepancies."
+      ]
+    },
+    {
+      "frrID": "MAS-CSO-FLO",
+      "frrImplementationStatus": "Implemented",
+      "frrImplementation": [
+        "Data flows between the MSW application tier, database tier, and the underlying IaaS platform are documented in the Certification Package Overview's information-flow repository, with each flow tagged with a security category of Moderate."
+      ],
+      "frrValidation": [
+        "Flow documentation is regenerated automatically from network policy configuration (security groups / firewall rules) on every production deployment to prevent drift between documented and actual flows."
+      ],
+      "frrAssessment": [
+        "Assessor confirmed via network configuration review that documented flows match observed traffic patterns during the FY26 annual assessment."
+      ]
+    },
+    {
+      "frrID": "MAS-CSO-TPR",
+      "frrImplementationStatus": "Implemented",
+      "frrImplementation": [
+        "The single third-party information resource in scope (the underlying IaaS platform) is identified in the Certification Package Overview along with its FedRAMP Certification status; the outbound-only email delivery dependency is documented as a non-certified third-party resource with a documented use-case justification."
+      ],
+      "frrValidation": [
+        "Third-party resource list is reviewed quarterly by the compliance team against the current vendor inventory."
+      ],
+      "frrAssessment": [
+        "Assessor verified the underlying IaaS platform's FedRAMP Certification status directly against the FedRAMP Marketplace during the FY26 annual assessment."
+      ]
+    },
+    {
+      "frrID": "VDR-CSO-DET",
+      "frrImplementationStatus": "Implemented",
+      "frrImplementation": [
+        "Authenticated vulnerability scanning is performed continuously across 100% of the MSW authorization boundary using an agent-based scanning tool integrated with the asset inventory pipeline."
+      ],
+      "frrValidation": [
+        "Scan coverage is validated weekly by reconciling scan results against the current asset inventory to identify any unscanned assets."
+      ],
+      "frrAssessment": [
+        "Assessor reviewed 90 days of scan coverage reports during the FY26 annual assessment and confirmed continuous full-boundary coverage with no unscanned assets identified."
+      ]
+    },
+    {
+      "frrID": "CCM-OCR-AVL",
+      "frrImplementationStatus": "Implemented",
+      "frrImplementation": [
+        "Meridian publishes an Ongoing Certification Report to the trust center every 2 weeks, consistent with the 20x Class C maintenance cadence, summarizing certification data changes, accepted vulnerabilities, and reportable incidents for the period."
+      ],
+      "frrValidation": [
+        "Report publication is tracked via an internal compliance calendar with automated reminders; a missed publication triggers an internal escalation."
+      ],
+      "frrAssessment": [
+        "Assessor confirmed a consistent 2-week publication cadence by reviewing the trust center's report history for the trailing 6 months."
+      ]
+    },
+    {
+      "frrID": "SCN-CSO-INF",
+      "frrImplementationStatus": "Implemented",
+      "frrImplementation": [
+        "Significant Change Notifications include, at minimum, a description of the change, its effective date, an assessment of impact to Key Security Indicators, and any affected third-party information resources, delivered via the trust center notification mechanism."
+      ],
+      "frrValidation": [
+        "A sample Significant Change Notification is retained in the trust center's assessment-reports repository for reference."
+      ],
+      "frrAssessment": [
+        "Assessor reviewed the most recent Significant Change Notification during the FY26 annual assessment and confirmed it contained all required elements."
+      ]
+    }
+  ],
+  "keySecurityIndicators": [
+    {
+      "ksiId": "KSI-IAM-APM",
+      "ksiImplementationStatus": "Implemented",
+      "ksiImplementation": [
+        "All MSW user accounts authenticate via WebAuthn-based passwordless credentials (platform or roaming authenticators) as the primary method; accounts unable to use passwordless methods fall back to a strong password combined with phishing-resistant MFA (FIDO2 security key)."
+      ],
+      "ksiValidation": [
+        "The identity provider's per-user authenticator-type report is reviewed monthly to confirm passwordless/phishing-resistant coverage remains above the internal 95% target."
+      ],
+      "ksiAssessment": [
+        "Assessor queried the identity provider's authenticator report directly during the FY26 annual assessment and independently confirmed 97% passwordless/phishing-resistant coverage across active accounts."
+      ],
+      "ksiTests": [
+        "Monthly automated query of identity provider API for per-user authenticator method",
+        "Attempted login using a disallowed authentication method (SMS OTP) to confirm rejection"
+      ],
+      "ksiEvidence": [
+        {
+          "evidenceType": "Report",
+          "evidenceDescription": "Identity provider authenticator-coverage report, July 2026",
+          "evidenceLocation": "https://trust.meridiancloud.example/evidence/iam-apm-2026-07.pdf",
+          "lastUpdated": "2026-07-15"
+        }
+      ]
+    },
+    {
+      "ksiId": "KSI-IAM-JIT",
+      "ksiImplementationStatus": "Implemented",
+      "ksiImplementation": [
+        "Administrative access to production infrastructure requires just-in-time role activation through the cloud provider's privileged-access-management service, with a maximum session duration of 1 hour and mandatory justification entry."
+      ],
+      "ksiValidation": [
+        "PAM activation logs are reviewed weekly for sessions exceeding typical duration or lacking justification text."
+      ],
+      "ksiAssessment": [
+        "Assessor sampled 30 days of PAM activation logs during the FY26 annual assessment and confirmed all elevated sessions were time-bound and justified."
+      ],
+      "ksiTests": [
+        "Automated weekly query of PAM activation log for session duration and justification-field completeness"
+      ],
+      "ksiEvidence": [
+        {
+          "evidenceType": "Log",
+          "evidenceDescription": "PAM activation log export, June-July 2026",
+          "evidenceLocation": "https://trust.meridiancloud.example/evidence/iam-jit-2026-07.csv",
+          "lastUpdated": "2026-07-20"
+        }
+      ]
+    },
+    {
+      "ksiId": "KSI-SVC-SIN",
+      "ksiImplementationStatus": "Implemented",
+      "ksiImplementation": [
+        "All data in transit is encrypted using TLS 1.2 or higher; all data at rest, including database volumes and object storage, is encrypted using AES-256 with keys managed through the cloud provider's FIPS 140-3 validated key management service."
+      ],
+      "ksiValidation": [
+        "Automated configuration scanning confirms encryption-at-rest is enabled on 100% of storage resources on every deployment pipeline run."
+      ],
+      "ksiAssessment": [
+        "Assessor reviewed configuration scan results and independently spot-checked 3 storage resources during the FY26 annual assessment, confirming encryption was enabled and using validated cryptographic modules."
+      ],
+      "ksiTests": [
+        "Per-deployment automated configuration scan for encryption-at-rest status on all storage resources"
+      ],
+      "ksiEvidence": [
+        {
+          "evidenceType": "Configuration",
+          "evidenceDescription": "Storage encryption configuration scan output, July 2026",
+          "evidenceLocation": "https://trust.meridiancloud.example/evidence/svc-sin-2026-07.json",
+          "lastUpdated": "2026-07-22"
+        }
+      ]
+    },
+    {
+      "ksiId": "KSI-MLA-OSM",
+      "ksiImplementationStatus": "Implemented",
+      "ksiImplementation": [
+        "All application, infrastructure, and identity-provider logs are forwarded in near-real-time to a centralized, tamper-resistant SIEM with a 13-month retention period."
+      ],
+      "ksiValidation": [
+        "Log-forwarding agent health is monitored continuously, with automated alerting on any host that stops forwarding logs for more than 15 minutes."
+      ],
+      "ksiAssessment": [
+        "Assessor confirmed SIEM ingestion coverage across a sample of infrastructure components and reviewed retention configuration during the FY26 annual assessment."
+      ],
+      "ksiTests": [
+        "Continuous automated monitoring of log-forwarding agent health across all hosts"
+      ],
+      "ksiEvidence": [
+        {
+          "evidenceType": "Configuration",
+          "evidenceDescription": "SIEM retention policy configuration export",
+          "evidenceLocation": "https://trust.meridiancloud.example/evidence/mla-osm-2026-07.json",
+          "lastUpdated": "2026-07-10"
+        }
+      ]
+    },
+    {
+      "ksiId": "KSI-CNA-RNT",
+      "ksiImplementationStatus": "Implemented",
+      "ksiImplementation": [
+        "Network traffic between application tiers is restricted using security groups that default-deny all traffic except explicitly allow-listed ports and protocols documented in the Certification Package Overview."
+      ],
+      "ksiValidation": [
+        "Security group configurations are scanned nightly against the documented allow-list; any drift generates an automated alert to the security operations team."
+      ],
+      "ksiAssessment": [
+        "Assessor reviewed security group configurations and the nightly drift-detection alert history during the FY26 annual assessment and found no unresolved drift incidents."
+      ],
+      "ksiTests": [
+        "Nightly automated diff of live security group rules against documented allow-list"
+      ],
+      "ksiEvidence": [
+        {
+          "evidenceType": "Configuration",
+          "evidenceDescription": "Security group configuration export and drift-detection log, July 2026",
+          "evidenceLocation": "https://trust.meridiancloud.example/evidence/cna-rnt-2026-07.json",
+          "lastUpdated": "2026-07-24"
+        }
+      ]
+    },
+    {
+      "ksiId": "KSI-INR-RIR",
+      "ksiImplementationStatus": "Implemented",
+      "ksiImplementation": [
+        "Meridian follows a documented incident handling process that includes detection, containment, eradication, and reporting to affected federal customers and FedRAMP within required timeframes."
+      ],
+      "ksiValidation": [
+        "The incident response process was exercised via a tabletop simulation in Q2 2026; findings were incorporated into an updated runbook."
+      ],
+      "ksiAssessment": [
+        "Assessor reviewed the Q2 2026 tabletop simulation report and confirmed the incident reporting timeline met FedRAMP requirements."
+      ],
+      "ksiTests": [
+        "Annual tabletop incident-response simulation"
+      ],
+      "ksiEvidence": [
+        {
+          "evidenceType": "Report",
+          "evidenceDescription": "Q2 2026 incident response tabletop exercise after-action summary",
+          "evidenceLocation": "https://trust.meridiancloud.example/evidence/inr-rir-2026-q2.pdf",
+          "lastUpdated": "2026-06-30"
+        }
+      ]
+    }
+  ]
+}
