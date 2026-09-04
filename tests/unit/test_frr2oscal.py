@@ -25,17 +25,21 @@ from frr2oscal import (
     _add_artifact_parts,
     _add_extra_parts,
     _add_following_information,
+    _add_following_information_bullets,
     _add_frr_to_profiles,
     _add_nist_to_profiles,
     _apply_ctl_guidance,
+    _assert_single_status_prop,
     _apply_ctl_params,
     _apply_ctl_to_profiles,
     _collect_ctl_param_ids,
     _ctl_id_to_oscal,
     _date_to_datetime,
+    _extension_props,
     _guidance_part,
     _notes_text,
     _profile_keys_for,
+    _reference_link,
     _reset_profile_tracking,
     _rev5_ctrl_to_oscal,
     _track_unhandled,
@@ -349,6 +353,120 @@ class TestAddFollowingInformation:
         assert items == []
 
 
+class TestAddFollowingInformationBullets:
+    def _make_control_with_statement(self):
+        cat = Catalog.new(title="T", version="0.1")
+        cat.create_control_group(parent_id="[root]", id="GRP", title="G")
+        cat.create_control(parent_id="GRP", id="R-001", title="R",
+                           statements=["The statement."])
+        return cat
+
+    def _statement_item_parts(self, cat):
+        data = json.loads(cat.dumps("json"))
+        ctrl = data["catalog"]["groups"][0]["controls"][0]
+        smt = next(p for p in ctrl.get("parts", []) if p["name"] == "statement")
+        return [p for p in smt.get("parts", []) if p["name"] == "item"]
+
+    def test_single_bullet(self):
+        cat = self._make_control_with_statement()
+        _add_following_information_bullets(cat, "R-001", ["Do this."])
+        items = self._statement_item_parts(cat)
+        assert len(items) == 1
+        assert "- Do this." in items[0]["prose"]
+
+    def test_multiple_bullets(self):
+        cat = self._make_control_with_statement()
+        _add_following_information_bullets(cat, "R-001", ["A", "B", "C"])
+        items = self._statement_item_parts(cat)
+        prose = items[0]["prose"]
+        assert "- A" in prose
+        assert "- B" in prose
+        assert "- C" in prose
+
+    def test_uses_unordered_not_numbered(self):
+        cat = self._make_control_with_statement()
+        _add_following_information_bullets(cat, "R-001", ["item"])
+        items = self._statement_item_parts(cat)
+        assert items[0]["prose"].startswith("- ")
+        assert "1." not in items[0]["prose"]
+
+    def test_empty_list_is_noop(self):
+        cat = self._make_control_with_statement()
+        _add_following_information_bullets(cat, "R-001", [])
+        assert self._statement_item_parts(cat) == []
+
+
+class TestReferenceLink:
+    def test_returns_empty_when_no_url(self):
+        assert _reference_link({}) == []
+        assert _reference_link({"reference": "Some doc"}) == []
+
+    def test_rel_is_reference(self):
+        link = _reference_link({"reference_url": "https://example.com"})[0]
+        assert link["rel"] == "reference"
+
+    def test_href_is_url(self):
+        link = _reference_link({"reference_url": "https://example.com"})[0]
+        assert link["href"] == "https://example.com"
+
+    def test_text_set_when_reference_present(self):
+        link = _reference_link({
+            "reference_url": "https://example.com",
+            "reference": "Example Doc",
+        })[0]
+        assert link["text"] == "Example Doc"
+
+    def test_no_text_key_when_reference_absent(self):
+        link = _reference_link({"reference_url": "https://example.com"})[0]
+        assert "text" not in link
+
+    def test_blank_url_returns_empty(self):
+        assert _reference_link({"reference_url": ""}) == []
+
+
+class TestExtensionProps:
+    def _names(self, props):
+        return [p["name"] for p in props]
+
+    def test_empty_rule_returns_empty(self):
+        assert _extension_props({}) == []
+
+    def test_timeframe_type_string(self):
+        props = _extension_props({"timeframe_type": "bizdays"})
+        assert len(props) == 1
+        p = props[0]
+        assert p["name"] == "timeframe_type"
+        assert p["value"] == "bizdays"
+        assert p["ns"] == FRR_NS
+
+    def test_timeframe_num_converted_to_string(self):
+        props = _extension_props({"timeframe_num": 10})
+        assert props[0]["value"] == "10"
+
+    def test_both_timeframe_fields(self):
+        props = _extension_props({"timeframe_type": "days", "timeframe_num": 30})
+        names = self._names(props)
+        assert "timeframe_type" in names
+        assert "timeframe_num" in names
+
+    def test_effective_date_dict_serialised_as_json(self):
+        ed = {"obtain": "2026-01-01", "maintain": None}
+        props = _extension_props({"effective_date": ed})
+        assert props[0]["name"] == "effective_date"
+        import json as _json
+        assert _json.loads(props[0]["value"]) == ed
+
+    def test_all_props_use_frr_ns(self):
+        props = _extension_props({"timeframe_type": "hours", "timeframe_num": 4})
+        assert all(p["ns"] == FRR_NS for p in props)
+
+    def test_absent_fields_not_included(self):
+        props = _extension_props({"timeframe_num": 5})
+        names = self._names(props)
+        assert "timeframe_type" not in names
+        assert "effective_date" not in names
+
+
 # ── Catalog-integrated: _build_frr_simple_control ────────────────────────────
 
 class TestBuildFrrSimpleControl:
@@ -454,6 +572,43 @@ class TestBuildFrrSimpleControl:
         notes_part = next((p for p in gdn_parts if p.get("title") == "Notes"), None)
         assert notes_part is not None
         assert "Be careful." in notes_part["prose"]
+
+    def test_following_information_bullets_unordered(self):
+        cat = _catalog_with_group()
+        rule = {"name": "R", "statement": "S.", "following_information_bullets": ["X", "Y"]}
+        frr2oscal._build_frr_simple_control(cat, "grp", "R-FIB", rule)
+        ctrl = _find_control(cat, "R-FIB")
+        smt = next(p for p in ctrl["parts"] if p["name"] == "statement")
+        item = next(p for p in smt.get("parts", []) if p["name"] == "item")
+        assert "- X" in item["prose"]
+        assert "- Y" in item["prose"]
+        assert "1." not in item["prose"]
+
+    def test_reference_url_link_written(self):
+        cat = _catalog_with_group()
+        rule = {"name": "R", "statement": "S.", "reference_url": "https://example.com"}
+        frr2oscal._build_frr_simple_control(cat, "grp", "R-REF", rule)
+        ctrl = _find_control(cat, "R-REF")
+        ref_links = [lk for lk in ctrl.get("links", []) if lk.get("rel") == "reference"]
+        assert ref_links
+        assert ref_links[0]["href"] == "https://example.com"
+
+    def test_reference_text_when_reference_present(self):
+        cat = _catalog_with_group()
+        rule = {"name": "R", "statement": "S.",
+                "reference_url": "https://example.com", "reference": "My Doc"}
+        frr2oscal._build_frr_simple_control(cat, "grp", "R-REFT", rule)
+        ctrl = _find_control(cat, "R-REFT")
+        ref_link = next(lk for lk in ctrl["links"] if lk.get("rel") == "reference")
+        assert ref_link.get("text") == "My Doc"
+
+    def test_timeframe_props_written(self):
+        cat = _catalog_with_group()
+        rule = {"name": "R", "statement": "S.", "timeframe_type": "bizdays", "timeframe_num": 10}
+        frr2oscal._build_frr_simple_control(cat, "grp", "R-TF", rule)
+        ctrl = _find_control(cat, "R-TF")
+        assert _prop_value(ctrl["props"], "timeframe_type", ns=FRR_NS) == "bizdays"
+        assert _prop_value(ctrl["props"], "timeframe_num", ns=FRR_NS) == "10"
 
 
 # ── Catalog-integrated: _build_frr_varies_control ────────────────────────────
@@ -618,6 +773,31 @@ class TestBuildFrrSubset:
         assert "This subset covers X." in overview["prose"]
 
 
+class TestAssertSingleStatusProp:
+    def test_empty_props_passes(self):
+        _assert_single_status_prop([], "ctrl-1")  # no exception
+
+    def test_one_status_prop_passes(self):
+        _assert_single_status_prop([{"name": "status", "value": "stable"}], "ctrl-1")
+
+    def test_two_status_props_raises(self):
+        props = [
+            {"name": "status", "value": "stable"},
+            {"name": "status", "value": "placeholder"},
+        ]
+        with pytest.raises(RuntimeError, match="ctrl-1"):
+            _assert_single_status_prop(props, "ctrl-1")
+
+    def test_non_status_props_ignored(self):
+        props = [{"name": "label", "value": "X"}, {"name": "force", "value": "MUST"}]
+        _assert_single_status_prop(props, "ctrl-1")  # no exception
+
+    def test_error_message_includes_count(self):
+        props = [{"name": "status"}, {"name": "status"}, {"name": "status"}]
+        with pytest.raises(RuntimeError, match="3"):
+            _assert_single_status_prop(props, "any-id")
+
+
 class TestBuildFrrRuleset:
     def setup_method(self):
         frr2oscal._STATS["groups"] = 0
@@ -694,6 +874,73 @@ class TestBuildFrrRuleset:
         assert overview is not None
         assert overview.get("title") == "Purpose"
         assert "Covers automated checks." in overview["prose"]
+
+    def test_label_prop_uses_short_name(self):
+        cat = Catalog.new(title="T", version="0.1")
+        frr_val = {
+            "info": {"name": "Test Ruleset", "short_name": "TST", "purpose": ""},
+            "data": {},
+        }
+        frr2oscal._build_frr_ruleset(cat, "TST", frr_val)
+        data = json.loads(cat.dumps("json"))
+        top_group = data["catalog"]["groups"][0]
+        label = _prop_value(top_group.get("props", []), "label")
+        assert label == "TST"
+
+    def test_label_falls_back_to_frr_key_when_short_name_absent(self):
+        cat = Catalog.new(title="T", version="0.1")
+        frr_val = {"info": {"name": "Test Ruleset", "purpose": ""}, "data": {}}
+        frr2oscal._build_frr_ruleset(cat, "TST", frr_val)
+        data = json.loads(cat.dumps("json"))
+        top_group = data["catalog"]["groups"][0]
+        label = _prop_value(top_group.get("props", []), "label")
+        assert label == "TST"
+
+    def test_status_prop_written_to_group(self):
+        cat = Catalog.new(title="T", version="0.1")
+        frr_val = {
+            "info": {"name": "Test Ruleset", "short_name": "TST", "status": "stable", "purpose": ""},
+            "data": {},
+        }
+        frr2oscal._build_frr_ruleset(cat, "TST", frr_val)
+        data = json.loads(cat.dumps("json"))
+        top_group = data["catalog"]["groups"][0]
+        status = _prop_value(top_group.get("props", []), "status", ns=FRR_NS)
+        assert status == "stable"
+
+    def test_status_prop_uses_frr_namespace(self):
+        cat = Catalog.new(title="T", version="0.1")
+        frr_val = {
+            "info": {"name": "Test Ruleset", "short_name": "TST", "status": "stable", "purpose": ""},
+            "data": {},
+        }
+        frr2oscal._build_frr_ruleset(cat, "TST", frr_val)
+        data = json.loads(cat.dumps("json"))
+        top_group = data["catalog"]["groups"][0]
+        props = top_group.get("props", [])
+        status_prop = next((p for p in props if p.get("name") == "status"), None)
+        assert status_prop is not None
+        assert status_prop.get("ns") == FRR_NS
+
+    def test_placeholder_status_written(self):
+        cat = Catalog.new(title="T", version="0.1")
+        frr_val = {
+            "info": {"name": "Test Ruleset", "short_name": "TST", "status": "placeholder", "purpose": ""},
+            "data": {},
+        }
+        frr2oscal._build_frr_ruleset(cat, "TST", frr_val)
+        data = json.loads(cat.dumps("json"))
+        top_group = data["catalog"]["groups"][0]
+        assert _prop_value(top_group.get("props", []), "status", ns=FRR_NS) == "placeholder"
+
+    def test_no_status_when_absent(self):
+        cat = Catalog.new(title="T", version="0.1")
+        frr_val = {"info": {"name": "Test Ruleset", "purpose": ""}, "data": {}}
+        frr2oscal._build_frr_ruleset(cat, "TST", frr_val)
+        data = json.loads(cat.dumps("json"))
+        top_group = data["catalog"]["groups"][0]
+        props = top_group.get("props", [])
+        assert not any(p.get("name") == "status" for p in props)
 
 
 # ── _rev5_ctrl_to_oscal ───────────────────────────────────────────────────────
@@ -1306,3 +1553,60 @@ class TestBuildProfiles:
         ]
         assert "ac-1" in all_ids
         assert "ac-20" in all_ids
+
+    def _metadata_links(self, raw: dict) -> list:
+        return raw.get("profile", {}).get("metadata", {}).get("links", [])
+
+    def test_profile_has_canonical_link(self):
+        profiles = frr2oscal.build_profiles(self._make_data())
+        for name, profile in profiles.items():
+            raw = json.loads(profile.dumps("json"))
+            links = self._metadata_links(raw)
+            canonical = [lk for lk in links if lk.get("rel") == "canonical"]
+            assert canonical, f"No canonical link in metadata of profile '{name}'"
+            assert canonical[0]["href"] == frr2oscal.SOURCE_URL
+
+    def test_profile_has_alternate_link(self):
+        profiles = frr2oscal.build_profiles(self._make_data())
+        for name, profile in profiles.items():
+            raw = json.loads(profile.dumps("json"))
+            links = self._metadata_links(raw)
+            alternate = [lk for lk in links if lk.get("rel") == "alternate"]
+            assert alternate, f"No alternate link in metadata of profile '{name}'"
+            assert alternate[0]["href"] == frr2oscal.ALTERNATE_URL
+
+
+class TestBuildCatalogCanonicalLink:
+    def setup_method(self):
+        frr2oscal._STATS["groups"] = 0
+        frr2oscal._STATS["controls"] = 0
+        frr2oscal.UNHANDLED.clear()
+        _reset_profile_tracking()
+
+    def _make_data(self):
+        return {
+            "info": {
+                "title": "Test Catalog",
+                "version": "0.1",
+                "description": "",
+                "last_updated": "2026-01-01",
+            },
+            "FRR": {},
+            "KSI": {},
+        }
+
+    def test_catalog_has_canonical_link(self):
+        catalog = frr2oscal.build_catalog(self._make_data())
+        raw = json.loads(catalog.dumps("json"))
+        links = raw.get("catalog", {}).get("metadata", {}).get("links", [])
+        canonical = [lk for lk in links if lk.get("rel") == "canonical"]
+        assert canonical, "No canonical link in catalog metadata"
+        assert canonical[0]["href"] == frr2oscal.SOURCE_URL
+
+    def test_catalog_has_alternate_link(self):
+        catalog = frr2oscal.build_catalog(self._make_data())
+        raw = json.loads(catalog.dumps("json"))
+        links = raw.get("catalog", {}).get("metadata", {}).get("links", [])
+        alternate = [lk for lk in links if lk.get("rel") == "alternate"]
+        assert alternate, "No alternate link in catalog metadata"
+        assert alternate[0]["href"] == frr2oscal.ALTERNATE_URL

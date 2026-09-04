@@ -12,6 +12,7 @@ Source: https://github.com/FedRAMP/rules
 
 Constants:
     SOURCE_URL (str): Remote URL for the FedRAMP consolidated-rules JSON.
+    ALTERNATE_URL (str): Alternate (human-facing) FedRAMP URL added to metadata links.
     SOURCE_LOCAL (str): Local cache path for the downloaded JSON.
     FRR_NS (str): FedRAMP namespace URI used in OSCAL props.
     NIST_800_53_REV5_URL (str): NIST SP 800-53 Rev 5 OSCAL catalog URL.
@@ -42,6 +43,7 @@ from datetime import datetime, timezone
 from oscal import Catalog, Profile
 
 SOURCE_URL = "https://raw.githubusercontent.com/FedRAMP/rules/main/fedramp-consolidated-rules.json"
+ALTERNATE_URL = "https://www.fedramp.gov/2026/"
 SOURCE_LOCAL = os.path.join(
     os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
     "data", "raw", "fedramp-consolidated-rules.json",
@@ -93,16 +95,22 @@ _HANDLED_RULE_KEYS = frozenset({
     "name", "statement", "danger", "notes", "note",
     "related", "force", "affects", "artifacts",
     "corrective_actions", "examples", "schema", "following_information", "updated",
+    "following_information_bullets", "reference", "reference_url",
+    "effective_date", "timeframe_type", "timeframe_num",
 })
 _HANDLED_VARIES_RULE_KEYS = frozenset({
     "name", "related", "affects", "varies_by_class",
     "note", "notes",
     "corrective_actions", "examples", "schema", "following_information", "updated",
+    "following_information_bullets", "reference", "reference_url",
+    "effective_date", "timeframe_type", "timeframe_num",
 })
 _HANDLED_CLASS_KEYS = frozenset({
     "statement", "force", "related", "note", "notes", "artifacts",
     "following_information", "corrective_actions", "examples", "schema",
     "rev5_controls_list",
+    "following_information_bullets",
+    "effective_date", "timeframe_type", "timeframe_num",
 })
 
 _VERBOSE: bool = True
@@ -355,6 +363,69 @@ def _add_artifact_parts(catalog: Catalog, ctrl_id: str, artifacts_dict: dict) ->
                 ],
                 parts=[{"name": "assessment-objects", "prose": a} for a in items],
             )
+
+
+def _add_following_information_bullets(catalog: Catalog, ctrl_id: str, content) -> None:
+    """Add following_information_bullets as an unordered-list item child of the statement part.
+
+    Each string in the content list becomes one bullet entry. The part is added
+    under the control's statement part (id={ctrl_id}_smt). If no statement part
+    exists the call is a no-op.
+
+    Args:
+        catalog (Catalog, required): The OSCAL catalog being built.
+        ctrl_id (str, required): ID of the control whose statement receives the item.
+        content (list | str, required): The following_information_bullets value from the rule dict.
+    """
+    items = content if isinstance(content, list) else [str(content)]
+    if not items:
+        return
+    prose = "\n".join(f"- {item}" for item in items)
+    catalog.add_part(f"{ctrl_id}_smt", "item", prose=prose)
+
+
+def _reference_link(rule: dict) -> list:
+    """Return a list containing a reference link if reference_url is present.
+
+    The link uses rel='reference'. If a 'reference' text field is also present
+    in the same rule dict it is used as the link's text.
+
+    Args:
+        rule (dict, required): Rule or class-variant dict from the FRR JSON source.
+
+    Returns:
+        list: A one-element list with the link dict, or an empty list.
+    """
+    url = (rule.get("reference_url") or "").strip()
+    if not url:
+        return []
+    link: dict = {"rel": "reference", "href": url}
+    ref_text = (rule.get("reference") or "").strip()
+    if ref_text:
+        link["text"] = ref_text
+    return [link]
+
+
+def _extension_props(rule: dict) -> list:
+    """Return FedRAMP-namespace props for extension fields in a rule or class-variant dict.
+
+    Handles: effective_date (serialised as JSON when it is an object),
+    timeframe_type (string), timeframe_num (number converted to string).
+    Only fields present and non-None in rule are included.
+
+    Args:
+        rule (dict, required): Rule or class-variant dict from the FRR JSON source.
+
+    Returns:
+        list: List of OSCAL prop dicts in the FedRAMP namespace (may be empty).
+    """
+    result = []
+    for key in ("effective_date", "timeframe_type", "timeframe_num"):
+        val = rule.get(key)
+        if val is not None:
+            str_val = json.dumps(val, ensure_ascii=False) if isinstance(val, dict) else str(val)
+            result.append({"name": key, "ns": FRR_NS, "value": str_val})
+    return result
 
 
 def _add_extra_parts(catalog: Catalog, ctrl_id: str, rule: dict) -> None:
@@ -767,11 +838,13 @@ def _build_frr_simple_control(
     for affect in (rule.get("affects") or []):
         props.append({"name": "affects", "value": affect, "ns": FRR_NS})
     props.extend(_updated_props(rule))
+    props.extend(_extension_props(rule))
 
     links = [
         {"rel": "related", "href": f"#{rid}"}
         for rid in (rule.get("related") or [])
     ]
+    links.extend(_reference_link(rule))
 
     danger = rule.get("danger", "")
     statement = rule.get("statement", "")
@@ -804,6 +877,10 @@ def _build_frr_simple_control(
     if fi:
         _add_following_information(catalog, ctrl_id, fi)
 
+    fib = rule.get("following_information_bullets")
+    if fib:
+        _add_following_information_bullets(catalog, ctrl_id, fib)
+
     _add_artifact_parts(catalog, ctrl_id, rule.get("artifacts") or {})
     _add_extra_parts(catalog, ctrl_id, rule)
 
@@ -832,10 +909,12 @@ def _build_frr_varies_control(
         {"rel": "related", "href": f"#{rid}"}
         for rid in (rule.get("related") or [])
     ]
+    links.extend(_reference_link(rule))
     props = [{"name": "path", "value": path, "ns": FRR_NS}]
     for affect in (rule.get("affects") or []):
         props.append({"name": "affects", "value": affect, "ns": FRR_NS})
     props.extend(_updated_props(rule))
+    props.extend(_extension_props(rule))
 
     parent_ctrl = catalog.create_control(
         parent_id=parent_id,
@@ -860,6 +939,10 @@ def _build_frr_varies_control(
     if fi:
         _add_following_information(catalog, rule_id, fi)
 
+    fib = rule.get("following_information_bullets")
+    if fib:
+        _add_following_information_bullets(catalog, rule_id, fib)
+
     _add_extra_parts(catalog, rule_id, rule)
 
     for class_key, class_data in rule["varies_by_class"].items():
@@ -869,6 +952,7 @@ def _build_frr_varies_control(
         child_props = [{"name": "path", "value": path, "ns": FRR_NS}]
         if class_data.get("force"):
             child_props.append({"name": "force", "value": class_data["force"], "ns": FRR_NS})
+        child_props.extend(_extension_props(class_data))
         child_links = [
             {"rel": "related", "href": f"#{rid}"}
             for rid in (class_data.get("related") or [])
@@ -897,6 +981,10 @@ def _build_frr_varies_control(
         child_fi = class_data.get("following_information")
         if child_fi:
             _add_following_information(catalog, child_id, child_fi)
+
+        child_fib = class_data.get("following_information_bullets")
+        if child_fib:
+            _add_following_information_bullets(catalog, child_id, child_fib)
 
         _add_artifact_parts(catalog, child_id, class_data.get("artifacts") or {})
         _add_extra_parts(catalog, child_id, class_data)
@@ -986,6 +1074,30 @@ def _build_frr_subset(
     _emit()
 
 
+def _assert_single_status_prop(props: list, control_id: str) -> None:
+    """Raise RuntimeError if a control's props list contains more than one 'status' entry.
+
+    This guard is intended for OSCAL controls only. Multiple status props on a
+    single control indicate a logic error where two separate code paths both
+    attempted to set status.
+
+    Args:
+        props (list, required): The props list of the OSCAL control to inspect.
+        control_id (str, required): ID of the control, used in the error message.
+
+    Returns:
+        None
+
+    Raises:
+        RuntimeError: If more than one prop with name='status' is found.
+    """
+    count = sum(1 for p in props if p.get("name") == "status")
+    if count > 1:
+        raise RuntimeError(
+            f"Control '{control_id}' has {count} 'status' props; expected at most 1."
+        )
+
+
 def _build_frr_ruleset(
     catalog: Catalog, frr_key: str, frr_val: dict
 ) -> None:
@@ -993,6 +1105,9 @@ def _build_frr_ruleset(
 
     The purpose overview part is added via catalog.add_part() with its title set
     directly, so it persists in the catalog's internal state.
+
+    The group's label prop is set to info.short_name (the abbreviated ruleset
+    code). If a status value is present in info, it is stored as a 'status' prop.
 
     Args:
         catalog (Catalog, required): The OSCAL catalog being built.
@@ -1003,12 +1118,17 @@ def _build_frr_ruleset(
     info = frr_val.get("info", {})
     title = info.get("name", frr_key)
     purpose = info.get("purpose", "")
+    short_name = info.get("short_name", frr_key)
+    status = info.get("status", "")
+
+    extra_props = [{"name": "status", "ns": FRR_NS, "value": status}] if status else []
 
     group = catalog.create_control_group(
         parent_id="[root]",
         id=group_id,
         title=title,
-        label=group_id,
+        label=short_name,
+        props=extra_props,
     )
     if group is None:
         return
@@ -1201,6 +1321,8 @@ def build_catalog(data: dict) -> Catalog:
         "published":     published,
         "last-modified": now,
     })
+    catalog.append_child("metadata/links", {"href": SOURCE_URL, "rel": "canonical"})
+    catalog.append_child("metadata/links", {"href": ALTERNATE_URL, "rel": "alternate"})
 
     _build_frr(catalog, data)
     _build_ksi(catalog, data)
@@ -1256,6 +1378,8 @@ def build_profiles(data: dict) -> dict:
             "published":     published,
             "last-modified": now,
         })
+        p.append_child("metadata/links", {"href": SOURCE_URL, "rel": "canonical"})
+        p.append_child("metadata/links", {"href": ALTERNATE_URL, "rel": "alternate"})
         return p
 
     def _set_frr_import(p: Profile, key: str) -> None:

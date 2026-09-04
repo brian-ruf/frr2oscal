@@ -1,16 +1,26 @@
 {
   "profile": {
-    "uuid": "f028b90a-7884-46f6-a9f1-c4f7861b4d3c",
+    "uuid": "3b782a35-44b1-462d-b8a0-979335ed3938",
     "metadata": {
       "title": "FedRAMP 20X \u2014 Class A",
       "published": "2026-07-06T00:00:00Z",
-      "last-modified": "2026-09-01T16:17:56Z",
+      "last-modified": "2026-09-04T03:46:03Z",
       "version": "2026.07.06.01",
-      "oscal-version": "1.2.3"
+      "oscal-version": "1.2.3",
+      "links": [
+        {
+          "href": "https://raw.githubusercontent.com/FedRAMP/rules/main/fedramp-consolidated-rules.json",
+          "rel": "canonical"
+        },
+        {
+          "href": "https://www.fedramp.gov/2026/",
+          "rel": "alternate"
+        }
+      ]
     },
     "imports": [
       {
-        "href": "#b8491298-6ef1-4ccc-bbbe-0d92f53aeddd",
+        "href": "#6c769be2-20ed-4436-83ce-195eea6c84d4",
         "include-controls": [
           {
             "with-ids": [
@@ -308,7 +318,7 @@
     "back-matter": {
       "resources": [
         {
-          "uuid": "b8491298-6ef1-4ccc-bbbe-0d92f53aeddd",
+          "uuid": "6c769be2-20ed-4436-83ce-195eea6c84d4",
           "title": "FedRAMP Consolidated Rules OSCAL Catalog",
           "rlinks": [
             {

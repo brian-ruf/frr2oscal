@@ -1,12 +1,22 @@
 {
   "catalog": {
-    "uuid": "f3e0dbc6-4a23-4273-982e-effdd0a142ef",
+    "uuid": "0fa06e4a-b632-4d99-9bd4-48b89794c5b3",
     "metadata": {
       "title": "FedRAMP Consolidated Rules for 2026",
       "published": "2026-07-06T00:00:00Z",
-      "last-modified": "2026-09-01T16:17:54Z",
+      "last-modified": "2026-09-04T03:46:01Z",
       "version": "2026.07.06.01",
       "oscal-version": "1.2.3",
+      "links": [
+        {
+          "href": "https://raw.githubusercontent.com/FedRAMP/rules/main/fedramp-consolidated-rules.json",
+          "rel": "canonical"
+        },
+        {
+          "href": "https://www.fedramp.gov/2026/",
+          "rel": "alternate"
+        }
+      ],
       "remarks": "This datafile contains the Consolidated Rules for FedRAMP in structured machine-readable text. It includes definitions, requirements, recommendations, and key security indicators."
     },
     "groups": [
@@ -16,7 +26,12 @@
         "props": [
           {
             "name": "label",
-            "value": "FRR-AFC"
+            "value": "AFC"
+          },
+          {
+            "name": "status",
+            "ns": "http://fedramp.gov/ns/oscal",
+            "value": "stable"
           }
         ],
         "parts": [
@@ -189,6 +204,16 @@
                     "ns": "http://fedramp.gov/ns/oscal",
                     "value": "2026-06-24T00:00:00Z",
                     "remarks": "Official launch of the FedRAMP Consolidated Rules for 2026."
+                  },
+                  {
+                    "name": "timeframe_type",
+                    "ns": "http://fedramp.gov/ns/oscal",
+                    "value": "bizdays"
+                  },
+                  {
+                    "name": "timeframe_num",
+                    "ns": "http://fedramp.gov/ns/oscal",
+                    "value": "10"
                   }
                 ],
                 "parts": [
@@ -811,7 +836,12 @@
         "props": [
           {
             "name": "label",
-            "value": "FRR-AGU"
+            "value": "AGU"
+          },
+          {
+            "name": "status",
+            "ns": "http://fedramp.gov/ns/oscal",
+            "value": "placeholder"
           }
         ],
         "parts": [
@@ -1149,6 +1179,13 @@
                     "remarks": "Official launch of the FedRAMP Consolidated Rules for 2026."
                   }
                 ],
+                "links": [
+                  {
+                    "href": "https://www.fedramp.gov/preview/2026/agencies/support/liaisons",
+                    "rel": "reference",
+                    "text": "Agency Liaison Program"
+                  }
+                ],
                 "parts": [
                   {
                     "id": "AGU-AGC-LIA_smt",
@@ -1234,6 +1271,13 @@
                     "ns": "http://fedramp.gov/ns/oscal",
                     "value": "2026-06-24T00:00:00Z",
                     "remarks": "Official launch of the FedRAMP Consolidated Rules for 2026."
+                  }
+                ],
+                "links": [
+                  {
+                    "href": "https://fedramp.gov/preview/2026/agencies/use",
+                    "rel": "reference",
+                    "text": "Using a FedRAMP Certified Cloud Service Offering"
                   }
                 ],
                 "parts": [
@@ -1655,7 +1699,12 @@
         "props": [
           {
             "name": "label",
-            "value": "FRR-CCM"
+            "value": "CCM"
+          },
+          {
+            "name": "status",
+            "ns": "http://fedramp.gov/ns/oscal",
+            "value": "stable"
           }
         ],
         "parts": [
@@ -2170,6 +2219,16 @@
                         "name": "force",
                         "ns": "http://fedramp.gov/ns/oscal",
                         "value": "MAY"
+                      },
+                      {
+                        "name": "timeframe_type",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "months"
+                      },
+                      {
+                        "name": "timeframe_num",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "3"
                       }
                     ],
                     "parts": [
@@ -2217,6 +2276,16 @@
                         "name": "force",
                         "ns": "http://fedramp.gov/ns/oscal",
                         "value": "SHOULD"
+                      },
+                      {
+                        "name": "timeframe_type",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "months"
+                      },
+                      {
+                        "name": "timeframe_num",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "3"
                       }
                     ],
                     "parts": [
@@ -2264,6 +2333,16 @@
                         "name": "force",
                         "ns": "http://fedramp.gov/ns/oscal",
                         "value": "MUST"
+                      },
+                      {
+                        "name": "timeframe_type",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "months"
+                      },
+                      {
+                        "name": "timeframe_num",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "3"
                       }
                     ],
                     "parts": [
@@ -2311,6 +2390,16 @@
                         "name": "force",
                         "ns": "http://fedramp.gov/ns/oscal",
                         "value": "MUST"
+                      },
+                      {
+                        "name": "timeframe_type",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "months"
+                      },
+                      {
+                        "name": "timeframe_num",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "3"
                       }
                     ],
                     "parts": [
@@ -2720,7 +2809,12 @@
         "props": [
           {
             "name": "label",
-            "value": "FRR-CDS"
+            "value": "CDS"
+          },
+          {
+            "name": "status",
+            "ns": "http://fedramp.gov/ns/oscal",
+            "value": "stable"
           }
         ],
         "parts": [
@@ -2963,6 +3057,16 @@
                     "ns": "http://fedramp.gov/ns/oscal",
                     "value": "2026-06-24T00:00:00Z",
                     "remarks": "Official launch of the FedRAMP Consolidated Rules for 2026."
+                  },
+                  {
+                    "name": "timeframe_type",
+                    "ns": "http://fedramp.gov/ns/oscal",
+                    "value": "weeks"
+                  },
+                  {
+                    "name": "timeframe_num",
+                    "ns": "http://fedramp.gov/ns/oscal",
+                    "value": "2"
                   }
                 ],
                 "parts": [
@@ -4043,6 +4147,16 @@
                     "ns": "http://fedramp.gov/ns/oscal",
                     "value": "2026-06-24T00:00:00Z",
                     "remarks": "Official launch of the FedRAMP Consolidated Rules for 2026."
+                  },
+                  {
+                    "name": "timeframe_type",
+                    "ns": "http://fedramp.gov/ns/oscal",
+                    "value": "bizdays"
+                  },
+                  {
+                    "name": "timeframe_num",
+                    "ns": "http://fedramp.gov/ns/oscal",
+                    "value": "5"
                   }
                 ],
                 "parts": [
@@ -4169,7 +4283,12 @@
         "props": [
           {
             "name": "label",
-            "value": "FRR-CMU"
+            "value": "CMU"
+          },
+          {
+            "name": "status",
+            "ns": "http://fedramp.gov/ns/oscal",
+            "value": "stable"
           }
         ],
         "parts": [
@@ -4533,7 +4652,12 @@
         "props": [
           {
             "name": "label",
-            "value": "FRR-CPO"
+            "value": "CPO"
+          },
+          {
+            "name": "status",
+            "ns": "http://fedramp.gov/ns/oscal",
+            "value": "stable"
           }
         ],
         "parts": [
@@ -4895,6 +5019,16 @@
                         "name": "force",
                         "ns": "http://fedramp.gov/ns/oscal",
                         "value": "SHOULD"
+                      },
+                      {
+                        "name": "timeframe_type",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "months"
+                      },
+                      {
+                        "name": "timeframe_num",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "3"
                       }
                     ],
                     "parts": [
@@ -4922,6 +5056,16 @@
                         "name": "force",
                         "ns": "http://fedramp.gov/ns/oscal",
                         "value": "MUST"
+                      },
+                      {
+                        "name": "timeframe_type",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "months"
+                      },
+                      {
+                        "name": "timeframe_num",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "1"
                       }
                     ],
                     "parts": [
@@ -4949,6 +5093,16 @@
                         "name": "force",
                         "ns": "http://fedramp.gov/ns/oscal",
                         "value": "MUST"
+                      },
+                      {
+                        "name": "timeframe_type",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "weeks"
+                      },
+                      {
+                        "name": "timeframe_num",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "2"
                       }
                     ],
                     "parts": [
@@ -4976,6 +5130,16 @@
                         "name": "force",
                         "ns": "http://fedramp.gov/ns/oscal",
                         "value": "MUST"
+                      },
+                      {
+                        "name": "timeframe_type",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "weeks"
+                      },
+                      {
+                        "name": "timeframe_num",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "1"
                       }
                     ],
                     "parts": [
@@ -5049,6 +5213,16 @@
                         "name": "force",
                         "ns": "http://fedramp.gov/ns/oscal",
                         "value": "SHOULD"
+                      },
+                      {
+                        "name": "timeframe_type",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "years"
+                      },
+                      {
+                        "name": "timeframe_num",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "1"
                       }
                     ],
                     "parts": [
@@ -5076,6 +5250,16 @@
                         "name": "force",
                         "ns": "http://fedramp.gov/ns/oscal",
                         "value": "MUST"
+                      },
+                      {
+                        "name": "timeframe_type",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "years"
+                      },
+                      {
+                        "name": "timeframe_num",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "1"
                       }
                     ],
                     "parts": [
@@ -5103,6 +5287,16 @@
                         "name": "force",
                         "ns": "http://fedramp.gov/ns/oscal",
                         "value": "MUST"
+                      },
+                      {
+                        "name": "timeframe_type",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "years"
+                      },
+                      {
+                        "name": "timeframe_num",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "1"
                       }
                     ],
                     "parts": [
@@ -5130,6 +5324,16 @@
                         "name": "force",
                         "ns": "http://fedramp.gov/ns/oscal",
                         "value": "MUST"
+                      },
+                      {
+                        "name": "timeframe_type",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "months"
+                      },
+                      {
+                        "name": "timeframe_num",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "6"
                       }
                     ],
                     "parts": [
@@ -5152,7 +5356,12 @@
         "props": [
           {
             "name": "label",
-            "value": "FRR-FRC"
+            "value": "FRC"
+          },
+          {
+            "name": "status",
+            "ns": "http://fedramp.gov/ns/oscal",
+            "value": "stable"
           }
         ],
         "parts": [
@@ -6043,6 +6252,16 @@
                         "name": "force",
                         "ns": "http://fedramp.gov/ns/oscal",
                         "value": "MAY"
+                      },
+                      {
+                        "name": "timeframe_type",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "months"
+                      },
+                      {
+                        "name": "timeframe_num",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "3"
                       }
                     ],
                     "parts": [
@@ -6070,6 +6289,16 @@
                         "name": "force",
                         "ns": "http://fedramp.gov/ns/oscal",
                         "value": "MUST"
+                      },
+                      {
+                        "name": "timeframe_type",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "months"
+                      },
+                      {
+                        "name": "timeframe_num",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "3"
                       }
                     ],
                     "parts": [
@@ -6097,6 +6326,16 @@
                         "name": "force",
                         "ns": "http://fedramp.gov/ns/oscal",
                         "value": "MUST"
+                      },
+                      {
+                        "name": "timeframe_type",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "months"
+                      },
+                      {
+                        "name": "timeframe_num",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "3"
                       }
                     ],
                     "parts": [
@@ -6124,6 +6363,16 @@
                         "name": "force",
                         "ns": "http://fedramp.gov/ns/oscal",
                         "value": "MUST"
+                      },
+                      {
+                        "name": "timeframe_type",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "months"
+                      },
+                      {
+                        "name": "timeframe_num",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "3"
                       }
                     ],
                     "parts": [
@@ -6916,6 +7165,13 @@
                     "remarks": "Official launch of the FedRAMP Consolidated Rules for 2026."
                   }
                 ],
+                "links": [
+                  {
+                    "href": "https://csrc.nist.gov/pubs/sp/800/53/r5/upd1/final",
+                    "rel": "reference",
+                    "text": "NIST SP 800-53 Rev. 5, Security and Privacy Controls for Information Systems and Organizations"
+                  }
+                ],
                 "parts": [
                   {
                     "id": "FRC-CSF-BSL_smt",
@@ -7136,7 +7392,12 @@
         "props": [
           {
             "name": "label",
-            "value": "FRR-IEC"
+            "value": "IEC"
+          },
+          {
+            "name": "status",
+            "ns": "http://fedramp.gov/ns/oscal",
+            "value": "stable"
           }
         ],
         "parts": [
@@ -8095,7 +8356,13 @@
                   {
                     "id": "IEC-CSO-EFI_smt",
                     "name": "statement",
-                    "prose": "Providers SHOULD promptly estimate the likely adverse impact of an incident on agency customers to assign a Potential Agency Impact N-rating; this step is called Incident Rating."
+                    "prose": "Providers SHOULD promptly estimate the likely adverse impact of an incident on agency customers to assign a Potential Agency Impact N-rating; this step is called Incident Rating.",
+                    "parts": [
+                      {
+                        "name": "item",
+                        "prose": "- **N1** for a likely minimal customer effect on 1 or more agencies.\n- **N2** for a likely narrow customer effect on 1 or more agencies.\n- **N3** for a likely disruptive customer effect on 1 agency.\n- **N4** for a likely debilitating customer effect on 1 agency or a likely disruptive customer effect on more than 1 agency.\n- **N5** for a likely debilitating customer effect on more than 1 agency."
+                      }
+                    ]
                   },
                   {
                     "name": "guidance",
@@ -8183,7 +8450,12 @@
         "props": [
           {
             "name": "label",
-            "value": "FRR-IVV"
+            "value": "IVV"
+          },
+          {
+            "name": "status",
+            "ns": "http://fedramp.gov/ns/oscal",
+            "value": "stable"
           }
         ],
         "parts": [
@@ -8253,6 +8525,16 @@
                         "name": "force",
                         "ns": "http://fedramp.gov/ns/oscal",
                         "value": "MAY"
+                      },
+                      {
+                        "name": "timeframe_type",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "years"
+                      },
+                      {
+                        "name": "timeframe_num",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "1"
                       }
                     ],
                     "parts": [
@@ -8280,6 +8562,16 @@
                         "name": "force",
                         "ns": "http://fedramp.gov/ns/oscal",
                         "value": "MUST"
+                      },
+                      {
+                        "name": "timeframe_type",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "years"
+                      },
+                      {
+                        "name": "timeframe_num",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "1"
                       }
                     ],
                     "parts": [
@@ -8307,6 +8599,16 @@
                         "name": "force",
                         "ns": "http://fedramp.gov/ns/oscal",
                         "value": "MUST"
+                      },
+                      {
+                        "name": "timeframe_type",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "years"
+                      },
+                      {
+                        "name": "timeframe_num",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "1"
                       }
                     ],
                     "parts": [
@@ -8334,6 +8636,16 @@
                         "name": "force",
                         "ns": "http://fedramp.gov/ns/oscal",
                         "value": "MUST"
+                      },
+                      {
+                        "name": "timeframe_type",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "years"
+                      },
+                      {
+                        "name": "timeframe_num",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "1"
                       }
                     ],
                     "parts": [
@@ -9036,6 +9348,16 @@
                         "name": "force",
                         "ns": "http://fedramp.gov/ns/oscal",
                         "value": "MUST"
+                      },
+                      {
+                        "name": "timeframe_type",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "years"
+                      },
+                      {
+                        "name": "timeframe_num",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "1"
                       }
                     ],
                     "parts": [
@@ -9063,6 +9385,16 @@
                         "name": "force",
                         "ns": "http://fedramp.gov/ns/oscal",
                         "value": "MUST"
+                      },
+                      {
+                        "name": "timeframe_type",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "years"
+                      },
+                      {
+                        "name": "timeframe_num",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "1"
                       }
                     ],
                     "parts": [
@@ -9090,6 +9422,16 @@
                         "name": "force",
                         "ns": "http://fedramp.gov/ns/oscal",
                         "value": "MUST"
+                      },
+                      {
+                        "name": "timeframe_type",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "years"
+                      },
+                      {
+                        "name": "timeframe_num",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "1"
                       }
                     ],
                     "parts": [
@@ -9158,6 +9500,16 @@
                         "name": "force",
                         "ns": "http://fedramp.gov/ns/oscal",
                         "value": "MUST"
+                      },
+                      {
+                        "name": "timeframe_type",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "years"
+                      },
+                      {
+                        "name": "timeframe_num",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "1"
                       }
                     ],
                     "parts": [
@@ -9185,6 +9537,16 @@
                         "name": "force",
                         "ns": "http://fedramp.gov/ns/oscal",
                         "value": "MUST"
+                      },
+                      {
+                        "name": "timeframe_type",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "years"
+                      },
+                      {
+                        "name": "timeframe_num",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "1"
                       }
                     ],
                     "parts": [
@@ -9212,6 +9574,16 @@
                         "name": "force",
                         "ns": "http://fedramp.gov/ns/oscal",
                         "value": "MUST"
+                      },
+                      {
+                        "name": "timeframe_type",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "years"
+                      },
+                      {
+                        "name": "timeframe_num",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "1"
                       }
                     ],
                     "parts": [
@@ -9359,7 +9731,12 @@
         "props": [
           {
             "name": "label",
-            "value": "FRR-MAS"
+            "value": "MAS"
+          },
+          {
+            "name": "status",
+            "ns": "http://fedramp.gov/ns/oscal",
+            "value": "stable"
           }
         ],
         "parts": [
@@ -9725,7 +10102,12 @@
         "props": [
           {
             "name": "label",
-            "value": "FRR-MKT"
+            "value": "MKT"
+          },
+          {
+            "name": "status",
+            "ns": "http://fedramp.gov/ns/oscal",
+            "value": "stable"
           }
         ],
         "parts": [
@@ -9768,6 +10150,13 @@
                     "ns": "http://fedramp.gov/ns/oscal",
                     "value": "2026-06-24T00:00:00Z",
                     "remarks": "Official launch of the FedRAMP Consolidated Rules for 2026."
+                  }
+                ],
+                "links": [
+                  {
+                    "href": "https://fedramp.gov/scope",
+                    "rel": "reference",
+                    "text": "Scope of FedRAMP"
                   }
                 ],
                 "parts": [
@@ -10351,7 +10740,12 @@
         "props": [
           {
             "name": "label",
-            "value": "FRR-REC"
+            "value": "REC"
+          },
+          {
+            "name": "status",
+            "ns": "http://fedramp.gov/ns/oscal",
+            "value": "stable"
           }
         ],
         "parts": [
@@ -10557,6 +10951,16 @@
                     "ns": "http://fedramp.gov/ns/oscal",
                     "value": "2026-06-24T00:00:00Z",
                     "remarks": "Official launch of the FedRAMP Consolidated Rules for 2026."
+                  },
+                  {
+                    "name": "timeframe_type",
+                    "ns": "http://fedramp.gov/ns/oscal",
+                    "value": "years"
+                  },
+                  {
+                    "name": "timeframe_num",
+                    "ns": "http://fedramp.gov/ns/oscal",
+                    "value": "2"
                   }
                 ],
                 "parts": [
@@ -10607,6 +11011,13 @@
                     "remarks": "Official launch of the FedRAMP Consolidated Rules for 2026."
                   }
                 ],
+                "links": [
+                  {
+                    "href": "https://portal.a2la.org/documents/",
+                    "rel": "reference",
+                    "text": "A2LA Public Documents"
+                  }
+                ],
                 "parts": [
                   {
                     "id": "REC-IAS-PSC_smt",
@@ -10643,6 +11054,16 @@
                     "ns": "http://fedramp.gov/ns/oscal",
                     "value": "2026-06-24T00:00:00Z",
                     "remarks": "Official launch of the FedRAMP Consolidated Rules for 2026."
+                  },
+                  {
+                    "name": "timeframe_type",
+                    "ns": "http://fedramp.gov/ns/oscal",
+                    "value": "years"
+                  },
+                  {
+                    "name": "timeframe_num",
+                    "ns": "http://fedramp.gov/ns/oscal",
+                    "value": "1"
                   }
                 ],
                 "parts": [
@@ -10686,6 +11107,16 @@
                     "ns": "http://fedramp.gov/ns/oscal",
                     "value": "2026-06-24T00:00:00Z",
                     "remarks": "Official launch of the FedRAMP Consolidated Rules for 2026."
+                  },
+                  {
+                    "name": "timeframe_type",
+                    "ns": "http://fedramp.gov/ns/oscal",
+                    "value": "years"
+                  },
+                  {
+                    "name": "timeframe_num",
+                    "ns": "http://fedramp.gov/ns/oscal",
+                    "value": "2"
                   }
                 ],
                 "parts": [
@@ -10815,6 +11246,16 @@
                     "ns": "http://fedramp.gov/ns/oscal",
                     "value": "2026-06-24T00:00:00Z",
                     "remarks": "Official launch of the FedRAMP Consolidated Rules for 2026."
+                  },
+                  {
+                    "name": "timeframe_type",
+                    "ns": "http://fedramp.gov/ns/oscal",
+                    "value": "years"
+                  },
+                  {
+                    "name": "timeframe_num",
+                    "ns": "http://fedramp.gov/ns/oscal",
+                    "value": "1"
                   }
                 ],
                 "parts": [
@@ -10853,6 +11294,16 @@
                     "ns": "http://fedramp.gov/ns/oscal",
                     "value": "2026-06-24T00:00:00Z",
                     "remarks": "Official launch of the FedRAMP Consolidated Rules for 2026."
+                  },
+                  {
+                    "name": "timeframe_type",
+                    "ns": "http://fedramp.gov/ns/oscal",
+                    "value": "hours"
+                  },
+                  {
+                    "name": "timeframe_num",
+                    "ns": "http://fedramp.gov/ns/oscal",
+                    "value": "48"
                   }
                 ],
                 "parts": [
@@ -11011,6 +11462,16 @@
                     "ns": "http://fedramp.gov/ns/oscal",
                     "value": "2026-06-24T00:00:00Z",
                     "remarks": "Official launch of the FedRAMP Consolidated Rules for 2026."
+                  },
+                  {
+                    "name": "timeframe_type",
+                    "ns": "http://fedramp.gov/ns/oscal",
+                    "value": "years"
+                  },
+                  {
+                    "name": "timeframe_num",
+                    "ns": "http://fedramp.gov/ns/oscal",
+                    "value": "2"
                   }
                 ],
                 "parts": [
@@ -11036,7 +11497,12 @@
         "props": [
           {
             "name": "label",
-            "value": "FRR-SCG"
+            "value": "SCG"
+          },
+          {
+            "name": "status",
+            "ns": "http://fedramp.gov/ns/oscal",
+            "value": "stable"
           }
         ],
         "parts": [
@@ -11647,7 +12113,12 @@
         "props": [
           {
             "name": "label",
-            "value": "FRR-SCN"
+            "value": "SCN"
+          },
+          {
+            "name": "status",
+            "ns": "http://fedramp.gov/ns/oscal",
+            "value": "stable"
           }
         ],
         "parts": [
@@ -12234,6 +12705,16 @@
                     "ns": "http://fedramp.gov/ns/oscal",
                     "value": "2026-06-24T00:00:00Z",
                     "remarks": "Official launch of the FedRAMP Consolidated Rules for 2026."
+                  },
+                  {
+                    "name": "timeframe_type",
+                    "ns": "http://fedramp.gov/ns/oscal",
+                    "value": "bizdays"
+                  },
+                  {
+                    "name": "timeframe_num",
+                    "ns": "http://fedramp.gov/ns/oscal",
+                    "value": "10"
                   }
                 ],
                 "parts": [
@@ -12370,6 +12851,16 @@
                     "ns": "http://fedramp.gov/ns/oscal",
                     "value": "2026-06-24T00:00:00Z",
                     "remarks": "Official launch of the FedRAMP Consolidated Rules for 2026."
+                  },
+                  {
+                    "name": "timeframe_type",
+                    "ns": "http://fedramp.gov/ns/oscal",
+                    "value": "bizdays"
+                  },
+                  {
+                    "name": "timeframe_num",
+                    "ns": "http://fedramp.gov/ns/oscal",
+                    "value": "30"
                   }
                 ],
                 "parts": [
@@ -12428,6 +12919,16 @@
                     "ns": "http://fedramp.gov/ns/oscal",
                     "value": "2026-06-24T00:00:00Z",
                     "remarks": "Official launch of the FedRAMP Consolidated Rules for 2026."
+                  },
+                  {
+                    "name": "timeframe_type",
+                    "ns": "http://fedramp.gov/ns/oscal",
+                    "value": "bizdays"
+                  },
+                  {
+                    "name": "timeframe_num",
+                    "ns": "http://fedramp.gov/ns/oscal",
+                    "value": "10"
                   }
                 ],
                 "parts": [
@@ -12486,6 +12987,16 @@
                     "ns": "http://fedramp.gov/ns/oscal",
                     "value": "2026-06-24T00:00:00Z",
                     "remarks": "Official launch of the FedRAMP Consolidated Rules for 2026."
+                  },
+                  {
+                    "name": "timeframe_type",
+                    "ns": "http://fedramp.gov/ns/oscal",
+                    "value": "bizdays"
+                  },
+                  {
+                    "name": "timeframe_num",
+                    "ns": "http://fedramp.gov/ns/oscal",
+                    "value": "5"
                   }
                 ],
                 "parts": [
@@ -12544,6 +13055,16 @@
                     "ns": "http://fedramp.gov/ns/oscal",
                     "value": "2026-06-24T00:00:00Z",
                     "remarks": "Official launch of the FedRAMP Consolidated Rules for 2026."
+                  },
+                  {
+                    "name": "timeframe_type",
+                    "ns": "http://fedramp.gov/ns/oscal",
+                    "value": "bizdays"
+                  },
+                  {
+                    "name": "timeframe_num",
+                    "ns": "http://fedramp.gov/ns/oscal",
+                    "value": "5"
                   }
                 ],
                 "parts": [
@@ -12608,6 +13129,16 @@
                     "ns": "http://fedramp.gov/ns/oscal",
                     "value": "2026-06-24T00:00:00Z",
                     "remarks": "Official launch of the FedRAMP Consolidated Rules for 2026."
+                  },
+                  {
+                    "name": "timeframe_type",
+                    "ns": "http://fedramp.gov/ns/oscal",
+                    "value": "bizdays"
+                  },
+                  {
+                    "name": "timeframe_num",
+                    "ns": "http://fedramp.gov/ns/oscal",
+                    "value": "30"
                   }
                 ],
                 "parts": [
@@ -12722,7 +13253,12 @@
         "props": [
           {
             "name": "label",
-            "value": "FRR-SDR"
+            "value": "SDR"
+          },
+          {
+            "name": "status",
+            "ns": "http://fedramp.gov/ns/oscal",
+            "value": "stable"
           }
         ],
         "parts": [
@@ -13108,7 +13644,12 @@
         "props": [
           {
             "name": "label",
-            "value": "FRR-VDR"
+            "value": "VDR"
+          },
+          {
+            "name": "status",
+            "ns": "http://fedramp.gov/ns/oscal",
+            "value": "stable"
           }
         ],
         "parts": [
@@ -13574,6 +14115,16 @@
                         "name": "force",
                         "ns": "http://fedramp.gov/ns/oscal",
                         "value": "SHOULD"
+                      },
+                      {
+                        "name": "timeframe_type",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "months"
+                      },
+                      {
+                        "name": "timeframe_num",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "3"
                       }
                     ],
                     "parts": [
@@ -13601,6 +14152,16 @@
                         "name": "force",
                         "ns": "http://fedramp.gov/ns/oscal",
                         "value": "SHOULD"
+                      },
+                      {
+                        "name": "timeframe_type",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "months"
+                      },
+                      {
+                        "name": "timeframe_num",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "1"
                       }
                     ],
                     "parts": [
@@ -13628,6 +14189,16 @@
                         "name": "force",
                         "ns": "http://fedramp.gov/ns/oscal",
                         "value": "SHOULD"
+                      },
+                      {
+                        "name": "timeframe_type",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "days"
+                      },
+                      {
+                        "name": "timeframe_num",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "14"
                       }
                     ],
                     "parts": [
@@ -13655,6 +14226,16 @@
                         "name": "force",
                         "ns": "http://fedramp.gov/ns/oscal",
                         "value": "SHOULD"
+                      },
+                      {
+                        "name": "timeframe_type",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "days"
+                      },
+                      {
+                        "name": "timeframe_num",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "7"
                       }
                     ],
                     "parts": [
@@ -13717,6 +14298,16 @@
                         "name": "force",
                         "ns": "http://fedramp.gov/ns/oscal",
                         "value": "SHOULD"
+                      },
+                      {
+                        "name": "timeframe_type",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "months"
+                      },
+                      {
+                        "name": "timeframe_num",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "6"
                       }
                     ],
                     "parts": [
@@ -13744,6 +14335,16 @@
                         "name": "force",
                         "ns": "http://fedramp.gov/ns/oscal",
                         "value": "SHOULD"
+                      },
+                      {
+                        "name": "timeframe_type",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "months"
+                      },
+                      {
+                        "name": "timeframe_num",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "6"
                       }
                     ],
                     "parts": [
@@ -13771,6 +14372,16 @@
                         "name": "force",
                         "ns": "http://fedramp.gov/ns/oscal",
                         "value": "SHOULD"
+                      },
+                      {
+                        "name": "timeframe_type",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "months"
+                      },
+                      {
+                        "name": "timeframe_num",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "1"
                       }
                     ],
                     "parts": [
@@ -13798,6 +14409,16 @@
                         "name": "force",
                         "ns": "http://fedramp.gov/ns/oscal",
                         "value": "SHOULD"
+                      },
+                      {
+                        "name": "timeframe_type",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "months"
+                      },
+                      {
+                        "name": "timeframe_num",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "1"
                       }
                     ],
                     "parts": [
@@ -14033,6 +14654,13 @@
                     "remarks": "Official launch of the FedRAMP Consolidated Rules for 2026."
                   }
                 ],
+                "links": [
+                  {
+                    "href": "https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk",
+                    "rel": "reference",
+                    "text": "CISA BOD 26-04"
+                  }
+                ],
                 "parts": [
                   {
                     "id": "VDR-TFR-KEV_smt",
@@ -14091,6 +14719,16 @@
                         "name": "force",
                         "ns": "http://fedramp.gov/ns/oscal",
                         "value": "SHOULD"
+                      },
+                      {
+                        "name": "timeframe_type",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "days"
+                      },
+                      {
+                        "name": "timeframe_num",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "14"
                       }
                     ],
                     "parts": [
@@ -14118,6 +14756,16 @@
                         "name": "force",
                         "ns": "http://fedramp.gov/ns/oscal",
                         "value": "SHOULD"
+                      },
+                      {
+                        "name": "timeframe_type",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "days"
+                      },
+                      {
+                        "name": "timeframe_num",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "7"
                       }
                     ],
                     "parts": [
@@ -14145,6 +14793,16 @@
                         "name": "force",
                         "ns": "http://fedramp.gov/ns/oscal",
                         "value": "SHOULD"
+                      },
+                      {
+                        "name": "timeframe_type",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "days"
+                      },
+                      {
+                        "name": "timeframe_num",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "3"
                       }
                     ],
                     "parts": [
@@ -14172,6 +14830,16 @@
                         "name": "force",
                         "ns": "http://fedramp.gov/ns/oscal",
                         "value": "SHOULD"
+                      },
+                      {
+                        "name": "timeframe_type",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "days"
+                      },
+                      {
+                        "name": "timeframe_num",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "1"
                       }
                     ],
                     "parts": [
@@ -14240,6 +14908,16 @@
                         "name": "force",
                         "ns": "http://fedramp.gov/ns/oscal",
                         "value": "SHOULD"
+                      },
+                      {
+                        "name": "timeframe_type",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "months"
+                      },
+                      {
+                        "name": "timeframe_num",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "1"
                       }
                     ],
                     "parts": [
@@ -14267,6 +14945,16 @@
                         "name": "force",
                         "ns": "http://fedramp.gov/ns/oscal",
                         "value": "MUST"
+                      },
+                      {
+                        "name": "timeframe_type",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "days"
+                      },
+                      {
+                        "name": "timeframe_num",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "7"
                       }
                     ],
                     "parts": [
@@ -14294,6 +14982,16 @@
                         "name": "force",
                         "ns": "http://fedramp.gov/ns/oscal",
                         "value": "MUST"
+                      },
+                      {
+                        "name": "timeframe_type",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "days"
+                      },
+                      {
+                        "name": "timeframe_num",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "3"
                       }
                     ],
                     "parts": [
@@ -14362,6 +15060,16 @@
                         "name": "force",
                         "ns": "http://fedramp.gov/ns/oscal",
                         "value": "SHOULD"
+                      },
+                      {
+                        "name": "timeframe_type",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "months"
+                      },
+                      {
+                        "name": "timeframe_num",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "1"
                       }
                     ],
                     "parts": [
@@ -14389,6 +15097,16 @@
                         "name": "force",
                         "ns": "http://fedramp.gov/ns/oscal",
                         "value": "MUST"
+                      },
+                      {
+                        "name": "timeframe_type",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "months"
+                      },
+                      {
+                        "name": "timeframe_num",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "1"
                       }
                     ],
                     "parts": [
@@ -14416,6 +15134,16 @@
                         "name": "force",
                         "ns": "http://fedramp.gov/ns/oscal",
                         "value": "MUST"
+                      },
+                      {
+                        "name": "timeframe_type",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "months"
+                      },
+                      {
+                        "name": "timeframe_num",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "1"
                       }
                     ],
                     "parts": [
@@ -14438,7 +15166,12 @@
         "props": [
           {
             "name": "label",
-            "value": "FRR-VER"
+            "value": "VER"
+          },
+          {
+            "name": "status",
+            "ns": "http://fedramp.gov/ns/oscal",
+            "value": "stable"
           }
         ],
         "parts": [
@@ -14742,7 +15475,13 @@
                   {
                     "id": "VER-EVA-EPA_smt",
                     "name": "statement",
-                    "prose": "Providers MUST evaluate detected vulnerabilities, considering the context of the cloud service offering, to estimate the potential agency impact of exploitation on government customers AND assign one of the following Potential Agency Impact N-ratings (PAIN):"
+                    "prose": "Providers MUST evaluate detected vulnerabilities, considering the context of the cloud service offering, to estimate the potential agency impact of exploitation on government customers AND assign one of the following Potential Agency Impact N-ratings (PAIN):",
+                    "parts": [
+                      {
+                        "name": "item",
+                        "prose": "- **N1**: Exploitation could be expected to have minimal customer effects on one or more agencies that use the cloud service offering.\n- **N2**: Exploitation could be expected to have narrow customer effects on one or more agencies that use the cloud service offering.\n- **N3**: Exploitation could be expected to have a disruptive customer effect on one agency that uses the cloud service offering.\n- **N4**: Exploitation could be expected to have a debilitating customer effect on one agency that uses the cloud service offering OR a disruptive customer effect on more than one federal agency that uses the cloud service offering.\n- **N5**: Exploitation could be expected to have a debilitating customer effect on more than one agency that uses the cloud service offering."
+                      }
+                    ]
                   }
                 ]
               },
@@ -15247,6 +15986,16 @@
                     "ns": "http://fedramp.gov/ns/oscal",
                     "value": "2026-06-24T00:00:00Z",
                     "remarks": "Official launch of the FedRAMP Consolidated Rules for 2026."
+                  },
+                  {
+                    "name": "timeframe_type",
+                    "ns": "http://fedramp.gov/ns/oscal",
+                    "value": "months"
+                  },
+                  {
+                    "name": "timeframe_num",
+                    "ns": "http://fedramp.gov/ns/oscal",
+                    "value": "1"
                   }
                 ],
                 "parts": [
@@ -15305,6 +16054,16 @@
                     "ns": "http://fedramp.gov/ns/oscal",
                     "value": "2026-06-24T00:00:00Z",
                     "remarks": "Official launch of the FedRAMP Consolidated Rules for 2026."
+                  },
+                  {
+                    "name": "timeframe_type",
+                    "ns": "http://fedramp.gov/ns/oscal",
+                    "value": "days"
+                  },
+                  {
+                    "name": "timeframe_num",
+                    "ns": "http://fedramp.gov/ns/oscal",
+                    "value": "192"
                   }
                 ],
                 "parts": [
@@ -15371,6 +16130,16 @@
                         "name": "force",
                         "ns": "http://fedramp.gov/ns/oscal",
                         "value": "MAY"
+                      },
+                      {
+                        "name": "timeframe_type",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "months"
+                      },
+                      {
+                        "name": "timeframe_num",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "1"
                       }
                     ],
                     "parts": [
@@ -15418,6 +16187,16 @@
                         "name": "force",
                         "ns": "http://fedramp.gov/ns/oscal",
                         "value": "SHOULD"
+                      },
+                      {
+                        "name": "timeframe_type",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "months"
+                      },
+                      {
+                        "name": "timeframe_num",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "1"
                       }
                     ],
                     "parts": [
@@ -15469,6 +16248,16 @@
                         "name": "force",
                         "ns": "http://fedramp.gov/ns/oscal",
                         "value": "SHOULD"
+                      },
+                      {
+                        "name": "timeframe_type",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "days"
+                      },
+                      {
+                        "name": "timeframe_num",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "14"
                       }
                     ],
                     "parts": [
@@ -15520,6 +16309,16 @@
                         "name": "force",
                         "ns": "http://fedramp.gov/ns/oscal",
                         "value": "SHOULD"
+                      },
+                      {
+                        "name": "timeframe_type",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "days"
+                      },
+                      {
+                        "name": "timeframe_num",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "7"
                       }
                     ],
                     "parts": [
@@ -15606,6 +16405,16 @@
                         "name": "force",
                         "ns": "http://fedramp.gov/ns/oscal",
                         "value": "SHOULD"
+                      },
+                      {
+                        "name": "timeframe_type",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "days"
+                      },
+                      {
+                        "name": "timeframe_num",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "14"
                       }
                     ],
                     "parts": [
@@ -15633,6 +16442,16 @@
                         "name": "force",
                         "ns": "http://fedramp.gov/ns/oscal",
                         "value": "SHOULD"
+                      },
+                      {
+                        "name": "timeframe_type",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "days"
+                      },
+                      {
+                        "name": "timeframe_num",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "7"
                       }
                     ],
                     "parts": [
@@ -15660,6 +16479,16 @@
                         "name": "force",
                         "ns": "http://fedramp.gov/ns/oscal",
                         "value": "SHOULD"
+                      },
+                      {
+                        "name": "timeframe_type",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "days"
+                      },
+                      {
+                        "name": "timeframe_num",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "5"
                       }
                     ],
                     "parts": [
@@ -15687,6 +16516,16 @@
                         "name": "force",
                         "ns": "http://fedramp.gov/ns/oscal",
                         "value": "SHOULD"
+                      },
+                      {
+                        "name": "timeframe_type",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "days"
+                      },
+                      {
+                        "name": "timeframe_num",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "2"
                       }
                     ],
                     "parts": [

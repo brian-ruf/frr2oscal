@@ -1,11 +1,16 @@
 catalog:
-  uuid: f3e0dbc6-4a23-4273-982e-effdd0a142ef
+  uuid: 0fa06e4a-b632-4d99-9bd4-48b89794c5b3
   metadata:
     title: FedRAMP Consolidated Rules for 2026
     published: '2026-07-06T00:00:00Z'
-    last-modified: '2026-09-01T16:17:54Z'
+    last-modified: '2026-09-04T03:46:01Z'
     version: 2026.07.06.01
     oscal-version: 1.2.3
+    links:
+    - href: https://raw.githubusercontent.com/FedRAMP/rules/main/fedramp-consolidated-rules.json
+      rel: canonical
+    - href: https://www.fedramp.gov/2026/
+      rel: alternate
     remarks: This datafile contains the Consolidated Rules for FedRAMP in structured
       machine-readable text. It includes definitions, requirements, recommendations,
       and key security indicators.
@@ -14,7 +19,10 @@ catalog:
     title: Addressing FedRAMP Communication
     props:
     - name: label
-      value: FRR-AFC
+      value: AFC
+    - name: status
+      ns: http://fedramp.gov/ns/oscal
+      value: stable
     parts:
     - name: overview
       title: Purpose
@@ -148,6 +156,12 @@ catalog:
           ns: http://fedramp.gov/ns/oscal
           value: '2026-06-24T00:00:00Z'
           remarks: Official launch of the FedRAMP Consolidated Rules for 2026.
+        - name: timeframe_type
+          ns: http://fedramp.gov/ns/oscal
+          value: bizdays
+        - name: timeframe_num
+          ns: http://fedramp.gov/ns/oscal
+          value: '10'
         parts:
         - id: AFC-FRP-PNT_smt
           name: statement
@@ -548,7 +562,10 @@ catalog:
     title: Agency Use of FedRAMP Certified Cloud Services
     props:
     - name: label
-      value: FRR-AGU
+      value: AGU
+    - name: status
+      ns: http://fedramp.gov/ns/oscal
+      value: placeholder
     parts:
     - name: overview
       title: Purpose
@@ -776,6 +793,10 @@ catalog:
           ns: http://fedramp.gov/ns/oscal
           value: '2026-06-24T00:00:00Z'
           remarks: Official launch of the FedRAMP Consolidated Rules for 2026.
+        links:
+        - href: https://www.fedramp.gov/preview/2026/agencies/support/liaisons
+          rel: reference
+          text: Agency Liaison Program
         parts:
         - id: AGU-AGC-LIA_smt
           name: statement
@@ -830,6 +851,10 @@ catalog:
           ns: http://fedramp.gov/ns/oscal
           value: '2026-06-24T00:00:00Z'
           remarks: Official launch of the FedRAMP Consolidated Rules for 2026.
+        links:
+        - href: https://fedramp.gov/preview/2026/agencies/use
+          rel: reference
+          text: Using a FedRAMP Certified Cloud Service Offering
         parts:
         - id: AGU-USE-ABU_smt
           name: statement
@@ -1094,7 +1119,10 @@ catalog:
     title: Collaborative Continuous Monitoring
     props:
     - name: label
-      value: FRR-CCM
+      value: CCM
+    - name: status
+      ns: http://fedramp.gov/ns/oscal
+      value: stable
     parts:
     - name: overview
       title: Purpose
@@ -1450,6 +1478,12 @@ catalog:
           - name: force
             ns: http://fedramp.gov/ns/oscal
             value: MAY
+          - name: timeframe_type
+            ns: http://fedramp.gov/ns/oscal
+            value: months
+          - name: timeframe_num
+            ns: http://fedramp.gov/ns/oscal
+            value: '3'
           parts:
           - id: CCM-QTR-MTG-a_smt
             name: statement
@@ -1479,6 +1513,12 @@ catalog:
           - name: force
             ns: http://fedramp.gov/ns/oscal
             value: SHOULD
+          - name: timeframe_type
+            ns: http://fedramp.gov/ns/oscal
+            value: months
+          - name: timeframe_num
+            ns: http://fedramp.gov/ns/oscal
+            value: '3'
           parts:
           - id: CCM-QTR-MTG-b_smt
             name: statement
@@ -1509,6 +1549,12 @@ catalog:
           - name: force
             ns: http://fedramp.gov/ns/oscal
             value: MUST
+          - name: timeframe_type
+            ns: http://fedramp.gov/ns/oscal
+            value: months
+          - name: timeframe_num
+            ns: http://fedramp.gov/ns/oscal
+            value: '3'
           parts:
           - id: CCM-QTR-MTG-c_smt
             name: statement
@@ -1538,6 +1584,12 @@ catalog:
           - name: force
             ns: http://fedramp.gov/ns/oscal
             value: MUST
+          - name: timeframe_type
+            ns: http://fedramp.gov/ns/oscal
+            value: months
+          - name: timeframe_num
+            ns: http://fedramp.gov/ns/oscal
+            value: '3'
           parts:
           - id: CCM-QTR-MTG-d_smt
             name: statement
@@ -1790,7 +1842,10 @@ catalog:
     title: Certification Data Sharing
     props:
     - name: label
-      value: FRR-CDS
+      value: CDS
+    - name: status
+      ns: http://fedramp.gov/ns/oscal
+      value: stable
     parts:
     - name: overview
       title: Purpose
@@ -1991,6 +2046,12 @@ catalog:
           ns: http://fedramp.gov/ns/oscal
           value: '2026-06-24T00:00:00Z'
           remarks: Official launch of the FedRAMP Consolidated Rules for 2026.
+        - name: timeframe_type
+          ns: http://fedramp.gov/ns/oscal
+          value: weeks
+        - name: timeframe_num
+          ns: http://fedramp.gov/ns/oscal
+          value: '2'
         parts:
         - id: CDS-CSO-FRC_smt
           name: statement
@@ -2716,6 +2777,12 @@ catalog:
           ns: http://fedramp.gov/ns/oscal
           value: '2026-06-24T00:00:00Z'
           remarks: Official launch of the FedRAMP Consolidated Rules for 2026.
+        - name: timeframe_type
+          ns: http://fedramp.gov/ns/oscal
+          value: bizdays
+        - name: timeframe_num
+          ns: http://fedramp.gov/ns/oscal
+          value: '5'
         parts:
         - id: CDS-UTC-AAD_smt
           name: statement
@@ -2789,7 +2856,10 @@ catalog:
     title: Cryptographic Module Use
     props:
     - name: label
-      value: FRR-CMU
+      value: CMU
+    - name: status
+      ns: http://fedramp.gov/ns/oscal
+      value: stable
     parts:
     - name: overview
       title: Purpose
@@ -3020,7 +3090,10 @@ catalog:
     title: Certification Package Overview
     props:
     - name: label
-      value: FRR-CPO
+      value: CPO
+    - name: status
+      ns: http://fedramp.gov/ns/oscal
+      value: stable
     parts:
     - name: overview
       title: Purpose
@@ -3284,6 +3357,12 @@ catalog:
           - name: force
             ns: http://fedramp.gov/ns/oscal
             value: SHOULD
+          - name: timeframe_type
+            ns: http://fedramp.gov/ns/oscal
+            value: months
+          - name: timeframe_num
+            ns: http://fedramp.gov/ns/oscal
+            value: '3'
           parts:
           - id: CPO-CSX-CPM-a_smt
             name: statement
@@ -3301,6 +3380,12 @@ catalog:
           - name: force
             ns: http://fedramp.gov/ns/oscal
             value: MUST
+          - name: timeframe_type
+            ns: http://fedramp.gov/ns/oscal
+            value: months
+          - name: timeframe_num
+            ns: http://fedramp.gov/ns/oscal
+            value: '1'
           parts:
           - id: CPO-CSX-CPM-b_smt
             name: statement
@@ -3318,6 +3403,12 @@ catalog:
           - name: force
             ns: http://fedramp.gov/ns/oscal
             value: MUST
+          - name: timeframe_type
+            ns: http://fedramp.gov/ns/oscal
+            value: weeks
+          - name: timeframe_num
+            ns: http://fedramp.gov/ns/oscal
+            value: '2'
           parts:
           - id: CPO-CSX-CPM-c_smt
             name: statement
@@ -3335,6 +3426,12 @@ catalog:
           - name: force
             ns: http://fedramp.gov/ns/oscal
             value: MUST
+          - name: timeframe_type
+            ns: http://fedramp.gov/ns/oscal
+            value: weeks
+          - name: timeframe_num
+            ns: http://fedramp.gov/ns/oscal
+            value: '1'
           parts:
           - id: CPO-CSX-CPM-d_smt
             name: statement
@@ -3389,6 +3486,12 @@ catalog:
           - name: force
             ns: http://fedramp.gov/ns/oscal
             value: SHOULD
+          - name: timeframe_type
+            ns: http://fedramp.gov/ns/oscal
+            value: years
+          - name: timeframe_num
+            ns: http://fedramp.gov/ns/oscal
+            value: '1'
           parts:
           - id: CPO-CSF-CPM-a_smt
             name: statement
@@ -3406,6 +3509,12 @@ catalog:
           - name: force
             ns: http://fedramp.gov/ns/oscal
             value: MUST
+          - name: timeframe_type
+            ns: http://fedramp.gov/ns/oscal
+            value: years
+          - name: timeframe_num
+            ns: http://fedramp.gov/ns/oscal
+            value: '1'
           parts:
           - id: CPO-CSF-CPM-b_smt
             name: statement
@@ -3423,6 +3532,12 @@ catalog:
           - name: force
             ns: http://fedramp.gov/ns/oscal
             value: MUST
+          - name: timeframe_type
+            ns: http://fedramp.gov/ns/oscal
+            value: years
+          - name: timeframe_num
+            ns: http://fedramp.gov/ns/oscal
+            value: '1'
           parts:
           - id: CPO-CSF-CPM-c_smt
             name: statement
@@ -3440,6 +3555,12 @@ catalog:
           - name: force
             ns: http://fedramp.gov/ns/oscal
             value: MUST
+          - name: timeframe_type
+            ns: http://fedramp.gov/ns/oscal
+            value: months
+          - name: timeframe_num
+            ns: http://fedramp.gov/ns/oscal
+            value: '6'
           parts:
           - id: CPO-CSF-CPM-d_smt
             name: statement
@@ -3450,7 +3571,10 @@ catalog:
     title: FedRAMP Certification
     props:
     - name: label
-      value: FRR-FRC
+      value: FRC
+    - name: status
+      ns: http://fedramp.gov/ns/oscal
+      value: stable
     parts:
     - name: overview
       title: Purpose
@@ -4133,6 +4257,12 @@ catalog:
           - name: force
             ns: http://fedramp.gov/ns/oscal
             value: MAY
+          - name: timeframe_type
+            ns: http://fedramp.gov/ns/oscal
+            value: months
+          - name: timeframe_num
+            ns: http://fedramp.gov/ns/oscal
+            value: '3'
           parts:
           - id: FRC-APP-FIA-a_smt
             name: statement
@@ -4150,6 +4280,12 @@ catalog:
           - name: force
             ns: http://fedramp.gov/ns/oscal
             value: MUST
+          - name: timeframe_type
+            ns: http://fedramp.gov/ns/oscal
+            value: months
+          - name: timeframe_num
+            ns: http://fedramp.gov/ns/oscal
+            value: '3'
           parts:
           - id: FRC-APP-FIA-b_smt
             name: statement
@@ -4167,6 +4303,12 @@ catalog:
           - name: force
             ns: http://fedramp.gov/ns/oscal
             value: MUST
+          - name: timeframe_type
+            ns: http://fedramp.gov/ns/oscal
+            value: months
+          - name: timeframe_num
+            ns: http://fedramp.gov/ns/oscal
+            value: '3'
           parts:
           - id: FRC-APP-FIA-c_smt
             name: statement
@@ -4184,6 +4326,12 @@ catalog:
           - name: force
             ns: http://fedramp.gov/ns/oscal
             value: MUST
+          - name: timeframe_type
+            ns: http://fedramp.gov/ns/oscal
+            value: months
+          - name: timeframe_num
+            ns: http://fedramp.gov/ns/oscal
+            value: '3'
           parts:
           - id: FRC-APP-FIA-d_smt
             name: statement
@@ -4699,6 +4847,11 @@ catalog:
           ns: http://fedramp.gov/ns/oscal
           value: '2026-06-24T00:00:00Z'
           remarks: Official launch of the FedRAMP Consolidated Rules for 2026.
+        links:
+        - href: https://csrc.nist.gov/pubs/sp/800/53/r5/upd1/final
+          rel: reference
+          text: NIST SP 800-53 Rev. 5, Security and Privacy Controls for Information
+            Systems and Organizations
         parts:
         - id: FRC-CSF-BSL_smt
           name: statement
@@ -4840,7 +4993,10 @@ catalog:
     title: Incident Evaluation and Communication
     props:
     - name: label
-      value: FRR-IEC
+      value: IEC
+    - name: status
+      ns: http://fedramp.gov/ns/oscal
+      value: stable
     parts:
     - name: overview
       title: Purpose
@@ -5585,6 +5741,18 @@ catalog:
           prose: Providers SHOULD promptly estimate the likely adverse impact of an
             incident on agency customers to assign a Potential Agency Impact N-rating;
             this step is called Incident Rating.
+          parts:
+          - name: item
+            prose: '- **N1** for a likely minimal customer effect on 1 or more agencies.
+
+              - **N2** for a likely narrow customer effect on 1 or more agencies.
+
+              - **N3** for a likely disruptive customer effect on 1 agency.
+
+              - **N4** for a likely debilitating customer effect on 1 agency or a
+              likely disruptive customer effect on more than 1 agency.
+
+              - **N5** for a likely debilitating customer effect on more than 1 agency.'
         - name: guidance
           title: Notes
           prose: All incidents must be assigned a default PAIN-5 as required by IEC-CSO-DPR
@@ -5639,7 +5807,10 @@ catalog:
     title: Independent Verification and Validation
     props:
     - name: label
-      value: FRR-IVV
+      value: IVV
+    - name: status
+      ns: http://fedramp.gov/ns/oscal
+      value: stable
     parts:
     - name: overview
       title: Purpose
@@ -5698,6 +5869,12 @@ catalog:
           - name: force
             ns: http://fedramp.gov/ns/oscal
             value: MAY
+          - name: timeframe_type
+            ns: http://fedramp.gov/ns/oscal
+            value: years
+          - name: timeframe_num
+            ns: http://fedramp.gov/ns/oscal
+            value: '1'
           parts:
           - id: IVV-CSO-FIA-a_smt
             name: statement
@@ -5716,6 +5893,12 @@ catalog:
           - name: force
             ns: http://fedramp.gov/ns/oscal
             value: MUST
+          - name: timeframe_type
+            ns: http://fedramp.gov/ns/oscal
+            value: years
+          - name: timeframe_num
+            ns: http://fedramp.gov/ns/oscal
+            value: '1'
           parts:
           - id: IVV-CSO-FIA-b_smt
             name: statement
@@ -5734,6 +5917,12 @@ catalog:
           - name: force
             ns: http://fedramp.gov/ns/oscal
             value: MUST
+          - name: timeframe_type
+            ns: http://fedramp.gov/ns/oscal
+            value: years
+          - name: timeframe_num
+            ns: http://fedramp.gov/ns/oscal
+            value: '1'
           parts:
           - id: IVV-CSO-FIA-c_smt
             name: statement
@@ -5752,6 +5941,12 @@ catalog:
           - name: force
             ns: http://fedramp.gov/ns/oscal
             value: MUST
+          - name: timeframe_type
+            ns: http://fedramp.gov/ns/oscal
+            value: years
+          - name: timeframe_num
+            ns: http://fedramp.gov/ns/oscal
+            value: '1'
           parts:
           - id: IVV-CSO-FIA-d_smt
             name: statement
@@ -6220,6 +6415,12 @@ catalog:
           - name: force
             ns: http://fedramp.gov/ns/oscal
             value: MUST
+          - name: timeframe_type
+            ns: http://fedramp.gov/ns/oscal
+            value: years
+          - name: timeframe_num
+            ns: http://fedramp.gov/ns/oscal
+            value: '1'
           parts:
           - id: IVV-CSX-AIA-b_smt
             name: statement
@@ -6237,6 +6438,12 @@ catalog:
           - name: force
             ns: http://fedramp.gov/ns/oscal
             value: MUST
+          - name: timeframe_type
+            ns: http://fedramp.gov/ns/oscal
+            value: years
+          - name: timeframe_num
+            ns: http://fedramp.gov/ns/oscal
+            value: '1'
           parts:
           - id: IVV-CSX-AIA-c_smt
             name: statement
@@ -6254,6 +6461,12 @@ catalog:
           - name: force
             ns: http://fedramp.gov/ns/oscal
             value: MUST
+          - name: timeframe_type
+            ns: http://fedramp.gov/ns/oscal
+            value: years
+          - name: timeframe_num
+            ns: http://fedramp.gov/ns/oscal
+            value: '1'
           parts:
           - id: IVV-CSX-AIA-d_smt
             name: statement
@@ -6294,6 +6507,12 @@ catalog:
           - name: force
             ns: http://fedramp.gov/ns/oscal
             value: MUST
+          - name: timeframe_type
+            ns: http://fedramp.gov/ns/oscal
+            value: years
+          - name: timeframe_num
+            ns: http://fedramp.gov/ns/oscal
+            value: '1'
           parts:
           - id: IVV-CSF-AIA-b_smt
             name: statement
@@ -6311,6 +6530,12 @@ catalog:
           - name: force
             ns: http://fedramp.gov/ns/oscal
             value: MUST
+          - name: timeframe_type
+            ns: http://fedramp.gov/ns/oscal
+            value: years
+          - name: timeframe_num
+            ns: http://fedramp.gov/ns/oscal
+            value: '1'
           parts:
           - id: IVV-CSF-AIA-c_smt
             name: statement
@@ -6328,6 +6553,12 @@ catalog:
           - name: force
             ns: http://fedramp.gov/ns/oscal
             value: MUST
+          - name: timeframe_type
+            ns: http://fedramp.gov/ns/oscal
+            value: years
+          - name: timeframe_num
+            ns: http://fedramp.gov/ns/oscal
+            value: '1'
           parts:
           - id: IVV-CSF-AIA-d_smt
             name: statement
@@ -6418,7 +6649,10 @@ catalog:
     title: Minimum Assessment Scope
     props:
     - name: label
-      value: FRR-MAS
+      value: MAS
+    - name: status
+      ns: http://fedramp.gov/ns/oscal
+      value: stable
     parts:
     - name: overview
       title: Purpose
@@ -6697,7 +6931,10 @@ catalog:
     title: Marketplace Listing
     props:
     - name: label
-      value: FRR-MKT
+      value: MKT
+    - name: status
+      ns: http://fedramp.gov/ns/oscal
+      value: stable
     parts:
     - name: overview
       title: Purpose
@@ -6729,6 +6966,10 @@ catalog:
           ns: http://fedramp.gov/ns/oscal
           value: '2026-06-24T00:00:00Z'
           remarks: Official launch of the FedRAMP Consolidated Rules for 2026.
+        links:
+        - href: https://fedramp.gov/scope
+          rel: reference
+          text: Scope of FedRAMP
         parts:
         - id: MKT-FRP-SOF_smt
           name: statement
@@ -7118,7 +7359,10 @@ catalog:
     title: FedRAMP Recognition of Independent Assessment Services
     props:
     - name: label
-      value: FRR-REC
+      value: REC
+    - name: status
+      ns: http://fedramp.gov/ns/oscal
+      value: stable
     parts:
     - name: overview
       title: Purpose
@@ -7249,6 +7493,12 @@ catalog:
           ns: http://fedramp.gov/ns/oscal
           value: '2026-06-24T00:00:00Z'
           remarks: Official launch of the FedRAMP Consolidated Rules for 2026.
+        - name: timeframe_type
+          ns: http://fedramp.gov/ns/oscal
+          value: years
+        - name: timeframe_num
+          ns: http://fedramp.gov/ns/oscal
+          value: '2'
         parts:
         - id: REC-IAS-ADA_smt
           name: statement
@@ -7287,6 +7537,10 @@ catalog:
           ns: http://fedramp.gov/ns/oscal
           value: '2026-06-24T00:00:00Z'
           remarks: Official launch of the FedRAMP Consolidated Rules for 2026.
+        links:
+        - href: https://portal.a2la.org/documents/
+          rel: reference
+          text: A2LA Public Documents
         parts:
         - id: REC-IAS-PSC_smt
           name: statement
@@ -7311,6 +7565,12 @@ catalog:
           ns: http://fedramp.gov/ns/oscal
           value: '2026-06-24T00:00:00Z'
           remarks: Official launch of the FedRAMP Consolidated Rules for 2026.
+        - name: timeframe_type
+          ns: http://fedramp.gov/ns/oscal
+          value: years
+        - name: timeframe_num
+          ns: http://fedramp.gov/ns/oscal
+          value: '1'
         parts:
         - id: REC-IAS-ANR_smt
           name: statement
@@ -7344,6 +7604,12 @@ catalog:
           ns: http://fedramp.gov/ns/oscal
           value: '2026-06-24T00:00:00Z'
           remarks: Official launch of the FedRAMP Consolidated Rules for 2026.
+        - name: timeframe_type
+          ns: http://fedramp.gov/ns/oscal
+          value: years
+        - name: timeframe_num
+          ns: http://fedramp.gov/ns/oscal
+          value: '2'
         parts:
         - id: REC-IAS-RAS_smt
           name: statement
@@ -7436,6 +7702,12 @@ catalog:
           ns: http://fedramp.gov/ns/oscal
           value: '2026-06-24T00:00:00Z'
           remarks: Official launch of the FedRAMP Consolidated Rules for 2026.
+        - name: timeframe_type
+          ns: http://fedramp.gov/ns/oscal
+          value: years
+        - name: timeframe_num
+          ns: http://fedramp.gov/ns/oscal
+          value: '1'
         parts:
         - id: REC-IAS-AFI_smt
           name: statement
@@ -7460,6 +7732,12 @@ catalog:
           ns: http://fedramp.gov/ns/oscal
           value: '2026-06-24T00:00:00Z'
           remarks: Official launch of the FedRAMP Consolidated Rules for 2026.
+        - name: timeframe_type
+          ns: http://fedramp.gov/ns/oscal
+          value: hours
+        - name: timeframe_num
+          ns: http://fedramp.gov/ns/oscal
+          value: '48'
         parts:
         - id: REC-IAS-CFI_smt
           name: statement
@@ -7578,6 +7856,12 @@ catalog:
           ns: http://fedramp.gov/ns/oscal
           value: '2026-06-24T00:00:00Z'
           remarks: Official launch of the FedRAMP Consolidated Rules for 2026.
+        - name: timeframe_type
+          ns: http://fedramp.gov/ns/oscal
+          value: years
+        - name: timeframe_num
+          ns: http://fedramp.gov/ns/oscal
+          value: '2'
         parts:
         - id: REC-IAS-SEP_smt
           name: statement
@@ -7593,7 +7877,10 @@ catalog:
     title: Secure Configuration Guide
     props:
     - name: label
-      value: FRR-SCG
+      value: SCG
+    - name: status
+      ns: http://fedramp.gov/ns/oscal
+      value: stable
     parts:
     - name: overview
       title: Purpose
@@ -7963,7 +8250,10 @@ catalog:
     title: Significant Change Notification
     props:
     - name: label
-      value: FRR-SCN
+      value: SCN
+    - name: status
+      ns: http://fedramp.gov/ns/oscal
+      value: stable
     parts:
     - name: overview
       title: Purpose
@@ -8377,6 +8667,12 @@ catalog:
           ns: http://fedramp.gov/ns/oscal
           value: '2026-06-24T00:00:00Z'
           remarks: Official launch of the FedRAMP Consolidated Rules for 2026.
+        - name: timeframe_type
+          ns: http://fedramp.gov/ns/oscal
+          value: bizdays
+        - name: timeframe_num
+          ns: http://fedramp.gov/ns/oscal
+          value: '10'
         parts:
         - id: SCN-ADP-NTF_smt
           name: statement
@@ -8558,6 +8854,12 @@ catalog:
           ns: http://fedramp.gov/ns/oscal
           value: '2026-06-24T00:00:00Z'
           remarks: Official launch of the FedRAMP Consolidated Rules for 2026.
+        - name: timeframe_type
+          ns: http://fedramp.gov/ns/oscal
+          value: bizdays
+        - name: timeframe_num
+          ns: http://fedramp.gov/ns/oscal
+          value: '30'
         parts:
         - id: SCN-TRF-NIP_smt
           name: statement
@@ -8596,6 +8898,12 @@ catalog:
           ns: http://fedramp.gov/ns/oscal
           value: '2026-06-24T00:00:00Z'
           remarks: Official launch of the FedRAMP Consolidated Rules for 2026.
+        - name: timeframe_type
+          ns: http://fedramp.gov/ns/oscal
+          value: bizdays
+        - name: timeframe_num
+          ns: http://fedramp.gov/ns/oscal
+          value: '10'
         parts:
         - id: SCN-TRF-NFP_smt
           name: statement
@@ -8633,6 +8941,12 @@ catalog:
           ns: http://fedramp.gov/ns/oscal
           value: '2026-06-24T00:00:00Z'
           remarks: Official launch of the FedRAMP Consolidated Rules for 2026.
+        - name: timeframe_type
+          ns: http://fedramp.gov/ns/oscal
+          value: bizdays
+        - name: timeframe_num
+          ns: http://fedramp.gov/ns/oscal
+          value: '5'
         parts:
         - id: SCN-TRF-NAF_smt
           name: statement
@@ -8670,6 +8984,12 @@ catalog:
           ns: http://fedramp.gov/ns/oscal
           value: '2026-06-24T00:00:00Z'
           remarks: Official launch of the FedRAMP Consolidated Rules for 2026.
+        - name: timeframe_type
+          ns: http://fedramp.gov/ns/oscal
+          value: bizdays
+        - name: timeframe_num
+          ns: http://fedramp.gov/ns/oscal
+          value: '5'
         parts:
         - id: SCN-TRF-NAV_smt
           name: statement
@@ -8715,6 +9035,12 @@ catalog:
           ns: http://fedramp.gov/ns/oscal
           value: '2026-06-24T00:00:00Z'
           remarks: Official launch of the FedRAMP Consolidated Rules for 2026.
+        - name: timeframe_type
+          ns: http://fedramp.gov/ns/oscal
+          value: bizdays
+        - name: timeframe_num
+          ns: http://fedramp.gov/ns/oscal
+          value: '30'
         parts:
         - id: SCN-TRF-UPD_smt
           name: statement
@@ -8821,7 +9147,10 @@ catalog:
     title: Security Decision Record
     props:
     - name: label
-      value: FRR-SDR
+      value: SDR
+    - name: status
+      ns: http://fedramp.gov/ns/oscal
+      value: stable
     parts:
     - name: overview
       title: Purpose
@@ -9123,7 +9452,10 @@ catalog:
     title: Vulnerability Detection and Response
     props:
     - name: label
-      value: FRR-VDR
+      value: VDR
+    - name: status
+      ns: http://fedramp.gov/ns/oscal
+      value: stable
     parts:
     - name: overview
       title: Purpose
@@ -9452,6 +9784,12 @@ catalog:
           - name: force
             ns: http://fedramp.gov/ns/oscal
             value: SHOULD
+          - name: timeframe_type
+            ns: http://fedramp.gov/ns/oscal
+            value: months
+          - name: timeframe_num
+            ns: http://fedramp.gov/ns/oscal
+            value: '3'
           parts:
           - id: VDR-TFR-PDD-a_smt
             name: statement
@@ -9469,6 +9807,12 @@ catalog:
           - name: force
             ns: http://fedramp.gov/ns/oscal
             value: SHOULD
+          - name: timeframe_type
+            ns: http://fedramp.gov/ns/oscal
+            value: months
+          - name: timeframe_num
+            ns: http://fedramp.gov/ns/oscal
+            value: '1'
           parts:
           - id: VDR-TFR-PDD-b_smt
             name: statement
@@ -9486,6 +9830,12 @@ catalog:
           - name: force
             ns: http://fedramp.gov/ns/oscal
             value: SHOULD
+          - name: timeframe_type
+            ns: http://fedramp.gov/ns/oscal
+            value: days
+          - name: timeframe_num
+            ns: http://fedramp.gov/ns/oscal
+            value: '14'
           parts:
           - id: VDR-TFR-PDD-c_smt
             name: statement
@@ -9503,6 +9853,12 @@ catalog:
           - name: force
             ns: http://fedramp.gov/ns/oscal
             value: SHOULD
+          - name: timeframe_type
+            ns: http://fedramp.gov/ns/oscal
+            value: days
+          - name: timeframe_num
+            ns: http://fedramp.gov/ns/oscal
+            value: '7'
           parts:
           - id: VDR-TFR-PDD-d_smt
             name: statement
@@ -9540,6 +9896,12 @@ catalog:
           - name: force
             ns: http://fedramp.gov/ns/oscal
             value: SHOULD
+          - name: timeframe_type
+            ns: http://fedramp.gov/ns/oscal
+            value: months
+          - name: timeframe_num
+            ns: http://fedramp.gov/ns/oscal
+            value: '6'
           parts:
           - id: VDR-TFR-PCD-a_smt
             name: statement
@@ -9557,6 +9919,12 @@ catalog:
           - name: force
             ns: http://fedramp.gov/ns/oscal
             value: SHOULD
+          - name: timeframe_type
+            ns: http://fedramp.gov/ns/oscal
+            value: months
+          - name: timeframe_num
+            ns: http://fedramp.gov/ns/oscal
+            value: '6'
           parts:
           - id: VDR-TFR-PCD-b_smt
             name: statement
@@ -9574,6 +9942,12 @@ catalog:
           - name: force
             ns: http://fedramp.gov/ns/oscal
             value: SHOULD
+          - name: timeframe_type
+            ns: http://fedramp.gov/ns/oscal
+            value: months
+          - name: timeframe_num
+            ns: http://fedramp.gov/ns/oscal
+            value: '1'
           parts:
           - id: VDR-TFR-PCD-c_smt
             name: statement
@@ -9591,6 +9965,12 @@ catalog:
           - name: force
             ns: http://fedramp.gov/ns/oscal
             value: SHOULD
+          - name: timeframe_type
+            ns: http://fedramp.gov/ns/oscal
+            value: months
+          - name: timeframe_num
+            ns: http://fedramp.gov/ns/oscal
+            value: '1'
           parts:
           - id: VDR-TFR-PCD-d_smt
             name: statement
@@ -9745,6 +10125,10 @@ catalog:
           ns: http://fedramp.gov/ns/oscal
           value: '2026-06-24T00:00:00Z'
           remarks: Official launch of the FedRAMP Consolidated Rules for 2026.
+        links:
+        - href: https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk
+          rel: reference
+          text: CISA BOD 26-04
         parts:
         - id: VDR-TFR-KEV_smt
           name: statement
@@ -9783,6 +10167,12 @@ catalog:
           - name: force
             ns: http://fedramp.gov/ns/oscal
             value: SHOULD
+          - name: timeframe_type
+            ns: http://fedramp.gov/ns/oscal
+            value: days
+          - name: timeframe_num
+            ns: http://fedramp.gov/ns/oscal
+            value: '14'
           parts:
           - id: VDR-TFR-PSD-a_smt
             name: statement
@@ -9800,6 +10190,12 @@ catalog:
           - name: force
             ns: http://fedramp.gov/ns/oscal
             value: SHOULD
+          - name: timeframe_type
+            ns: http://fedramp.gov/ns/oscal
+            value: days
+          - name: timeframe_num
+            ns: http://fedramp.gov/ns/oscal
+            value: '7'
           parts:
           - id: VDR-TFR-PSD-b_smt
             name: statement
@@ -9817,6 +10213,12 @@ catalog:
           - name: force
             ns: http://fedramp.gov/ns/oscal
             value: SHOULD
+          - name: timeframe_type
+            ns: http://fedramp.gov/ns/oscal
+            value: days
+          - name: timeframe_num
+            ns: http://fedramp.gov/ns/oscal
+            value: '3'
           parts:
           - id: VDR-TFR-PSD-c_smt
             name: statement
@@ -9834,6 +10236,12 @@ catalog:
           - name: force
             ns: http://fedramp.gov/ns/oscal
             value: SHOULD
+          - name: timeframe_type
+            ns: http://fedramp.gov/ns/oscal
+            value: days
+          - name: timeframe_num
+            ns: http://fedramp.gov/ns/oscal
+            value: '1'
           parts:
           - id: VDR-TFR-PSD-d_smt
             name: statement
@@ -9874,6 +10282,12 @@ catalog:
           - name: force
             ns: http://fedramp.gov/ns/oscal
             value: SHOULD
+          - name: timeframe_type
+            ns: http://fedramp.gov/ns/oscal
+            value: months
+          - name: timeframe_num
+            ns: http://fedramp.gov/ns/oscal
+            value: '1'
           parts:
           - id: VDR-TFR-MVX-a_smt
             name: statement
@@ -9891,6 +10305,12 @@ catalog:
           - name: force
             ns: http://fedramp.gov/ns/oscal
             value: MUST
+          - name: timeframe_type
+            ns: http://fedramp.gov/ns/oscal
+            value: days
+          - name: timeframe_num
+            ns: http://fedramp.gov/ns/oscal
+            value: '7'
           parts:
           - id: VDR-TFR-MVX-b_smt
             name: statement
@@ -9908,6 +10328,12 @@ catalog:
           - name: force
             ns: http://fedramp.gov/ns/oscal
             value: MUST
+          - name: timeframe_type
+            ns: http://fedramp.gov/ns/oscal
+            value: days
+          - name: timeframe_num
+            ns: http://fedramp.gov/ns/oscal
+            value: '3'
           parts:
           - id: VDR-TFR-MVX-c_smt
             name: statement
@@ -9948,6 +10374,12 @@ catalog:
           - name: force
             ns: http://fedramp.gov/ns/oscal
             value: SHOULD
+          - name: timeframe_type
+            ns: http://fedramp.gov/ns/oscal
+            value: months
+          - name: timeframe_num
+            ns: http://fedramp.gov/ns/oscal
+            value: '1'
           parts:
           - id: VDR-TFR-MVF-b_smt
             name: statement
@@ -9965,6 +10397,12 @@ catalog:
           - name: force
             ns: http://fedramp.gov/ns/oscal
             value: MUST
+          - name: timeframe_type
+            ns: http://fedramp.gov/ns/oscal
+            value: months
+          - name: timeframe_num
+            ns: http://fedramp.gov/ns/oscal
+            value: '1'
           parts:
           - id: VDR-TFR-MVF-c_smt
             name: statement
@@ -9982,6 +10420,12 @@ catalog:
           - name: force
             ns: http://fedramp.gov/ns/oscal
             value: MUST
+          - name: timeframe_type
+            ns: http://fedramp.gov/ns/oscal
+            value: months
+          - name: timeframe_num
+            ns: http://fedramp.gov/ns/oscal
+            value: '1'
           parts:
           - id: VDR-TFR-MVF-d_smt
             name: statement
@@ -9992,7 +10436,10 @@ catalog:
     title: Vulnerability Evaluation and Reporting
     props:
     - name: label
-      value: FRR-VER
+      value: VER
+    - name: status
+      ns: http://fedramp.gov/ns/oscal
+      value: stable
     parts:
     - name: overview
       title: Purpose
@@ -10236,6 +10683,24 @@ catalog:
             context of the cloud service offering, to estimate the potential agency
             impact of exploitation on government customers AND assign one of the following
             Potential Agency Impact N-ratings (PAIN):'
+          parts:
+          - name: item
+            prose: '- **N1**: Exploitation could be expected to have minimal customer
+              effects on one or more agencies that use the cloud service offering.
+
+              - **N2**: Exploitation could be expected to have narrow customer effects
+              on one or more agencies that use the cloud service offering.
+
+              - **N3**: Exploitation could be expected to have a disruptive customer
+              effect on one agency that uses the cloud service offering.
+
+              - **N4**: Exploitation could be expected to have a debilitating customer
+              effect on one agency that uses the cloud service offering OR a disruptive
+              customer effect on more than one federal agency that uses the cloud
+              service offering.
+
+              - **N5**: Exploitation could be expected to have a debilitating customer
+              effect on more than one agency that uses the cloud service offering.'
       - id: VER-EVA-AIA
         title: Assume It's Automatable
         props:
@@ -10620,6 +11085,12 @@ catalog:
           ns: http://fedramp.gov/ns/oscal
           value: '2026-06-24T00:00:00Z'
           remarks: Official launch of the FedRAMP Consolidated Rules for 2026.
+        - name: timeframe_type
+          ns: http://fedramp.gov/ns/oscal
+          value: months
+        - name: timeframe_num
+          ns: http://fedramp.gov/ns/oscal
+          value: '1'
         parts:
         - id: VER-TFR-MHR_smt
           name: statement
@@ -10654,6 +11125,12 @@ catalog:
           ns: http://fedramp.gov/ns/oscal
           value: '2026-06-24T00:00:00Z'
           remarks: Official launch of the FedRAMP Consolidated Rules for 2026.
+        - name: timeframe_type
+          ns: http://fedramp.gov/ns/oscal
+          value: days
+        - name: timeframe_num
+          ns: http://fedramp.gov/ns/oscal
+          value: '192'
         parts:
         - id: VER-TFR-MAV_smt
           name: statement
@@ -10698,6 +11175,12 @@ catalog:
           - name: force
             ns: http://fedramp.gov/ns/oscal
             value: MAY
+          - name: timeframe_type
+            ns: http://fedramp.gov/ns/oscal
+            value: months
+          - name: timeframe_num
+            ns: http://fedramp.gov/ns/oscal
+            value: '1'
           parts:
           - id: VER-TFR-MRH-a_smt
             name: statement
@@ -10728,6 +11211,12 @@ catalog:
           - name: force
             ns: http://fedramp.gov/ns/oscal
             value: SHOULD
+          - name: timeframe_type
+            ns: http://fedramp.gov/ns/oscal
+            value: months
+          - name: timeframe_num
+            ns: http://fedramp.gov/ns/oscal
+            value: '1'
           parts:
           - id: VER-TFR-MRH-b_smt
             name: statement
@@ -10761,6 +11250,12 @@ catalog:
           - name: force
             ns: http://fedramp.gov/ns/oscal
             value: SHOULD
+          - name: timeframe_type
+            ns: http://fedramp.gov/ns/oscal
+            value: days
+          - name: timeframe_num
+            ns: http://fedramp.gov/ns/oscal
+            value: '14'
           parts:
           - id: VER-TFR-MRH-c_smt
             name: statement
@@ -10794,6 +11289,12 @@ catalog:
           - name: force
             ns: http://fedramp.gov/ns/oscal
             value: SHOULD
+          - name: timeframe_type
+            ns: http://fedramp.gov/ns/oscal
+            value: days
+          - name: timeframe_num
+            ns: http://fedramp.gov/ns/oscal
+            value: '7'
           parts:
           - id: VER-TFR-MRH-d_smt
             name: statement
@@ -10847,6 +11348,12 @@ catalog:
           - name: force
             ns: http://fedramp.gov/ns/oscal
             value: SHOULD
+          - name: timeframe_type
+            ns: http://fedramp.gov/ns/oscal
+            value: days
+          - name: timeframe_num
+            ns: http://fedramp.gov/ns/oscal
+            value: '14'
           parts:
           - id: VER-TFR-EVU-a_smt
             name: statement
@@ -10863,6 +11370,12 @@ catalog:
           - name: force
             ns: http://fedramp.gov/ns/oscal
             value: SHOULD
+          - name: timeframe_type
+            ns: http://fedramp.gov/ns/oscal
+            value: days
+          - name: timeframe_num
+            ns: http://fedramp.gov/ns/oscal
+            value: '7'
           parts:
           - id: VER-TFR-EVU-b_smt
             name: statement
@@ -10879,6 +11392,12 @@ catalog:
           - name: force
             ns: http://fedramp.gov/ns/oscal
             value: SHOULD
+          - name: timeframe_type
+            ns: http://fedramp.gov/ns/oscal
+            value: days
+          - name: timeframe_num
+            ns: http://fedramp.gov/ns/oscal
+            value: '5'
           parts:
           - id: VER-TFR-EVU-c_smt
             name: statement
@@ -10895,6 +11414,12 @@ catalog:
           - name: force
             ns: http://fedramp.gov/ns/oscal
             value: SHOULD
+          - name: timeframe_type
+            ns: http://fedramp.gov/ns/oscal
+            value: days
+          - name: timeframe_num
+            ns: http://fedramp.gov/ns/oscal
+            value: '2'
           parts:
           - id: VER-TFR-EVU-d_smt
             name: statement

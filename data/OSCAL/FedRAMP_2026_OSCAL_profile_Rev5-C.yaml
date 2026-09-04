@@ -1,13 +1,18 @@
 profile:
-  uuid: bbaf79e4-918f-463f-9468-75aa68cd7301
+  uuid: 937e5243-6ab8-4482-ac01-5f24a195177a
   metadata:
     title: "FedRAMP Rev 5 \u2014 Class C"
     published: '2026-07-06T00:00:00Z'
-    last-modified: '2026-09-01T16:17:56Z'
+    last-modified: '2026-09-04T03:46:03Z'
     version: 2026.07.06.01
     oscal-version: 1.2.3
+    links:
+    - href: https://raw.githubusercontent.com/FedRAMP/rules/main/fedramp-consolidated-rules.json
+      rel: canonical
+    - href: https://www.fedramp.gov/2026/
+      rel: alternate
   imports:
-  - href: '#0550c405-4589-47be-94c7-313d9afae526'
+  - href: '#46681695-3b78-4fdf-9041-f1eed1183187'
     include-controls:
     - with-ids:
       - AFC-CSO-ACK
@@ -247,7 +252,7 @@ profile:
       - VER-TFR-MHR
       - VER-TFR-MRH-c
       - VER-TFR-NRI-c
-  - href: '#71f415b0-bedd-4924-9cea-088ae59686af'
+  - href: '#99c6bad1-e86e-401a-90a8-e16c7b476eed'
     include-controls:
     - with-ids:
       - ac-1
@@ -601,12 +606,12 @@ profile:
             Web Encryption (JWE).'
   back-matter:
     resources:
-    - uuid: 0550c405-4589-47be-94c7-313d9afae526
+    - uuid: 46681695-3b78-4fdf-9041-f1eed1183187
       title: FedRAMP Consolidated Rules OSCAL Catalog
       rlinks:
       - href: FedRAMP_2026_OSCAL_catalog.json
         media-type: application/json
-    - uuid: 71f415b0-bedd-4924-9cea-088ae59686af
+    - uuid: 99c6bad1-e86e-401a-90a8-e16c7b476eed
       title: FedRAMP Rev 5 Tailoring Profile
       rlinks:
       - href: FedRAMP_2026_OSCAL_profile_Rev5-Tailoring.json

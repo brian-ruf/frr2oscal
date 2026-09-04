@@ -52,9 +52,9 @@ Each top-level key in `FRR` (pattern `^[A-Z]{3}$`) becomes a top-level
 |---|---|---|---|
 | `name` | ✓ | string | → `group.title` |
 | `purpose` | ✓ | string | → `group.parts[name=overview].prose` |
-| `short_name` | ✓ | string `^[A-Z]{3}$` | **NOT MAPPED** — abbreviated ruleset code |
+| `short_name` | ✓ | string `^[A-Z]{3}$` | → `group.props[name=label].value` |
 | `web_name` | ✓ | string | **NOT MAPPED** — human-friendly display name |
-| `status` | ✓ | `"stable"` \| `"placeholder"` \| `"empty"` | **NOT MAPPED** — publication status of the ruleset |
+| `status` | ✓ | `"stable"` \| `"placeholder"` \| `"empty"` | → `group.props[name=status, ns=FRR_NS].value` (FedRAMP extension) |
 | `tag` | — | string | **NOT MAPPED** — optional short tag |
 | `effective` | ✓ (or `20x`+`rev5`) | `effective_entry` | **NOT MAPPED** — effective date and status for the ruleset |
 | `subsets` | — | `frr_info_subsets` | **NOT MAPPED** — subset metadata (names, descriptions, applicability); see §2.3 |
@@ -87,8 +87,8 @@ they originate from.
 | Schema key | Type | OSCAL mapping |
 |---|---|---|
 | `data.all` | `frr_requirements_map` | → processed; child groups use `FRR-{key}-{subset}` ID |
-| `data.20x` | `frr_requirements_map` | → processed; child groups use `FRR-{key}-20x-{subset}` ID |
-| `data.rev5` | `frr_requirements_map` | → processed; child groups use `FRR-{key}-rev5-{subset}` ID |
+| `data.20x` | `frr_requirements_map` | → processed; child groups use `FRR-{key}-{subset}-20x` ID |
+| `data.rev5` | `frr_requirements_map` | → processed; child groups use `FRR-{key}-{subset}-rev5` ID |
 
 ---
 
@@ -99,8 +99,8 @@ ruleset group.
 
 | OSCAL field | Value |
 |---|---|
-| `group.id` | `"FRR-{key}-{subset}"` (scope=all) or `"FRR-{key}-{scope}-{subset}"` (scope=20x/rev5) |
-| `group.title` | Same as `group.id` (no info block present in current data) |
+| `group.id` | `"FRR-{key}-{subset}"` (scope=all) or `"FRR-{key}-{subset}-{scope}"` (scope=20x/rev5) |
+| `group.title` | Same as `group.id` for scope=all; `"FRR-{key}-{subset} 20X Path"` or `"FRR-{key}-{subset} Rev 5 Path"` for scoped groups |
 | `group.parts[name=overview]` | Omitted (no `info` block present in current data) |
 
 > The `frr_requirements_subset_group` schema allows any `frr_requirement_id`
@@ -138,12 +138,12 @@ enforces a mutual exclusion: a rule has either `statement` + `force`
 | `schema` | — | `rule_schema` (`name`+`url`) | → `parts[name=guidance, class=schema, title=Schema].prose` |
 | `following_information` | — | string[] | → `parts[name=guidance, class=following_information, title=Following Information].prose` |
 | `updated` | ✓ | `updated_list` | → one `props[name=updated, ns=FRR_NS, value=date, remarks=comment]` per entry |
-| `following_information_bullets` | — | string[] | **NOT MAPPED** — supplemental information as bullet points |
-| `reference` | — | string | **NOT MAPPED** — plain-text reference citation |
-| `reference_url` | — | URI | **NOT MAPPED** — URL for an external reference |
-| `effective_date` | — | `effective_dates` | **NOT MAPPED** — obtain/maintain/grace effective dates for this rule |
-| `timeframe_type` | — | enum (`bizdays`\|`days`\|`hours`\|`weeks`\|`months`\|`years`) | **NOT MAPPED** — unit for the compliance timeframe (always paired with `timeframe_num`) |
-| `timeframe_num` | — | positive number | **NOT MAPPED** — numeric quantity for the compliance timeframe |
+| `following_information_bullets` | — | string[] | → `parts[name=statement, id={id}_smt].parts[name=item].prose` (each item prefixed with `- `; appended after `statement`) |
+| `reference` | — | string | → `links[rel=reference].text` (used as link text when `reference_url` is also present) |
+| `reference_url` | — | URI | → `links[rel=reference, href={url}]`; `.text` set to `reference` value when present |
+| `effective_date` | — | `effective_dates` | → `props[name=effective_date, ns=FRR_NS].value` (JSON-serialised when value is an object) |
+| `timeframe_type` | — | enum (`bizdays`\|`days`\|`hours`\|`weeks`\|`months`\|`years`) | → `props[name=timeframe_type, ns=FRR_NS].value` |
+| `timeframe_num` | — | positive number | → `props[name=timeframe_num, ns=FRR_NS].value` (number converted to string) |
 | `notification` | — | object[] (`party`, `method`, `target`, `name`, `url`) | **NOT MAPPED** — structured notification requirements |
 | `controls` | — | `control_id[]` | **NOT MAPPED** — NIST SP 800-53 control identifiers related to this rule |
 | `terms` | — | string[] | **NOT MAPPED** — FRD term references |
@@ -171,10 +171,12 @@ variant becomes a child `control` nested in the parent's `controls` list
 | `schema` | — | `rule_schema` | → `parts[name=guidance, class=schema, title=Schema].prose` |
 | `following_information` | — | string[] | → `parts[name=guidance, class=following_information, title=Following Information].prose` |
 | `updated` | ✓ | `updated_list` | → one `props[name=updated, ns=FRR_NS, value=date, remarks=comment]` per entry |
-| `following_information_bullets` | — | string[] | **NOT MAPPED** |
-| `effective_date` | — | `effective_dates` | **NOT MAPPED** |
-| `timeframe_type` | — | enum | **NOT MAPPED** |
-| `timeframe_num` | — | positive number | **NOT MAPPED** |
+| `following_information_bullets` | — | string[] | → `parts[name=statement, id={id}_smt].parts[name=item].prose` (each item prefixed with `- `) |
+| `reference` | — | string | → `links[rel=reference].text` (used as link text when `reference_url` is also present) |
+| `reference_url` | — | URI | → `links[rel=reference, href={url}]`; `.text` set to `reference` value when present |
+| `effective_date` | — | `effective_dates` | → `props[name=effective_date, ns=FRR_NS].value` (JSON-serialised when value is an object) |
+| `timeframe_type` | — | enum | → `props[name=timeframe_type, ns=FRR_NS].value` |
+| `timeframe_num` | — | positive number | → `props[name=timeframe_num, ns=FRR_NS].value` (number converted to string) |
 | `notification` | — | object[] | **NOT MAPPED** |
 | `controls` | — | `control_id[]` | **NOT MAPPED** |
 | `terms` | — | string[] | **NOT MAPPED** |
@@ -199,10 +201,11 @@ directly to the parent control's `controls` list.
 | `artifacts.20x` | — | string[] | → `parts[name=assessment-method, props=[method=EXAMINE, path=20x]].parts[name=assessment-objects].prose` |
 | `artifacts.rev5` | — | string[] | → `parts[name=assessment-method, props=[method=EXAMINE, path=rev5]].parts[name=assessment-objects].prose` |
 | `following_information` | — | string[] | → `parts[name=guidance, class=following_information, title=Following Information].prose` |
-| `rev5_controls_list` | — | object (family → `rev5_control_id[]`) | **NOT MAPPED** — Rev5 NIST SP 800-53 control references specific to this class |
-| `effective_date` | — | `effective_dates` | **NOT MAPPED** |
-| `timeframe_type` | — | enum | **NOT MAPPED** (always paired with `timeframe_num`) |
-| `timeframe_num` | — | positive number | **NOT MAPPED** |
+| `following_information_bullets` | — | string[] | → `parts[name=statement, id={id}_smt].parts[name=item].prose` (each item prefixed with `- `) |
+| `rev5_controls_list` | — | object (family → `rev5_control_id[]`) | → used for Rev5 profile control selection (not written to the catalog); control IDs are converted to OSCAL format and added to the appropriate Rev5 class profile's include list |
+| `effective_date` | — | `effective_dates` | → `props[name=effective_date, ns=FRR_NS].value` (JSON-serialised when value is an object) |
+| `timeframe_type` | — | enum | → `props[name=timeframe_type, ns=FRR_NS].value` |
+| `timeframe_num` | — | positive number | → `props[name=timeframe_num, ns=FRR_NS].value` (number converted to string) |
 | `pain_timeframes` | — | object (PAIN level 1–5 → timeframe) | **NOT MAPPED** — PAIN score-based response timeframe table |
 
 ---
@@ -236,12 +239,7 @@ output. They are recorded in `data/unhandled.json` at runtime.
 
 | Field | Appears in | Description |
 |---|---|---|
-| `following_information_bullets` | rule | Supplemental info as a bullet-point list (distinct from `following_information`) |
-| `reference` | rule | Plain-text citation for an external reference |
-| `reference_url` | rule | URI for an external reference |
-| `timeframe_type` | rule, class variant | Unit for compliance timeframe (`bizdays`, `days`, `hours`, etc.) |
-| `timeframe_num` | rule, class variant | Numeric quantity paired with `timeframe_type` |
 | `notification` | rule | Structured notification requirements (party, method, target, URL) |
+| `controls` | rule | NIST SP 800-53 control identifiers related to this rule |
 | `terms` | rule | References to defined terms in the FRD |
-| `rev5_controls_list` | class variant | NIST SP 800-53 Rev5 control IDs grouped by control family |
 | `pain_timeframes` | class variant | PAIN severity 1–5 → response timeframe lookup table |
