@@ -6,6 +6,9 @@ OSCAL catalog produced by `src/frr2oscal.py`. Fields with no current mapping
 are marked **NOT MAPPED** and noted with a brief description of the data they
 contain.
 
+The catalog metadata also includes fixed roles, parties, and responsible-parties
+that are not derived from the source JSON; these are described in §9.
+
 ---
 
 ## 1. Schema Hierarchy Overview
@@ -52,12 +55,12 @@ Each top-level key in `FRR` (pattern `^[A-Z]{3}$`) becomes a top-level
 |---|---|---|---|
 | `name` | ✓ | string | → `group.title` |
 | `purpose` | ✓ | string | → `group.parts[name=overview].prose` |
-| `short_name` | ✓ | string `^[A-Z]{3}$` | **NOT MAPPED** — abbreviated ruleset code |
-| `web_name` | ✓ | string | **NOT MAPPED** — human-friendly display name |
-| `status` | ✓ | `"stable"` \| `"placeholder"` \| `"empty"` | **NOT MAPPED** — publication status of the ruleset |
-| `tag` | — | string | **NOT MAPPED** — optional short tag |
+| `short_name` | ✓ | string `^[A-Z]{3}$` | → `group.props[name=label].value` |
+| `web_name` | ✓ | string | → `group.props[name=web_name, ns=FRR_NS].value` (FedRAMP extension) |
+| `status` | ✓ | `"stable"` \| `"placeholder"` \| `"empty"` | → `group.props[name=status, ns=FRR_NS].value` (FedRAMP extension) |
+| `tag` | — | string | → `group.props[name=tag, ns=FRR_NS].value` (FedRAMP extension) |
 | `effective` | ✓ (or `20x`+`rev5`) | `effective_entry` | **NOT MAPPED** — effective date and status for the ruleset |
-| `subsets` | — | `frr_info_subsets` | **NOT MAPPED** — subset metadata (names, descriptions, applicability); see §2.3 |
+| `subsets` | — | `frr_info_subsets` | Mapped as child controls — subset metadata (names, descriptions, applicability); see §2.3 |
 | `flows` | — | array | **NOT MAPPED** — process-flow relationships |
 | `20x` | ✓ (when no top-level `effective`) | `frr_document_info_certification` | **NOT MAPPED** — 20x-specific effective dates and subset overrides |
 | `rev5` | ✓ (when no top-level `effective`) | `frr_document_info_certification` | **NOT MAPPED** — Rev5-specific effective dates and subset overrides |
@@ -66,16 +69,17 @@ Each top-level key in `FRR` (pattern `^[A-Z]{3}$`) becomes a top-level
 
 Subset metadata describes each named group of rules within a ruleset. It is
 present in the `info` block but is not present in the current data for any
-ruleset. No subset has an `info` block in any scope.
+ruleset. When present, each entry becomes a child `control` of the parent
+ruleset group (id = `FRR-{key}-{subset-key}`).
 
 | Schema field | Required | Type | OSCAL mapping |
 |---|---|---|---|
-| `{subset-key}.name` | ✓ | string | **NOT MAPPED** |
-| `{subset-key}.description` | ✓ | string | **NOT MAPPED** |
-| `{subset-key}.applicability.types` | ✓ | `["20x"` \| `"Rev5"]` | **NOT MAPPED** — which certification types the subset applies to |
-| `{subset-key}.applicability.paths` | ✓ | `["Program"` \| `"Agency"]` | **NOT MAPPED** — which certification paths apply |
-| `{subset-key}.applicability.classes` | ✓ | `["A"…"D"]` | **NOT MAPPED** — which certification classes apply |
-| `{subset-key}.applicability.affects` | ✓ | `affected_party[]` | **NOT MAPPED** — which parties the subset targets |
+| `{subset-key}.name` | ✓ | string | → `control.title` (prefixed with `"SUBSET: "`) |
+| `{subset-key}.description` | ✓ | string | → `control.parts[name=statement].prose` |
+| `{subset-key}.applicability.types` | ✓ | `["20x"` \| `"Rev5"]` | → one `control.props[name=applicability-type, ns=FRR_NS]` per item |
+| `{subset-key}.applicability.paths` | ✓ | `["Program"` \| `"Agency"]` | → one `control.props[name=applicability-path, ns=FRR_NS]` per item |
+| `{subset-key}.applicability.classes` | ✓ | `["A"…"D"]` | → one `control.props[name=applicability-class, ns=FRR_NS]` per item |
+| `{subset-key}.applicability.affects` | ✓ | `affected_party[]` | → one `control.props[name=affects, ns=FRR_NS]` per item |
 
 ---
 
@@ -87,8 +91,8 @@ they originate from.
 | Schema key | Type | OSCAL mapping |
 |---|---|---|
 | `data.all` | `frr_requirements_map` | → processed; child groups use `FRR-{key}-{subset}` ID |
-| `data.20x` | `frr_requirements_map` | → processed; child groups use `FRR-{key}-20x-{subset}` ID |
-| `data.rev5` | `frr_requirements_map` | → processed; child groups use `FRR-{key}-rev5-{subset}` ID |
+| `data.20x` | `frr_requirements_map` | → processed; child groups use `FRR-{key}-{subset}-20x` ID |
+| `data.rev5` | `frr_requirements_map` | → processed; child groups use `FRR-{key}-{subset}-rev5` ID |
 
 ---
 
@@ -99,8 +103,8 @@ ruleset group.
 
 | OSCAL field | Value |
 |---|---|
-| `group.id` | `"FRR-{key}-{subset}"` (scope=all) or `"FRR-{key}-{scope}-{subset}"` (scope=20x/rev5) |
-| `group.title` | Same as `group.id` (no info block present in current data) |
+| `group.id` | `"FRR-{key}-{subset}"` (scope=all) or `"FRR-{key}-{subset}-{scope}"` (scope=20x/rev5) |
+| `group.title` | Same as `group.id` for scope=all; `"FRR-{key}-{subset} 20X Path"` or `"FRR-{key}-{subset} Rev 5 Path"` for scoped groups |
 | `group.parts[name=overview]` | Omitted (no `info` block present in current data) |
 
 > The `frr_requirements_subset_group` schema allows any `frr_requirement_id`
@@ -138,14 +142,14 @@ enforces a mutual exclusion: a rule has either `statement` + `force`
 | `schema` | — | `rule_schema` (`name`+`url`) | → `parts[name=guidance, class=schema, title=Schema].prose` |
 | `following_information` | — | string[] | → `parts[name=guidance, class=following_information, title=Following Information].prose` |
 | `updated` | ✓ | `updated_list` | → one `props[name=updated, ns=FRR_NS, value=date, remarks=comment]` per entry |
-| `following_information_bullets` | — | string[] | **NOT MAPPED** — supplemental information as bullet points |
-| `reference` | — | string | **NOT MAPPED** — plain-text reference citation |
-| `reference_url` | — | URI | **NOT MAPPED** — URL for an external reference |
-| `effective_date` | — | `effective_dates` | **NOT MAPPED** — obtain/maintain/grace effective dates for this rule |
-| `timeframe_type` | — | enum (`bizdays`\|`days`\|`hours`\|`weeks`\|`months`\|`years`) | **NOT MAPPED** — unit for the compliance timeframe (always paired with `timeframe_num`) |
-| `timeframe_num` | — | positive number | **NOT MAPPED** — numeric quantity for the compliance timeframe |
+| `following_information_bullets` | — | string[] | → `parts[name=statement, id={id}_smt].parts[name=item].prose` (each item prefixed with `- `; appended after `statement`) |
+| `reference` | — | string | → `links[rel=reference].text` (used as link text when `reference_url` is also present) |
+| `reference_url` | — | URI | → `links[rel=reference, href={url}]`; `.text` set to `reference` value when present |
+| `effective_date` | — | `effective_dates` | → `props[name=effective_date, ns=FRR_NS].value` (JSON-serialised when value is an object) |
+| `timeframe_type` | — | enum (`bizdays`\|`days`\|`hours`\|`weeks`\|`months`\|`years`) | → `props[name=timeframe_type, ns=FRR_NS].value` |
+| `timeframe_num` | — | positive number | → `props[name=timeframe_num, ns=FRR_NS].value` (number converted to string) |
 | `notification` | — | object[] (`party`, `method`, `target`, `name`, `url`) | **NOT MAPPED** — structured notification requirements |
-| `controls` | — | `control_id[]` | **NOT MAPPED** — NIST SP 800-53 control identifiers related to this rule |
+| `controls` | — | `control_id[]` | → one `links[rel=related, href=#{NIST_RESOURCE_UUID}, resource-fragment={id}, text="NIST SP 800-53 Rev 5 {ID}"]` per item (see §10) |
 | `terms` | — | string[] | **NOT MAPPED** — FRD term references |
 
 ### 5.2 Varies-by-Class Rule (has `varies_by_class`, no `statement` or `force`)
@@ -171,12 +175,14 @@ variant becomes a child `control` nested in the parent's `controls` list
 | `schema` | — | `rule_schema` | → `parts[name=guidance, class=schema, title=Schema].prose` |
 | `following_information` | — | string[] | → `parts[name=guidance, class=following_information, title=Following Information].prose` |
 | `updated` | ✓ | `updated_list` | → one `props[name=updated, ns=FRR_NS, value=date, remarks=comment]` per entry |
-| `following_information_bullets` | — | string[] | **NOT MAPPED** |
-| `effective_date` | — | `effective_dates` | **NOT MAPPED** |
-| `timeframe_type` | — | enum | **NOT MAPPED** |
-| `timeframe_num` | — | positive number | **NOT MAPPED** |
+| `following_information_bullets` | — | string[] | → `parts[name=statement, id={id}_smt].parts[name=item].prose` (each item prefixed with `- `) |
+| `reference` | — | string | → `links[rel=reference].text` (used as link text when `reference_url` is also present) |
+| `reference_url` | — | URI | → `links[rel=reference, href={url}]`; `.text` set to `reference` value when present |
+| `effective_date` | — | `effective_dates` | → `props[name=effective_date, ns=FRR_NS].value` (JSON-serialised when value is an object) |
+| `timeframe_type` | — | enum | → `props[name=timeframe_type, ns=FRR_NS].value` |
+| `timeframe_num` | — | positive number | → `props[name=timeframe_num, ns=FRR_NS].value` (number converted to string) |
 | `notification` | — | object[] | **NOT MAPPED** |
-| `controls` | — | `control_id[]` | **NOT MAPPED** |
+| `controls` | — | `control_id[]` | → one `links[rel=related, href=#{NIST_RESOURCE_UUID}, resource-fragment={id}, text="NIST SP 800-53 Rev 5 {ID}"]` per item (see §10) |
 | `terms` | — | string[] | **NOT MAPPED** |
 
 ---
@@ -199,10 +205,11 @@ directly to the parent control's `controls` list.
 | `artifacts.20x` | — | string[] | → `parts[name=assessment-method, props=[method=EXAMINE, path=20x]].parts[name=assessment-objects].prose` |
 | `artifacts.rev5` | — | string[] | → `parts[name=assessment-method, props=[method=EXAMINE, path=rev5]].parts[name=assessment-objects].prose` |
 | `following_information` | — | string[] | → `parts[name=guidance, class=following_information, title=Following Information].prose` |
-| `rev5_controls_list` | — | object (family → `rev5_control_id[]`) | **NOT MAPPED** — Rev5 NIST SP 800-53 control references specific to this class |
-| `effective_date` | — | `effective_dates` | **NOT MAPPED** |
-| `timeframe_type` | — | enum | **NOT MAPPED** (always paired with `timeframe_num`) |
-| `timeframe_num` | — | positive number | **NOT MAPPED** |
+| `following_information_bullets` | — | string[] | → `parts[name=statement, id={id}_smt].parts[name=item].prose` (each item prefixed with `- `) |
+| `rev5_controls_list` | — | object (family → `rev5_control_id[]`) | → used for Rev5 profile control selection (not written to the catalog); control IDs are converted to OSCAL format and added to the appropriate Rev5 class profile's include list |
+| `effective_date` | — | `effective_dates` | → `props[name=effective_date, ns=FRR_NS].value` (JSON-serialised when value is an object) |
+| `timeframe_type` | — | enum | → `props[name=timeframe_type, ns=FRR_NS].value` |
+| `timeframe_num` | — | positive number | → `props[name=timeframe_num, ns=FRR_NS].value` (number converted to string) |
 | `pain_timeframes` | — | object (PAIN level 1–5 → timeframe) | **NOT MAPPED** — PAIN score-based response timeframe table |
 
 ---
@@ -236,12 +243,73 @@ output. They are recorded in `data/unhandled.json` at runtime.
 
 | Field | Appears in | Description |
 |---|---|---|
-| `following_information_bullets` | rule | Supplemental info as a bullet-point list (distinct from `following_information`) |
-| `reference` | rule | Plain-text citation for an external reference |
-| `reference_url` | rule | URI for an external reference |
-| `timeframe_type` | rule, class variant | Unit for compliance timeframe (`bizdays`, `days`, `hours`, etc.) |
-| `timeframe_num` | rule, class variant | Numeric quantity paired with `timeframe_type` |
 | `notification` | rule | Structured notification requirements (party, method, target, URL) |
 | `terms` | rule | References to defined terms in the FRD |
-| `rev5_controls_list` | class variant | NIST SP 800-53 Rev5 control IDs grouped by control family |
 | `pain_timeframes` | class variant | PAIN severity 1–5 → response timeframe lookup table |
+
+---
+
+## 9. Catalog Metadata — Roles, Parties, and Responsible-Parties
+
+The following entries are written to the catalog `metadata` section by
+`_add_catalog_contacts()` regardless of source-JSON content. They are not
+derived from the FRR data.
+
+### 9.1 Roles
+
+| Role `id` | `title` |
+|---|---|
+| `fedramp` | FedRAMP |
+| `system-owner` | System Owner |
+| `assessor` | Assessor |
+| `agency` | Agency |
+
+### 9.2 Parties
+
+| `name` | `type` | `uuid` constant | Extra fields |
+|---|---|---|---|
+| FedRAMP PMO | organization | `_PARTY_UUID_FEDRAMP` | `email-addresses: [info@fedramp.gov]`, `links[rel=website, href=https://www.fedramp.gov]` |
+| Cloud Service Provider | organization | `_PARTY_UUID_CSP` | — |
+| Assessing Organization | organization | `_PARTY_UUID_AO` | — |
+| Federal Agency | organization | `_PARTY_UUID_AGENCY` | — |
+
+### 9.3 Responsible-Parties
+
+| `role-id` | `party-uuids` |
+|---|---|
+| `fedramp` | `[_PARTY_UUID_FEDRAMP]` |
+| `system-owner` | `[_PARTY_UUID_CSP]` |
+| `assessor` | `[_PARTY_UUID_AO]` |
+| `agency` | `[_PARTY_UUID_AGENCY]` |
+
+---
+
+## 10. Catalog Back-Matter — NIST SP 800-53 Rev 5 Resource
+
+A single back-matter resource is added to the catalog by `build_catalog()` so
+that `controls` citations on rules can reference it via UUID fragment.  The
+resource UUID is the stable module-level constant `_NIST_800_53_REV5_RESOURCE_UUID`.
+
+| Field | Value |
+|---|---|
+| `uuid` | `_NIST_800_53_REV5_RESOURCE_UUID` (`ffffffff-0000-4000-a000-000000000001`) |
+| `title` | `"NIST SP 800-53 Rev 5"` |
+| `rlinks[0].href` | `NIST_800_53_REV5_URL` — OSCAL JSON on GitHub raw |
+| `rlinks[1].href` | `NIST_800_53_REV5_DOI_URL` — canonical DOI (`https://doi.org/10.6028/NIST.SP.800-53r5`) |
+
+Each NIST control ID listed in a rule's `controls` array produces a link on
+the OSCAL control:
+
+```
+links[
+  rel             = "related",
+  href            = "#{NIST_RESOURCE_UUID}",
+  resource-fragment = {control-id},
+  text            = "NIST SP 800-53 Rev 5 {CONTROL-ID}",   ← id uppercased
+]
+```
+
+The `resource-fragment` field
+identifies the specific control within the referenced catalog without
+requiring a separate per-control back-matter entry.  The `text` field
+provides a human-readable label with the control ID in uppercase.

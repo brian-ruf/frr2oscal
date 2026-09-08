@@ -18,24 +18,39 @@ sys.path.insert(0, os.path.join(_repo_root, "src"))
 
 import frr2oscal
 from frr2oscal import (
+    CYBERCRAFT_NAMESPACE,
     FRR_NS,
+    NIST_800_53_REV5_DOI_URL,
+    NIST_800_53_REV5_URL,
     PROFILE_NAMES,
     TAILORING_HREF,
     TAILORING_PROFILE_NAME,
+    _NIST_800_53_REV5_RESOURCE_UUID,
+    _PARTY_UUID_FEDRAMP,
+    _PARTY_UUID_CSP,
+    _PARTY_UUID_AO,
+    _PARTY_UUID_AGENCY,
     _add_artifact_parts,
+    _add_catalog_contacts,
     _add_extra_parts,
     _add_following_information,
+    _add_following_information_bullets,
     _add_frr_to_profiles,
     _add_nist_to_profiles,
     _apply_ctl_guidance,
+    _assert_single_status_prop,
     _apply_ctl_params,
     _apply_ctl_to_profiles,
+    _build_frr_subset_groups,
     _collect_ctl_param_ids,
     _ctl_id_to_oscal,
     _date_to_datetime,
+    _extension_props,
     _guidance_part,
+    _nist_control_links,
     _notes_text,
     _profile_keys_for,
+    _reference_link,
     _reset_profile_tracking,
     _rev5_ctrl_to_oscal,
     _track_unhandled,
@@ -349,6 +364,120 @@ class TestAddFollowingInformation:
         assert items == []
 
 
+class TestAddFollowingInformationBullets:
+    def _make_control_with_statement(self):
+        cat = Catalog.new(title="T", version="0.1")
+        cat.create_control_group(parent_id="[root]", id="GRP", title="G")
+        cat.create_control(parent_id="GRP", id="R-001", title="R",
+                           statements=["The statement."])
+        return cat
+
+    def _statement_item_parts(self, cat):
+        data = json.loads(cat.dumps("json"))
+        ctrl = data["catalog"]["groups"][0]["controls"][0]
+        smt = next(p for p in ctrl.get("parts", []) if p["name"] == "statement")
+        return [p for p in smt.get("parts", []) if p["name"] == "item"]
+
+    def test_single_bullet(self):
+        cat = self._make_control_with_statement()
+        _add_following_information_bullets(cat, "R-001", ["Do this."])
+        items = self._statement_item_parts(cat)
+        assert len(items) == 1
+        assert "- Do this." in items[0]["prose"]
+
+    def test_multiple_bullets(self):
+        cat = self._make_control_with_statement()
+        _add_following_information_bullets(cat, "R-001", ["A", "B", "C"])
+        items = self._statement_item_parts(cat)
+        prose = items[0]["prose"]
+        assert "- A" in prose
+        assert "- B" in prose
+        assert "- C" in prose
+
+    def test_uses_unordered_not_numbered(self):
+        cat = self._make_control_with_statement()
+        _add_following_information_bullets(cat, "R-001", ["item"])
+        items = self._statement_item_parts(cat)
+        assert items[0]["prose"].startswith("- ")
+        assert "1." not in items[0]["prose"]
+
+    def test_empty_list_is_noop(self):
+        cat = self._make_control_with_statement()
+        _add_following_information_bullets(cat, "R-001", [])
+        assert self._statement_item_parts(cat) == []
+
+
+class TestReferenceLink:
+    def test_returns_empty_when_no_url(self):
+        assert _reference_link({}) == []
+        assert _reference_link({"reference": "Some doc"}) == []
+
+    def test_rel_is_reference(self):
+        link = _reference_link({"reference_url": "https://example.com"})[0]
+        assert link["rel"] == "reference"
+
+    def test_href_is_url(self):
+        link = _reference_link({"reference_url": "https://example.com"})[0]
+        assert link["href"] == "https://example.com"
+
+    def test_text_set_when_reference_present(self):
+        link = _reference_link({
+            "reference_url": "https://example.com",
+            "reference": "Example Doc",
+        })[0]
+        assert link["text"] == "Example Doc"
+
+    def test_no_text_key_when_reference_absent(self):
+        link = _reference_link({"reference_url": "https://example.com"})[0]
+        assert "text" not in link
+
+    def test_blank_url_returns_empty(self):
+        assert _reference_link({"reference_url": ""}) == []
+
+
+class TestExtensionProps:
+    def _names(self, props):
+        return [p["name"] for p in props]
+
+    def test_empty_rule_returns_empty(self):
+        assert _extension_props({}) == []
+
+    def test_timeframe_type_string(self):
+        props = _extension_props({"timeframe_type": "bizdays"})
+        assert len(props) == 1
+        p = props[0]
+        assert p["name"] == "timeframe_type"
+        assert p["value"] == "bizdays"
+        assert p["ns"] == FRR_NS
+
+    def test_timeframe_num_converted_to_string(self):
+        props = _extension_props({"timeframe_num": 10})
+        assert props[0]["value"] == "10"
+
+    def test_both_timeframe_fields(self):
+        props = _extension_props({"timeframe_type": "days", "timeframe_num": 30})
+        names = self._names(props)
+        assert "timeframe_type" in names
+        assert "timeframe_num" in names
+
+    def test_effective_date_dict_serialised_as_json(self):
+        ed = {"obtain": "2026-01-01", "maintain": None}
+        props = _extension_props({"effective_date": ed})
+        assert props[0]["name"] == "effective_date"
+        import json as _json
+        assert _json.loads(props[0]["value"]) == ed
+
+    def test_all_props_use_frr_ns(self):
+        props = _extension_props({"timeframe_type": "hours", "timeframe_num": 4})
+        assert all(p["ns"] == FRR_NS for p in props)
+
+    def test_absent_fields_not_included(self):
+        props = _extension_props({"timeframe_num": 5})
+        names = self._names(props)
+        assert "timeframe_type" not in names
+        assert "effective_date" not in names
+
+
 # ── Catalog-integrated: _build_frr_simple_control ────────────────────────────
 
 class TestBuildFrrSimpleControl:
@@ -455,6 +584,43 @@ class TestBuildFrrSimpleControl:
         assert notes_part is not None
         assert "Be careful." in notes_part["prose"]
 
+    def test_following_information_bullets_unordered(self):
+        cat = _catalog_with_group()
+        rule = {"name": "R", "statement": "S.", "following_information_bullets": ["X", "Y"]}
+        frr2oscal._build_frr_simple_control(cat, "grp", "R-FIB", rule)
+        ctrl = _find_control(cat, "R-FIB")
+        smt = next(p for p in ctrl["parts"] if p["name"] == "statement")
+        item = next(p for p in smt.get("parts", []) if p["name"] == "item")
+        assert "- X" in item["prose"]
+        assert "- Y" in item["prose"]
+        assert "1." not in item["prose"]
+
+    def test_reference_url_link_written(self):
+        cat = _catalog_with_group()
+        rule = {"name": "R", "statement": "S.", "reference_url": "https://example.com"}
+        frr2oscal._build_frr_simple_control(cat, "grp", "R-REF", rule)
+        ctrl = _find_control(cat, "R-REF")
+        ref_links = [lk for lk in ctrl.get("links", []) if lk.get("rel") == "reference"]
+        assert ref_links
+        assert ref_links[0]["href"] == "https://example.com"
+
+    def test_reference_text_when_reference_present(self):
+        cat = _catalog_with_group()
+        rule = {"name": "R", "statement": "S.",
+                "reference_url": "https://example.com", "reference": "My Doc"}
+        frr2oscal._build_frr_simple_control(cat, "grp", "R-REFT", rule)
+        ctrl = _find_control(cat, "R-REFT")
+        ref_link = next(lk for lk in ctrl["links"] if lk.get("rel") == "reference")
+        assert ref_link.get("text") == "My Doc"
+
+    def test_timeframe_props_written(self):
+        cat = _catalog_with_group()
+        rule = {"name": "R", "statement": "S.", "timeframe_type": "bizdays", "timeframe_num": 10}
+        frr2oscal._build_frr_simple_control(cat, "grp", "R-TF", rule)
+        ctrl = _find_control(cat, "R-TF")
+        assert _prop_value(ctrl["props"], "timeframe_type", ns=FRR_NS) == "bizdays"
+        assert _prop_value(ctrl["props"], "timeframe_num", ns=FRR_NS) == "10"
+
 
 # ── Catalog-integrated: _build_frr_varies_control ────────────────────────────
 
@@ -560,29 +726,69 @@ class TestBuildFrrSubset:
         frr2oscal.UNHANDLED.clear()
         _reset_profile_tracking()
 
-    def test_all_scope_id_has_no_path_prefix(self):
+    def _parent_with_subset_group(self, subset_id="FRR-TST-SUB"):
+        """Return a catalog with FRR-TST and a pre-created subset group."""
         cat = Catalog.new(title="T", version="0.1")
         cat.create_control_group(parent_id="[root]", id="FRR-TST", title="Test")
-        subset_val = {
-            "TST-001": {"name": "R", "statement": "S.", "force": "MUST"},
-        }
+        cat.create_control_group(parent_id="FRR-TST", id=subset_id, title=subset_id)
+        return cat
+
+    def test_fallback_creates_subset_group(self):
+        """Controls for an undeclared subset key trigger fallback group creation."""
+        cat = Catalog.new(title="T", version="0.1")
+        cat.create_control_group(parent_id="[root]", id="FRR-TST", title="Test")
+        subset_val = {"TST-001": {"name": "R", "statement": "S.", "force": "MUST"}}
         frr2oscal._build_frr_subset(cat, "FRR-TST", "TST", "SUB", subset_val, path="all")
         data = json.loads(cat.dumps("json"))
         groups = data["catalog"]["groups"][0].get("groups", [])
         assert any(g["id"] == "FRR-TST-SUB" for g in groups)
 
-    def test_20x_scope_id_has_path_prefix(self):
+    def test_all_scopes_add_to_same_group(self):
+        """Controls from all/20x/rev5 scopes land in the same FRR-{key}-{subset} group."""
         cat = Catalog.new(title="T", version="0.1")
         cat.create_control_group(parent_id="[root]", id="FRR-TST", title="Test")
-        subset_val = {
-            "TST-001": {"name": "R", "statement": "S.", "force": "MUST"},
-        }
-        frr2oscal._build_frr_subset(cat, "FRR-TST", "TST", "SUB", subset_val, path="20x")
+        existing = set()
+        frr2oscal._build_frr_subset(cat, "FRR-TST", "TST", "SUB",
+                                    {"TST-ALL": {"name": "R", "statement": "S."}},
+                                    path="all", existing_groups=existing)
+        frr2oscal._build_frr_subset(cat, "FRR-TST", "TST", "SUB",
+                                    {"TST-20X": {"name": "R", "statement": "S."}},
+                                    path="20x", existing_groups=existing)
+        frr2oscal._build_frr_subset(cat, "FRR-TST", "TST", "SUB",
+                                    {"TST-REV5": {"name": "R", "statement": "S."}},
+                                    path="rev5", existing_groups=existing)
+        data = json.loads(cat.dumps("json"))
+        # Only one subset group should exist (no path-suffixed duplicates).
+        groups = data["catalog"]["groups"][0].get("groups", [])
+        assert len(groups) == 1
+        assert groups[0]["id"] == "FRR-TST-SUB"
+        ctrl_ids = {c["id"] for c in groups[0].get("controls", [])}
+        assert {"TST-ALL", "TST-20X", "TST-REV5"} == ctrl_ids
+
+    def test_existing_group_not_duplicated(self):
+        """When existing_groups contains the subset ID, no second group is created."""
+        cat = self._parent_with_subset_group()
+        existing = {"FRR-TST-SUB"}
+        frr2oscal._build_frr_subset(cat, "FRR-TST", "TST", "SUB",
+                                    {"TST-001": {"name": "R", "statement": "S."}},
+                                    path="all", existing_groups=existing)
         data = json.loads(cat.dumps("json"))
         groups = data["catalog"]["groups"][0].get("groups", [])
-        assert any(g["id"] == "FRR-TST-20x-SUB" for g in groups)
+        assert len(groups) == 1  # No duplicate
 
-    def test_purpose_overview_part_with_title(self):
+    def test_controls_added_to_pre_existing_group(self):
+        """Controls are inserted into the pre-existing subset group."""
+        cat = self._parent_with_subset_group()
+        existing = {"FRR-TST-SUB"}
+        frr2oscal._build_frr_subset(cat, "FRR-TST", "TST", "SUB",
+                                    {"TST-001": {"name": "R", "statement": "S."}},
+                                    path="all", existing_groups=existing)
+        data = json.loads(cat.dumps("json"))
+        sub = data["catalog"]["groups"][0]["groups"][0]
+        assert any(c["id"] == "TST-001" for c in sub.get("controls", []))
+
+    def test_fallback_group_uses_purpose_as_overview(self):
+        """Fallback group is created with info.purpose as its overview part."""
         cat = Catalog.new(title="T", version="0.1")
         cat.create_control_group(parent_id="[root]", id="FRR-TST", title="Test")
         subset_val = {
@@ -594,8 +800,42 @@ class TestBuildFrrSubset:
         sub_group = data["catalog"]["groups"][0]["groups"][0]
         overview = next((p for p in sub_group.get("parts", []) if p["name"] == "overview"), None)
         assert overview is not None
-        assert overview.get("title") == "Purpose"
         assert "This subset covers X." in overview["prose"]
+
+    def test_existing_groups_updated_on_fallback(self):
+        """The existing_groups set is mutated when a fallback group is created."""
+        cat = Catalog.new(title="T", version="0.1")
+        cat.create_control_group(parent_id="[root]", id="FRR-TST", title="Test")
+        existing = set()
+        frr2oscal._build_frr_subset(cat, "FRR-TST", "TST", "SUB",
+                                    {"TST-001": {"name": "R", "statement": "S."}},
+                                    path="all", existing_groups=existing)
+        assert "FRR-TST-SUB" in existing
+
+
+class TestAssertSingleStatusProp:
+    def test_empty_props_passes(self):
+        _assert_single_status_prop([], "ctrl-1")  # no exception
+
+    def test_one_status_prop_passes(self):
+        _assert_single_status_prop([{"name": "status", "value": "stable"}], "ctrl-1")
+
+    def test_two_status_props_raises(self):
+        props = [
+            {"name": "status", "value": "stable"},
+            {"name": "status", "value": "placeholder"},
+        ]
+        with pytest.raises(RuntimeError, match="ctrl-1"):
+            _assert_single_status_prop(props, "ctrl-1")
+
+    def test_non_status_props_ignored(self):
+        props = [{"name": "label", "value": "X"}, {"name": "force", "value": "MUST"}]
+        _assert_single_status_prop(props, "ctrl-1")  # no exception
+
+    def test_error_message_includes_count(self):
+        props = [{"name": "status"}, {"name": "status"}, {"name": "status"}]
+        with pytest.raises(RuntimeError, match="3"):
+            _assert_single_status_prop(props, "any-id")
 
 
 class TestBuildFrrRuleset:
@@ -627,7 +867,8 @@ class TestBuildFrrRuleset:
         assert "TST-20X" in ctrl_ids
         assert "TST-REV5" in ctrl_ids
 
-    def test_scope_conflict_produces_unique_group_ids(self):
+    def test_multiple_scope_controls_land_in_same_subset_group(self):
+        """Controls from all/20x scopes for the same subset key share one group."""
         cat = Catalog.new(title="T", version="0.1")
         frr_val = {
             "info": {"name": "Test Ruleset", "purpose": ""},
@@ -639,8 +880,12 @@ class TestBuildFrrRuleset:
         frr2oscal._build_frr_ruleset(cat, "TST", frr_val)
         data = json.loads(cat.dumps("json"))
         group_ids = [g["id"] for g in data["catalog"]["groups"][0].get("groups", [])]
-        assert "FRR-TST-SAME" in group_ids
-        assert "FRR-TST-20x-SAME" in group_ids
+        # Only one subset group exists; no path-suffixed duplicate.
+        assert group_ids == ["FRR-TST-SAME"]
+        subset_grp = data["catalog"]["groups"][0]["groups"][0]
+        ctrl_ids = {c["id"] for c in subset_grp.get("controls", [])}
+        assert "R1" in ctrl_ids
+        assert "R2" in ctrl_ids
 
     def test_controls_inherit_scope_path_prop(self):
         cat = Catalog.new(title="T", version="0.1")
@@ -674,6 +919,73 @@ class TestBuildFrrRuleset:
         assert overview is not None
         assert overview.get("title") == "Purpose"
         assert "Covers automated checks." in overview["prose"]
+
+    def test_label_prop_uses_short_name(self):
+        cat = Catalog.new(title="T", version="0.1")
+        frr_val = {
+            "info": {"name": "Test Ruleset", "short_name": "TST", "purpose": ""},
+            "data": {},
+        }
+        frr2oscal._build_frr_ruleset(cat, "TST", frr_val)
+        data = json.loads(cat.dumps("json"))
+        top_group = data["catalog"]["groups"][0]
+        label = _prop_value(top_group.get("props", []), "label")
+        assert label == "TST"
+
+    def test_label_falls_back_to_frr_key_when_short_name_absent(self):
+        cat = Catalog.new(title="T", version="0.1")
+        frr_val = {"info": {"name": "Test Ruleset", "purpose": ""}, "data": {}}
+        frr2oscal._build_frr_ruleset(cat, "TST", frr_val)
+        data = json.loads(cat.dumps("json"))
+        top_group = data["catalog"]["groups"][0]
+        label = _prop_value(top_group.get("props", []), "label")
+        assert label == "TST"
+
+    def test_status_prop_written_to_group(self):
+        cat = Catalog.new(title="T", version="0.1")
+        frr_val = {
+            "info": {"name": "Test Ruleset", "short_name": "TST", "status": "stable", "purpose": ""},
+            "data": {},
+        }
+        frr2oscal._build_frr_ruleset(cat, "TST", frr_val)
+        data = json.loads(cat.dumps("json"))
+        top_group = data["catalog"]["groups"][0]
+        status = _prop_value(top_group.get("props", []), "status", ns=FRR_NS)
+        assert status == "stable"
+
+    def test_status_prop_uses_frr_namespace(self):
+        cat = Catalog.new(title="T", version="0.1")
+        frr_val = {
+            "info": {"name": "Test Ruleset", "short_name": "TST", "status": "stable", "purpose": ""},
+            "data": {},
+        }
+        frr2oscal._build_frr_ruleset(cat, "TST", frr_val)
+        data = json.loads(cat.dumps("json"))
+        top_group = data["catalog"]["groups"][0]
+        props = top_group.get("props", [])
+        status_prop = next((p for p in props if p.get("name") == "status"), None)
+        assert status_prop is not None
+        assert status_prop.get("ns") == FRR_NS
+
+    def test_placeholder_status_written(self):
+        cat = Catalog.new(title="T", version="0.1")
+        frr_val = {
+            "info": {"name": "Test Ruleset", "short_name": "TST", "status": "placeholder", "purpose": ""},
+            "data": {},
+        }
+        frr2oscal._build_frr_ruleset(cat, "TST", frr_val)
+        data = json.loads(cat.dumps("json"))
+        top_group = data["catalog"]["groups"][0]
+        assert _prop_value(top_group.get("props", []), "status", ns=FRR_NS) == "placeholder"
+
+    def test_no_status_when_absent(self):
+        cat = Catalog.new(title="T", version="0.1")
+        frr_val = {"info": {"name": "Test Ruleset", "purpose": ""}, "data": {}}
+        frr2oscal._build_frr_ruleset(cat, "TST", frr_val)
+        data = json.loads(cat.dumps("json"))
+        top_group = data["catalog"]["groups"][0]
+        props = top_group.get("props", [])
+        assert not any(p.get("name") == "status" for p in props)
 
 
 # ── _rev5_ctrl_to_oscal ───────────────────────────────────────────────────────
@@ -1286,3 +1598,569 @@ class TestBuildProfiles:
         ]
         assert "ac-1" in all_ids
         assert "ac-20" in all_ids
+
+    def _metadata_links(self, raw: dict) -> list:
+        return raw.get("profile", {}).get("metadata", {}).get("links", [])
+
+    def test_profile_has_canonical_link(self):
+        profiles = frr2oscal.build_profiles(self._make_data())
+        for name, profile in profiles.items():
+            raw = json.loads(profile.dumps("json"))
+            links = self._metadata_links(raw)
+            canonical = [lk for lk in links if lk.get("rel") == "canonical"]
+            assert canonical, f"No canonical link in metadata of profile '{name}'"
+            assert canonical[0]["href"] == frr2oscal.SOURCE_URL
+
+    def test_profile_has_alternate_link(self):
+        profiles = frr2oscal.build_profiles(self._make_data())
+        for name, profile in profiles.items():
+            raw = json.loads(profile.dumps("json"))
+            links = self._metadata_links(raw)
+            alternate = [lk for lk in links if lk.get("rel") == "alternate"]
+            assert alternate, f"No alternate link in metadata of profile '{name}'"
+            assert alternate[0]["href"] == frr2oscal.ALTERNATE_URL
+
+
+class TestBuildCatalogCanonicalLink:
+    def setup_method(self):
+        frr2oscal._STATS["groups"] = 0
+        frr2oscal._STATS["controls"] = 0
+        frr2oscal.UNHANDLED.clear()
+        _reset_profile_tracking()
+
+    def _make_data(self):
+        return {
+            "info": {
+                "title": "Test Catalog",
+                "version": "0.1",
+                "description": "",
+                "last_updated": "2026-01-01",
+            },
+            "FRR": {},
+            "KSI": {},
+        }
+
+    def test_catalog_has_canonical_link(self):
+        catalog = frr2oscal.build_catalog(self._make_data())
+        raw = json.loads(catalog.dumps("json"))
+        links = raw.get("catalog", {}).get("metadata", {}).get("links", [])
+        canonical = [lk for lk in links if lk.get("rel") == "canonical"]
+        assert canonical, "No canonical link in catalog metadata"
+        assert canonical[0]["href"] == frr2oscal.SOURCE_URL
+
+    def test_catalog_has_alternate_link(self):
+        catalog = frr2oscal.build_catalog(self._make_data())
+        raw = json.loads(catalog.dumps("json"))
+        links = raw.get("catalog", {}).get("metadata", {}).get("links", [])
+        alternate = [lk for lk in links if lk.get("rel") == "alternate"]
+        assert alternate, "No alternate link in catalog metadata"
+        assert alternate[0]["href"] == frr2oscal.ALTERNATE_URL
+
+
+# ── _build_frr_ruleset: web_name / tag props ──────────────────────────────────
+
+class TestBuildFrrRulesetExtensionProps:
+    def setup_method(self):
+        frr2oscal._STATS["groups"] = 0
+        frr2oscal._STATS["controls"] = 0
+        frr2oscal._VERBOSE = False
+        _reset_profile_tracking()
+
+    def _top_group_props(self, info_extra: dict) -> list:
+        cat = Catalog.new(title="T", version="0.1")
+        frr_val = {
+            "info": {"name": "Test Ruleset", "short_name": "TST", **info_extra},
+            "data": {},
+        }
+        frr2oscal._build_frr_ruleset(cat, "TST", frr_val)
+        data = json.loads(cat.dumps("json"))
+        return data["catalog"]["groups"][0].get("props", [])
+
+    def test_web_name_becomes_frr_prop(self):
+        props = self._top_group_props({"web_name": "Test Full Name"})
+        assert _prop_value(props, "web_name", ns=FRR_NS) == "Test Full Name"
+
+    def test_tag_becomes_frr_prop(self):
+        props = self._top_group_props({"tag": "tst-tag"})
+        assert _prop_value(props, "tag", ns=FRR_NS) == "tst-tag"
+
+    def test_absent_web_name_not_in_props(self):
+        props = self._top_group_props({})
+        assert not any(p.get("name") == "web_name" for p in props)
+
+    def test_absent_tag_not_in_props(self):
+        props = self._top_group_props({})
+        assert not any(p.get("name") == "tag" for p in props)
+
+    def test_web_name_and_tag_both_present(self):
+        props = self._top_group_props({"web_name": "Full Name", "tag": "fn"})
+        assert _prop_value(props, "web_name", ns=FRR_NS) == "Full Name"
+        assert _prop_value(props, "tag", ns=FRR_NS) == "fn"
+
+    def test_web_name_uses_frr_namespace(self):
+        props = self._top_group_props({"web_name": "Name"})
+        prop = next((p for p in props if p.get("name") == "web_name"), None)
+        assert prop is not None
+        assert prop.get("ns") == FRR_NS
+
+    def test_tag_uses_frr_namespace(self):
+        props = self._top_group_props({"tag": "t"})
+        prop = next((p for p in props if p.get("name") == "tag"), None)
+        assert prop is not None
+        assert prop.get("ns") == FRR_NS
+
+
+# ── _build_frr_subset_info_controls ──────────────────────────────────────────
+
+class TestBuildFrrSubsetGroups:
+    def setup_method(self):
+        frr2oscal._STATS["groups"] = 0
+        frr2oscal._STATS["controls"] = 0
+        frr2oscal._VERBOSE = False
+        _reset_profile_tracking()
+
+    def _cat_with_group(self, group_id: str = "FRR-TST") -> Catalog:
+        cat = Catalog.new(title="T", version="0.1")
+        cat.create_control_group(parent_id="[root]", id=group_id, title="Test")
+        return cat
+
+    def _subgroups_in(self, cat: Catalog, group_id: str = "FRR-TST") -> list:
+        data = json.loads(cat.dumps("json"))
+        for grp in data.get("catalog", {}).get("groups", []):
+            if grp.get("id") == group_id:
+                return grp.get("groups", [])
+        return []
+
+    def test_no_subsets_returns_empty_set(self):
+        cat = self._cat_with_group()
+        created = _build_frr_subset_groups(cat, "FRR-TST", {})
+        assert created == set()
+
+    def test_no_subsets_creates_no_groups(self):
+        cat = self._cat_with_group()
+        _build_frr_subset_groups(cat, "FRR-TST", {})
+        assert self._subgroups_in(cat) == []
+
+    def test_single_subset_creates_one_group(self):
+        cat = self._cat_with_group()
+        info = {"subsets": {"BSL": {"name": "Baseline"}}}
+        _build_frr_subset_groups(cat, "FRR-TST", info)
+        assert len(self._subgroups_in(cat)) == 1
+
+    def test_returns_set_of_created_ids(self):
+        cat = self._cat_with_group()
+        info = {"subsets": {"BSL": {"name": "Baseline"}, "EXT": {"name": "Extended"}}}
+        created = _build_frr_subset_groups(cat, "FRR-TST", info)
+        assert created == {"FRR-TST-BSL", "FRR-TST-EXT"}
+
+    def test_subset_title_is_name(self):
+        cat = self._cat_with_group()
+        info = {"subsets": {"BSL": {"name": "Baseline"}}}
+        _build_frr_subset_groups(cat, "FRR-TST", info)
+        grp = self._subgroups_in(cat)[0]
+        assert grp["title"] == "Baseline"
+
+    def test_subset_group_id_is_parent_dash_key(self):
+        cat = self._cat_with_group()
+        info = {"subsets": {"BSL": {"name": "Baseline"}}}
+        _build_frr_subset_groups(cat, "FRR-TST", info)
+        grp = self._subgroups_in(cat)[0]
+        assert grp["id"] == "FRR-TST-BSL"
+
+    def test_description_becomes_overview_part(self):
+        cat = self._cat_with_group()
+        info = {"subsets": {"BSL": {"name": "Baseline", "description": "The baseline subset."}}}
+        _build_frr_subset_groups(cat, "FRR-TST", info)
+        grp = self._subgroups_in(cat)[0]
+        overview = next((p for p in grp.get("parts", []) if p.get("name") == "overview"), None)
+        assert overview is not None
+        assert "The baseline subset." in overview.get("prose", "")
+
+    def test_no_statement_part_created(self):
+        cat = self._cat_with_group()
+        info = {"subsets": {"BSL": {"name": "Baseline", "description": "Desc."}}}
+        _build_frr_subset_groups(cat, "FRR-TST", info)
+        grp = self._subgroups_in(cat)[0]
+        assert not any(p.get("name") == "statement" for p in grp.get("parts", []))
+
+    def test_applicability_types_become_props(self):
+        cat = self._cat_with_group()
+        info = {
+            "subsets": {
+                "BSL": {"name": "Baseline", "applicability": {"types": ["20x", "Rev5"]}}
+            }
+        }
+        _build_frr_subset_groups(cat, "FRR-TST", info)
+        grp = self._subgroups_in(cat)[0]
+        type_vals = [p["value"] for p in grp.get("props", []) if p.get("name") == "applicability-type"]
+        assert "20x" in type_vals
+        assert "Rev5" in type_vals
+
+    def test_affects_becomes_props(self):
+        cat = self._cat_with_group()
+        info = {
+            "subsets": {
+                "BSL": {"name": "Baseline", "applicability": {"affects": ["Providers", "Agencies"]}}
+            }
+        }
+        _build_frr_subset_groups(cat, "FRR-TST", info)
+        grp = self._subgroups_in(cat)[0]
+        affects_vals = [p["value"] for p in grp.get("props", []) if p.get("name") == "affects"]
+        assert "Providers" in affects_vals
+        assert "Agencies" in affects_vals
+
+    def test_multiple_subsets_create_multiple_groups(self):
+        cat = self._cat_with_group()
+        info = {"subsets": {"BSL": {"name": "Baseline"}, "EXT": {"name": "Extended"}}}
+        _build_frr_subset_groups(cat, "FRR-TST", info)
+        ids = {g["id"] for g in self._subgroups_in(cat)}
+        assert "FRR-TST-BSL" in ids
+        assert "FRR-TST-EXT" in ids
+
+    def test_via_build_frr_ruleset_creates_subgroups(self):
+        """Subsets from info.subsets appear as groups (not controls) under the ruleset group."""
+        cat = Catalog.new(title="T", version="0.1")
+        frr_val = {
+            "info": {
+                "name": "Test", "short_name": "TST",
+                "subsets": {"BSL": {"name": "Baseline"}},
+            },
+            "data": {},
+        }
+        frr2oscal._build_frr_ruleset(cat, "TST", frr_val)
+        data = json.loads(cat.dumps("json"))
+        group = data["catalog"]["groups"][0]
+        sub_ids = [g["id"] for g in group.get("groups", [])]
+        assert "FRR-TST-BSL" in sub_ids
+        # Must NOT appear as a control.
+        ctrl_ids = [c["id"] for c in group.get("controls", [])]
+        assert "FRR-TST-BSL" not in ctrl_ids
+
+
+# ── _add_catalog_contacts ─────────────────────────────────────────────────────
+
+class TestAddCatalogContacts:
+    def _catalog_with_contacts(self) -> tuple:
+        cat = Catalog.new(title="T", version="0.1")
+        _add_catalog_contacts(cat)
+        raw = json.loads(cat.dumps("json"))
+        meta = raw.get("catalog", {}).get("metadata", {})
+        return cat, meta
+
+    def test_four_roles_created(self):
+        _, meta = self._catalog_with_contacts()
+        roles = meta.get("roles", [])
+        assert len(roles) == 4
+
+    def test_role_ids_correct(self):
+        _, meta = self._catalog_with_contacts()
+        ids = {r["id"] for r in meta.get("roles", [])}
+        assert ids == {"fedramp", "system-owner", "assessor", "agency"}
+
+    def test_four_parties_created(self):
+        _, meta = self._catalog_with_contacts()
+        parties = meta.get("parties", [])
+        assert len(parties) == 4
+
+    def test_fedramp_party_has_email(self):
+        _, meta = self._catalog_with_contacts()
+        fedramp = next(
+            (p for p in meta.get("parties", []) if p.get("name") == "FedRAMP PMO"), None
+        )
+        assert fedramp is not None
+        assert "info@fedramp.gov" in fedramp.get("email-addresses", [])
+
+    def test_fedramp_party_has_website_link(self):
+        _, meta = self._catalog_with_contacts()
+        fedramp = next(
+            (p for p in meta.get("parties", []) if p.get("name") == "FedRAMP PMO"), None
+        )
+        links = fedramp.get("links", [])
+        website = next((lk for lk in links if lk.get("rel") == "website"), None)
+        assert website is not None
+        assert website["href"] == "https://www.fedramp.gov"
+
+    def test_party_uuids_match_constants(self):
+        _, meta = self._catalog_with_contacts()
+        uuids = {p["uuid"] for p in meta.get("parties", [])}
+        assert _PARTY_UUID_FEDRAMP in uuids
+        assert _PARTY_UUID_CSP in uuids
+        assert _PARTY_UUID_AO in uuids
+        assert _PARTY_UUID_AGENCY in uuids
+
+    def test_four_responsible_parties(self):
+        _, meta = self._catalog_with_contacts()
+        rps = meta.get("responsible-parties", [])
+        assert len(rps) == 4
+
+    def test_fedramp_role_linked_to_fedramp_pmo(self):
+        _, meta = self._catalog_with_contacts()
+        rp = next(
+            (r for r in meta.get("responsible-parties", []) if r.get("role-id") == "fedramp"),
+            None,
+        )
+        assert rp is not None
+        assert _PARTY_UUID_FEDRAMP in rp.get("party-uuids", [])
+
+    def test_system_owner_role_linked_to_csp(self):
+        _, meta = self._catalog_with_contacts()
+        rp = next(
+            (r for r in meta.get("responsible-parties", []) if r.get("role-id") == "system-owner"),
+            None,
+        )
+        assert rp is not None
+        assert _PARTY_UUID_CSP in rp.get("party-uuids", [])
+
+    def test_assessor_role_linked_to_ao(self):
+        _, meta = self._catalog_with_contacts()
+        rp = next(
+            (r for r in meta.get("responsible-parties", []) if r.get("role-id") == "assessor"),
+            None,
+        )
+        assert rp is not None
+        assert _PARTY_UUID_AO in rp.get("party-uuids", [])
+
+    def test_agency_role_linked_to_federal_agency(self):
+        _, meta = self._catalog_with_contacts()
+        rp = next(
+            (r for r in meta.get("responsible-parties", []) if r.get("role-id") == "agency"),
+            None,
+        )
+        assert rp is not None
+        assert _PARTY_UUID_AGENCY in rp.get("party-uuids", [])
+
+    def test_contacts_present_in_build_catalog_output(self):
+        data = {
+            "info": {"title": "T", "version": "0.1", "description": "", "last_updated": "2026-01-01"},
+            "FRR": {}, "KSI": {},
+        }
+        frr2oscal._STATS["groups"] = 0
+        frr2oscal._STATS["controls"] = 0
+        frr2oscal.UNHANDLED.clear()
+        _reset_profile_tracking()
+        cat = frr2oscal.build_catalog(data)
+        raw = json.loads(cat.dumps("json"))
+        meta = raw.get("catalog", {}).get("metadata", {})
+        assert len(meta.get("roles", [])) == 4
+        assert len(meta.get("parties", [])) == 4
+        assert len(meta.get("responsible-parties", [])) == 4
+
+
+# ── _nist_control_links ───────────────────────────────────────────────────────
+
+class TestNistControlLinks:
+    def test_empty_controls_returns_empty_list(self):
+        assert _nist_control_links({}) == []
+
+    def test_none_controls_returns_empty_list(self):
+        assert _nist_control_links({"controls": None}) == []
+
+    def test_single_control_produces_one_link(self):
+        links = _nist_control_links({"controls": ["ac-2"]})
+        assert len(links) == 1
+
+    def test_link_rel_is_related(self):
+        links = _nist_control_links({"controls": ["ac-2"]})
+        assert links[0]["rel"] == "related"
+
+    def test_link_href_references_resource_uuid(self):
+        links = _nist_control_links({"controls": ["ac-2"]})
+        assert links[0]["href"] == f"#{_NIST_800_53_REV5_RESOURCE_UUID}"
+
+    def test_resource_fragment_is_control_id(self):
+        links = _nist_control_links({"controls": ["ac-2"]})
+        assert links[0]["resource-fragment"] == "ac-2"
+
+    def test_multiple_controls_produce_multiple_links(self):
+        links = _nist_control_links({"controls": ["ac-2", "ia-5", "si-3"]})
+        assert len(links) == 3
+        fragments = [lk["resource-fragment"] for lk in links]
+        assert fragments == ["ac-2", "ia-5", "si-3"]
+
+    def test_all_links_point_to_same_resource(self):
+        links = _nist_control_links({"controls": ["ac-2", "ia-5"]})
+        hrefs = {lk["href"] for lk in links}
+        assert hrefs == {f"#{_NIST_800_53_REV5_RESOURCE_UUID}"}
+
+    def test_link_text_is_uppercase_label(self):
+        links = _nist_control_links({"controls": ["ac-2"]})
+        assert links[0]["text"] == "NIST SP 800-53 Rev 5 AC-2"
+
+    def test_link_text_uppercases_id(self):
+        links = _nist_control_links({"controls": ["ia-5", "si-3.1"]})
+        texts = [lk["text"] for lk in links]
+        assert "NIST SP 800-53 Rev 5 IA-5" in texts
+        assert "NIST SP 800-53 Rev 5 SI-3.1" in texts
+
+    def test_simple_control_builds_nist_links(self):
+        cat = _catalog_with_group()
+        frr2oscal._VERBOSE = False
+        _reset_profile_tracking()
+        rule = {
+            "name": "Test Rule",
+            "statement": "Do this.",
+            "force": "MUST",
+            "affects": [],
+            "updated": [],
+            "controls": ["ac-2", "ia-5"],
+        }
+        frr2oscal._build_frr_simple_control(cat, "grp", "TEST-001", rule)
+        raw = json.loads(cat.dumps("json"))
+        ctrl = next(
+            c for g in raw["catalog"]["groups"]
+            for c in g.get("controls", [])
+            if c["id"] == "TEST-001"
+        )
+        nist_links = [
+            lk for lk in ctrl.get("links", [])
+            if lk.get("href") == f"#{_NIST_800_53_REV5_RESOURCE_UUID}"
+        ]
+        assert len(nist_links) == 2
+        fragments = {lk["resource-fragment"] for lk in nist_links}
+        assert fragments == {"ac-2", "ia-5"}
+        texts = {lk["text"] for lk in nist_links}
+        assert texts == {"NIST SP 800-53 Rev 5 AC-2", "NIST SP 800-53 Rev 5 IA-5"}
+
+    def test_varies_control_parent_builds_nist_links(self):
+        cat = _catalog_with_group()
+        frr2oscal._VERBOSE = False
+        _reset_profile_tracking()
+        rule = {
+            "name": "Varies Rule",
+            "controls": ["si-3"],
+            "affects": [],
+            "updated": [],
+            "varies_by_class": {
+                "b": {"statement": "Class B.", "force": "MUST"},
+            },
+        }
+        frr2oscal._build_frr_varies_control(cat, "grp", "VBC-001", rule)
+        raw = json.loads(cat.dumps("json"))
+        ctrl = next(
+            c for g in raw["catalog"]["groups"]
+            for c in g.get("controls", [])
+            if c["id"] == "VBC-001"
+        )
+        nist_links = [
+            lk for lk in ctrl.get("links", [])
+            if lk.get("resource-fragment") == "si-3"
+        ]
+        assert len(nist_links) == 1
+
+
+# ── back-matter NIST resource ─────────────────────────────────────────────────
+
+class TestCatalogNistResource:
+    def setup_method(self):
+        frr2oscal._STATS["groups"] = 0
+        frr2oscal._STATS["controls"] = 0
+        frr2oscal.UNHANDLED.clear()
+        _reset_profile_tracking()
+
+    def _minimal_data(self):
+        return {
+            "info": {"title": "T", "version": "0.1", "description": "", "last_updated": "2026-01-01"},
+            "FRR": {}, "KSI": {},
+        }
+
+    def _back_matter_resources(self) -> list:
+        cat = frr2oscal.build_catalog(self._minimal_data())
+        raw = json.loads(cat.dumps("json"))
+        return raw.get("catalog", {}).get("back-matter", {}).get("resources", [])
+
+    def test_nist_resource_present(self):
+        resources = self._back_matter_resources()
+        uuids = [r.get("uuid") for r in resources]
+        assert _NIST_800_53_REV5_RESOURCE_UUID in uuids
+
+    def test_nist_resource_title(self):
+        resources = self._back_matter_resources()
+        res = next(r for r in resources if r.get("uuid") == _NIST_800_53_REV5_RESOURCE_UUID)
+        assert res["title"] == "NIST SP 800-53 Rev 5"
+
+    def test_nist_resource_has_two_rlinks(self):
+        resources = self._back_matter_resources()
+        res = next(r for r in resources if r.get("uuid") == _NIST_800_53_REV5_RESOURCE_UUID)
+        assert len(res.get("rlinks", [])) == 2
+
+    def test_first_rlink_is_oscal_github_url(self):
+        resources = self._back_matter_resources()
+        res = next(r for r in resources if r.get("uuid") == _NIST_800_53_REV5_RESOURCE_UUID)
+        assert res["rlinks"][0]["href"] == NIST_800_53_REV5_URL
+
+    def test_second_rlink_is_doi_url(self):
+        resources = self._back_matter_resources()
+        res = next(r for r in resources if r.get("uuid") == _NIST_800_53_REV5_RESOURCE_UUID)
+        assert res["rlinks"][1]["href"] == NIST_800_53_REV5_DOI_URL
+
+
+# ── Cybercraft extension (presentation-id prop) ────────────────────────────────────
+
+class TestCybercraftExtension:
+    """Verify the cybercraft presentation-id extension appears in catalog and profile metadata."""
+
+    def setup_method(self):
+        frr2oscal._STATS["groups"] = 0
+        frr2oscal._STATS["controls"] = 0
+        frr2oscal.UNHANDLED.clear()
+        _reset_profile_tracking()
+
+    def _minimal_data(self):
+        return {
+            "info": {"title": "T", "version": "0.1", "description": "", "last_updated": "2026-01-01"},
+            "FRR": {}, "KSI": {}, "CTL": {},
+        }
+
+    def _catalog_meta_props(self) -> list:
+        cat = frr2oscal.build_catalog(self._minimal_data())
+        raw = json.loads(cat.dumps("json"))
+        return raw.get("catalog", {}).get("metadata", {}).get("props", [])
+
+    def test_catalog_has_content_id_prop(self):
+        props = self._catalog_meta_props()
+        assert any(p.get("name") == "presentation-id" for p in props)
+
+    def test_catalog_content_id_value_is_fedramp_cr26(self):
+        props = self._catalog_meta_props()
+        prop = next(p for p in props if p.get("name") == "presentation-id")
+        assert prop["value"] == "fedramp-cr26"
+
+    def test_catalog_content_id_uses_cybercraft_namespace(self):
+        props = self._catalog_meta_props()
+        prop = next(p for p in props if p.get("name") == "presentation-id")
+        assert prop["ns"] == CYBERCRAFT_NAMESPACE
+
+    def test_profiles_have_content_id_prop(self):
+        _add_frr_to_profiles("CTRL-1", "all")
+        _add_nist_to_profiles("AC-20", "rev5")
+        profiles = frr2oscal.build_profiles(self._minimal_data())
+        for name, profile in profiles.items():
+            raw = json.loads(profile.dumps("json"))
+            props = raw.get("profile", {}).get("metadata", {}).get("props", [])
+            assert any(p.get("name") == "presentation-id" for p in props), (
+                f"Profile '{name}' missing presentation-id prop"
+            )
+
+    def test_profiles_content_id_value_is_fedramp_cr26(self):
+        _add_frr_to_profiles("CTRL-1", "all")
+        _add_nist_to_profiles("AC-20", "rev5")
+        profiles = frr2oscal.build_profiles(self._minimal_data())
+        for name, profile in profiles.items():
+            raw = json.loads(profile.dumps("json"))
+            props = raw.get("profile", {}).get("metadata", {}).get("props", [])
+            prop = next((p for p in props if p.get("name") == "presentation-id"), None)
+            assert prop is not None and prop["value"] == "fedramp-cr26", (
+                f"Profile '{name}' presentation-id value mismatch"
+            )
+
+    def test_profiles_content_id_uses_cybercraft_namespace(self):
+        _add_frr_to_profiles("CTRL-1", "all")
+        _add_nist_to_profiles("AC-20", "rev5")
+        profiles = frr2oscal.build_profiles(self._minimal_data())
+        for name, profile in profiles.items():
+            raw = json.loads(profile.dumps("json"))
+            props = raw.get("profile", {}).get("metadata", {}).get("props", [])
+            prop = next((p for p in props if p.get("name") == "presentation-id"), None)
+            assert prop is not None and prop["ns"] == CYBERCRAFT_NAMESPACE, (
+                f"Profile '{name}' presentation-id namespace mismatch"
+            )

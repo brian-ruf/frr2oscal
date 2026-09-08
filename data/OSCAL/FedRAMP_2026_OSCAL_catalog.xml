@@ -1,23 +1,78 @@
-<catalog xmlns="http://csrc.nist.gov/ns/oscal/1.0" uuid="ca284188-c4c6-4a5a-b8d7-a820379409ea">
+<catalog xmlns="http://csrc.nist.gov/ns/oscal/1.0" uuid="5e030f89-393b-41e4-9f08-0944da36f919">
   <metadata>
     <title>FedRAMP Consolidated Rules for 2026</title>
     <published>2026-07-06T00:00:00Z</published>
-    <last-modified>2026-09-01T14:53:28Z</last-modified>
+    <last-modified>2026-09-08T02:49:10Z</last-modified>
     <version>2026.07.06.01</version>
     <oscal-version>1.2.3</oscal-version>
+    <prop name="presentation-id" ns="http://cybercraft.app/ns/oscal" value="fedramp-cr26" />
+    <link href="https://raw.githubusercontent.com/FedRAMP/rules/main/fedramp-consolidated-rules.json" rel="canonical" />
+    <link href="https://www.fedramp.gov/2026/" rel="alternate" />
+    <role id="fedramp">
+      <title>FedRAMP</title>
+    </role>
+    <role id="system-owner">
+      <title>System Owner</title>
+    </role>
+    <role id="assessor">
+      <title>Assessor</title>
+    </role>
+    <role id="agency">
+      <title>Agency</title>
+    </role>
+    <party uuid="aaaaaaaa-0000-4000-a000-000000000001" type="organization">
+      <name>FedRAMP PMO</name>
+      <link href="https://www.fedramp.gov" rel="website" />
+      <email-address>info@fedramp.gov</email-address>
+    </party>
+    <party uuid="aaaaaaaa-0000-4000-a000-000000000002" type="organization">
+      <name>Cloud Service Provider</name>
+    </party>
+    <party uuid="aaaaaaaa-0000-4000-a000-000000000003" type="organization">
+      <name>Assessing Organization</name>
+    </party>
+    <party uuid="aaaaaaaa-0000-4000-a000-000000000004" type="organization">
+      <name>Federal Agency</name>
+    </party>
+    <responsible-party role-id="fedramp">
+      <party-uuid>aaaaaaaa-0000-4000-a000-000000000001</party-uuid>
+    </responsible-party>
+    <responsible-party role-id="system-owner">
+      <party-uuid>aaaaaaaa-0000-4000-a000-000000000002</party-uuid>
+    </responsible-party>
+    <responsible-party role-id="assessor">
+      <party-uuid>aaaaaaaa-0000-4000-a000-000000000003</party-uuid>
+    </responsible-party>
+    <responsible-party role-id="agency">
+      <party-uuid>aaaaaaaa-0000-4000-a000-000000000004</party-uuid>
+    </responsible-party>
     <remarks>
       <p>This datafile contains the Consolidated Rules for FedRAMP in structured machine-readable text. It includes definitions, requirements, recommendations, and key security indicators.</p>
     </remarks>
   </metadata>
   <group id="FRR-AFC">
     <title>Addressing FedRAMP Communication</title>
-    <prop name="label" value="FRR-AFC" />
+    <prop name="label" value="AFC" />
+    <prop name="status" ns="http://fedramp.gov/ns/oscal" value="stable" />
+    <prop name="web_name" ns="http://fedramp.gov/ns/oscal" value="addressing-fedramp-communication" />
+    <prop name="tag" ns="http://fedramp.gov/ns/oscal" value="assurance" />
     <part name="overview">
       <title>Purpose</title>
       <p>The Addressing FedRAMP Communication rules (formerly FedRAMP Security Inbox) ensure FedRAMP can reliably contact the security and compliance staff responsible for every FedRAMP-authorized cloud service offering. These rules also set expectations for urgent communications, response time testing, and routing important messages separately from general support or customer service channels.</p>
     </part>
     <group id="FRR-AFC-FRP">
-      <title>FRR-AFC-FRP</title>
+      <title>FedRAMP Responsibilities</title>
+      <prop name="applicability-type" ns="http://fedramp.gov/ns/oscal" value="20x" />
+      <prop name="applicability-type" ns="http://fedramp.gov/ns/oscal" value="Rev5" />
+      <prop name="applicability-path" ns="http://fedramp.gov/ns/oscal" value="Program" />
+      <prop name="applicability-path" ns="http://fedramp.gov/ns/oscal" value="Agency" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="B" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="C" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="D" />
+      <prop name="affects" ns="http://fedramp.gov/ns/oscal" value="FedRAMP" />
+      <part name="overview">
+        <p>These rules apply to FedRAMP when communicating with cloud service providers.</p>
+      </part>
       <control id="AFC-FRP-VRE">
         <title>Verified Emails</title>
         <prop name="label" value="AFC-FRP-VRE" />
@@ -92,6 +147,8 @@
             <p>Official launch of the FedRAMP Consolidated Rules for 2026.</p>
           </remarks>
         </prop>
+        <prop name="timeframe_type" ns="http://fedramp.gov/ns/oscal" value="bizdays" />
+        <prop name="timeframe_num" ns="http://fedramp.gov/ns/oscal" value="10" />
         <part id="AFC-FRP-PNT_smt" name="statement">
           <p>FedRAMP MUST post a public notice at least 10 business days in advance of sending an Emergency Test message; such notices MUST include explanation of the likely expected actions and timeframes for the Emergency Test message.</p>
         </part>
@@ -179,7 +236,18 @@
       </control>
     </group>
     <group id="FRR-AFC-CSO">
-      <title>FRR-AFC-CSO</title>
+      <title>General Provider Responsibilities</title>
+      <prop name="applicability-type" ns="http://fedramp.gov/ns/oscal" value="20x" />
+      <prop name="applicability-type" ns="http://fedramp.gov/ns/oscal" value="Rev5" />
+      <prop name="applicability-path" ns="http://fedramp.gov/ns/oscal" value="Program" />
+      <prop name="applicability-path" ns="http://fedramp.gov/ns/oscal" value="Agency" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="B" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="C" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="D" />
+      <prop name="affects" ns="http://fedramp.gov/ns/oscal" value="Providers" />
+      <part name="overview">
+        <p>These rules apply to providers with any type of FedRAMP Certification.</p>
+      </part>
       <control id="AFC-CSO-INB">
         <title>Maintain a FedRAMP Security Inbox</title>
         <prop name="label" value="AFC-CSO-INB" />
@@ -364,13 +432,28 @@
   </group>
   <group id="FRR-AGU">
     <title>Agency Use of FedRAMP Certified Cloud Services</title>
-    <prop name="label" value="FRR-AGU" />
+    <prop name="label" value="AGU" />
+    <prop name="status" ns="http://fedramp.gov/ns/oscal" value="placeholder" />
+    <prop name="web_name" ns="http://fedramp.gov/ns/oscal" value="agency-use" />
+    <prop name="tag" ns="http://fedramp.gov/ns/oscal" value="gov" />
     <part name="overview">
       <title>Purpose</title>
       <p>The Agency Use rules summarize the many demands made on agencies by the FedRAMP Authorization Act and OMB Memorandum M-24-15 in a simple, clear, easy-to-follow set of FedRAMP-style rules. These rules align agency policies, authorization letters, machine-readable tools, secure configuration review, continuous monitoring, and communication with FedRAMP so certifications can be reused consistently across government.</p>
     </part>
     <group id="FRR-AGU-AGC">
-      <title>FRR-AGU-AGC</title>
+      <title>General Agency Responsibilities</title>
+      <prop name="applicability-type" ns="http://fedramp.gov/ns/oscal" value="20x" />
+      <prop name="applicability-type" ns="http://fedramp.gov/ns/oscal" value="Rev5" />
+      <prop name="applicability-path" ns="http://fedramp.gov/ns/oscal" value="Program" />
+      <prop name="applicability-path" ns="http://fedramp.gov/ns/oscal" value="Agency" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="A" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="B" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="C" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="D" />
+      <prop name="affects" ns="http://fedramp.gov/ns/oscal" value="Agencies" />
+      <part name="overview">
+        <p>These rules apply to agencies based on the FedRAMP Authorization Act, OMB M-24-15, and related FedRAMP policies.</p>
+      </part>
       <control id="AGU-AGC-AIP">
         <title>Agency Internal Policies</title>
         <prop name="label" value="AGU-AGC-AIP" />
@@ -511,6 +594,9 @@
             <p>Official launch of the FedRAMP Consolidated Rules for 2026.</p>
           </remarks>
         </prop>
+        <link href="https://www.fedramp.gov/preview/2026/agencies/support/liaisons" rel="reference">
+          <text>Agency Liaison Program</text>
+        </link>
         <part id="AGU-AGC-LIA_smt" name="statement">
           <p>Agencies SHOULD assign at least 1 federal employee to be an active participant in the FedRAMP Agency Liaison program.</p>
         </part>
@@ -536,7 +622,19 @@
       </control>
     </group>
     <group id="FRR-AGU-USE">
-      <title>FRR-AGU-USE</title>
+      <title>Use of FedRAMP Certifications</title>
+      <prop name="applicability-type" ns="http://fedramp.gov/ns/oscal" value="20x" />
+      <prop name="applicability-type" ns="http://fedramp.gov/ns/oscal" value="Rev5" />
+      <prop name="applicability-path" ns="http://fedramp.gov/ns/oscal" value="Program" />
+      <prop name="applicability-path" ns="http://fedramp.gov/ns/oscal" value="Agency" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="A" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="B" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="C" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="D" />
+      <prop name="affects" ns="http://fedramp.gov/ns/oscal" value="Agencies" />
+      <part name="overview">
+        <p>These rules apply when agencies use FedRAMP Certifications to make agency authorization decisions.</p>
+      </part>
       <control id="AGU-USE-ABU">
         <title>Authorization Before Use</title>
         <prop name="label" value="AGU-USE-ABU" />
@@ -548,6 +646,9 @@
             <p>Official launch of the FedRAMP Consolidated Rules for 2026.</p>
           </remarks>
         </prop>
+        <link href="https://fedramp.gov/preview/2026/agencies/use" rel="reference">
+          <text>Using a FedRAMP Certified Cloud Service Offering</text>
+        </link>
         <part id="AGU-USE-ABU_smt" name="statement">
           <p>Agencies MUST complete the Authorization to Operate process for federal information systems that use FedRAMP Certified cloud service offerings.</p>
         </part>
@@ -701,7 +802,16 @@
       </control>
     </group>
     <group id="FRR-AGU-SPN">
-      <title>FRR-AGU-SPN</title>
+      <title>Agency Sponsored Certifications</title>
+      <prop name="applicability-type" ns="http://fedramp.gov/ns/oscal" value="Rev5" />
+      <prop name="applicability-path" ns="http://fedramp.gov/ns/oscal" value="Agency" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="B" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="C" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="D" />
+      <prop name="affects" ns="http://fedramp.gov/ns/oscal" value="Agencies" />
+      <part name="overview">
+        <p>These rules apply when an agency sponsors a FedRAMP Rev5 Certification after completing an agency authorization.</p>
+      </part>
       <control id="AGU-SPN-MRC">
         <title>Most Recent Consolidated Rules</title>
         <prop name="label" value="AGU-SPN-MRC" />
@@ -721,13 +831,27 @@
   </group>
   <group id="FRR-CCM">
     <title>Collaborative Continuous Monitoring</title>
-    <prop name="label" value="FRR-CCM" />
+    <prop name="label" value="CCM" />
+    <prop name="status" ns="http://fedramp.gov/ns/oscal" value="stable" />
+    <prop name="web_name" ns="http://fedramp.gov/ns/oscal" value="collaborative-continuous-monitoring" />
+    <prop name="tag" ns="http://fedramp.gov/ns/oscal" value="assurance" />
     <part name="overview">
       <title>Purpose</title>
       <p>The Collaborative Continuous Monitoring rules help agencies use shared, current authorization information from providers as part of each agency's own Information Security Continuous Monitoring strategy. These rules reduce unnecessary manual burden by encouraging automated monitoring and review while allowing each agency to make its own risk-based decisions about ongoing authorization.</p>
     </part>
     <group id="FRR-CCM-AGM">
-      <title>FRR-CCM-AGM</title>
+      <title>Agency Guidance</title>
+      <prop name="applicability-type" ns="http://fedramp.gov/ns/oscal" value="20x" />
+      <prop name="applicability-type" ns="http://fedramp.gov/ns/oscal" value="Rev5" />
+      <prop name="applicability-path" ns="http://fedramp.gov/ns/oscal" value="Program" />
+      <prop name="applicability-path" ns="http://fedramp.gov/ns/oscal" value="Agency" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="B" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="C" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="D" />
+      <prop name="affects" ns="http://fedramp.gov/ns/oscal" value="Agencies" />
+      <part name="overview">
+        <p>These rules for agencies apply to all agencies using a FedRAMP Certification.</p>
+      </part>
       <control id="CCM-AGM-ROR">
         <title>Review Ongoing Reports</title>
         <prop name="label" value="CCM-AGM-ROR" />
@@ -764,7 +888,18 @@
       </control>
     </group>
     <group id="FRR-CCM-OCR">
-      <title>FRR-CCM-OCR</title>
+      <title>Ongoing Certification Reports</title>
+      <prop name="applicability-type" ns="http://fedramp.gov/ns/oscal" value="20x" />
+      <prop name="applicability-type" ns="http://fedramp.gov/ns/oscal" value="Rev5" />
+      <prop name="applicability-path" ns="http://fedramp.gov/ns/oscal" value="Program" />
+      <prop name="applicability-path" ns="http://fedramp.gov/ns/oscal" value="Agency" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="B" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="C" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="D" />
+      <prop name="affects" ns="http://fedramp.gov/ns/oscal" value="Providers" />
+      <part name="overview">
+        <p>These rules for Ongoing Certification Reports apply to providers with any type of FedRAMP Certification.</p>
+      </part>
       <control id="CCM-OCR-AVL">
         <title>Report Availability</title>
         <prop name="label" value="CCM-OCR-AVL" />
@@ -925,7 +1060,18 @@ https://fedramp.gov/schemas/fedramp-ongoing-certification-report-schema-2026-06-
       </control>
     </group>
     <group id="FRR-CCM-QTR">
-      <title>FRR-CCM-QTR</title>
+      <title>Quarterly Reviews</title>
+      <prop name="applicability-type" ns="http://fedramp.gov/ns/oscal" value="20x" />
+      <prop name="applicability-type" ns="http://fedramp.gov/ns/oscal" value="Rev5" />
+      <prop name="applicability-path" ns="http://fedramp.gov/ns/oscal" value="Program" />
+      <prop name="applicability-path" ns="http://fedramp.gov/ns/oscal" value="Agency" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="B" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="C" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="D" />
+      <prop name="affects" ns="http://fedramp.gov/ns/oscal" value="Providers" />
+      <part name="overview">
+        <p>These rules for Quarterly Reviews apply to providers with any type of FedRAMP Certification.</p>
+      </part>
       <control id="CCM-QTR-MTG">
         <title>Quarterly Review Meeting</title>
         <prop name="label" value="CCM-QTR-MTG" />
@@ -944,6 +1090,8 @@ https://fedramp.gov/schemas/fedramp-ongoing-certification-report-schema-2026-06-
           <prop name="label" value="Class A" />
           <prop name="path" ns="http://fedramp.gov/ns/oscal" value="all" />
           <prop name="force" ns="http://fedramp.gov/ns/oscal" value="MAY" />
+          <prop name="timeframe_type" ns="http://fedramp.gov/ns/oscal" value="months" />
+          <prop name="timeframe_num" ns="http://fedramp.gov/ns/oscal" value="3" />
           <part id="CCM-QTR-MTG-a_smt" name="statement">
             <p>Providers with Class A Certifications MAY host a synchronous Quarterly Review every 3 months, open to all necessary parties, to review aspects of the most recent Ongoing Certification Reports that the provider determines are of the most relevance to agencies.</p>
           </part>
@@ -960,6 +1108,8 @@ https://fedramp.gov/schemas/fedramp-ongoing-certification-report-schema-2026-06-
           <prop name="label" value="Class B" />
           <prop name="path" ns="http://fedramp.gov/ns/oscal" value="all" />
           <prop name="force" ns="http://fedramp.gov/ns/oscal" value="SHOULD" />
+          <prop name="timeframe_type" ns="http://fedramp.gov/ns/oscal" value="months" />
+          <prop name="timeframe_num" ns="http://fedramp.gov/ns/oscal" value="3" />
           <part id="CCM-QTR-MTG-b_smt" name="statement">
             <p>Providers with Class B Certifications SHOULD host a synchronous Quarterly Review every 3 months, open to all necessary parties, to review aspects of the most recent Ongoing Certification Reports that the provider determines are of the most relevance to agencies.</p>
           </part>
@@ -976,6 +1126,8 @@ https://fedramp.gov/schemas/fedramp-ongoing-certification-report-schema-2026-06-
           <prop name="label" value="Class C" />
           <prop name="path" ns="http://fedramp.gov/ns/oscal" value="all" />
           <prop name="force" ns="http://fedramp.gov/ns/oscal" value="MUST" />
+          <prop name="timeframe_type" ns="http://fedramp.gov/ns/oscal" value="months" />
+          <prop name="timeframe_num" ns="http://fedramp.gov/ns/oscal" value="3" />
           <part id="CCM-QTR-MTG-c_smt" name="statement">
             <p>Providers with Class C Certifications MUST host a synchronous Quarterly Review every 3 months, open to all necessary parties, to review aspects of the most recent Ongoing Certification Reports that the provider determines are of the most relevance to agencies.</p>
           </part>
@@ -992,6 +1144,8 @@ https://fedramp.gov/schemas/fedramp-ongoing-certification-report-schema-2026-06-
           <prop name="label" value="Class D" />
           <prop name="path" ns="http://fedramp.gov/ns/oscal" value="all" />
           <prop name="force" ns="http://fedramp.gov/ns/oscal" value="MUST" />
+          <prop name="timeframe_type" ns="http://fedramp.gov/ns/oscal" value="months" />
+          <prop name="timeframe_num" ns="http://fedramp.gov/ns/oscal" value="3" />
           <part id="CCM-QTR-MTG-d_smt" name="statement">
             <p>Providers with Class D Certifications MUST host a synchronous Quarterly Review every 3 months, open to all necessary parties, to review aspects of the most recent Ongoing Certification Reports that the provider determines are of the most relevance to agencies.</p>
           </part>
@@ -1154,13 +1308,27 @@ https://fedramp.gov/schemas/fedramp-ongoing-certification-report-schema-2026-06-
   </group>
   <group id="FRR-CDS">
     <title>Certification Data Sharing</title>
-    <prop name="label" value="FRR-CDS" />
+    <prop name="label" value="CDS" />
+    <prop name="status" ns="http://fedramp.gov/ns/oscal" value="stable" />
+    <prop name="web_name" ns="http://fedramp.gov/ns/oscal" value="certification-data-sharing" />
+    <prop name="tag" ns="http://fedramp.gov/ns/oscal" value="boundary" />
     <part name="overview">
       <title>Purpose</title>
       <p>The Certification Data Sharing rules allow providers to store and share FedRAMP Certification Data through the platform they choose as long as it follows FedRAMP rules for access, accuracy, and transparency. This helps customers and the public review consistent, current security and compliance information while recognizing that the information usually remains the provider's intellectual property and is not federal information.</p>
     </part>
     <group id="FRR-CDS-CSO">
-      <title>FRR-CDS-CSO</title>
+      <title>General Provider Responsibilities</title>
+      <prop name="applicability-type" ns="http://fedramp.gov/ns/oscal" value="20x" />
+      <prop name="applicability-type" ns="http://fedramp.gov/ns/oscal" value="Rev5" />
+      <prop name="applicability-path" ns="http://fedramp.gov/ns/oscal" value="Program" />
+      <prop name="applicability-path" ns="http://fedramp.gov/ns/oscal" value="Agency" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="B" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="C" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="D" />
+      <prop name="affects" ns="http://fedramp.gov/ns/oscal" value="Providers" />
+      <part name="overview">
+        <p>These rules apply to providers for FedRAMP Certifications of any type.</p>
+      </part>
       <control id="CDS-CSO-PUB">
         <title>Public Information</title>
         <prop name="label" value="CDS-CSO-PUB" />
@@ -1278,6 +1446,8 @@ https://fedramp.gov/schemas/fedramp-certification-package-overview-schema-2026-0
             <p>Official launch of the FedRAMP Consolidated Rules for 2026.</p>
           </remarks>
         </prop>
+        <prop name="timeframe_type" ns="http://fedramp.gov/ns/oscal" value="weeks" />
+        <prop name="timeframe_num" ns="http://fedramp.gov/ns/oscal" value="2" />
         <part id="CDS-CSO-FRC_smt" name="statement">
           <p>Providers MUST include FedRAMP Certification Reports with their FedRAMP Certification Data without inappropriate modifications, and make such reports available within 2 weeks of receiving the materials from FedRAMP.</p>
         </part>
@@ -1592,7 +1762,18 @@ Examples:
       </control>
     </group>
     <group id="FRR-CDS-TRC">
-      <title>FRR-CDS-TRC</title>
+      <title>FedRAMP-Compatible Trust Centers</title>
+      <prop name="applicability-type" ns="http://fedramp.gov/ns/oscal" value="20x" />
+      <prop name="applicability-type" ns="http://fedramp.gov/ns/oscal" value="Rev5" />
+      <prop name="applicability-path" ns="http://fedramp.gov/ns/oscal" value="Program" />
+      <prop name="applicability-path" ns="http://fedramp.gov/ns/oscal" value="Agency" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="B" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="C" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="D" />
+      <prop name="affects" ns="http://fedramp.gov/ns/oscal" value="Providers" />
+      <part name="overview">
+        <p>These rules apply to trust centers that are FedRAMP-compatible.</p>
+      </part>
       <control id="CDS-TRC-USH">
         <title>Uninterrupted Sharing</title>
         <prop name="label" value="CDS-TRC-USH" />
@@ -1717,7 +1898,18 @@ Examples:
       </control>
     </group>
     <group id="FRR-CDS-UTC">
-      <title>FRR-CDS-UTC</title>
+      <title>Using a Trust Center</title>
+      <prop name="applicability-type" ns="http://fedramp.gov/ns/oscal" value="20x" />
+      <prop name="applicability-type" ns="http://fedramp.gov/ns/oscal" value="Rev5" />
+      <prop name="applicability-path" ns="http://fedramp.gov/ns/oscal" value="Program" />
+      <prop name="applicability-path" ns="http://fedramp.gov/ns/oscal" value="Agency" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="B" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="C" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="D" />
+      <prop name="affects" ns="http://fedramp.gov/ns/oscal" value="Providers" />
+      <part name="overview">
+        <p>These rules apply to providers that are using a FedRAMP-compatible trust center instead of USDA Connect; they DO NOT apply to providers using USDA Connect.</p>
+      </part>
       <control id="CDS-UTC-AAD">
         <title>Agency Access Denial</title>
         <prop name="label" value="CDS-UTC-AAD" />
@@ -1729,6 +1921,8 @@ Examples:
             <p>Official launch of the FedRAMP Consolidated Rules for 2026.</p>
           </remarks>
         </prop>
+        <prop name="timeframe_type" ns="http://fedramp.gov/ns/oscal" value="bizdays" />
+        <prop name="timeframe_num" ns="http://fedramp.gov/ns/oscal" value="5" />
         <part id="CDS-UTC-AAD_smt" name="statement">
           <p>Providers MUST notify FedRAMP within 5 business days of denying an agency access request for FedRAMP Certification Data.</p>
         </part>
@@ -1759,8 +1953,8 @@ Examples:
         </part>
       </control>
     </group>
-    <group id="FRR-CDS-rev5-CSF">
-      <title>FRR-CDS-rev5-CSF</title>
+    <group id="FRR-CDS-CSF">
+      <title>FRR-CDS-CSF</title>
       <control id="CDS-CSF-TCM">
         <title>Trust Center Migration</title>
         <prop name="label" value="CDS-CSF-TCM" />
@@ -1780,13 +1974,27 @@ Examples:
   </group>
   <group id="FRR-CMU">
     <title>Cryptographic Module Use</title>
-    <prop name="label" value="FRR-CMU" />
+    <prop name="label" value="CMU" />
+    <prop name="status" ns="http://fedramp.gov/ns/oscal" value="stable" />
+    <prop name="web_name" ns="http://fedramp.gov/ns/oscal" value="cryptographic-module-use" />
+    <prop name="tag" ns="http://fedramp.gov/ns/oscal" value="boundary" />
     <part name="overview">
       <title>Purpose</title>
       <p>The Cryptographic Module Use rules clarify how providers should select and use cryptographic modules. These rules allow risk-based decisions for some services while still encouraging validated cryptographic modules whenever they are technically feasible and reasonable.</p>
     </part>
     <group id="FRR-CMU-CSO">
-      <title>FRR-CMU-CSO</title>
+      <title>Cloud Service Provider Responsibilities</title>
+      <prop name="applicability-type" ns="http://fedramp.gov/ns/oscal" value="20x" />
+      <prop name="applicability-type" ns="http://fedramp.gov/ns/oscal" value="Rev5" />
+      <prop name="applicability-path" ns="http://fedramp.gov/ns/oscal" value="Program" />
+      <prop name="applicability-path" ns="http://fedramp.gov/ns/oscal" value="Agency" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="B" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="C" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="D" />
+      <prop name="affects" ns="http://fedramp.gov/ns/oscal" value="Providers" />
+      <part name="overview">
+        <p>These rules apply to providers for FedRAMP Certifications.</p>
+      </part>
       <control id="CMU-CSO-CMD">
         <title>Cryptographic Module Documentation</title>
         <prop name="label" value="CMU-CSO-CMD" />
@@ -1913,13 +2121,27 @@ Examples:
   </group>
   <group id="FRR-CPO">
     <title>Certification Package Overview</title>
-    <prop name="label" value="FRR-CPO" />
+    <prop name="label" value="CPO" />
+    <prop name="status" ns="http://fedramp.gov/ns/oscal" value="stable" />
+    <prop name="web_name" ns="http://fedramp.gov/ns/oscal" value="certification-package-overview" />
+    <prop name="tag" ns="http://fedramp.gov/ns/oscal" value="materials" />
     <part name="overview">
       <title>Purpose</title>
       <p>The Certification Package Overview rules outline the expectations for a simple overview of the cloud service offering that must be included within a FedRAMP Certification Package. This overview replaces the historically required base System Security Plan for FedRAMP Rev5 and is intended to provide a clear, concise, and consistent summary of the offering and the information included in the package to help customers understand the offering at a high level.</p>
     </part>
     <group id="FRR-CPO-CSO">
-      <title>FRR-CPO-CSO</title>
+      <title>General Provider Responsibilities</title>
+      <prop name="applicability-type" ns="http://fedramp.gov/ns/oscal" value="20x" />
+      <prop name="applicability-type" ns="http://fedramp.gov/ns/oscal" value="Rev5" />
+      <prop name="applicability-path" ns="http://fedramp.gov/ns/oscal" value="Program" />
+      <prop name="applicability-path" ns="http://fedramp.gov/ns/oscal" value="Agency" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="B" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="C" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="D" />
+      <prop name="affects" ns="http://fedramp.gov/ns/oscal" value="Providers" />
+      <part name="overview">
+        <p>These rules apply to providers for FedRAMP Certifications of any type.</p>
+      </part>
       <control id="CPO-CSO-OVR">
         <title>Overview of the Cloud Service Offering</title>
         <prop name="label" value="CPO-CSO-OVR" />
@@ -2042,8 +2264,8 @@ https://fedramp.gov/schemas/fedramp-certification-package-overview-schema-2026-0
         </control>
       </control>
     </group>
-    <group id="FRR-CPO-20x-CSX">
-      <title>FRR-CPO-20x-CSX</title>
+    <group id="FRR-CPO-CSX">
+      <title>FRR-CPO-CSX</title>
       <control id="CPO-CSX-CPM">
         <title>Certification Package Maintenance for 20x</title>
         <prop name="label" value="CPO-CSX-CPM" />
@@ -2067,6 +2289,8 @@ https://fedramp.gov/schemas/fedramp-certification-package-overview-schema-2026-0
           <prop name="label" value="Class A" />
           <prop name="path" ns="http://fedramp.gov/ns/oscal" value="20x" />
           <prop name="force" ns="http://fedramp.gov/ns/oscal" value="SHOULD" />
+          <prop name="timeframe_type" ns="http://fedramp.gov/ns/oscal" value="months" />
+          <prop name="timeframe_num" ns="http://fedramp.gov/ns/oscal" value="3" />
           <part id="CPO-CSX-CPM-a_smt" name="statement">
             <p>Providers with 20x Class A Certifications SHOULD persistently maintain their FedRAMP Certification Package to ensure it is up to date and complete at least once every 3 months.</p>
           </part>
@@ -2076,6 +2300,8 @@ https://fedramp.gov/schemas/fedramp-certification-package-overview-schema-2026-0
           <prop name="label" value="Class B" />
           <prop name="path" ns="http://fedramp.gov/ns/oscal" value="20x" />
           <prop name="force" ns="http://fedramp.gov/ns/oscal" value="MUST" />
+          <prop name="timeframe_type" ns="http://fedramp.gov/ns/oscal" value="months" />
+          <prop name="timeframe_num" ns="http://fedramp.gov/ns/oscal" value="1" />
           <part id="CPO-CSX-CPM-b_smt" name="statement">
             <p>Providers with 20x Class B Certifications MUST persistently maintain their FedRAMP Certification Package to ensure it is up to date and complete at least once every month.</p>
           </part>
@@ -2085,6 +2311,8 @@ https://fedramp.gov/schemas/fedramp-certification-package-overview-schema-2026-0
           <prop name="label" value="Class C" />
           <prop name="path" ns="http://fedramp.gov/ns/oscal" value="20x" />
           <prop name="force" ns="http://fedramp.gov/ns/oscal" value="MUST" />
+          <prop name="timeframe_type" ns="http://fedramp.gov/ns/oscal" value="weeks" />
+          <prop name="timeframe_num" ns="http://fedramp.gov/ns/oscal" value="2" />
           <part id="CPO-CSX-CPM-c_smt" name="statement">
             <p>Providers with 20x Class C Certifications MUST persistently maintain their FedRAMP Certification Package to ensure it is up to date and complete at least once every 2 weeks.</p>
           </part>
@@ -2094,14 +2322,16 @@ https://fedramp.gov/schemas/fedramp-certification-package-overview-schema-2026-0
           <prop name="label" value="Class D" />
           <prop name="path" ns="http://fedramp.gov/ns/oscal" value="20x" />
           <prop name="force" ns="http://fedramp.gov/ns/oscal" value="MUST" />
+          <prop name="timeframe_type" ns="http://fedramp.gov/ns/oscal" value="weeks" />
+          <prop name="timeframe_num" ns="http://fedramp.gov/ns/oscal" value="1" />
           <part id="CPO-CSX-CPM-d_smt" name="statement">
             <p>Providers with 20x Class D Certifications MUST persistently maintain their FedRAMP Certification Package to ensure it is up to date and complete at least once every week.</p>
           </part>
         </control>
       </control>
     </group>
-    <group id="FRR-CPO-rev5-CSF">
-      <title>FRR-CPO-rev5-CSF</title>
+    <group id="FRR-CPO-CSF">
+      <title>FRR-CPO-CSF</title>
       <control id="CPO-CSF-CPM">
         <title>Certification Package Maintenance for Rev5</title>
         <prop name="label" value="CPO-CSF-CPM" />
@@ -2125,6 +2355,8 @@ https://fedramp.gov/schemas/fedramp-certification-package-overview-schema-2026-0
           <prop name="label" value="Class A" />
           <prop name="path" ns="http://fedramp.gov/ns/oscal" value="rev5" />
           <prop name="force" ns="http://fedramp.gov/ns/oscal" value="SHOULD" />
+          <prop name="timeframe_type" ns="http://fedramp.gov/ns/oscal" value="years" />
+          <prop name="timeframe_num" ns="http://fedramp.gov/ns/oscal" value="1" />
           <part id="CPO-CSF-CPM-a_smt" name="statement">
             <p>Providers with Rev5 Class A Certifications SHOULD persistently maintain their FedRAMP Certification Package to ensure it is up to date and complete at least once every year.</p>
           </part>
@@ -2134,6 +2366,8 @@ https://fedramp.gov/schemas/fedramp-certification-package-overview-schema-2026-0
           <prop name="label" value="Class B" />
           <prop name="path" ns="http://fedramp.gov/ns/oscal" value="rev5" />
           <prop name="force" ns="http://fedramp.gov/ns/oscal" value="MUST" />
+          <prop name="timeframe_type" ns="http://fedramp.gov/ns/oscal" value="years" />
+          <prop name="timeframe_num" ns="http://fedramp.gov/ns/oscal" value="1" />
           <part id="CPO-CSF-CPM-b_smt" name="statement">
             <p>Providers with Rev5 Class B Certifications MUST persistently maintain their FedRAMP Certification Package to ensure it is up to date and complete at least once every year.</p>
           </part>
@@ -2143,6 +2377,8 @@ https://fedramp.gov/schemas/fedramp-certification-package-overview-schema-2026-0
           <prop name="label" value="Class C" />
           <prop name="path" ns="http://fedramp.gov/ns/oscal" value="rev5" />
           <prop name="force" ns="http://fedramp.gov/ns/oscal" value="MUST" />
+          <prop name="timeframe_type" ns="http://fedramp.gov/ns/oscal" value="years" />
+          <prop name="timeframe_num" ns="http://fedramp.gov/ns/oscal" value="1" />
           <part id="CPO-CSF-CPM-c_smt" name="statement">
             <p>Providers with Rev5 Class C Certifications MUST persistently maintain their FedRAMP Certification Package to ensure it is up to date and complete at least once every year.</p>
           </part>
@@ -2152,6 +2388,8 @@ https://fedramp.gov/schemas/fedramp-certification-package-overview-schema-2026-0
           <prop name="label" value="Class D" />
           <prop name="path" ns="http://fedramp.gov/ns/oscal" value="rev5" />
           <prop name="force" ns="http://fedramp.gov/ns/oscal" value="MUST" />
+          <prop name="timeframe_type" ns="http://fedramp.gov/ns/oscal" value="months" />
+          <prop name="timeframe_num" ns="http://fedramp.gov/ns/oscal" value="6" />
           <part id="CPO-CSF-CPM-d_smt" name="statement">
             <p>Providers with Rev5 Class D Certifications MUST persistently maintain their FedRAMP Certification Package to ensure it is up to date and complete at least once every six months.</p>
           </part>
@@ -2161,13 +2399,28 @@ https://fedramp.gov/schemas/fedramp-certification-package-overview-schema-2026-0
   </group>
   <group id="FRR-FRC">
     <title>FedRAMP Certification</title>
-    <prop name="label" value="FRR-FRC" />
+    <prop name="label" value="FRC" />
+    <prop name="status" ns="http://fedramp.gov/ns/oscal" value="stable" />
+    <prop name="web_name" ns="http://fedramp.gov/ns/oscal" value="fedramp-certification" />
+    <prop name="tag" ns="http://fedramp.gov/ns/oscal" value="other" />
     <part name="overview">
       <title>Purpose</title>
       <p>This ruleset explains how cloud service offerings obtain and maintain FedRAMP Certification across certification classes and paths.</p>
     </part>
     <group id="FRR-FRC-CSO">
-      <title>FRR-FRC-CSO</title>
+      <title>General Provider Responsibilities</title>
+      <prop name="applicability-type" ns="http://fedramp.gov/ns/oscal" value="20x" />
+      <prop name="applicability-type" ns="http://fedramp.gov/ns/oscal" value="Rev5" />
+      <prop name="applicability-path" ns="http://fedramp.gov/ns/oscal" value="Program" />
+      <prop name="applicability-path" ns="http://fedramp.gov/ns/oscal" value="Agency" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="A" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="B" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="C" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="D" />
+      <prop name="affects" ns="http://fedramp.gov/ns/oscal" value="Providers" />
+      <part name="overview">
+        <p>These rules apply to cloud service providers obtaining and maintaining any FedRAMP Certification.</p>
+      </part>
       <control id="FRC-CSO-FCP">
         <title>FedRAMP Certification Profile</title>
         <prop name="label" value="FRC-CSO-FCP" />
@@ -2275,7 +2528,14 @@ https://fedramp.gov/schemas/fedramp-certification-package-overview-schema-2026-0
       </control>
     </group>
     <group id="FRR-FRC-CLA">
-      <title>FRR-FRC-CLA</title>
+      <title>FedRAMP Class A Certification Rules</title>
+      <prop name="applicability-type" ns="http://fedramp.gov/ns/oscal" value="20x" />
+      <prop name="applicability-path" ns="http://fedramp.gov/ns/oscal" value="Program" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="A" />
+      <prop name="affects" ns="http://fedramp.gov/ns/oscal" value="Providers" />
+      <part name="overview">
+        <p>These are specific rules that apply to providers seeking FedRAMP Class A Certifications.</p>
+      </part>
       <control id="FRC-CLA-ASF">
         <title>Approved Alternative Security Frameworks</title>
         <prop name="label" value="FRC-CLA-ASF" />
@@ -2491,7 +2751,19 @@ https://fedramp.gov/schemas/fedramp-certification-package-overview-schema-2026-0
       </control>
     </group>
     <group id="FRR-FRC-APP">
-      <title>FRR-FRC-APP</title>
+      <title>Applying for FedRAMP Certification</title>
+      <prop name="applicability-type" ns="http://fedramp.gov/ns/oscal" value="20x" />
+      <prop name="applicability-type" ns="http://fedramp.gov/ns/oscal" value="Rev5" />
+      <prop name="applicability-path" ns="http://fedramp.gov/ns/oscal" value="Program" />
+      <prop name="applicability-path" ns="http://fedramp.gov/ns/oscal" value="Agency" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="A" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="B" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="C" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="D" />
+      <prop name="affects" ns="http://fedramp.gov/ns/oscal" value="Providers" />
+      <part name="overview">
+        <p>These rules apply to cloud service providers who have met all other relevant rules and are ready to apply for any FedRAMP Certification.</p>
+      </part>
       <control id="FRC-APP-MLF">
         <title>Marketplace Listing First</title>
         <prop name="label" value="FRC-APP-MLF" />
@@ -2567,6 +2839,8 @@ https://fedramp.gov/schemas/fedramp-certification-package-overview-schema-2026-0
           <prop name="label" value="Class A" />
           <prop name="path" ns="http://fedramp.gov/ns/oscal" value="all" />
           <prop name="force" ns="http://fedramp.gov/ns/oscal" value="MAY" />
+          <prop name="timeframe_type" ns="http://fedramp.gov/ns/oscal" value="months" />
+          <prop name="timeframe_num" ns="http://fedramp.gov/ns/oscal" value="3" />
           <part id="FRC-APP-FIA-a_smt" name="statement">
             <p>Providers seeking Class A Certification MAY supply a fresh initial FedRAMP independent assessment that was completed by a FedRAMP Recognized independent assessment service within the previous 3 months.</p>
           </part>
@@ -2576,6 +2850,8 @@ https://fedramp.gov/schemas/fedramp-certification-package-overview-schema-2026-0
           <prop name="label" value="Class B" />
           <prop name="path" ns="http://fedramp.gov/ns/oscal" value="all" />
           <prop name="force" ns="http://fedramp.gov/ns/oscal" value="MUST" />
+          <prop name="timeframe_type" ns="http://fedramp.gov/ns/oscal" value="months" />
+          <prop name="timeframe_num" ns="http://fedramp.gov/ns/oscal" value="3" />
           <part id="FRC-APP-FIA-b_smt" name="statement">
             <p>Providers seeking Class B Certification MUST supply a fresh initial FedRAMP independent assessment that was completed by a FedRAMP Recognized independent assessment service within the previous 3 months.</p>
           </part>
@@ -2585,6 +2861,8 @@ https://fedramp.gov/schemas/fedramp-certification-package-overview-schema-2026-0
           <prop name="label" value="Class C" />
           <prop name="path" ns="http://fedramp.gov/ns/oscal" value="all" />
           <prop name="force" ns="http://fedramp.gov/ns/oscal" value="MUST" />
+          <prop name="timeframe_type" ns="http://fedramp.gov/ns/oscal" value="months" />
+          <prop name="timeframe_num" ns="http://fedramp.gov/ns/oscal" value="3" />
           <part id="FRC-APP-FIA-c_smt" name="statement">
             <p>Providers seeking Class C Certification MUST supply a fresh initial FedRAMP independent assessment that was completed by a FedRAMP Recognized independent assessment service within the previous 3 months.</p>
           </part>
@@ -2594,6 +2872,8 @@ https://fedramp.gov/schemas/fedramp-certification-package-overview-schema-2026-0
           <prop name="label" value="Class D" />
           <prop name="path" ns="http://fedramp.gov/ns/oscal" value="all" />
           <prop name="force" ns="http://fedramp.gov/ns/oscal" value="MUST" />
+          <prop name="timeframe_type" ns="http://fedramp.gov/ns/oscal" value="months" />
+          <prop name="timeframe_num" ns="http://fedramp.gov/ns/oscal" value="3" />
           <part id="FRC-APP-FIA-d_smt" name="statement">
             <p>Providers seeking Class D Certification MUST supply a fresh initial FedRAMP independent assessment that was completed by a FedRAMP Recognized independent assessment service within the previous 3 months.</p>
           </part>
@@ -2636,7 +2916,16 @@ https://fedramp.gov/schemas/fedramp-certification-package-overview-schema-2026-0
       </control>
     </group>
     <group id="FRR-FRC-APS">
-      <title>FRR-FRC-APS</title>
+      <title>Applying for FedRAMP Certification with an Agency Sponsor</title>
+      <prop name="applicability-type" ns="http://fedramp.gov/ns/oscal" value="Rev5" />
+      <prop name="applicability-path" ns="http://fedramp.gov/ns/oscal" value="Agency" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="B" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="C" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="D" />
+      <prop name="affects" ns="http://fedramp.gov/ns/oscal" value="Providers" />
+      <part name="overview">
+        <p>These rules apply to cloud service providers with an Agency Sponsor who have met all other relevant rules and are ready to apply for any FedRAMP Certification.</p>
+      </part>
       <control id="FRC-APS-ATO">
         <title>Agency Authorization to Operate</title>
         <prop name="label" value="FRC-APS-ATO" />
@@ -2654,7 +2943,17 @@ https://fedramp.gov/schemas/fedramp-certification-package-overview-schema-2026-0
       </control>
     </group>
     <group id="FRR-FRC-CCL">
-      <title>FRR-FRC-CCL</title>
+      <title>Changing Certification Class</title>
+      <prop name="applicability-type" ns="http://fedramp.gov/ns/oscal" value="Rev5" />
+      <prop name="applicability-path" ns="http://fedramp.gov/ns/oscal" value="Agency" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="A" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="B" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="C" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="D" />
+      <prop name="affects" ns="http://fedramp.gov/ns/oscal" value="Providers" />
+      <part name="overview">
+        <p>These rules apply to cloud service providers when changing their FedRAMP Certification Class.</p>
+      </part>
       <control id="FRC-CCL-UCC">
         <title>Upgrading Certification Class</title>
         <prop name="label" value="FRC-CCL-UCC" />
@@ -2716,8 +3015,8 @@ https://fedramp.gov/schemas/fedramp-certification-package-overview-schema-2026-0
         </part>
       </control>
     </group>
-    <group id="FRR-FRC-20x-CSX">
-      <title>FRR-FRC-20x-CSX</title>
+    <group id="FRR-FRC-CSX">
+      <title>FRR-FRC-CSX</title>
       <control id="FRC-CSX-VVK">
         <title>Automated Verification and Validation of Key Security Indicators</title>
         <prop name="label" value="FRC-CSX-VVK" />
@@ -2892,8 +3191,8 @@ https://fedramp.gov/schemas/fedramp-certification-package-overview-schema-2026-0
         </part>
       </control>
     </group>
-    <group id="FRR-FRC-rev5-CSF">
-      <title>FRR-FRC-rev5-CSF</title>
+    <group id="FRR-FRC-CSF">
+      <title>FRR-FRC-CSF</title>
       <control id="FRC-CSF-BSL">
         <title>FedRAMP Rev5 Baselines</title>
         <prop name="label" value="FRC-CSF-BSL" />
@@ -2904,6 +3203,9 @@ https://fedramp.gov/schemas/fedramp-certification-package-overview-schema-2026-0
             <p>Official launch of the FedRAMP Consolidated Rules for 2026.</p>
           </remarks>
         </prop>
+        <link href="https://csrc.nist.gov/pubs/sp/800/53/r5/upd1/final" rel="reference">
+          <text>NIST SP 800-53 Rev. 5, Security and Privacy Controls for Information Systems and Organizations</text>
+        </link>
         <part id="FRC-CSF-BSL_smt" name="statement">
           <p>Varies by Class</p>
         </part>
@@ -2989,13 +3291,27 @@ https://fedramp.gov/schemas/fedramp-certification-package-overview-schema-2026-0
   </group>
   <group id="FRR-IEC">
     <title>Incident Evaluation and Communication</title>
-    <prop name="label" value="FRR-IEC" />
+    <prop name="label" value="IEC" />
+    <prop name="status" ns="http://fedramp.gov/ns/oscal" value="stable" />
+    <prop name="web_name" ns="http://fedramp.gov/ns/oscal" value="incident-evaluation-and-communication" />
+    <prop name="tag" ns="http://fedramp.gov/ns/oscal" value="assurance" />
     <part name="overview">
       <title>Purpose</title>
       <p>The Incident Evaluation and Communication rules explain how providers must communicate incident information to FedRAMP and government customers when they are affected by an incident or likely to be affected by an incident.</p>
     </part>
     <group id="FRR-IEC-FRP">
-      <title>FRR-IEC-FRP</title>
+      <title>FedRAMP Responsibilities</title>
+      <prop name="applicability-type" ns="http://fedramp.gov/ns/oscal" value="20x" />
+      <prop name="applicability-type" ns="http://fedramp.gov/ns/oscal" value="Rev5" />
+      <prop name="applicability-path" ns="http://fedramp.gov/ns/oscal" value="Program" />
+      <prop name="applicability-path" ns="http://fedramp.gov/ns/oscal" value="Agency" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="B" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="C" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="D" />
+      <prop name="affects" ns="http://fedramp.gov/ns/oscal" value="FedRAMP" />
+      <part name="overview">
+        <p>These rules apply to FedRAMP.</p>
+      </part>
       <control id="IEC-FRP-ORV">
         <title>Ongoing Review</title>
         <prop name="label" value="IEC-FRP-ORV" />
@@ -3022,7 +3338,18 @@ https://fedramp.gov/schemas/fedramp-certification-package-overview-schema-2026-0
       </control>
     </group>
     <group id="FRR-IEC-CSO">
-      <title>FRR-IEC-CSO</title>
+      <title>General Provider Responsibilities</title>
+      <prop name="applicability-type" ns="http://fedramp.gov/ns/oscal" value="20x" />
+      <prop name="applicability-type" ns="http://fedramp.gov/ns/oscal" value="Rev5" />
+      <prop name="applicability-path" ns="http://fedramp.gov/ns/oscal" value="Program" />
+      <prop name="applicability-path" ns="http://fedramp.gov/ns/oscal" value="Agency" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="B" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="C" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="D" />
+      <prop name="affects" ns="http://fedramp.gov/ns/oscal" value="Providers" />
+      <part name="overview">
+        <p>These rules apply to providers with FedRAMP Certifications of any type.</p>
+      </part>
       <control id="IEC-CSO-EFR">
         <title>Evaluate FedRAMP Reportability</title>
         <prop name="label" value="IEC-CSO-EFR" />
@@ -3414,6 +3741,20 @@ https://fedramp.gov/schemas/fedramp-incident-report-schema-2026-06-24.json</p>
         <link href="#IEC-CSO-DPR" rel="related" />
         <part id="IEC-CSO-EFI_smt" name="statement">
           <p>Providers SHOULD promptly estimate the likely adverse impact of an incident on agency customers to assign a Potential Agency Impact N-rating; this step is called Incident Rating.</p>
+          <part name="item">
+            <ul>
+              <li>
+                <strong>N1</strong> for a likely minimal customer effect on 1 or more agencies.</li>
+              <li>
+                <strong>N2</strong> for a likely narrow customer effect on 1 or more agencies.</li>
+              <li>
+                <strong>N3</strong> for a likely disruptive customer effect on 1 agency.</li>
+              <li>
+                <strong>N4</strong> for a likely debilitating customer effect on 1 agency or a likely disruptive customer effect on more than 1 agency.</li>
+              <li>
+                <strong>N5</strong> for a likely debilitating customer effect on more than 1 agency.</li>
+            </ul>
+          </part>
         </part>
         <part name="guidance">
           <title>Notes</title>
@@ -3455,13 +3796,27 @@ https://fedramp.gov/schemas/fedramp-incident-report-schema-2026-06-24.json</p>
   </group>
   <group id="FRR-IVV">
     <title>Independent Verification and Validation</title>
-    <prop name="label" value="FRR-IVV" />
+    <prop name="label" value="IVV" />
+    <prop name="status" ns="http://fedramp.gov/ns/oscal" value="stable" />
+    <prop name="web_name" ns="http://fedramp.gov/ns/oscal" value="independent-verification-and-validation" />
+    <prop name="tag" ns="http://fedramp.gov/ns/oscal" value="assurance" />
     <part name="overview">
       <title>Purpose</title>
       <p>This ruleset explains the expectations for independent verification and validation assessments.</p>
     </part>
     <group id="FRR-IVV-CSO">
-      <title>FRR-IVV-CSO</title>
+      <title>General Provider Responsibilities</title>
+      <prop name="applicability-type" ns="http://fedramp.gov/ns/oscal" value="20x" />
+      <prop name="applicability-type" ns="http://fedramp.gov/ns/oscal" value="Rev5" />
+      <prop name="applicability-path" ns="http://fedramp.gov/ns/oscal" value="Program" />
+      <prop name="applicability-path" ns="http://fedramp.gov/ns/oscal" value="Agency" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="B" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="C" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="D" />
+      <prop name="affects" ns="http://fedramp.gov/ns/oscal" value="Providers" />
+      <part name="overview">
+        <p>These rules apply to cloud service providers obtaining and maintaining any FedRAMP Certification.</p>
+      </part>
       <control id="IVV-CSO-FIA">
         <title>FedRAMP Independent Assessments</title>
         <prop name="label" value="IVV-CSO-FIA" />
@@ -3487,6 +3842,8 @@ https://fedramp.gov/schemas/fedramp-incident-report-schema-2026-06-24.json</p>
           <prop name="label" value="Class A" />
           <prop name="path" ns="http://fedramp.gov/ns/oscal" value="all" />
           <prop name="force" ns="http://fedramp.gov/ns/oscal" value="MAY" />
+          <prop name="timeframe_type" ns="http://fedramp.gov/ns/oscal" value="years" />
+          <prop name="timeframe_num" ns="http://fedramp.gov/ns/oscal" value="1" />
           <part id="IVV-CSO-FIA-a_smt" name="statement">
             <p>Providers with Class A Certifications MAY persistently complete an independent verification and validation assessment of all applicable FedRAMP rules with a FedRAMP Recognized independent assessment service OR FedRAMP at least once per year; this is a FedRAMP independent assessment.</p>
           </part>
@@ -3496,6 +3853,8 @@ https://fedramp.gov/schemas/fedramp-incident-report-schema-2026-06-24.json</p>
           <prop name="label" value="Class B" />
           <prop name="path" ns="http://fedramp.gov/ns/oscal" value="all" />
           <prop name="force" ns="http://fedramp.gov/ns/oscal" value="MUST" />
+          <prop name="timeframe_type" ns="http://fedramp.gov/ns/oscal" value="years" />
+          <prop name="timeframe_num" ns="http://fedramp.gov/ns/oscal" value="1" />
           <part id="IVV-CSO-FIA-b_smt" name="statement">
             <p>Providers with Class B Certifications MUST persistently complete an independent verification and validation assessment of all applicable FedRAMP rules with a FedRAMP Recognized independent assessment service OR FedRAMP at least once per year; this is a FedRAMP independent assessment.</p>
           </part>
@@ -3505,6 +3864,8 @@ https://fedramp.gov/schemas/fedramp-incident-report-schema-2026-06-24.json</p>
           <prop name="label" value="Class C" />
           <prop name="path" ns="http://fedramp.gov/ns/oscal" value="all" />
           <prop name="force" ns="http://fedramp.gov/ns/oscal" value="MUST" />
+          <prop name="timeframe_type" ns="http://fedramp.gov/ns/oscal" value="years" />
+          <prop name="timeframe_num" ns="http://fedramp.gov/ns/oscal" value="1" />
           <part id="IVV-CSO-FIA-c_smt" name="statement">
             <p>Providers with Class C Certifications MUST persistently complete an independent verification and validation assessment of all applicable FedRAMP rules with a FedRAMP Recognized independent assessment service OR FedRAMP at least once per year; this is a FedRAMP independent assessment.</p>
           </part>
@@ -3514,6 +3875,8 @@ https://fedramp.gov/schemas/fedramp-incident-report-schema-2026-06-24.json</p>
           <prop name="label" value="Class D" />
           <prop name="path" ns="http://fedramp.gov/ns/oscal" value="all" />
           <prop name="force" ns="http://fedramp.gov/ns/oscal" value="MUST" />
+          <prop name="timeframe_type" ns="http://fedramp.gov/ns/oscal" value="years" />
+          <prop name="timeframe_num" ns="http://fedramp.gov/ns/oscal" value="1" />
           <part id="IVV-CSO-FIA-d_smt" name="statement">
             <p>Providers with Class D Certifications MUST persistently complete an independent verification and validation assessment of all applicable FedRAMP rules with a FedRAMP Recognized independent assessment service OR FedRAMP at least once per year; this is a FedRAMP independent assessment.</p>
           </part>
@@ -3646,7 +4009,18 @@ https://fedramp.gov/schemas/fedramp-incident-report-schema-2026-06-24.json</p>
       </control>
     </group>
     <group id="FRR-IVV-IAS">
-      <title>FRR-IVV-IAS</title>
+      <title>General Independent Assessor Responsibilities</title>
+      <prop name="applicability-type" ns="http://fedramp.gov/ns/oscal" value="20x" />
+      <prop name="applicability-type" ns="http://fedramp.gov/ns/oscal" value="Rev5" />
+      <prop name="applicability-path" ns="http://fedramp.gov/ns/oscal" value="Program" />
+      <prop name="applicability-path" ns="http://fedramp.gov/ns/oscal" value="Agency" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="B" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="C" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="D" />
+      <prop name="affects" ns="http://fedramp.gov/ns/oscal" value="Assessors" />
+      <part name="overview">
+        <p>These rules apply to independent assessment services supporting all FedRAMP Certification types.</p>
+      </part>
       <control id="IVV-IAS-VIM">
         <title>Verify Implementation</title>
         <prop name="label" value="IVV-IAS-VIM" />
@@ -3774,8 +4148,8 @@ https://fedramp.gov/schemas/fedramp-incident-report-schema-2026-06-24.json</p>
         </part>
       </control>
     </group>
-    <group id="FRR-IVV-20x-CSX">
-      <title>FRR-IVV-20x-CSX</title>
+    <group id="FRR-IVV-CSX">
+      <title>FRR-IVV-CSX</title>
       <control id="IVV-CSX-AIA">
         <title>Annual Independent Assessments for 20x</title>
         <prop name="label" value="IVV-CSX-AIA" />
@@ -3803,6 +4177,8 @@ https://fedramp.gov/schemas/fedramp-incident-report-schema-2026-06-24.json</p>
           <prop name="label" value="Class B" />
           <prop name="path" ns="http://fedramp.gov/ns/oscal" value="20x" />
           <prop name="force" ns="http://fedramp.gov/ns/oscal" value="MUST" />
+          <prop name="timeframe_type" ns="http://fedramp.gov/ns/oscal" value="years" />
+          <prop name="timeframe_num" ns="http://fedramp.gov/ns/oscal" value="1" />
           <part id="IVV-CSX-AIA-b_smt" name="statement">
             <p>Providers with 20x Class B Certifications MUST include all Key Security Indicators in a FedRAMP independent assessment at least once per year.</p>
           </part>
@@ -3812,6 +4188,8 @@ https://fedramp.gov/schemas/fedramp-incident-report-schema-2026-06-24.json</p>
           <prop name="label" value="Class C" />
           <prop name="path" ns="http://fedramp.gov/ns/oscal" value="20x" />
           <prop name="force" ns="http://fedramp.gov/ns/oscal" value="MUST" />
+          <prop name="timeframe_type" ns="http://fedramp.gov/ns/oscal" value="years" />
+          <prop name="timeframe_num" ns="http://fedramp.gov/ns/oscal" value="1" />
           <part id="IVV-CSX-AIA-c_smt" name="statement">
             <p>Providers with 20x Class C Certifications MUST include all Key Security Indicators in a FedRAMP independent assessment at least once per year.</p>
           </part>
@@ -3821,14 +4199,16 @@ https://fedramp.gov/schemas/fedramp-incident-report-schema-2026-06-24.json</p>
           <prop name="label" value="Class D" />
           <prop name="path" ns="http://fedramp.gov/ns/oscal" value="20x" />
           <prop name="force" ns="http://fedramp.gov/ns/oscal" value="MUST" />
+          <prop name="timeframe_type" ns="http://fedramp.gov/ns/oscal" value="years" />
+          <prop name="timeframe_num" ns="http://fedramp.gov/ns/oscal" value="1" />
           <part id="IVV-CSX-AIA-d_smt" name="statement">
             <p>Providers with 20x Class D Certifications MUST include all Key Security Indicators in a FedRAMP independent assessment at least once per year.</p>
           </part>
         </control>
       </control>
     </group>
-    <group id="FRR-IVV-rev5-CSF">
-      <title>FRR-IVV-rev5-CSF</title>
+    <group id="FRR-IVV-CSF">
+      <title>FRR-IVV-CSF</title>
       <control id="IVV-CSF-AIA">
         <title>Annual Independent Assessments for Rev5</title>
         <prop name="label" value="IVV-CSF-AIA" />
@@ -3847,6 +4227,8 @@ https://fedramp.gov/schemas/fedramp-incident-report-schema-2026-06-24.json</p>
           <prop name="label" value="Class B" />
           <prop name="path" ns="http://fedramp.gov/ns/oscal" value="rev5" />
           <prop name="force" ns="http://fedramp.gov/ns/oscal" value="MUST" />
+          <prop name="timeframe_type" ns="http://fedramp.gov/ns/oscal" value="years" />
+          <prop name="timeframe_num" ns="http://fedramp.gov/ns/oscal" value="1" />
           <part id="IVV-CSF-AIA-b_smt" name="statement">
             <p>Providers with Rev5 Class B Certifications MUST include the following Rev5 Controls in a FedRAMP independent assessment at least once per year:</p>
           </part>
@@ -3856,6 +4238,8 @@ https://fedramp.gov/schemas/fedramp-incident-report-schema-2026-06-24.json</p>
           <prop name="label" value="Class C" />
           <prop name="path" ns="http://fedramp.gov/ns/oscal" value="rev5" />
           <prop name="force" ns="http://fedramp.gov/ns/oscal" value="MUST" />
+          <prop name="timeframe_type" ns="http://fedramp.gov/ns/oscal" value="years" />
+          <prop name="timeframe_num" ns="http://fedramp.gov/ns/oscal" value="1" />
           <part id="IVV-CSF-AIA-c_smt" name="statement">
             <p>Providers with Rev5 Class C Certifications MUST include the following Rev5 Controls in a FedRAMP independent assessment at least once per year:</p>
           </part>
@@ -3865,6 +4249,8 @@ https://fedramp.gov/schemas/fedramp-incident-report-schema-2026-06-24.json</p>
           <prop name="label" value="Class D" />
           <prop name="path" ns="http://fedramp.gov/ns/oscal" value="rev5" />
           <prop name="force" ns="http://fedramp.gov/ns/oscal" value="MUST" />
+          <prop name="timeframe_type" ns="http://fedramp.gov/ns/oscal" value="years" />
+          <prop name="timeframe_num" ns="http://fedramp.gov/ns/oscal" value="1" />
           <part id="IVV-CSF-AIA-d_smt" name="statement">
             <p>Providers with Rev5 Class D Certifications MUST include the following Rev5 Controls in a FedRAMP independent assessment at least once per year:</p>
           </part>
@@ -3924,13 +4310,27 @@ https://fedramp.gov/schemas/fedramp-incident-report-schema-2026-06-24.json</p>
   </group>
   <group id="FRR-MAS">
     <title>Minimum Assessment Scope</title>
-    <prop name="label" value="FRR-MAS" />
+    <prop name="label" value="MAS" />
+    <prop name="status" ns="http://fedramp.gov/ns/oscal" value="stable" />
+    <prop name="web_name" ns="http://fedramp.gov/ns/oscal" value="minimum-assessment-scope" />
+    <prop name="tag" ns="http://fedramp.gov/ns/oscal" value="boundary" />
     <part name="overview">
       <title>Purpose</title>
       <p>The Minimum Assessment Scope rules help providers define assessment boundaries narrowly enough to avoid unnecessary review of components that do not affect the offering's security. These rules still ensure the assessment includes the resources and connections needed to understand the offering's confidentiality, integrity, and availability.</p>
     </part>
     <group id="FRR-MAS-CSO">
-      <title>FRR-MAS-CSO</title>
+      <title>General Provider Responsibilities</title>
+      <prop name="applicability-type" ns="http://fedramp.gov/ns/oscal" value="20x" />
+      <prop name="applicability-type" ns="http://fedramp.gov/ns/oscal" value="Rev5" />
+      <prop name="applicability-path" ns="http://fedramp.gov/ns/oscal" value="Program" />
+      <prop name="applicability-path" ns="http://fedramp.gov/ns/oscal" value="Agency" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="B" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="C" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="D" />
+      <prop name="affects" ns="http://fedramp.gov/ns/oscal" value="Providers" />
+      <part name="overview">
+        <p>These rules apply to providers for any type of FedRAMP Certification.</p>
+      </part>
       <control id="MAS-CSO-IIR">
         <title>Identify Information Resources</title>
         <prop name="label" value="MAS-CSO-IIR" />
@@ -4091,13 +4491,28 @@ https://fedramp.gov/schemas/fedramp-certification-package-overview-schema-2026-0
   </group>
   <group id="FRR-MKT">
     <title>Marketplace Listing</title>
-    <prop name="label" value="FRR-MKT" />
+    <prop name="label" value="MKT" />
+    <prop name="status" ns="http://fedramp.gov/ns/oscal" value="stable" />
+    <prop name="web_name" ns="http://fedramp.gov/ns/oscal" value="marketplace-listing" />
+    <prop name="tag" ns="http://fedramp.gov/ns/oscal" value="other" />
     <part name="overview">
       <title>Purpose</title>
       <p>The Marketplace Listing rules define how FedRAMP decides which cloud service offerings, assessors, and advisors may be listed in the FedRAMP Marketplace. These rules help agencies and other customers rely on the Marketplace as a consistent source of eligible services and supporting organizations, while requiring listed organizations to supply accurate, accessible, and machine-readable information.</p>
     </part>
     <group id="FRR-MKT-FRP">
-      <title>FRR-MKT-FRP</title>
+      <title>FedRAMP Responsibilities</title>
+      <prop name="applicability-type" ns="http://fedramp.gov/ns/oscal" value="20x" />
+      <prop name="applicability-type" ns="http://fedramp.gov/ns/oscal" value="Rev5" />
+      <prop name="applicability-path" ns="http://fedramp.gov/ns/oscal" value="Program" />
+      <prop name="applicability-path" ns="http://fedramp.gov/ns/oscal" value="Agency" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="A" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="B" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="C" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="D" />
+      <prop name="affects" ns="http://fedramp.gov/ns/oscal" value="FedRAMP" />
+      <part name="overview">
+        <p>These rules apply to FedRAMP activities related to the FedRAMP Marketplace.</p>
+      </part>
       <control id="MKT-FRP-SOF">
         <title>Scope of FedRAMP</title>
         <prop name="label" value="MKT-FRP-SOF" />
@@ -4109,13 +4524,28 @@ https://fedramp.gov/schemas/fedramp-certification-package-overview-schema-2026-0
             <p>Official launch of the FedRAMP Consolidated Rules for 2026.</p>
           </remarks>
         </prop>
+        <link href="https://fedramp.gov/scope" rel="reference">
+          <text>Scope of FedRAMP</text>
+        </link>
         <part id="MKT-FRP-SOF_smt" name="statement">
           <p>FedRAMP MUST NOT list cloud service offerings in the Marketplace or perform any FedRAMP Certification activities unless it determines the cloud service offering is within the scope of FedRAMP.</p>
         </part>
       </control>
     </group>
     <group id="FRR-MKT-CSO">
-      <title>FRR-MKT-CSO</title>
+      <title>General Provider Responsibilities</title>
+      <prop name="applicability-type" ns="http://fedramp.gov/ns/oscal" value="20x" />
+      <prop name="applicability-type" ns="http://fedramp.gov/ns/oscal" value="Rev5" />
+      <prop name="applicability-path" ns="http://fedramp.gov/ns/oscal" value="Program" />
+      <prop name="applicability-path" ns="http://fedramp.gov/ns/oscal" value="Agency" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="A" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="B" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="C" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="D" />
+      <prop name="affects" ns="http://fedramp.gov/ns/oscal" value="Providers" />
+      <part name="overview">
+        <p>These rules apply to providers seeking a listing in the FedRAMP Marketplace.</p>
+      </part>
       <control id="MKT-CSO-MLR">
         <title>Marketplace Listing Requirements</title>
         <prop name="label" value="MKT-CSO-MLR" />
@@ -4158,7 +4588,11 @@ https://fedramp.gov/schemas/fedramp-certification-package-overview-schema-2026-0
       </control>
     </group>
     <group id="FRR-MKT-IAS">
-      <title>FRR-MKT-IAS</title>
+      <title>General Assessor Responsibilities</title>
+      <prop name="affects" ns="http://fedramp.gov/ns/oscal" value="Assessors" />
+      <part name="overview">
+        <p>These rules apply to independent assessment services seeking a listing in the FedRAMP Marketplace.</p>
+      </part>
       <control id="MKT-IAS-OFR">
         <title>Only FedRAMP Recognized Assessors</title>
         <prop name="label" value="MKT-IAS-OFR" />
@@ -4229,7 +4663,11 @@ https://fedramp.gov/schemas/fedramp-assessor-information-schema-2026-06-24.json<
       </control>
     </group>
     <group id="FRR-MKT-CAS">
-      <title>FRR-MKT-CAS</title>
+      <title>General Advisor Responsibilities</title>
+      <prop name="affects" ns="http://fedramp.gov/ns/oscal" value="Advisors" />
+      <part name="overview">
+        <p>These rules apply to consulting and advisory services seeking a listing in the FedRAMP Marketplace.</p>
+      </part>
       <control id="MKT-CAS-WEB">
         <title>Website Requirements for Advisors</title>
         <prop name="label" value="MKT-CAS-WEB" />
@@ -4305,7 +4743,15 @@ https://fedramp.gov/schemas/fedramp-advisor-information-schema-2026-06-24.json</
       </control>
     </group>
     <group id="FRR-MKT-IIP">
-      <title>FRR-MKT-IIP</title>
+      <title>Provider Responsibilities for Initial Implementation Phase Listings</title>
+      <prop name="applicability-type" ns="http://fedramp.gov/ns/oscal" value="20x" />
+      <prop name="applicability-type" ns="http://fedramp.gov/ns/oscal" value="Rev5" />
+      <prop name="applicability-path" ns="http://fedramp.gov/ns/oscal" value="Program" />
+      <prop name="applicability-path" ns="http://fedramp.gov/ns/oscal" value="Agency" />
+      <prop name="affects" ns="http://fedramp.gov/ns/oscal" value="Providers" />
+      <part name="overview">
+        <p>FedRAMP allows cloud service providers that are actively preparing to obtain a FedRAMP Certification to apply for listing in the FedRAMP Marketplace. All cloud service providers must obtain a Initial Implementation Phase Marketplace Listing before they can apply for FedRAMP Certification. These rules apply to providers seeking a Initial Implementation Phase listing in the FedRAMP Marketplace.</p>
+      </part>
       <control id="MKT-IIP-AGU">
         <title>Agency Use Cases</title>
         <prop name="label" value="MKT-IIP-AGU" />
@@ -4374,13 +4820,20 @@ https://fedramp.gov/schemas/fedramp-advisor-information-schema-2026-06-24.json</
   </group>
   <group id="FRR-REC">
     <title>FedRAMP Recognition of Independent Assessment Services</title>
-    <prop name="label" value="FRR-REC" />
+    <prop name="label" value="REC" />
+    <prop name="status" ns="http://fedramp.gov/ns/oscal" value="stable" />
+    <prop name="web_name" ns="http://fedramp.gov/ns/oscal" value="fedramp-recognition" />
+    <prop name="tag" ns="http://fedramp.gov/ns/oscal" value="other" />
     <part name="overview">
       <title>Purpose</title>
       <p>The FedRAMP Recognition of independent assessment services rules explain the requirements for assessors to obtain and maintain FedRAMP Recognition in order to support the FedRAMP Certification process.</p>
     </part>
     <group id="FRR-REC-FRP">
-      <title>FRR-REC-FRP</title>
+      <title>FedRAMP Responsibilities</title>
+      <prop name="affects" ns="http://fedramp.gov/ns/oscal" value="FedRAMP" />
+      <part name="overview">
+        <p>These rules apply to FedRAMP when evaluating independent assessment services for initial or ongoing FedRAMP Recognition.</p>
+      </part>
       <control id="REC-FRP-FOC">
         <title>Foreign Ownership Collection</title>
         <prop name="label" value="REC-FRP-FOC" />
@@ -4428,7 +4881,11 @@ https://fedramp.gov/schemas/fedramp-advisor-information-schema-2026-06-24.json</
       </control>
     </group>
     <group id="FRR-REC-IAS">
-      <title>FRR-REC-IAS</title>
+      <title>General Independent Assessor Responsibilities</title>
+      <prop name="affects" ns="http://fedramp.gov/ns/oscal" value="Assessors" />
+      <part name="overview">
+        <p>These rules apply to independent assessment services seeking to obtain or maintain FedRAMP Recognition.</p>
+      </part>
       <control id="REC-IAS-ACC">
         <title>A2LA Accreditation</title>
         <prop name="label" value="REC-IAS-ACC" />
@@ -4459,6 +4916,8 @@ https://fedramp.gov/schemas/fedramp-advisor-information-schema-2026-06-24.json</
             <p>Official launch of the FedRAMP Consolidated Rules for 2026.</p>
           </remarks>
         </prop>
+        <prop name="timeframe_type" ns="http://fedramp.gov/ns/oscal" value="years" />
+        <prop name="timeframe_num" ns="http://fedramp.gov/ns/oscal" value="2" />
         <part id="REC-IAS-ADA_smt" name="statement">
           <p>Assessors MUST complete at least 2 initial or ongoing assessments for Class B, C, or D FedRAMP Certifications every 2 years to maintain FedRAMP Recognition.</p>
         </part>
@@ -4482,6 +4941,9 @@ https://fedramp.gov/schemas/fedramp-advisor-information-schema-2026-06-24.json</
             <p>Official launch of the FedRAMP Consolidated Rules for 2026.</p>
           </remarks>
         </prop>
+        <link href="https://portal.a2la.org/documents/" rel="reference">
+          <text>A2LA Public Documents</text>
+        </link>
         <part id="REC-IAS-PSC_smt" name="statement">
           <p>Assessors MUST maintain compliance with the latest American Association for Laboratory Accreditation (A2LA) R311 - Specific Requirements - Federal Risk and Authorization Management Program to maintain FedRAMP Recognition.</p>
         </part>
@@ -4497,6 +4959,8 @@ https://fedramp.gov/schemas/fedramp-advisor-information-schema-2026-06-24.json</
             <p>Official launch of the FedRAMP Consolidated Rules for 2026.</p>
           </remarks>
         </prop>
+        <prop name="timeframe_type" ns="http://fedramp.gov/ns/oscal" value="years" />
+        <prop name="timeframe_num" ns="http://fedramp.gov/ns/oscal" value="1" />
         <part id="REC-IAS-ANR_smt" name="statement">
           <p>Assessors MUST achieve a favorable annual surveillance assessment by the American Association for Laboratory Accreditation (A2LA) to maintain FedRAMP Recognition.</p>
         </part>
@@ -4515,6 +4979,8 @@ https://fedramp.gov/schemas/fedramp-advisor-information-schema-2026-06-24.json</
             <p>Official launch of the FedRAMP Consolidated Rules for 2026.</p>
           </remarks>
         </prop>
+        <prop name="timeframe_type" ns="http://fedramp.gov/ns/oscal" value="years" />
+        <prop name="timeframe_num" ns="http://fedramp.gov/ns/oscal" value="2" />
         <part id="REC-IAS-RAS_smt" name="statement">
           <p>Assessors MUST achieve a favorable full reassessment by the American Association for Laboratory Accreditation (A2LA) at least once every 2 years to maintain FedRAMP Recognition.</p>
         </part>
@@ -4570,6 +5036,8 @@ https://fedramp.gov/schemas/fedramp-advisor-information-schema-2026-06-24.json</
             <p>Official launch of the FedRAMP Consolidated Rules for 2026.</p>
           </remarks>
         </prop>
+        <prop name="timeframe_type" ns="http://fedramp.gov/ns/oscal" value="years" />
+        <prop name="timeframe_num" ns="http://fedramp.gov/ns/oscal" value="1" />
         <part id="REC-IAS-AFI_smt" name="statement">
           <p>Assessors MUST report information relating to any foreign interest, foreign influence, or foreign control of the independent assessment service to FedRAMP annually.</p>
         </part>
@@ -4585,6 +5053,8 @@ https://fedramp.gov/schemas/fedramp-advisor-information-schema-2026-06-24.json</
             <p>Official launch of the FedRAMP Consolidated Rules for 2026.</p>
           </remarks>
         </prop>
+        <prop name="timeframe_type" ns="http://fedramp.gov/ns/oscal" value="hours" />
+        <prop name="timeframe_num" ns="http://fedramp.gov/ns/oscal" value="48" />
         <part id="REC-IAS-CFI_smt" name="statement">
           <p>Assessors MUST report updated information relating to any foreign interest, foreign influence, or foreign control of the independent assessment service within 48 hours of any change in foreign ownership or control.</p>
         </part>
@@ -4656,6 +5126,8 @@ https://fedramp.gov/schemas/fedramp-advisor-information-schema-2026-06-24.json</
             <p>Official launch of the FedRAMP Consolidated Rules for 2026.</p>
           </remarks>
         </prop>
+        <prop name="timeframe_type" ns="http://fedramp.gov/ns/oscal" value="years" />
+        <prop name="timeframe_num" ns="http://fedramp.gov/ns/oscal" value="2" />
         <part id="REC-IAS-SEP_smt" name="statement">
           <p>Assessors MUST NOT perform a FedRAMP independent assessment of the same cloud service offering within 2 years after supplying advisory or consulting services for that offering, unless FedRAMP publishes a specific exception for a limited pilot or other explicitly scoped process.</p>
         </part>
@@ -4667,13 +5139,27 @@ https://fedramp.gov/schemas/fedramp-advisor-information-schema-2026-06-24.json</
   </group>
   <group id="FRR-SCG">
     <title>Secure Configuration Guide</title>
-    <prop name="label" value="FRR-SCG" />
+    <prop name="label" value="SCG" />
+    <prop name="status" ns="http://fedramp.gov/ns/oscal" value="stable" />
+    <prop name="web_name" ns="http://fedramp.gov/ns/oscal" value="secure-configuration-guide" />
+    <prop name="tag" ns="http://fedramp.gov/ns/oscal" value="materials" />
     <part name="overview">
       <title>Purpose</title>
       <p>The Secure Configuration Guide rules help agencies and other customers understand how to configure a cloud service offering securely. These rules require providers to clearly explain the security impact of common settings so customers can make informed configuration choices.</p>
     </part>
     <group id="FRR-SCG-CSO">
-      <title>FRR-SCG-CSO</title>
+      <title>General Provider Responsibilities</title>
+      <prop name="applicability-type" ns="http://fedramp.gov/ns/oscal" value="20x" />
+      <prop name="applicability-type" ns="http://fedramp.gov/ns/oscal" value="Rev5" />
+      <prop name="applicability-path" ns="http://fedramp.gov/ns/oscal" value="Program" />
+      <prop name="applicability-path" ns="http://fedramp.gov/ns/oscal" value="Agency" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="B" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="C" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="D" />
+      <prop name="affects" ns="http://fedramp.gov/ns/oscal" value="Providers" />
+      <part name="overview">
+        <p>These rules apply to providers with FedRAMP Certifications of any type.</p>
+      </part>
       <control id="SCG-CSO-RSC">
         <title>Recommended Secure Configuration</title>
         <prop name="label" value="SCG-CSO-RSC" />
@@ -4797,7 +5283,18 @@ https://fedramp.gov/schemas/fedramp-certification-package-overview-schema-2026-0
       </control>
     </group>
     <group id="FRR-SCG-ENH">
-      <title>FRR-SCG-ENH</title>
+      <title>Enhanced Capabilities</title>
+      <prop name="applicability-type" ns="http://fedramp.gov/ns/oscal" value="20x" />
+      <prop name="applicability-type" ns="http://fedramp.gov/ns/oscal" value="Rev5" />
+      <prop name="applicability-path" ns="http://fedramp.gov/ns/oscal" value="Program" />
+      <prop name="applicability-path" ns="http://fedramp.gov/ns/oscal" value="Agency" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="B" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="C" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="D" />
+      <prop name="affects" ns="http://fedramp.gov/ns/oscal" value="Providers" />
+      <part name="overview">
+        <p>These recommendations apply to providers with FedRAMP Certifications of any type.</p>
+      </part>
       <control id="SCG-ENH-CMP">
         <title>Comparison Capability</title>
         <prop name="label" value="SCG-ENH-CMP" />
@@ -4927,13 +5424,27 @@ https://fedramp.gov/schemas/fedramp-certification-package-overview-schema-2026-0
   </group>
   <group id="FRR-SCN">
     <title>Significant Change Notification</title>
-    <prop name="label" value="FRR-SCN" />
+    <prop name="label" value="SCN" />
+    <prop name="status" ns="http://fedramp.gov/ns/oscal" value="stable" />
+    <prop name="web_name" ns="http://fedramp.gov/ns/oscal" value="significant-change-notification" />
+    <prop name="tag" ns="http://fedramp.gov/ns/oscal" value="assurance" />
     <part name="overview">
       <title>Purpose</title>
       <p>The Significant Change Notification rules supply a simple framework allowing providers to make significant changes to their own products while keeping agency customers in the loop. These rules organize significant changes into clear categories so agencies can understand the expected risk and make authorization decisions accordingly.</p>
     </part>
     <group id="FRR-SCN-FRP">
-      <title>FRR-SCN-FRP</title>
+      <title>FedRAMP Responsibilities</title>
+      <prop name="applicability-type" ns="http://fedramp.gov/ns/oscal" value="20x" />
+      <prop name="applicability-type" ns="http://fedramp.gov/ns/oscal" value="Rev5" />
+      <prop name="applicability-path" ns="http://fedramp.gov/ns/oscal" value="Program" />
+      <prop name="applicability-path" ns="http://fedramp.gov/ns/oscal" value="Agency" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="B" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="C" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="D" />
+      <prop name="affects" ns="http://fedramp.gov/ns/oscal" value="FedRAMP" />
+      <part name="overview">
+        <p>These rules apply to FedRAMP.</p>
+      </part>
       <control id="SCN-FRP-CAP">
         <title>Corrective Action Plan Conditions</title>
         <prop name="label" value="SCN-FRP-CAP" />
@@ -4955,7 +5466,18 @@ https://fedramp.gov/schemas/fedramp-certification-package-overview-schema-2026-0
       </control>
     </group>
     <group id="FRR-SCN-CSO">
-      <title>FRR-SCN-CSO</title>
+      <title>General Provider Responsibilities</title>
+      <prop name="applicability-type" ns="http://fedramp.gov/ns/oscal" value="20x" />
+      <prop name="applicability-type" ns="http://fedramp.gov/ns/oscal" value="Rev5" />
+      <prop name="applicability-path" ns="http://fedramp.gov/ns/oscal" value="Program" />
+      <prop name="applicability-path" ns="http://fedramp.gov/ns/oscal" value="Agency" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="B" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="C" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="D" />
+      <prop name="affects" ns="http://fedramp.gov/ns/oscal" value="Providers" />
+      <part name="overview">
+        <p>These rules apply to providers with FedRAMP Certifications of any type.</p>
+      </part>
       <control id="SCN-CSO-EVA">
         <title>Evaluate Changes</title>
         <prop name="label" value="SCN-CSO-EVA" />
@@ -5183,7 +5705,18 @@ https://fedramp.gov/schemas/fedramp-significant-change-notifications-schema-2026
       </control>
     </group>
     <group id="FRR-SCN-ADP">
-      <title>FRR-SCN-ADP</title>
+      <title>Adaptive Changes</title>
+      <prop name="applicability-type" ns="http://fedramp.gov/ns/oscal" value="20x" />
+      <prop name="applicability-type" ns="http://fedramp.gov/ns/oscal" value="Rev5" />
+      <prop name="applicability-path" ns="http://fedramp.gov/ns/oscal" value="Program" />
+      <prop name="applicability-path" ns="http://fedramp.gov/ns/oscal" value="Agency" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="B" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="C" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="D" />
+      <prop name="affects" ns="http://fedramp.gov/ns/oscal" value="Providers" />
+      <part name="overview">
+        <p>These rules apply to all adaptive significant changes.</p>
+      </part>
       <control id="SCN-ADP-NTF">
         <title>Notification Requirements</title>
         <prop name="label" value="SCN-ADP-NTF" />
@@ -5195,6 +5728,8 @@ https://fedramp.gov/schemas/fedramp-significant-change-notifications-schema-2026
             <p>Official launch of the FedRAMP Consolidated Rules for 2026.</p>
           </remarks>
         </prop>
+        <prop name="timeframe_type" ns="http://fedramp.gov/ns/oscal" value="bizdays" />
+        <prop name="timeframe_num" ns="http://fedramp.gov/ns/oscal" value="10" />
         <part id="SCN-ADP-NTF_smt" name="statement">
           <p>Providers MUST notify all necessary parties within 10 business days after finishing adaptive changes, also including the following information:</p>
           <part name="item">
@@ -5233,7 +5768,18 @@ Examples:
       </control>
     </group>
     <group id="FRR-SCN-RTR">
-      <title>FRR-SCN-RTR</title>
+      <title>Routine Recurring Changes</title>
+      <prop name="applicability-type" ns="http://fedramp.gov/ns/oscal" value="20x" />
+      <prop name="applicability-type" ns="http://fedramp.gov/ns/oscal" value="Rev5" />
+      <prop name="applicability-path" ns="http://fedramp.gov/ns/oscal" value="Program" />
+      <prop name="applicability-path" ns="http://fedramp.gov/ns/oscal" value="Agency" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="B" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="C" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="D" />
+      <prop name="affects" ns="http://fedramp.gov/ns/oscal" value="Providers" />
+      <part name="overview">
+        <p>These rules apply to all routine recurring significant changes.</p>
+      </part>
       <control id="SCN-RTR-NNR">
         <title>No Notification Requirements</title>
         <prop name="label" value="SCN-RTR-NNR" />
@@ -5282,7 +5828,18 @@ Examples:
       </control>
     </group>
     <group id="FRR-SCN-TRF">
-      <title>FRR-SCN-TRF</title>
+      <title>Transformative Changes</title>
+      <prop name="applicability-type" ns="http://fedramp.gov/ns/oscal" value="20x" />
+      <prop name="applicability-type" ns="http://fedramp.gov/ns/oscal" value="Rev5" />
+      <prop name="applicability-path" ns="http://fedramp.gov/ns/oscal" value="Program" />
+      <prop name="applicability-path" ns="http://fedramp.gov/ns/oscal" value="Agency" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="B" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="C" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="D" />
+      <prop name="affects" ns="http://fedramp.gov/ns/oscal" value="Providers" />
+      <part name="overview">
+        <p>These rules apply to all transformative significant changes.</p>
+      </part>
       <control id="SCN-TRF-NIP">
         <title>Notification of Initial Plans</title>
         <prop name="label" value="SCN-TRF-NIP" />
@@ -5294,6 +5851,8 @@ Examples:
             <p>Official launch of the FedRAMP Consolidated Rules for 2026.</p>
           </remarks>
         </prop>
+        <prop name="timeframe_type" ns="http://fedramp.gov/ns/oscal" value="bizdays" />
+        <prop name="timeframe_num" ns="http://fedramp.gov/ns/oscal" value="30" />
         <part id="SCN-TRF-NIP_smt" name="statement">
           <p>Providers MUST notify all necessary parties of initial plans for transformative changes at least 30 business days before starting transformative changes, including a summary of any likely security impacts or changes in risk.</p>
         </part>
@@ -5316,6 +5875,8 @@ Examples:
             <p>Official launch of the FedRAMP Consolidated Rules for 2026.</p>
           </remarks>
         </prop>
+        <prop name="timeframe_type" ns="http://fedramp.gov/ns/oscal" value="bizdays" />
+        <prop name="timeframe_num" ns="http://fedramp.gov/ns/oscal" value="10" />
         <part id="SCN-TRF-NFP_smt" name="statement">
           <p>Providers MUST notify all necessary parties of final plans for transformative changes at least 10 business days before starting transformative changes, including updates to all previously sent information.</p>
         </part>
@@ -5338,6 +5899,8 @@ Examples:
             <p>Official launch of the FedRAMP Consolidated Rules for 2026.</p>
           </remarks>
         </prop>
+        <prop name="timeframe_type" ns="http://fedramp.gov/ns/oscal" value="bizdays" />
+        <prop name="timeframe_num" ns="http://fedramp.gov/ns/oscal" value="5" />
         <part id="SCN-TRF-NAF_smt" name="statement">
           <p>Providers MUST notify all necessary parties within 5 business days after finishing transformative changes, including updates to all previously sent information.</p>
         </part>
@@ -5360,6 +5923,8 @@ Examples:
             <p>Official launch of the FedRAMP Consolidated Rules for 2026.</p>
           </remarks>
         </prop>
+        <prop name="timeframe_type" ns="http://fedramp.gov/ns/oscal" value="bizdays" />
+        <prop name="timeframe_num" ns="http://fedramp.gov/ns/oscal" value="5" />
         <part id="SCN-TRF-NAV_smt" name="statement">
           <p>Providers MUST notify all necessary parties within 5 business days after completing the verification, assessment, and/or validation of transformative changes, also including the following information:</p>
           <part name="item">
@@ -5389,6 +5954,8 @@ Examples:
             <p>Official launch of the FedRAMP Consolidated Rules for 2026.</p>
           </remarks>
         </prop>
+        <prop name="timeframe_type" ns="http://fedramp.gov/ns/oscal" value="bizdays" />
+        <prop name="timeframe_num" ns="http://fedramp.gov/ns/oscal" value="30" />
         <part id="SCN-TRF-UPD_smt" name="statement">
           <p>Providers MUST publish updated service documentation and other materials to reflect transformative changes within 30 business days after finishing transformative changes.</p>
         </part>
@@ -5449,13 +6016,27 @@ Examples:
   </group>
   <group id="FRR-SDR">
     <title>Security Decision Record</title>
-    <prop name="label" value="FRR-SDR" />
+    <prop name="label" value="SDR" />
+    <prop name="status" ns="http://fedramp.gov/ns/oscal" value="stable" />
+    <prop name="web_name" ns="http://fedramp.gov/ns/oscal" value="security-decision-record" />
+    <prop name="tag" ns="http://fedramp.gov/ns/oscal" value="materials" />
     <part name="overview">
       <title>Purpose</title>
       <p>The Security Decision Record replaced a traditional System Security Plan with a persistently maintained, verified, and validated record of the security decisions made by the cloud service provider over the lifecycle of their cloud service offering.</p>
     </part>
     <group id="FRR-SDR-CSO">
-      <title>FRR-SDR-CSO</title>
+      <title>General Provider Responsibilities</title>
+      <prop name="applicability-type" ns="http://fedramp.gov/ns/oscal" value="20x" />
+      <prop name="applicability-type" ns="http://fedramp.gov/ns/oscal" value="Rev5" />
+      <prop name="applicability-path" ns="http://fedramp.gov/ns/oscal" value="Program" />
+      <prop name="applicability-path" ns="http://fedramp.gov/ns/oscal" value="Agency" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="B" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="C" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="D" />
+      <prop name="affects" ns="http://fedramp.gov/ns/oscal" value="Providers" />
+      <part name="overview">
+        <p>These rules apply to providers for FedRAMP Certifications of any type.</p>
+      </part>
       <control id="SDR-CSO-FRR">
         <title>FedRAMP Rules</title>
         <prop name="label" value="SDR-CSO-FRR" />
@@ -5510,8 +6091,8 @@ https://fedramp.gov/schemas/fedramp-security-decision-record-schema-2026-06-24.j
         </part>
       </control>
     </group>
-    <group id="FRR-SDR-20x-CSX">
-      <title>FRR-SDR-20x-CSX</title>
+    <group id="FRR-SDR-CSX">
+      <title>FRR-SDR-CSX</title>
       <control id="SDR-CSX-KSI">
         <title>Key Security Indicators</title>
         <prop name="label" value="SDR-CSX-KSI" />
@@ -5610,8 +6191,8 @@ https://fedramp.gov/schemas/fedramp-security-decision-record-schema-2026-06-24.j
         </control>
       </control>
     </group>
-    <group id="FRR-SDR-rev5-CSF">
-      <title>FRR-SDR-rev5-CSF</title>
+    <group id="FRR-SDR-CSF">
+      <title>FRR-SDR-CSF</title>
       <control id="SDR-CSF-CTF">
         <title>Rev5 Controls</title>
         <prop name="label" value="SDR-CSF-CTF" />
@@ -5644,13 +6225,27 @@ https://fedramp.gov/schemas/fedramp-security-decision-record-schema-2026-06-24.j
   </group>
   <group id="FRR-VDR">
     <title>Vulnerability Detection and Response</title>
-    <prop name="label" value="FRR-VDR" />
+    <prop name="label" value="VDR" />
+    <prop name="status" ns="http://fedramp.gov/ns/oscal" value="stable" />
+    <prop name="web_name" ns="http://fedramp.gov/ns/oscal" value="vulnerability-detection-and-response" />
+    <prop name="tag" ns="http://fedramp.gov/ns/oscal" value="boundary" />
     <part name="overview">
       <title>Purpose</title>
       <p>The Vulnerability Detection and Response rules require providers to continuously identify, analyze, prioritize, mitigate, and remediate vulnerabilities and related exposures through automated systems. These rules give providers flexibility in implementation while ensuring agencies receive the information needed to support ongoing authorization decisions.</p>
     </part>
     <group id="FRR-VDR-CSO">
-      <title>FRR-VDR-CSO</title>
+      <title>General Provider Responsibilities</title>
+      <prop name="applicability-type" ns="http://fedramp.gov/ns/oscal" value="20x" />
+      <prop name="applicability-type" ns="http://fedramp.gov/ns/oscal" value="Rev5" />
+      <prop name="applicability-path" ns="http://fedramp.gov/ns/oscal" value="Program" />
+      <prop name="applicability-path" ns="http://fedramp.gov/ns/oscal" value="Agency" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="B" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="C" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="D" />
+      <prop name="affects" ns="http://fedramp.gov/ns/oscal" value="Providers" />
+      <part name="overview">
+        <p>These rules apply to all providers with FedRAMP Certifications of any type.</p>
+      </part>
       <control id="VDR-CSO-DET">
         <title>Vulnerability Detection</title>
         <prop name="label" value="VDR-CSO-DET" />
@@ -5803,7 +6398,18 @@ https://fedramp.gov/schemas/fedramp-security-decision-record-schema-2026-06-24.j
       </control>
     </group>
     <group id="FRR-VDR-TFR">
-      <title>FRR-VDR-TFR</title>
+      <title>Timeframes</title>
+      <prop name="applicability-type" ns="http://fedramp.gov/ns/oscal" value="20x" />
+      <prop name="applicability-type" ns="http://fedramp.gov/ns/oscal" value="Rev5" />
+      <prop name="applicability-path" ns="http://fedramp.gov/ns/oscal" value="Program" />
+      <prop name="applicability-path" ns="http://fedramp.gov/ns/oscal" value="Agency" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="B" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="C" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="D" />
+      <prop name="affects" ns="http://fedramp.gov/ns/oscal" value="Providers" />
+      <part name="overview">
+        <p>These rules apply to timeframes for vulnerability detection and response.</p>
+      </part>
       <control id="VDR-TFR-NMV">
         <title>Non-Machine Verification and Validation</title>
         <prop name="label" value="VDR-TFR-NMV" />
@@ -5837,6 +6443,8 @@ https://fedramp.gov/schemas/fedramp-security-decision-record-schema-2026-06-24.j
           <prop name="label" value="Class A" />
           <prop name="path" ns="http://fedramp.gov/ns/oscal" value="all" />
           <prop name="force" ns="http://fedramp.gov/ns/oscal" value="SHOULD" />
+          <prop name="timeframe_type" ns="http://fedramp.gov/ns/oscal" value="months" />
+          <prop name="timeframe_num" ns="http://fedramp.gov/ns/oscal" value="3" />
           <part id="VDR-TFR-PDD-a_smt" name="statement">
             <p>Providers with Class A Certifications SHOULD persistently perform vulnerability detection on all information resources that are likely to drift, at least once every 3 months.</p>
           </part>
@@ -5846,6 +6454,8 @@ https://fedramp.gov/schemas/fedramp-security-decision-record-schema-2026-06-24.j
           <prop name="label" value="Class B" />
           <prop name="path" ns="http://fedramp.gov/ns/oscal" value="all" />
           <prop name="force" ns="http://fedramp.gov/ns/oscal" value="SHOULD" />
+          <prop name="timeframe_type" ns="http://fedramp.gov/ns/oscal" value="months" />
+          <prop name="timeframe_num" ns="http://fedramp.gov/ns/oscal" value="1" />
           <part id="VDR-TFR-PDD-b_smt" name="statement">
             <p>Providers with Class B Certifications SHOULD persistently perform vulnerability detection on all information resources that are likely to drift, at least once every month.</p>
           </part>
@@ -5855,6 +6465,8 @@ https://fedramp.gov/schemas/fedramp-security-decision-record-schema-2026-06-24.j
           <prop name="label" value="Class C" />
           <prop name="path" ns="http://fedramp.gov/ns/oscal" value="all" />
           <prop name="force" ns="http://fedramp.gov/ns/oscal" value="SHOULD" />
+          <prop name="timeframe_type" ns="http://fedramp.gov/ns/oscal" value="days" />
+          <prop name="timeframe_num" ns="http://fedramp.gov/ns/oscal" value="14" />
           <part id="VDR-TFR-PDD-c_smt" name="statement">
             <p>Providers with Class C Certifications SHOULD persistently perform vulnerability detection on all information resources that are likely to drift, at least once every 14 days.</p>
           </part>
@@ -5864,6 +6476,8 @@ https://fedramp.gov/schemas/fedramp-security-decision-record-schema-2026-06-24.j
           <prop name="label" value="Class D" />
           <prop name="path" ns="http://fedramp.gov/ns/oscal" value="all" />
           <prop name="force" ns="http://fedramp.gov/ns/oscal" value="SHOULD" />
+          <prop name="timeframe_type" ns="http://fedramp.gov/ns/oscal" value="days" />
+          <prop name="timeframe_num" ns="http://fedramp.gov/ns/oscal" value="7" />
           <part id="VDR-TFR-PDD-d_smt" name="statement">
             <p>Providers with Class D Certifications SHOULD persistently perform vulnerability detection on all information resources that are likely to drift, at least once every 7 days.</p>
           </part>
@@ -5887,6 +6501,8 @@ https://fedramp.gov/schemas/fedramp-security-decision-record-schema-2026-06-24.j
           <prop name="label" value="Class A" />
           <prop name="path" ns="http://fedramp.gov/ns/oscal" value="all" />
           <prop name="force" ns="http://fedramp.gov/ns/oscal" value="SHOULD" />
+          <prop name="timeframe_type" ns="http://fedramp.gov/ns/oscal" value="months" />
+          <prop name="timeframe_num" ns="http://fedramp.gov/ns/oscal" value="6" />
           <part id="VDR-TFR-PCD-a_smt" name="statement">
             <p>Providers with Class A Certifications SHOULD persistently perform vulnerability detection on all information resources that are NOT likely to drift, at least once every 6 months.</p>
           </part>
@@ -5896,6 +6512,8 @@ https://fedramp.gov/schemas/fedramp-security-decision-record-schema-2026-06-24.j
           <prop name="label" value="Class B" />
           <prop name="path" ns="http://fedramp.gov/ns/oscal" value="all" />
           <prop name="force" ns="http://fedramp.gov/ns/oscal" value="SHOULD" />
+          <prop name="timeframe_type" ns="http://fedramp.gov/ns/oscal" value="months" />
+          <prop name="timeframe_num" ns="http://fedramp.gov/ns/oscal" value="6" />
           <part id="VDR-TFR-PCD-b_smt" name="statement">
             <p>Providers with Class B Certifications SHOULD persistently perform vulnerability detection on all information resources that are NOT likely to drift, at least once every 6 months.</p>
           </part>
@@ -5905,6 +6523,8 @@ https://fedramp.gov/schemas/fedramp-security-decision-record-schema-2026-06-24.j
           <prop name="label" value="Class C" />
           <prop name="path" ns="http://fedramp.gov/ns/oscal" value="all" />
           <prop name="force" ns="http://fedramp.gov/ns/oscal" value="SHOULD" />
+          <prop name="timeframe_type" ns="http://fedramp.gov/ns/oscal" value="months" />
+          <prop name="timeframe_num" ns="http://fedramp.gov/ns/oscal" value="1" />
           <part id="VDR-TFR-PCD-c_smt" name="statement">
             <p>Providers with Class C Certifications SHOULD persistently perform vulnerability detection on all information resources that are NOT likely to drift, at least once every month.</p>
           </part>
@@ -5914,6 +6534,8 @@ https://fedramp.gov/schemas/fedramp-security-decision-record-schema-2026-06-24.j
           <prop name="label" value="Class D" />
           <prop name="path" ns="http://fedramp.gov/ns/oscal" value="all" />
           <prop name="force" ns="http://fedramp.gov/ns/oscal" value="SHOULD" />
+          <prop name="timeframe_type" ns="http://fedramp.gov/ns/oscal" value="months" />
+          <prop name="timeframe_num" ns="http://fedramp.gov/ns/oscal" value="1" />
           <part id="VDR-TFR-PCD-d_smt" name="statement">
             <p>Providers with Class D Certifications SHOULD persistently perform vulnerability detection on all information resources that are NOT likely to drift, at least once every month.</p>
           </part>
@@ -6001,6 +6623,9 @@ https://fedramp.gov/schemas/fedramp-security-decision-record-schema-2026-06-24.j
             <p>Official launch of the FedRAMP Consolidated Rules for 2026.</p>
           </remarks>
         </prop>
+        <link href="https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk" rel="reference">
+          <text>CISA BOD 26-04</text>
+        </link>
         <part id="VDR-TFR-KEV_smt" name="statement">
           <p>Providers SHOULD remediate Known Exploited Vulnerabilities according to the due dates in the CISA Known Exploited Vulnerabilities Catalog (even if the vulnerability has been fully mitigated) as required by CISA Binding Operational Directive (BOD) 26-04 or any successor guidance from CISA.</p>
         </part>
@@ -6023,6 +6648,8 @@ https://fedramp.gov/schemas/fedramp-security-decision-record-schema-2026-06-24.j
           <prop name="label" value="Class A" />
           <prop name="path" ns="http://fedramp.gov/ns/oscal" value="all" />
           <prop name="force" ns="http://fedramp.gov/ns/oscal" value="SHOULD" />
+          <prop name="timeframe_type" ns="http://fedramp.gov/ns/oscal" value="days" />
+          <prop name="timeframe_num" ns="http://fedramp.gov/ns/oscal" value="14" />
           <part id="VDR-TFR-PSD-a_smt" name="statement">
             <p>Providers with Class A Certifications SHOULD persistently perform vulnerability detection on representative samples of similar machine-based information resources, at least once every 14 days.</p>
           </part>
@@ -6032,6 +6659,8 @@ https://fedramp.gov/schemas/fedramp-security-decision-record-schema-2026-06-24.j
           <prop name="label" value="Class B" />
           <prop name="path" ns="http://fedramp.gov/ns/oscal" value="all" />
           <prop name="force" ns="http://fedramp.gov/ns/oscal" value="SHOULD" />
+          <prop name="timeframe_type" ns="http://fedramp.gov/ns/oscal" value="days" />
+          <prop name="timeframe_num" ns="http://fedramp.gov/ns/oscal" value="7" />
           <part id="VDR-TFR-PSD-b_smt" name="statement">
             <p>Providers with Class B Certifications SHOULD persistently perform vulnerability detection on representative samples of similar machine-based information resources, at least once every 7 days.</p>
           </part>
@@ -6041,6 +6670,8 @@ https://fedramp.gov/schemas/fedramp-security-decision-record-schema-2026-06-24.j
           <prop name="label" value="Class C" />
           <prop name="path" ns="http://fedramp.gov/ns/oscal" value="all" />
           <prop name="force" ns="http://fedramp.gov/ns/oscal" value="SHOULD" />
+          <prop name="timeframe_type" ns="http://fedramp.gov/ns/oscal" value="days" />
+          <prop name="timeframe_num" ns="http://fedramp.gov/ns/oscal" value="3" />
           <part id="VDR-TFR-PSD-c_smt" name="statement">
             <p>Providers with Class C Certifications SHOULD persistently perform vulnerability detection on representative samples of similar machine-based information resources, at least once every 3 days.</p>
           </part>
@@ -6050,14 +6681,13 @@ https://fedramp.gov/schemas/fedramp-security-decision-record-schema-2026-06-24.j
           <prop name="label" value="Class D" />
           <prop name="path" ns="http://fedramp.gov/ns/oscal" value="all" />
           <prop name="force" ns="http://fedramp.gov/ns/oscal" value="SHOULD" />
+          <prop name="timeframe_type" ns="http://fedramp.gov/ns/oscal" value="days" />
+          <prop name="timeframe_num" ns="http://fedramp.gov/ns/oscal" value="1" />
           <part id="VDR-TFR-PSD-d_smt" name="statement">
             <p>Providers with Class D Certifications SHOULD persistently perform vulnerability detection on representative samples of similar machine-based information resources, at least once per day.</p>
           </part>
         </control>
       </control>
-    </group>
-    <group id="FRR-VDR-20x-TFR">
-      <title>FRR-VDR-20x-TFR</title>
       <control id="VDR-TFR-MVX">
         <title>Persistent Machine Verification and Validation for 20x</title>
         <prop name="label" value="VDR-TFR-MVX" />
@@ -6076,6 +6706,8 @@ https://fedramp.gov/schemas/fedramp-security-decision-record-schema-2026-06-24.j
           <prop name="label" value="Class A" />
           <prop name="path" ns="http://fedramp.gov/ns/oscal" value="20x" />
           <prop name="force" ns="http://fedramp.gov/ns/oscal" value="SHOULD" />
+          <prop name="timeframe_type" ns="http://fedramp.gov/ns/oscal" value="months" />
+          <prop name="timeframe_num" ns="http://fedramp.gov/ns/oscal" value="1" />
           <part id="VDR-TFR-MVX-a_smt" name="statement">
             <p>Providers of FedRAMP 20x Class A offerings SHOULD verify and validate the status of machine-based information resources at least once every month.</p>
           </part>
@@ -6085,6 +6717,8 @@ https://fedramp.gov/schemas/fedramp-security-decision-record-schema-2026-06-24.j
           <prop name="label" value="Class B" />
           <prop name="path" ns="http://fedramp.gov/ns/oscal" value="20x" />
           <prop name="force" ns="http://fedramp.gov/ns/oscal" value="MUST" />
+          <prop name="timeframe_type" ns="http://fedramp.gov/ns/oscal" value="days" />
+          <prop name="timeframe_num" ns="http://fedramp.gov/ns/oscal" value="7" />
           <part id="VDR-TFR-MVX-b_smt" name="statement">
             <p>Providers of FedRAMP 20x Class B offerings MUST verify and validate the status of machine-based information resources at least once every 7 days.</p>
           </part>
@@ -6094,14 +6728,13 @@ https://fedramp.gov/schemas/fedramp-security-decision-record-schema-2026-06-24.j
           <prop name="label" value="Class C" />
           <prop name="path" ns="http://fedramp.gov/ns/oscal" value="20x" />
           <prop name="force" ns="http://fedramp.gov/ns/oscal" value="MUST" />
+          <prop name="timeframe_type" ns="http://fedramp.gov/ns/oscal" value="days" />
+          <prop name="timeframe_num" ns="http://fedramp.gov/ns/oscal" value="3" />
           <part id="VDR-TFR-MVX-c_smt" name="statement">
             <p>Providers of FedRAMP 20x Class C offerings MUST verify and validate the status of machine-based information resources at least once every 3 days.</p>
           </part>
         </control>
       </control>
-    </group>
-    <group id="FRR-VDR-rev5-TFR">
-      <title>FRR-VDR-rev5-TFR</title>
       <control id="VDR-TFR-MVF">
         <title>Persistent Machine Verification and Validation for Rev5</title>
         <prop name="label" value="VDR-TFR-MVF" />
@@ -6120,6 +6753,8 @@ https://fedramp.gov/schemas/fedramp-security-decision-record-schema-2026-06-24.j
           <prop name="label" value="Class B" />
           <prop name="path" ns="http://fedramp.gov/ns/oscal" value="rev5" />
           <prop name="force" ns="http://fedramp.gov/ns/oscal" value="SHOULD" />
+          <prop name="timeframe_type" ns="http://fedramp.gov/ns/oscal" value="months" />
+          <prop name="timeframe_num" ns="http://fedramp.gov/ns/oscal" value="1" />
           <part id="VDR-TFR-MVF-b_smt" name="statement">
             <p>Providers of FedRAMP Rev5 Class B offerings SHOULD verify and validate the status of machine-based information resources at least once every month.</p>
           </part>
@@ -6129,6 +6764,8 @@ https://fedramp.gov/schemas/fedramp-security-decision-record-schema-2026-06-24.j
           <prop name="label" value="Class C" />
           <prop name="path" ns="http://fedramp.gov/ns/oscal" value="rev5" />
           <prop name="force" ns="http://fedramp.gov/ns/oscal" value="MUST" />
+          <prop name="timeframe_type" ns="http://fedramp.gov/ns/oscal" value="months" />
+          <prop name="timeframe_num" ns="http://fedramp.gov/ns/oscal" value="1" />
           <part id="VDR-TFR-MVF-c_smt" name="statement">
             <p>Providers of FedRAMP Rev5 Class C offerings MUST verify and validate the status of machine-based information resources at least once every month.</p>
           </part>
@@ -6138,6 +6775,8 @@ https://fedramp.gov/schemas/fedramp-security-decision-record-schema-2026-06-24.j
           <prop name="label" value="Class D" />
           <prop name="path" ns="http://fedramp.gov/ns/oscal" value="rev5" />
           <prop name="force" ns="http://fedramp.gov/ns/oscal" value="MUST" />
+          <prop name="timeframe_type" ns="http://fedramp.gov/ns/oscal" value="months" />
+          <prop name="timeframe_num" ns="http://fedramp.gov/ns/oscal" value="1" />
           <part id="VDR-TFR-MVF-d_smt" name="statement">
             <p>Providers of FedRAMP Rev5 Class D offerings MUST verify and validate the status of machine-based information resources at least once every month.</p>
           </part>
@@ -6147,13 +6786,27 @@ https://fedramp.gov/schemas/fedramp-security-decision-record-schema-2026-06-24.j
   </group>
   <group id="FRR-VER">
     <title>Vulnerability Evaluation and Reporting</title>
-    <prop name="label" value="FRR-VER" />
+    <prop name="label" value="VER" />
+    <prop name="status" ns="http://fedramp.gov/ns/oscal" value="stable" />
+    <prop name="web_name" ns="http://fedramp.gov/ns/oscal" value="vulnerability-evaluation-and-reporting" />
+    <prop name="tag" ns="http://fedramp.gov/ns/oscal" value="assurance" />
     <part name="overview">
       <title>Purpose</title>
       <p>The Vulnerability Evaluation and Reporting rules require cloud service providers to determine when vulnerabilities are likely to impact federal customers and report the status of such vulnerabilities to all necessary parties.</p>
     </part>
     <group id="FRR-VER-FRP">
-      <title>FRR-VER-FRP</title>
+      <title>FedRAMP Responsibilities</title>
+      <prop name="applicability-type" ns="http://fedramp.gov/ns/oscal" value="20x" />
+      <prop name="applicability-type" ns="http://fedramp.gov/ns/oscal" value="Rev5" />
+      <prop name="applicability-path" ns="http://fedramp.gov/ns/oscal" value="Program" />
+      <prop name="applicability-path" ns="http://fedramp.gov/ns/oscal" value="Agency" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="B" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="C" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="D" />
+      <prop name="affects" ns="http://fedramp.gov/ns/oscal" value="FedRAMP" />
+      <part name="overview">
+        <p>These rules apply to FedRAMP when setting expectations for specific cloud service providers.</p>
+      </part>
       <control id="VER-FRP-ARP">
         <title>Additional Requirements</title>
         <prop name="label" value="VER-FRP-ARP" />
@@ -6186,7 +6839,18 @@ https://fedramp.gov/schemas/fedramp-security-decision-record-schema-2026-06-24.j
       </control>
     </group>
     <group id="FRR-VER-AGM">
-      <title>FRR-VER-AGM</title>
+      <title>Agency Guidance</title>
+      <prop name="applicability-type" ns="http://fedramp.gov/ns/oscal" value="20x" />
+      <prop name="applicability-type" ns="http://fedramp.gov/ns/oscal" value="Rev5" />
+      <prop name="applicability-path" ns="http://fedramp.gov/ns/oscal" value="Program" />
+      <prop name="applicability-path" ns="http://fedramp.gov/ns/oscal" value="Agency" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="B" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="C" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="D" />
+      <prop name="affects" ns="http://fedramp.gov/ns/oscal" value="Agencies" />
+      <part name="overview">
+        <p>These rules for agencies apply to all agencies using a FedRAMP Certification.</p>
+      </part>
       <control id="VER-AGM-RVR">
         <title>Review Vulnerability Reports</title>
         <prop name="label" value="VER-AGM-RVR" />
@@ -6223,7 +6887,18 @@ https://fedramp.gov/schemas/fedramp-security-decision-record-schema-2026-06-24.j
       </control>
     </group>
     <group id="FRR-VER-EVA">
-      <title>FRR-VER-EVA</title>
+      <title>Evaluation</title>
+      <prop name="applicability-type" ns="http://fedramp.gov/ns/oscal" value="20x" />
+      <prop name="applicability-type" ns="http://fedramp.gov/ns/oscal" value="Rev5" />
+      <prop name="applicability-path" ns="http://fedramp.gov/ns/oscal" value="Program" />
+      <prop name="applicability-path" ns="http://fedramp.gov/ns/oscal" value="Agency" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="B" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="C" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="D" />
+      <prop name="affects" ns="http://fedramp.gov/ns/oscal" value="Providers" />
+      <part name="overview">
+        <p>These rules apply to the evaluation of vulnerabilities.</p>
+      </part>
       <control id="VER-EVA-ELX">
         <title>Evaluate Exploitability</title>
         <prop name="label" value="VER-EVA-ELX" />
@@ -6279,6 +6954,20 @@ https://fedramp.gov/schemas/fedramp-security-decision-record-schema-2026-06-24.j
         </prop>
         <part id="VER-EVA-EPA_smt" name="statement">
           <p>Providers MUST evaluate detected vulnerabilities, considering the context of the cloud service offering, to estimate the potential agency impact of exploitation on government customers AND assign one of the following Potential Agency Impact N-ratings (PAIN):</p>
+          <part name="item">
+            <ul>
+              <li>
+                <strong>N1</strong>: Exploitation could be expected to have minimal customer effects on one or more agencies that use the cloud service offering.</li>
+              <li>
+                <strong>N2</strong>: Exploitation could be expected to have narrow customer effects on one or more agencies that use the cloud service offering.</li>
+              <li>
+                <strong>N3</strong>: Exploitation could be expected to have a disruptive customer effect on one agency that uses the cloud service offering.</li>
+              <li>
+                <strong>N4</strong>: Exploitation could be expected to have a debilitating customer effect on one agency that uses the cloud service offering OR a disruptive customer effect on more than one federal agency that uses the cloud service offering.</li>
+              <li>
+                <strong>N5</strong>: Exploitation could be expected to have a debilitating customer effect on more than one agency that uses the cloud service offering.</li>
+            </ul>
+          </part>
         </part>
       </control>
       <control id="VER-EVA-AIA">
@@ -6363,7 +7052,18 @@ https://fedramp.gov/schemas/fedramp-security-decision-record-schema-2026-06-24.j
       </control>
     </group>
     <group id="FRR-VER-RPT">
-      <title>FRR-VER-RPT</title>
+      <title>Reporting</title>
+      <prop name="applicability-type" ns="http://fedramp.gov/ns/oscal" value="20x" />
+      <prop name="applicability-type" ns="http://fedramp.gov/ns/oscal" value="Rev5" />
+      <prop name="applicability-path" ns="http://fedramp.gov/ns/oscal" value="Program" />
+      <prop name="applicability-path" ns="http://fedramp.gov/ns/oscal" value="Agency" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="B" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="C" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="D" />
+      <prop name="affects" ns="http://fedramp.gov/ns/oscal" value="Providers" />
+      <part name="overview">
+        <p>These rules apply to reporting related to vulnerability detection and response.</p>
+      </part>
       <control id="VER-RPT-PER">
         <title>Persistent Reporting</title>
         <prop name="label" value="VER-RPT-PER" />
@@ -6516,7 +7216,18 @@ https://fedramp.gov/schemas/fedramp-accepted-vulnerability-info-schema-2026-06-2
       </control>
     </group>
     <group id="FRR-VER-TFR">
-      <title>FRR-VER-TFR</title>
+      <title>Timeframes</title>
+      <prop name="applicability-type" ns="http://fedramp.gov/ns/oscal" value="20x" />
+      <prop name="applicability-type" ns="http://fedramp.gov/ns/oscal" value="Rev5" />
+      <prop name="applicability-path" ns="http://fedramp.gov/ns/oscal" value="Program" />
+      <prop name="applicability-path" ns="http://fedramp.gov/ns/oscal" value="Agency" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="B" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="C" />
+      <prop name="applicability-class" ns="http://fedramp.gov/ns/oscal" value="D" />
+      <prop name="affects" ns="http://fedramp.gov/ns/oscal" value="Providers" />
+      <part name="overview">
+        <p>These rules apply to timeframes for vulnerability detection and response.</p>
+      </part>
       <control id="VER-TFR-MHR">
         <title>Monthly Activity Report</title>
         <prop name="label" value="VER-TFR-MHR" />
@@ -6528,6 +7239,8 @@ https://fedramp.gov/schemas/fedramp-accepted-vulnerability-info-schema-2026-06-2
             <p>Official launch of the FedRAMP Consolidated Rules for 2026.</p>
           </remarks>
         </prop>
+        <prop name="timeframe_type" ns="http://fedramp.gov/ns/oscal" value="months" />
+        <prop name="timeframe_num" ns="http://fedramp.gov/ns/oscal" value="1" />
         <part id="VER-TFR-MHR_smt" name="statement">
           <p>Providers MUST report vulnerability detection and response activity to all necessary parties in a consistent format that is human readable at least monthly.</p>
         </part>
@@ -6550,6 +7263,8 @@ https://fedramp.gov/schemas/fedramp-accepted-vulnerability-info-schema-2026-06-2
             <p>Official launch of the FedRAMP Consolidated Rules for 2026.</p>
           </remarks>
         </prop>
+        <prop name="timeframe_type" ns="http://fedramp.gov/ns/oscal" value="days" />
+        <prop name="timeframe_num" ns="http://fedramp.gov/ns/oscal" value="192" />
         <part id="VER-TFR-MAV_smt" name="statement">
           <p>Providers MUST categorize any vulnerability that is not or will not be fully mitigated or remediated within 192 days of evaluation as an accepted vulnerability.</p>
         </part>
@@ -6577,6 +7292,8 @@ https://fedramp.gov/schemas/fedramp-historical-ver-activity-schema-2026-06-24.js
           <prop name="label" value="Class A" />
           <prop name="path" ns="http://fedramp.gov/ns/oscal" value="all" />
           <prop name="force" ns="http://fedramp.gov/ns/oscal" value="MAY" />
+          <prop name="timeframe_type" ns="http://fedramp.gov/ns/oscal" value="months" />
+          <prop name="timeframe_num" ns="http://fedramp.gov/ns/oscal" value="1" />
           <part id="VER-TFR-MRH-a_smt" name="statement">
             <p>Providers with Class A Certifications MAY make all recent historical vulnerability detection and response activity available in JSON format for automated retrieval by all necessary parties (e.g. using an API service or similar); this information MAY be updated persistently, at least once every month.</p>
           </part>
@@ -6593,6 +7310,8 @@ https://fedramp.gov/schemas/fedramp-historical-ver-activity-schema-2026-06-24.js
           <prop name="label" value="Class B" />
           <prop name="path" ns="http://fedramp.gov/ns/oscal" value="all" />
           <prop name="force" ns="http://fedramp.gov/ns/oscal" value="SHOULD" />
+          <prop name="timeframe_type" ns="http://fedramp.gov/ns/oscal" value="months" />
+          <prop name="timeframe_num" ns="http://fedramp.gov/ns/oscal" value="1" />
           <part id="VER-TFR-MRH-b_smt" name="statement">
             <p>Providers with Class B Certifications SHOULD make all recent historical vulnerability detection and response activity available in JSON format for automated retrieval by all necessary parties (e.g. using an API service or similar); this information SHOULD be updated persistently, at least once every month.</p>
           </part>
@@ -6612,6 +7331,8 @@ https://fedramp.gov/schemas/fedramp-historical-ver-activity-schema-2026-06-24.js
           <prop name="label" value="Class C" />
           <prop name="path" ns="http://fedramp.gov/ns/oscal" value="all" />
           <prop name="force" ns="http://fedramp.gov/ns/oscal" value="SHOULD" />
+          <prop name="timeframe_type" ns="http://fedramp.gov/ns/oscal" value="days" />
+          <prop name="timeframe_num" ns="http://fedramp.gov/ns/oscal" value="14" />
           <part id="VER-TFR-MRH-c_smt" name="statement">
             <p>Providers with Class C Certifications SHOULD make all recent historical vulnerability detection and response activity available in JSON format for automated retrieval by all necessary parties (e.g. using an API service or similar); this information SHOULD be updated persistently, at least once every 14 days.</p>
           </part>
@@ -6631,6 +7352,8 @@ https://fedramp.gov/schemas/fedramp-historical-ver-activity-schema-2026-06-24.js
           <prop name="label" value="Class D" />
           <prop name="path" ns="http://fedramp.gov/ns/oscal" value="all" />
           <prop name="force" ns="http://fedramp.gov/ns/oscal" value="SHOULD" />
+          <prop name="timeframe_type" ns="http://fedramp.gov/ns/oscal" value="days" />
+          <prop name="timeframe_num" ns="http://fedramp.gov/ns/oscal" value="7" />
           <part id="VER-TFR-MRH-d_smt" name="statement">
             <p>Providers with Class D Certifications SHOULD make all recent historical vulnerability detection and response activity available in JSON format for automated retrieval by all necessary parties (e.g. using an API service or similar); this information SHOULD be updated persistently, at least once every 7 days.</p>
           </part>
@@ -6664,6 +7387,8 @@ https://fedramp.gov/schemas/fedramp-historical-ver-activity-schema-2026-06-24.js
           <prop name="label" value="Class A" />
           <prop name="path" ns="http://fedramp.gov/ns/oscal" value="all" />
           <prop name="force" ns="http://fedramp.gov/ns/oscal" value="SHOULD" />
+          <prop name="timeframe_type" ns="http://fedramp.gov/ns/oscal" value="days" />
+          <prop name="timeframe_num" ns="http://fedramp.gov/ns/oscal" value="14" />
           <part id="VER-TFR-EVU-a_smt" name="statement">
             <p>Providers with Class A Certifications SHOULD evaluate ALL vulnerabilities as required by VER-EVA (Evaluation) within 14 days of detection.</p>
           </part>
@@ -6673,6 +7398,8 @@ https://fedramp.gov/schemas/fedramp-historical-ver-activity-schema-2026-06-24.js
           <prop name="label" value="Class B" />
           <prop name="path" ns="http://fedramp.gov/ns/oscal" value="all" />
           <prop name="force" ns="http://fedramp.gov/ns/oscal" value="SHOULD" />
+          <prop name="timeframe_type" ns="http://fedramp.gov/ns/oscal" value="days" />
+          <prop name="timeframe_num" ns="http://fedramp.gov/ns/oscal" value="7" />
           <part id="VER-TFR-EVU-b_smt" name="statement">
             <p>Providers with Class B Certifications SHOULD evaluate ALL vulnerabilities as required by VER-EVA (Evaluation) within 7 days of detection.</p>
           </part>
@@ -6682,6 +7409,8 @@ https://fedramp.gov/schemas/fedramp-historical-ver-activity-schema-2026-06-24.js
           <prop name="label" value="Class C" />
           <prop name="path" ns="http://fedramp.gov/ns/oscal" value="all" />
           <prop name="force" ns="http://fedramp.gov/ns/oscal" value="SHOULD" />
+          <prop name="timeframe_type" ns="http://fedramp.gov/ns/oscal" value="days" />
+          <prop name="timeframe_num" ns="http://fedramp.gov/ns/oscal" value="5" />
           <part id="VER-TFR-EVU-c_smt" name="statement">
             <p>Providers with Class C Certifications SHOULD evaluate ALL vulnerabilities as required by VER-EVA (Evaluation) within 5 days of detection.</p>
           </part>
@@ -6691,6 +7420,8 @@ https://fedramp.gov/schemas/fedramp-historical-ver-activity-schema-2026-06-24.js
           <prop name="label" value="Class D" />
           <prop name="path" ns="http://fedramp.gov/ns/oscal" value="all" />
           <prop name="force" ns="http://fedramp.gov/ns/oscal" value="SHOULD" />
+          <prop name="timeframe_type" ns="http://fedramp.gov/ns/oscal" value="days" />
+          <prop name="timeframe_num" ns="http://fedramp.gov/ns/oscal" value="2" />
           <part id="VER-TFR-EVU-d_smt" name="statement">
             <p>Providers with Class D Certifications SHOULD evaluate ALL vulnerabilities as required by VER-EVA (Evaluation) within 2 days of detection.</p>
           </part>
@@ -7469,4 +8200,11 @@ https://fedramp.gov/schemas/fedramp-historical-ver-activity-schema-2026-06-24.js
       </control>
     </group>
   </group>
+  <back-matter>
+    <resource uuid="ffffffff-0000-4000-a000-000000000001">
+      <title>NIST SP 800-53 Rev 5</title>
+      <rlink href="https://raw.githubusercontent.com/usnistgov/oscal-content/refs/heads/main/nist.gov/SP800-53/rev5/json/NIST_SP-800-53_rev5_catalog.json" />
+      <rlink href="https://doi.org/10.6028/NIST.SP.800-53r5" />
+    </resource>
+  </back-matter>
 </catalog>

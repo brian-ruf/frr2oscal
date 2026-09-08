@@ -1,12 +1,104 @@
 {
   "catalog": {
-    "uuid": "ca284188-c4c6-4a5a-b8d7-a820379409ea",
+    "uuid": "5e030f89-393b-41e4-9f08-0944da36f919",
     "metadata": {
       "title": "FedRAMP Consolidated Rules for 2026",
       "published": "2026-07-06T00:00:00Z",
-      "last-modified": "2026-09-01T14:53:28Z",
+      "last-modified": "2026-09-08T02:49:10Z",
       "version": "2026.07.06.01",
       "oscal-version": "1.2.3",
+      "props": [
+        {
+          "name": "presentation-id",
+          "ns": "http://cybercraft.app/ns/oscal",
+          "value": "fedramp-cr26"
+        }
+      ],
+      "links": [
+        {
+          "href": "https://raw.githubusercontent.com/FedRAMP/rules/main/fedramp-consolidated-rules.json",
+          "rel": "canonical"
+        },
+        {
+          "href": "https://www.fedramp.gov/2026/",
+          "rel": "alternate"
+        }
+      ],
+      "roles": [
+        {
+          "id": "fedramp",
+          "title": "FedRAMP"
+        },
+        {
+          "id": "system-owner",
+          "title": "System Owner"
+        },
+        {
+          "id": "assessor",
+          "title": "Assessor"
+        },
+        {
+          "id": "agency",
+          "title": "Agency"
+        }
+      ],
+      "parties": [
+        {
+          "uuid": "aaaaaaaa-0000-4000-a000-000000000001",
+          "type": "organization",
+          "name": "FedRAMP PMO",
+          "links": [
+            {
+              "href": "https://www.fedramp.gov",
+              "rel": "website"
+            }
+          ],
+          "email-addresses": [
+            "info@fedramp.gov"
+          ]
+        },
+        {
+          "uuid": "aaaaaaaa-0000-4000-a000-000000000002",
+          "type": "organization",
+          "name": "Cloud Service Provider"
+        },
+        {
+          "uuid": "aaaaaaaa-0000-4000-a000-000000000003",
+          "type": "organization",
+          "name": "Assessing Organization"
+        },
+        {
+          "uuid": "aaaaaaaa-0000-4000-a000-000000000004",
+          "type": "organization",
+          "name": "Federal Agency"
+        }
+      ],
+      "responsible-parties": [
+        {
+          "role-id": "fedramp",
+          "party-uuids": [
+            "aaaaaaaa-0000-4000-a000-000000000001"
+          ]
+        },
+        {
+          "role-id": "system-owner",
+          "party-uuids": [
+            "aaaaaaaa-0000-4000-a000-000000000002"
+          ]
+        },
+        {
+          "role-id": "assessor",
+          "party-uuids": [
+            "aaaaaaaa-0000-4000-a000-000000000003"
+          ]
+        },
+        {
+          "role-id": "agency",
+          "party-uuids": [
+            "aaaaaaaa-0000-4000-a000-000000000004"
+          ]
+        }
+      ],
       "remarks": "This datafile contains the Consolidated Rules for FedRAMP in structured machine-readable text. It includes definitions, requirements, recommendations, and key security indicators."
     },
     "groups": [
@@ -16,7 +108,22 @@
         "props": [
           {
             "name": "label",
-            "value": "FRR-AFC"
+            "value": "AFC"
+          },
+          {
+            "name": "status",
+            "ns": "http://fedramp.gov/ns/oscal",
+            "value": "stable"
+          },
+          {
+            "name": "web_name",
+            "ns": "http://fedramp.gov/ns/oscal",
+            "value": "addressing-fedramp-communication"
+          },
+          {
+            "name": "tag",
+            "ns": "http://fedramp.gov/ns/oscal",
+            "value": "assurance"
           }
         ],
         "parts": [
@@ -29,7 +136,55 @@
         "groups": [
           {
             "id": "FRR-AFC-FRP",
-            "title": "FRR-AFC-FRP",
+            "title": "FedRAMP Responsibilities",
+            "props": [
+              {
+                "name": "applicability-type",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "20x"
+              },
+              {
+                "name": "applicability-type",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Rev5"
+              },
+              {
+                "name": "applicability-path",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Program"
+              },
+              {
+                "name": "applicability-path",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Agency"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "B"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "C"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "D"
+              },
+              {
+                "name": "affects",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "FedRAMP"
+              }
+            ],
+            "parts": [
+              {
+                "name": "overview",
+                "prose": "These rules apply to FedRAMP when communicating with cloud service providers."
+              }
+            ],
             "controls": [
               {
                 "id": "AFC-FRP-VRE",
@@ -189,6 +344,16 @@
                     "ns": "http://fedramp.gov/ns/oscal",
                     "value": "2026-06-24T00:00:00Z",
                     "remarks": "Official launch of the FedRAMP Consolidated Rules for 2026."
+                  },
+                  {
+                    "name": "timeframe_type",
+                    "ns": "http://fedramp.gov/ns/oscal",
+                    "value": "bizdays"
+                  },
+                  {
+                    "name": "timeframe_num",
+                    "ns": "http://fedramp.gov/ns/oscal",
+                    "value": "10"
                   }
                 ],
                 "parts": [
@@ -371,7 +536,55 @@
           },
           {
             "id": "FRR-AFC-CSO",
-            "title": "FRR-AFC-CSO",
+            "title": "General Provider Responsibilities",
+            "props": [
+              {
+                "name": "applicability-type",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "20x"
+              },
+              {
+                "name": "applicability-type",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Rev5"
+              },
+              {
+                "name": "applicability-path",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Program"
+              },
+              {
+                "name": "applicability-path",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Agency"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "B"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "C"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "D"
+              },
+              {
+                "name": "affects",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Providers"
+              }
+            ],
+            "parts": [
+              {
+                "name": "overview",
+                "prose": "These rules apply to providers with any type of FedRAMP Certification."
+              }
+            ],
             "controls": [
               {
                 "id": "AFC-CSO-INB",
@@ -811,7 +1024,22 @@
         "props": [
           {
             "name": "label",
-            "value": "FRR-AGU"
+            "value": "AGU"
+          },
+          {
+            "name": "status",
+            "ns": "http://fedramp.gov/ns/oscal",
+            "value": "placeholder"
+          },
+          {
+            "name": "web_name",
+            "ns": "http://fedramp.gov/ns/oscal",
+            "value": "agency-use"
+          },
+          {
+            "name": "tag",
+            "ns": "http://fedramp.gov/ns/oscal",
+            "value": "gov"
           }
         ],
         "parts": [
@@ -824,7 +1052,60 @@
         "groups": [
           {
             "id": "FRR-AGU-AGC",
-            "title": "FRR-AGU-AGC",
+            "title": "General Agency Responsibilities",
+            "props": [
+              {
+                "name": "applicability-type",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "20x"
+              },
+              {
+                "name": "applicability-type",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Rev5"
+              },
+              {
+                "name": "applicability-path",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Program"
+              },
+              {
+                "name": "applicability-path",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Agency"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "A"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "B"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "C"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "D"
+              },
+              {
+                "name": "affects",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Agencies"
+              }
+            ],
+            "parts": [
+              {
+                "name": "overview",
+                "prose": "These rules apply to agencies based on the FedRAMP Authorization Act, OMB M-24-15, and related FedRAMP policies."
+              }
+            ],
             "controls": [
               {
                 "id": "AGU-AGC-AIP",
@@ -1149,6 +1430,13 @@
                     "remarks": "Official launch of the FedRAMP Consolidated Rules for 2026."
                   }
                 ],
+                "links": [
+                  {
+                    "href": "https://www.fedramp.gov/preview/2026/agencies/support/liaisons",
+                    "rel": "reference",
+                    "text": "Agency Liaison Program"
+                  }
+                ],
                 "parts": [
                   {
                     "id": "AGU-AGC-LIA_smt",
@@ -1204,7 +1492,60 @@
           },
           {
             "id": "FRR-AGU-USE",
-            "title": "FRR-AGU-USE",
+            "title": "Use of FedRAMP Certifications",
+            "props": [
+              {
+                "name": "applicability-type",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "20x"
+              },
+              {
+                "name": "applicability-type",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Rev5"
+              },
+              {
+                "name": "applicability-path",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Program"
+              },
+              {
+                "name": "applicability-path",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Agency"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "A"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "B"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "C"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "D"
+              },
+              {
+                "name": "affects",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Agencies"
+              }
+            ],
+            "parts": [
+              {
+                "name": "overview",
+                "prose": "These rules apply when agencies use FedRAMP Certifications to make agency authorization decisions."
+              }
+            ],
             "controls": [
               {
                 "id": "AGU-USE-ABU",
@@ -1234,6 +1575,13 @@
                     "ns": "http://fedramp.gov/ns/oscal",
                     "value": "2026-06-24T00:00:00Z",
                     "remarks": "Official launch of the FedRAMP Consolidated Rules for 2026."
+                  }
+                ],
+                "links": [
+                  {
+                    "href": "https://fedramp.gov/preview/2026/agencies/use",
+                    "rel": "reference",
+                    "text": "Using a FedRAMP Certified Cloud Service Offering"
                   }
                 ],
                 "parts": [
@@ -1605,7 +1953,45 @@
           },
           {
             "id": "FRR-AGU-SPN",
-            "title": "FRR-AGU-SPN",
+            "title": "Agency Sponsored Certifications",
+            "props": [
+              {
+                "name": "applicability-type",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Rev5"
+              },
+              {
+                "name": "applicability-path",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Agency"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "B"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "C"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "D"
+              },
+              {
+                "name": "affects",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Agencies"
+              }
+            ],
+            "parts": [
+              {
+                "name": "overview",
+                "prose": "These rules apply when an agency sponsors a FedRAMP Rev5 Certification after completing an agency authorization."
+              }
+            ],
             "controls": [
               {
                 "id": "AGU-SPN-MRC",
@@ -1655,7 +2041,22 @@
         "props": [
           {
             "name": "label",
-            "value": "FRR-CCM"
+            "value": "CCM"
+          },
+          {
+            "name": "status",
+            "ns": "http://fedramp.gov/ns/oscal",
+            "value": "stable"
+          },
+          {
+            "name": "web_name",
+            "ns": "http://fedramp.gov/ns/oscal",
+            "value": "collaborative-continuous-monitoring"
+          },
+          {
+            "name": "tag",
+            "ns": "http://fedramp.gov/ns/oscal",
+            "value": "assurance"
           }
         ],
         "parts": [
@@ -1668,7 +2069,55 @@
         "groups": [
           {
             "id": "FRR-CCM-AGM",
-            "title": "FRR-CCM-AGM",
+            "title": "Agency Guidance",
+            "props": [
+              {
+                "name": "applicability-type",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "20x"
+              },
+              {
+                "name": "applicability-type",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Rev5"
+              },
+              {
+                "name": "applicability-path",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Program"
+              },
+              {
+                "name": "applicability-path",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Agency"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "B"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "C"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "D"
+              },
+              {
+                "name": "affects",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Agencies"
+              }
+            ],
+            "parts": [
+              {
+                "name": "overview",
+                "prose": "These rules for agencies apply to all agencies using a FedRAMP Certification."
+              }
+            ],
             "controls": [
               {
                 "id": "CCM-AGM-ROR",
@@ -1755,7 +2204,55 @@
           },
           {
             "id": "FRR-CCM-OCR",
-            "title": "FRR-CCM-OCR",
+            "title": "Ongoing Certification Reports",
+            "props": [
+              {
+                "name": "applicability-type",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "20x"
+              },
+              {
+                "name": "applicability-type",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Rev5"
+              },
+              {
+                "name": "applicability-path",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Program"
+              },
+              {
+                "name": "applicability-path",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Agency"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "B"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "C"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "D"
+              },
+              {
+                "name": "affects",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Providers"
+              }
+            ],
+            "parts": [
+              {
+                "name": "overview",
+                "prose": "These rules for Ongoing Certification Reports apply to providers with any type of FedRAMP Certification."
+              }
+            ],
             "controls": [
               {
                 "id": "CCM-OCR-AVL",
@@ -2118,7 +2615,55 @@
           },
           {
             "id": "FRR-CCM-QTR",
-            "title": "FRR-CCM-QTR",
+            "title": "Quarterly Reviews",
+            "props": [
+              {
+                "name": "applicability-type",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "20x"
+              },
+              {
+                "name": "applicability-type",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Rev5"
+              },
+              {
+                "name": "applicability-path",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Program"
+              },
+              {
+                "name": "applicability-path",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Agency"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "B"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "C"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "D"
+              },
+              {
+                "name": "affects",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Providers"
+              }
+            ],
+            "parts": [
+              {
+                "name": "overview",
+                "prose": "These rules for Quarterly Reviews apply to providers with any type of FedRAMP Certification."
+              }
+            ],
             "controls": [
               {
                 "id": "CCM-QTR-MTG",
@@ -2170,6 +2715,16 @@
                         "name": "force",
                         "ns": "http://fedramp.gov/ns/oscal",
                         "value": "MAY"
+                      },
+                      {
+                        "name": "timeframe_type",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "months"
+                      },
+                      {
+                        "name": "timeframe_num",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "3"
                       }
                     ],
                     "parts": [
@@ -2217,6 +2772,16 @@
                         "name": "force",
                         "ns": "http://fedramp.gov/ns/oscal",
                         "value": "SHOULD"
+                      },
+                      {
+                        "name": "timeframe_type",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "months"
+                      },
+                      {
+                        "name": "timeframe_num",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "3"
                       }
                     ],
                     "parts": [
@@ -2264,6 +2829,16 @@
                         "name": "force",
                         "ns": "http://fedramp.gov/ns/oscal",
                         "value": "MUST"
+                      },
+                      {
+                        "name": "timeframe_type",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "months"
+                      },
+                      {
+                        "name": "timeframe_num",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "3"
                       }
                     ],
                     "parts": [
@@ -2311,6 +2886,16 @@
                         "name": "force",
                         "ns": "http://fedramp.gov/ns/oscal",
                         "value": "MUST"
+                      },
+                      {
+                        "name": "timeframe_type",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "months"
+                      },
+                      {
+                        "name": "timeframe_num",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "3"
                       }
                     ],
                     "parts": [
@@ -2720,7 +3305,22 @@
         "props": [
           {
             "name": "label",
-            "value": "FRR-CDS"
+            "value": "CDS"
+          },
+          {
+            "name": "status",
+            "ns": "http://fedramp.gov/ns/oscal",
+            "value": "stable"
+          },
+          {
+            "name": "web_name",
+            "ns": "http://fedramp.gov/ns/oscal",
+            "value": "certification-data-sharing"
+          },
+          {
+            "name": "tag",
+            "ns": "http://fedramp.gov/ns/oscal",
+            "value": "boundary"
           }
         ],
         "parts": [
@@ -2733,7 +3333,55 @@
         "groups": [
           {
             "id": "FRR-CDS-CSO",
-            "title": "FRR-CDS-CSO",
+            "title": "General Provider Responsibilities",
+            "props": [
+              {
+                "name": "applicability-type",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "20x"
+              },
+              {
+                "name": "applicability-type",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Rev5"
+              },
+              {
+                "name": "applicability-path",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Program"
+              },
+              {
+                "name": "applicability-path",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Agency"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "B"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "C"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "D"
+              },
+              {
+                "name": "affects",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Providers"
+              }
+            ],
+            "parts": [
+              {
+                "name": "overview",
+                "prose": "These rules apply to providers for FedRAMP Certifications of any type."
+              }
+            ],
             "controls": [
               {
                 "id": "CDS-CSO-PUB",
@@ -2963,6 +3611,16 @@
                     "ns": "http://fedramp.gov/ns/oscal",
                     "value": "2026-06-24T00:00:00Z",
                     "remarks": "Official launch of the FedRAMP Consolidated Rules for 2026."
+                  },
+                  {
+                    "name": "timeframe_type",
+                    "ns": "http://fedramp.gov/ns/oscal",
+                    "value": "weeks"
+                  },
+                  {
+                    "name": "timeframe_num",
+                    "ns": "http://fedramp.gov/ns/oscal",
+                    "value": "2"
                   }
                 ],
                 "parts": [
@@ -3694,7 +4352,55 @@
           },
           {
             "id": "FRR-CDS-TRC",
-            "title": "FRR-CDS-TRC",
+            "title": "FedRAMP-Compatible Trust Centers",
+            "props": [
+              {
+                "name": "applicability-type",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "20x"
+              },
+              {
+                "name": "applicability-type",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Rev5"
+              },
+              {
+                "name": "applicability-path",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Program"
+              },
+              {
+                "name": "applicability-path",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Agency"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "B"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "C"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "D"
+              },
+              {
+                "name": "affects",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Providers"
+              }
+            ],
+            "parts": [
+              {
+                "name": "overview",
+                "prose": "These rules apply to trust centers that are FedRAMP-compatible."
+              }
+            ],
             "controls": [
               {
                 "id": "CDS-TRC-USH",
@@ -4013,7 +4719,55 @@
           },
           {
             "id": "FRR-CDS-UTC",
-            "title": "FRR-CDS-UTC",
+            "title": "Using a Trust Center",
+            "props": [
+              {
+                "name": "applicability-type",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "20x"
+              },
+              {
+                "name": "applicability-type",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Rev5"
+              },
+              {
+                "name": "applicability-path",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Program"
+              },
+              {
+                "name": "applicability-path",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Agency"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "B"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "C"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "D"
+              },
+              {
+                "name": "affects",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Providers"
+              }
+            ],
+            "parts": [
+              {
+                "name": "overview",
+                "prose": "These rules apply to providers that are using a FedRAMP-compatible trust center instead of USDA Connect; they DO NOT apply to providers using USDA Connect."
+              }
+            ],
             "controls": [
               {
                 "id": "CDS-UTC-AAD",
@@ -4043,6 +4797,16 @@
                     "ns": "http://fedramp.gov/ns/oscal",
                     "value": "2026-06-24T00:00:00Z",
                     "remarks": "Official launch of the FedRAMP Consolidated Rules for 2026."
+                  },
+                  {
+                    "name": "timeframe_type",
+                    "ns": "http://fedramp.gov/ns/oscal",
+                    "value": "bizdays"
+                  },
+                  {
+                    "name": "timeframe_num",
+                    "ns": "http://fedramp.gov/ns/oscal",
+                    "value": "5"
                   }
                 ],
                 "parts": [
@@ -4118,8 +4882,8 @@
             ]
           },
           {
-            "id": "FRR-CDS-rev5-CSF",
-            "title": "FRR-CDS-rev5-CSF",
+            "id": "FRR-CDS-CSF",
+            "title": "FRR-CDS-CSF",
             "controls": [
               {
                 "id": "CDS-CSF-TCM",
@@ -4169,7 +4933,22 @@
         "props": [
           {
             "name": "label",
-            "value": "FRR-CMU"
+            "value": "CMU"
+          },
+          {
+            "name": "status",
+            "ns": "http://fedramp.gov/ns/oscal",
+            "value": "stable"
+          },
+          {
+            "name": "web_name",
+            "ns": "http://fedramp.gov/ns/oscal",
+            "value": "cryptographic-module-use"
+          },
+          {
+            "name": "tag",
+            "ns": "http://fedramp.gov/ns/oscal",
+            "value": "boundary"
           }
         ],
         "parts": [
@@ -4182,7 +4961,55 @@
         "groups": [
           {
             "id": "FRR-CMU-CSO",
-            "title": "FRR-CMU-CSO",
+            "title": "Cloud Service Provider Responsibilities",
+            "props": [
+              {
+                "name": "applicability-type",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "20x"
+              },
+              {
+                "name": "applicability-type",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Rev5"
+              },
+              {
+                "name": "applicability-path",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Program"
+              },
+              {
+                "name": "applicability-path",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Agency"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "B"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "C"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "D"
+              },
+              {
+                "name": "affects",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Providers"
+              }
+            ],
+            "parts": [
+              {
+                "name": "overview",
+                "prose": "These rules apply to providers for FedRAMP Certifications."
+              }
+            ],
             "controls": [
               {
                 "id": "CMU-CSO-CMD",
@@ -4533,7 +5360,22 @@
         "props": [
           {
             "name": "label",
-            "value": "FRR-CPO"
+            "value": "CPO"
+          },
+          {
+            "name": "status",
+            "ns": "http://fedramp.gov/ns/oscal",
+            "value": "stable"
+          },
+          {
+            "name": "web_name",
+            "ns": "http://fedramp.gov/ns/oscal",
+            "value": "certification-package-overview"
+          },
+          {
+            "name": "tag",
+            "ns": "http://fedramp.gov/ns/oscal",
+            "value": "materials"
           }
         ],
         "parts": [
@@ -4546,7 +5388,55 @@
         "groups": [
           {
             "id": "FRR-CPO-CSO",
-            "title": "FRR-CPO-CSO",
+            "title": "General Provider Responsibilities",
+            "props": [
+              {
+                "name": "applicability-type",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "20x"
+              },
+              {
+                "name": "applicability-type",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Rev5"
+              },
+              {
+                "name": "applicability-path",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Program"
+              },
+              {
+                "name": "applicability-path",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Agency"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "B"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "C"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "D"
+              },
+              {
+                "name": "affects",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Providers"
+              }
+            ],
+            "parts": [
+              {
+                "name": "overview",
+                "prose": "These rules apply to providers for FedRAMP Certifications of any type."
+              }
+            ],
             "controls": [
               {
                 "id": "CPO-CSO-OVR",
@@ -4837,8 +5727,8 @@
             ]
           },
           {
-            "id": "FRR-CPO-20x-CSX",
-            "title": "FRR-CPO-20x-CSX",
+            "id": "FRR-CPO-CSX",
+            "title": "FRR-CPO-CSX",
             "controls": [
               {
                 "id": "CPO-CSX-CPM",
@@ -4895,6 +5785,16 @@
                         "name": "force",
                         "ns": "http://fedramp.gov/ns/oscal",
                         "value": "SHOULD"
+                      },
+                      {
+                        "name": "timeframe_type",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "months"
+                      },
+                      {
+                        "name": "timeframe_num",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "3"
                       }
                     ],
                     "parts": [
@@ -4922,6 +5822,16 @@
                         "name": "force",
                         "ns": "http://fedramp.gov/ns/oscal",
                         "value": "MUST"
+                      },
+                      {
+                        "name": "timeframe_type",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "months"
+                      },
+                      {
+                        "name": "timeframe_num",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "1"
                       }
                     ],
                     "parts": [
@@ -4949,6 +5859,16 @@
                         "name": "force",
                         "ns": "http://fedramp.gov/ns/oscal",
                         "value": "MUST"
+                      },
+                      {
+                        "name": "timeframe_type",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "weeks"
+                      },
+                      {
+                        "name": "timeframe_num",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "2"
                       }
                     ],
                     "parts": [
@@ -4976,6 +5896,16 @@
                         "name": "force",
                         "ns": "http://fedramp.gov/ns/oscal",
                         "value": "MUST"
+                      },
+                      {
+                        "name": "timeframe_type",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "weeks"
+                      },
+                      {
+                        "name": "timeframe_num",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "1"
                       }
                     ],
                     "parts": [
@@ -4991,8 +5921,8 @@
             ]
           },
           {
-            "id": "FRR-CPO-rev5-CSF",
-            "title": "FRR-CPO-rev5-CSF",
+            "id": "FRR-CPO-CSF",
+            "title": "FRR-CPO-CSF",
             "controls": [
               {
                 "id": "CPO-CSF-CPM",
@@ -5049,6 +5979,16 @@
                         "name": "force",
                         "ns": "http://fedramp.gov/ns/oscal",
                         "value": "SHOULD"
+                      },
+                      {
+                        "name": "timeframe_type",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "years"
+                      },
+                      {
+                        "name": "timeframe_num",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "1"
                       }
                     ],
                     "parts": [
@@ -5076,6 +6016,16 @@
                         "name": "force",
                         "ns": "http://fedramp.gov/ns/oscal",
                         "value": "MUST"
+                      },
+                      {
+                        "name": "timeframe_type",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "years"
+                      },
+                      {
+                        "name": "timeframe_num",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "1"
                       }
                     ],
                     "parts": [
@@ -5103,6 +6053,16 @@
                         "name": "force",
                         "ns": "http://fedramp.gov/ns/oscal",
                         "value": "MUST"
+                      },
+                      {
+                        "name": "timeframe_type",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "years"
+                      },
+                      {
+                        "name": "timeframe_num",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "1"
                       }
                     ],
                     "parts": [
@@ -5130,6 +6090,16 @@
                         "name": "force",
                         "ns": "http://fedramp.gov/ns/oscal",
                         "value": "MUST"
+                      },
+                      {
+                        "name": "timeframe_type",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "months"
+                      },
+                      {
+                        "name": "timeframe_num",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "6"
                       }
                     ],
                     "parts": [
@@ -5152,7 +6122,22 @@
         "props": [
           {
             "name": "label",
-            "value": "FRR-FRC"
+            "value": "FRC"
+          },
+          {
+            "name": "status",
+            "ns": "http://fedramp.gov/ns/oscal",
+            "value": "stable"
+          },
+          {
+            "name": "web_name",
+            "ns": "http://fedramp.gov/ns/oscal",
+            "value": "fedramp-certification"
+          },
+          {
+            "name": "tag",
+            "ns": "http://fedramp.gov/ns/oscal",
+            "value": "other"
           }
         ],
         "parts": [
@@ -5165,7 +6150,60 @@
         "groups": [
           {
             "id": "FRR-FRC-CSO",
-            "title": "FRR-FRC-CSO",
+            "title": "General Provider Responsibilities",
+            "props": [
+              {
+                "name": "applicability-type",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "20x"
+              },
+              {
+                "name": "applicability-type",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Rev5"
+              },
+              {
+                "name": "applicability-path",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Program"
+              },
+              {
+                "name": "applicability-path",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Agency"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "A"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "B"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "C"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "D"
+              },
+              {
+                "name": "affects",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Providers"
+              }
+            ],
+            "parts": [
+              {
+                "name": "overview",
+                "prose": "These rules apply to cloud service providers obtaining and maintaining any FedRAMP Certification."
+              }
+            ],
             "controls": [
               {
                 "id": "FRC-CSO-FCP",
@@ -5400,7 +6438,35 @@
           },
           {
             "id": "FRR-FRC-CLA",
-            "title": "FRR-FRC-CLA",
+            "title": "FedRAMP Class A Certification Rules",
+            "props": [
+              {
+                "name": "applicability-type",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "20x"
+              },
+              {
+                "name": "applicability-path",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Program"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "A"
+              },
+              {
+                "name": "affects",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Providers"
+              }
+            ],
+            "parts": [
+              {
+                "name": "overview",
+                "prose": "These are specific rules that apply to providers seeking FedRAMP Class A Certifications."
+              }
+            ],
             "controls": [
               {
                 "id": "FRC-CLA-ASF",
@@ -5853,7 +6919,60 @@
           },
           {
             "id": "FRR-FRC-APP",
-            "title": "FRR-FRC-APP",
+            "title": "Applying for FedRAMP Certification",
+            "props": [
+              {
+                "name": "applicability-type",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "20x"
+              },
+              {
+                "name": "applicability-type",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Rev5"
+              },
+              {
+                "name": "applicability-path",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Program"
+              },
+              {
+                "name": "applicability-path",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Agency"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "A"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "B"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "C"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "D"
+              },
+              {
+                "name": "affects",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Providers"
+              }
+            ],
+            "parts": [
+              {
+                "name": "overview",
+                "prose": "These rules apply to cloud service providers who have met all other relevant rules and are ready to apply for any FedRAMP Certification."
+              }
+            ],
             "controls": [
               {
                 "id": "FRC-APP-MLF",
@@ -6043,6 +7162,16 @@
                         "name": "force",
                         "ns": "http://fedramp.gov/ns/oscal",
                         "value": "MAY"
+                      },
+                      {
+                        "name": "timeframe_type",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "months"
+                      },
+                      {
+                        "name": "timeframe_num",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "3"
                       }
                     ],
                     "parts": [
@@ -6070,6 +7199,16 @@
                         "name": "force",
                         "ns": "http://fedramp.gov/ns/oscal",
                         "value": "MUST"
+                      },
+                      {
+                        "name": "timeframe_type",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "months"
+                      },
+                      {
+                        "name": "timeframe_num",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "3"
                       }
                     ],
                     "parts": [
@@ -6097,6 +7236,16 @@
                         "name": "force",
                         "ns": "http://fedramp.gov/ns/oscal",
                         "value": "MUST"
+                      },
+                      {
+                        "name": "timeframe_type",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "months"
+                      },
+                      {
+                        "name": "timeframe_num",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "3"
                       }
                     ],
                     "parts": [
@@ -6124,6 +7273,16 @@
                         "name": "force",
                         "ns": "http://fedramp.gov/ns/oscal",
                         "value": "MUST"
+                      },
+                      {
+                        "name": "timeframe_type",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "months"
+                      },
+                      {
+                        "name": "timeframe_num",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "3"
                       }
                     ],
                     "parts": [
@@ -6221,7 +7380,45 @@
           },
           {
             "id": "FRR-FRC-APS",
-            "title": "FRR-FRC-APS",
+            "title": "Applying for FedRAMP Certification with an Agency Sponsor",
+            "props": [
+              {
+                "name": "applicability-type",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Rev5"
+              },
+              {
+                "name": "applicability-path",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Agency"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "B"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "C"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "D"
+              },
+              {
+                "name": "affects",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Providers"
+              }
+            ],
+            "parts": [
+              {
+                "name": "overview",
+                "prose": "These rules apply to cloud service providers with an Agency Sponsor who have met all other relevant rules and are ready to apply for any FedRAMP Certification."
+              }
+            ],
             "controls": [
               {
                 "id": "FRC-APS-ATO",
@@ -6265,7 +7462,50 @@
           },
           {
             "id": "FRR-FRC-CCL",
-            "title": "FRR-FRC-CCL",
+            "title": "Changing Certification Class",
+            "props": [
+              {
+                "name": "applicability-type",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Rev5"
+              },
+              {
+                "name": "applicability-path",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Agency"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "A"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "B"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "C"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "D"
+              },
+              {
+                "name": "affects",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Providers"
+              }
+            ],
+            "parts": [
+              {
+                "name": "overview",
+                "prose": "These rules apply to cloud service providers when changing their FedRAMP Certification Class."
+              }
+            ],
             "controls": [
               {
                 "id": "FRC-CCL-UCC",
@@ -6405,8 +7645,8 @@
             ]
           },
           {
-            "id": "FRR-FRC-20x-CSX",
-            "title": "FRR-FRC-20x-CSX",
+            "id": "FRR-FRC-CSX",
+            "title": "FRR-FRC-CSX",
             "controls": [
               {
                 "id": "FRC-CSX-VVK",
@@ -6888,8 +8128,8 @@
             ]
           },
           {
-            "id": "FRR-FRC-rev5-CSF",
-            "title": "FRR-FRC-rev5-CSF",
+            "id": "FRR-FRC-CSF",
+            "title": "FRR-FRC-CSF",
             "controls": [
               {
                 "id": "FRC-CSF-BSL",
@@ -6914,6 +8154,13 @@
                     "ns": "http://fedramp.gov/ns/oscal",
                     "value": "2026-06-24T00:00:00Z",
                     "remarks": "Official launch of the FedRAMP Consolidated Rules for 2026."
+                  }
+                ],
+                "links": [
+                  {
+                    "href": "https://csrc.nist.gov/pubs/sp/800/53/r5/upd1/final",
+                    "rel": "reference",
+                    "text": "NIST SP 800-53 Rev. 5, Security and Privacy Controls for Information Systems and Organizations"
                   }
                 ],
                 "parts": [
@@ -7136,7 +8383,22 @@
         "props": [
           {
             "name": "label",
-            "value": "FRR-IEC"
+            "value": "IEC"
+          },
+          {
+            "name": "status",
+            "ns": "http://fedramp.gov/ns/oscal",
+            "value": "stable"
+          },
+          {
+            "name": "web_name",
+            "ns": "http://fedramp.gov/ns/oscal",
+            "value": "incident-evaluation-and-communication"
+          },
+          {
+            "name": "tag",
+            "ns": "http://fedramp.gov/ns/oscal",
+            "value": "assurance"
           }
         ],
         "parts": [
@@ -7149,7 +8411,55 @@
         "groups": [
           {
             "id": "FRR-IEC-FRP",
-            "title": "FRR-IEC-FRP",
+            "title": "FedRAMP Responsibilities",
+            "props": [
+              {
+                "name": "applicability-type",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "20x"
+              },
+              {
+                "name": "applicability-type",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Rev5"
+              },
+              {
+                "name": "applicability-path",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Program"
+              },
+              {
+                "name": "applicability-path",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Agency"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "B"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "C"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "D"
+              },
+              {
+                "name": "affects",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "FedRAMP"
+              }
+            ],
+            "parts": [
+              {
+                "name": "overview",
+                "prose": "These rules apply to FedRAMP."
+              }
+            ],
             "controls": [
               {
                 "id": "IEC-FRP-ORV",
@@ -7204,7 +8514,55 @@
           },
           {
             "id": "FRR-IEC-CSO",
-            "title": "FRR-IEC-CSO",
+            "title": "General Provider Responsibilities",
+            "props": [
+              {
+                "name": "applicability-type",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "20x"
+              },
+              {
+                "name": "applicability-type",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Rev5"
+              },
+              {
+                "name": "applicability-path",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Program"
+              },
+              {
+                "name": "applicability-path",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Agency"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "B"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "C"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "D"
+              },
+              {
+                "name": "affects",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Providers"
+              }
+            ],
+            "parts": [
+              {
+                "name": "overview",
+                "prose": "These rules apply to providers with FedRAMP Certifications of any type."
+              }
+            ],
             "controls": [
               {
                 "id": "IEC-CSO-EFR",
@@ -8095,7 +9453,13 @@
                   {
                     "id": "IEC-CSO-EFI_smt",
                     "name": "statement",
-                    "prose": "Providers SHOULD promptly estimate the likely adverse impact of an incident on agency customers to assign a Potential Agency Impact N-rating; this step is called Incident Rating."
+                    "prose": "Providers SHOULD promptly estimate the likely adverse impact of an incident on agency customers to assign a Potential Agency Impact N-rating; this step is called Incident Rating.",
+                    "parts": [
+                      {
+                        "name": "item",
+                        "prose": "- **N1** for a likely minimal customer effect on 1 or more agencies.\n- **N2** for a likely narrow customer effect on 1 or more agencies.\n- **N3** for a likely disruptive customer effect on 1 agency.\n- **N4** for a likely debilitating customer effect on 1 agency or a likely disruptive customer effect on more than 1 agency.\n- **N5** for a likely debilitating customer effect on more than 1 agency."
+                      }
+                    ]
                   },
                   {
                     "name": "guidance",
@@ -8183,7 +9547,22 @@
         "props": [
           {
             "name": "label",
-            "value": "FRR-IVV"
+            "value": "IVV"
+          },
+          {
+            "name": "status",
+            "ns": "http://fedramp.gov/ns/oscal",
+            "value": "stable"
+          },
+          {
+            "name": "web_name",
+            "ns": "http://fedramp.gov/ns/oscal",
+            "value": "independent-verification-and-validation"
+          },
+          {
+            "name": "tag",
+            "ns": "http://fedramp.gov/ns/oscal",
+            "value": "assurance"
           }
         ],
         "parts": [
@@ -8196,7 +9575,55 @@
         "groups": [
           {
             "id": "FRR-IVV-CSO",
-            "title": "FRR-IVV-CSO",
+            "title": "General Provider Responsibilities",
+            "props": [
+              {
+                "name": "applicability-type",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "20x"
+              },
+              {
+                "name": "applicability-type",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Rev5"
+              },
+              {
+                "name": "applicability-path",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Program"
+              },
+              {
+                "name": "applicability-path",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Agency"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "B"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "C"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "D"
+              },
+              {
+                "name": "affects",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Providers"
+              }
+            ],
+            "parts": [
+              {
+                "name": "overview",
+                "prose": "These rules apply to cloud service providers obtaining and maintaining any FedRAMP Certification."
+              }
+            ],
             "controls": [
               {
                 "id": "IVV-CSO-FIA",
@@ -8253,6 +9680,16 @@
                         "name": "force",
                         "ns": "http://fedramp.gov/ns/oscal",
                         "value": "MAY"
+                      },
+                      {
+                        "name": "timeframe_type",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "years"
+                      },
+                      {
+                        "name": "timeframe_num",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "1"
                       }
                     ],
                     "parts": [
@@ -8280,6 +9717,16 @@
                         "name": "force",
                         "ns": "http://fedramp.gov/ns/oscal",
                         "value": "MUST"
+                      },
+                      {
+                        "name": "timeframe_type",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "years"
+                      },
+                      {
+                        "name": "timeframe_num",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "1"
                       }
                     ],
                     "parts": [
@@ -8307,6 +9754,16 @@
                         "name": "force",
                         "ns": "http://fedramp.gov/ns/oscal",
                         "value": "MUST"
+                      },
+                      {
+                        "name": "timeframe_type",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "years"
+                      },
+                      {
+                        "name": "timeframe_num",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "1"
                       }
                     ],
                     "parts": [
@@ -8334,6 +9791,16 @@
                         "name": "force",
                         "ns": "http://fedramp.gov/ns/oscal",
                         "value": "MUST"
+                      },
+                      {
+                        "name": "timeframe_type",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "years"
+                      },
+                      {
+                        "name": "timeframe_num",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "1"
                       }
                     ],
                     "parts": [
@@ -8654,7 +10121,55 @@
           },
           {
             "id": "FRR-IVV-IAS",
-            "title": "FRR-IVV-IAS",
+            "title": "General Independent Assessor Responsibilities",
+            "props": [
+              {
+                "name": "applicability-type",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "20x"
+              },
+              {
+                "name": "applicability-type",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Rev5"
+              },
+              {
+                "name": "applicability-path",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Program"
+              },
+              {
+                "name": "applicability-path",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Agency"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "B"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "C"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "D"
+              },
+              {
+                "name": "affects",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Assessors"
+              }
+            ],
+            "parts": [
+              {
+                "name": "overview",
+                "prose": "These rules apply to independent assessment services supporting all FedRAMP Certification types."
+              }
+            ],
             "controls": [
               {
                 "id": "IVV-IAS-VIM",
@@ -8956,8 +10471,8 @@
             ]
           },
           {
-            "id": "FRR-IVV-20x-CSX",
-            "title": "FRR-IVV-20x-CSX",
+            "id": "FRR-IVV-CSX",
+            "title": "FRR-IVV-CSX",
             "controls": [
               {
                 "id": "IVV-CSX-AIA",
@@ -9036,6 +10551,16 @@
                         "name": "force",
                         "ns": "http://fedramp.gov/ns/oscal",
                         "value": "MUST"
+                      },
+                      {
+                        "name": "timeframe_type",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "years"
+                      },
+                      {
+                        "name": "timeframe_num",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "1"
                       }
                     ],
                     "parts": [
@@ -9063,6 +10588,16 @@
                         "name": "force",
                         "ns": "http://fedramp.gov/ns/oscal",
                         "value": "MUST"
+                      },
+                      {
+                        "name": "timeframe_type",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "years"
+                      },
+                      {
+                        "name": "timeframe_num",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "1"
                       }
                     ],
                     "parts": [
@@ -9090,6 +10625,16 @@
                         "name": "force",
                         "ns": "http://fedramp.gov/ns/oscal",
                         "value": "MUST"
+                      },
+                      {
+                        "name": "timeframe_type",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "years"
+                      },
+                      {
+                        "name": "timeframe_num",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "1"
                       }
                     ],
                     "parts": [
@@ -9105,8 +10650,8 @@
             ]
           },
           {
-            "id": "FRR-IVV-rev5-CSF",
-            "title": "FRR-IVV-rev5-CSF",
+            "id": "FRR-IVV-CSF",
+            "title": "FRR-IVV-CSF",
             "controls": [
               {
                 "id": "IVV-CSF-AIA",
@@ -9158,6 +10703,16 @@
                         "name": "force",
                         "ns": "http://fedramp.gov/ns/oscal",
                         "value": "MUST"
+                      },
+                      {
+                        "name": "timeframe_type",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "years"
+                      },
+                      {
+                        "name": "timeframe_num",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "1"
                       }
                     ],
                     "parts": [
@@ -9185,6 +10740,16 @@
                         "name": "force",
                         "ns": "http://fedramp.gov/ns/oscal",
                         "value": "MUST"
+                      },
+                      {
+                        "name": "timeframe_type",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "years"
+                      },
+                      {
+                        "name": "timeframe_num",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "1"
                       }
                     ],
                     "parts": [
@@ -9212,6 +10777,16 @@
                         "name": "force",
                         "ns": "http://fedramp.gov/ns/oscal",
                         "value": "MUST"
+                      },
+                      {
+                        "name": "timeframe_type",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "years"
+                      },
+                      {
+                        "name": "timeframe_num",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "1"
                       }
                     ],
                     "parts": [
@@ -9359,7 +10934,22 @@
         "props": [
           {
             "name": "label",
-            "value": "FRR-MAS"
+            "value": "MAS"
+          },
+          {
+            "name": "status",
+            "ns": "http://fedramp.gov/ns/oscal",
+            "value": "stable"
+          },
+          {
+            "name": "web_name",
+            "ns": "http://fedramp.gov/ns/oscal",
+            "value": "minimum-assessment-scope"
+          },
+          {
+            "name": "tag",
+            "ns": "http://fedramp.gov/ns/oscal",
+            "value": "boundary"
           }
         ],
         "parts": [
@@ -9372,7 +10962,55 @@
         "groups": [
           {
             "id": "FRR-MAS-CSO",
-            "title": "FRR-MAS-CSO",
+            "title": "General Provider Responsibilities",
+            "props": [
+              {
+                "name": "applicability-type",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "20x"
+              },
+              {
+                "name": "applicability-type",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Rev5"
+              },
+              {
+                "name": "applicability-path",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Program"
+              },
+              {
+                "name": "applicability-path",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Agency"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "B"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "C"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "D"
+              },
+              {
+                "name": "affects",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Providers"
+              }
+            ],
+            "parts": [
+              {
+                "name": "overview",
+                "prose": "These rules apply to providers for any type of FedRAMP Certification."
+              }
+            ],
             "controls": [
               {
                 "id": "MAS-CSO-IIR",
@@ -9725,7 +11363,22 @@
         "props": [
           {
             "name": "label",
-            "value": "FRR-MKT"
+            "value": "MKT"
+          },
+          {
+            "name": "status",
+            "ns": "http://fedramp.gov/ns/oscal",
+            "value": "stable"
+          },
+          {
+            "name": "web_name",
+            "ns": "http://fedramp.gov/ns/oscal",
+            "value": "marketplace-listing"
+          },
+          {
+            "name": "tag",
+            "ns": "http://fedramp.gov/ns/oscal",
+            "value": "other"
           }
         ],
         "parts": [
@@ -9738,7 +11391,60 @@
         "groups": [
           {
             "id": "FRR-MKT-FRP",
-            "title": "FRR-MKT-FRP",
+            "title": "FedRAMP Responsibilities",
+            "props": [
+              {
+                "name": "applicability-type",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "20x"
+              },
+              {
+                "name": "applicability-type",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Rev5"
+              },
+              {
+                "name": "applicability-path",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Program"
+              },
+              {
+                "name": "applicability-path",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Agency"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "A"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "B"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "C"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "D"
+              },
+              {
+                "name": "affects",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "FedRAMP"
+              }
+            ],
+            "parts": [
+              {
+                "name": "overview",
+                "prose": "These rules apply to FedRAMP activities related to the FedRAMP Marketplace."
+              }
+            ],
             "controls": [
               {
                 "id": "MKT-FRP-SOF",
@@ -9770,6 +11476,13 @@
                     "remarks": "Official launch of the FedRAMP Consolidated Rules for 2026."
                   }
                 ],
+                "links": [
+                  {
+                    "href": "https://fedramp.gov/scope",
+                    "rel": "reference",
+                    "text": "Scope of FedRAMP"
+                  }
+                ],
                 "parts": [
                   {
                     "id": "MKT-FRP-SOF_smt",
@@ -9782,7 +11495,60 @@
           },
           {
             "id": "FRR-MKT-CSO",
-            "title": "FRR-MKT-CSO",
+            "title": "General Provider Responsibilities",
+            "props": [
+              {
+                "name": "applicability-type",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "20x"
+              },
+              {
+                "name": "applicability-type",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Rev5"
+              },
+              {
+                "name": "applicability-path",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Program"
+              },
+              {
+                "name": "applicability-path",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Agency"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "A"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "B"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "C"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "D"
+              },
+              {
+                "name": "affects",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Providers"
+              }
+            ],
+            "parts": [
+              {
+                "name": "overview",
+                "prose": "These rules apply to providers seeking a listing in the FedRAMP Marketplace."
+              }
+            ],
             "controls": [
               {
                 "id": "MKT-CSO-MLR",
@@ -9881,7 +11647,20 @@
           },
           {
             "id": "FRR-MKT-IAS",
-            "title": "FRR-MKT-IAS",
+            "title": "General Assessor Responsibilities",
+            "props": [
+              {
+                "name": "affects",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Assessors"
+              }
+            ],
+            "parts": [
+              {
+                "name": "overview",
+                "prose": "These rules apply to independent assessment services seeking a listing in the FedRAMP Marketplace."
+              }
+            ],
             "controls": [
               {
                 "id": "MKT-IAS-OFR",
@@ -10037,7 +11816,20 @@
           },
           {
             "id": "FRR-MKT-CAS",
-            "title": "FRR-MKT-CAS",
+            "title": "General Advisor Responsibilities",
+            "props": [
+              {
+                "name": "affects",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Advisors"
+              }
+            ],
+            "parts": [
+              {
+                "name": "overview",
+                "prose": "These rules apply to consulting and advisory services seeking a listing in the FedRAMP Marketplace."
+              }
+            ],
             "controls": [
               {
                 "id": "MKT-CAS-WEB",
@@ -10198,7 +11990,40 @@
           },
           {
             "id": "FRR-MKT-IIP",
-            "title": "FRR-MKT-IIP",
+            "title": "Provider Responsibilities for Initial Implementation Phase Listings",
+            "props": [
+              {
+                "name": "applicability-type",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "20x"
+              },
+              {
+                "name": "applicability-type",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Rev5"
+              },
+              {
+                "name": "applicability-path",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Program"
+              },
+              {
+                "name": "applicability-path",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Agency"
+              },
+              {
+                "name": "affects",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Providers"
+              }
+            ],
+            "parts": [
+              {
+                "name": "overview",
+                "prose": "FedRAMP allows cloud service providers that are actively preparing to obtain a FedRAMP Certification to apply for listing in the FedRAMP Marketplace. All cloud service providers must obtain a Initial Implementation Phase Marketplace Listing before they can apply for FedRAMP Certification. These rules apply to providers seeking a Initial Implementation Phase listing in the FedRAMP Marketplace."
+              }
+            ],
             "controls": [
               {
                 "id": "MKT-IIP-AGU",
@@ -10351,7 +12176,22 @@
         "props": [
           {
             "name": "label",
-            "value": "FRR-REC"
+            "value": "REC"
+          },
+          {
+            "name": "status",
+            "ns": "http://fedramp.gov/ns/oscal",
+            "value": "stable"
+          },
+          {
+            "name": "web_name",
+            "ns": "http://fedramp.gov/ns/oscal",
+            "value": "fedramp-recognition"
+          },
+          {
+            "name": "tag",
+            "ns": "http://fedramp.gov/ns/oscal",
+            "value": "other"
           }
         ],
         "parts": [
@@ -10364,7 +12204,20 @@
         "groups": [
           {
             "id": "FRR-REC-FRP",
-            "title": "FRR-REC-FRP",
+            "title": "FedRAMP Responsibilities",
+            "props": [
+              {
+                "name": "affects",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "FedRAMP"
+              }
+            ],
+            "parts": [
+              {
+                "name": "overview",
+                "prose": "These rules apply to FedRAMP when evaluating independent assessment services for initial or ongoing FedRAMP Recognition."
+              }
+            ],
             "controls": [
               {
                 "id": "REC-FRP-FOC",
@@ -10484,7 +12337,20 @@
           },
           {
             "id": "FRR-REC-IAS",
-            "title": "FRR-REC-IAS",
+            "title": "General Independent Assessor Responsibilities",
+            "props": [
+              {
+                "name": "affects",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Assessors"
+              }
+            ],
+            "parts": [
+              {
+                "name": "overview",
+                "prose": "These rules apply to independent assessment services seeking to obtain or maintain FedRAMP Recognition."
+              }
+            ],
             "controls": [
               {
                 "id": "REC-IAS-ACC",
@@ -10557,6 +12423,16 @@
                     "ns": "http://fedramp.gov/ns/oscal",
                     "value": "2026-06-24T00:00:00Z",
                     "remarks": "Official launch of the FedRAMP Consolidated Rules for 2026."
+                  },
+                  {
+                    "name": "timeframe_type",
+                    "ns": "http://fedramp.gov/ns/oscal",
+                    "value": "years"
+                  },
+                  {
+                    "name": "timeframe_num",
+                    "ns": "http://fedramp.gov/ns/oscal",
+                    "value": "2"
                   }
                 ],
                 "parts": [
@@ -10607,6 +12483,13 @@
                     "remarks": "Official launch of the FedRAMP Consolidated Rules for 2026."
                   }
                 ],
+                "links": [
+                  {
+                    "href": "https://portal.a2la.org/documents/",
+                    "rel": "reference",
+                    "text": "A2LA Public Documents"
+                  }
+                ],
                 "parts": [
                   {
                     "id": "REC-IAS-PSC_smt",
@@ -10643,6 +12526,16 @@
                     "ns": "http://fedramp.gov/ns/oscal",
                     "value": "2026-06-24T00:00:00Z",
                     "remarks": "Official launch of the FedRAMP Consolidated Rules for 2026."
+                  },
+                  {
+                    "name": "timeframe_type",
+                    "ns": "http://fedramp.gov/ns/oscal",
+                    "value": "years"
+                  },
+                  {
+                    "name": "timeframe_num",
+                    "ns": "http://fedramp.gov/ns/oscal",
+                    "value": "1"
                   }
                 ],
                 "parts": [
@@ -10686,6 +12579,16 @@
                     "ns": "http://fedramp.gov/ns/oscal",
                     "value": "2026-06-24T00:00:00Z",
                     "remarks": "Official launch of the FedRAMP Consolidated Rules for 2026."
+                  },
+                  {
+                    "name": "timeframe_type",
+                    "ns": "http://fedramp.gov/ns/oscal",
+                    "value": "years"
+                  },
+                  {
+                    "name": "timeframe_num",
+                    "ns": "http://fedramp.gov/ns/oscal",
+                    "value": "2"
                   }
                 ],
                 "parts": [
@@ -10815,6 +12718,16 @@
                     "ns": "http://fedramp.gov/ns/oscal",
                     "value": "2026-06-24T00:00:00Z",
                     "remarks": "Official launch of the FedRAMP Consolidated Rules for 2026."
+                  },
+                  {
+                    "name": "timeframe_type",
+                    "ns": "http://fedramp.gov/ns/oscal",
+                    "value": "years"
+                  },
+                  {
+                    "name": "timeframe_num",
+                    "ns": "http://fedramp.gov/ns/oscal",
+                    "value": "1"
                   }
                 ],
                 "parts": [
@@ -10853,6 +12766,16 @@
                     "ns": "http://fedramp.gov/ns/oscal",
                     "value": "2026-06-24T00:00:00Z",
                     "remarks": "Official launch of the FedRAMP Consolidated Rules for 2026."
+                  },
+                  {
+                    "name": "timeframe_type",
+                    "ns": "http://fedramp.gov/ns/oscal",
+                    "value": "hours"
+                  },
+                  {
+                    "name": "timeframe_num",
+                    "ns": "http://fedramp.gov/ns/oscal",
+                    "value": "48"
                   }
                 ],
                 "parts": [
@@ -11011,6 +12934,16 @@
                     "ns": "http://fedramp.gov/ns/oscal",
                     "value": "2026-06-24T00:00:00Z",
                     "remarks": "Official launch of the FedRAMP Consolidated Rules for 2026."
+                  },
+                  {
+                    "name": "timeframe_type",
+                    "ns": "http://fedramp.gov/ns/oscal",
+                    "value": "years"
+                  },
+                  {
+                    "name": "timeframe_num",
+                    "ns": "http://fedramp.gov/ns/oscal",
+                    "value": "2"
                   }
                 ],
                 "parts": [
@@ -11036,7 +12969,22 @@
         "props": [
           {
             "name": "label",
-            "value": "FRR-SCG"
+            "value": "SCG"
+          },
+          {
+            "name": "status",
+            "ns": "http://fedramp.gov/ns/oscal",
+            "value": "stable"
+          },
+          {
+            "name": "web_name",
+            "ns": "http://fedramp.gov/ns/oscal",
+            "value": "secure-configuration-guide"
+          },
+          {
+            "name": "tag",
+            "ns": "http://fedramp.gov/ns/oscal",
+            "value": "materials"
           }
         ],
         "parts": [
@@ -11049,7 +12997,55 @@
         "groups": [
           {
             "id": "FRR-SCG-CSO",
-            "title": "FRR-SCG-CSO",
+            "title": "General Provider Responsibilities",
+            "props": [
+              {
+                "name": "applicability-type",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "20x"
+              },
+              {
+                "name": "applicability-type",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Rev5"
+              },
+              {
+                "name": "applicability-path",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Program"
+              },
+              {
+                "name": "applicability-path",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Agency"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "B"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "C"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "D"
+              },
+              {
+                "name": "affects",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Providers"
+              }
+            ],
+            "parts": [
+              {
+                "name": "overview",
+                "prose": "These rules apply to providers with FedRAMP Certifications of any type."
+              }
+            ],
             "controls": [
               {
                 "id": "SCG-CSO-RSC",
@@ -11325,7 +13321,55 @@
           },
           {
             "id": "FRR-SCG-ENH",
-            "title": "FRR-SCG-ENH",
+            "title": "Enhanced Capabilities",
+            "props": [
+              {
+                "name": "applicability-type",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "20x"
+              },
+              {
+                "name": "applicability-type",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Rev5"
+              },
+              {
+                "name": "applicability-path",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Program"
+              },
+              {
+                "name": "applicability-path",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Agency"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "B"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "C"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "D"
+              },
+              {
+                "name": "affects",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Providers"
+              }
+            ],
+            "parts": [
+              {
+                "name": "overview",
+                "prose": "These recommendations apply to providers with FedRAMP Certifications of any type."
+              }
+            ],
             "controls": [
               {
                 "id": "SCG-ENH-CMP",
@@ -11647,7 +13691,22 @@
         "props": [
           {
             "name": "label",
-            "value": "FRR-SCN"
+            "value": "SCN"
+          },
+          {
+            "name": "status",
+            "ns": "http://fedramp.gov/ns/oscal",
+            "value": "stable"
+          },
+          {
+            "name": "web_name",
+            "ns": "http://fedramp.gov/ns/oscal",
+            "value": "significant-change-notification"
+          },
+          {
+            "name": "tag",
+            "ns": "http://fedramp.gov/ns/oscal",
+            "value": "assurance"
           }
         ],
         "parts": [
@@ -11660,7 +13719,55 @@
         "groups": [
           {
             "id": "FRR-SCN-FRP",
-            "title": "FRR-SCN-FRP",
+            "title": "FedRAMP Responsibilities",
+            "props": [
+              {
+                "name": "applicability-type",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "20x"
+              },
+              {
+                "name": "applicability-type",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Rev5"
+              },
+              {
+                "name": "applicability-path",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Program"
+              },
+              {
+                "name": "applicability-path",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Agency"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "B"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "C"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "D"
+              },
+              {
+                "name": "affects",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "FedRAMP"
+              }
+            ],
+            "parts": [
+              {
+                "name": "overview",
+                "prose": "These rules apply to FedRAMP."
+              }
+            ],
             "controls": [
               {
                 "id": "SCN-FRP-CAP",
@@ -11709,7 +13816,55 @@
           },
           {
             "id": "FRR-SCN-CSO",
-            "title": "FRR-SCN-CSO",
+            "title": "General Provider Responsibilities",
+            "props": [
+              {
+                "name": "applicability-type",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "20x"
+              },
+              {
+                "name": "applicability-type",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Rev5"
+              },
+              {
+                "name": "applicability-path",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Program"
+              },
+              {
+                "name": "applicability-path",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Agency"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "B"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "C"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "D"
+              },
+              {
+                "name": "affects",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Providers"
+              }
+            ],
+            "parts": [
+              {
+                "name": "overview",
+                "prose": "These rules apply to providers with FedRAMP Certifications of any type."
+              }
+            ],
             "controls": [
               {
                 "id": "SCN-CSO-EVA",
@@ -12204,7 +14359,55 @@
           },
           {
             "id": "FRR-SCN-ADP",
-            "title": "FRR-SCN-ADP",
+            "title": "Adaptive Changes",
+            "props": [
+              {
+                "name": "applicability-type",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "20x"
+              },
+              {
+                "name": "applicability-type",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Rev5"
+              },
+              {
+                "name": "applicability-path",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Program"
+              },
+              {
+                "name": "applicability-path",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Agency"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "B"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "C"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "D"
+              },
+              {
+                "name": "affects",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Providers"
+              }
+            ],
+            "parts": [
+              {
+                "name": "overview",
+                "prose": "These rules apply to all adaptive significant changes."
+              }
+            ],
             "controls": [
               {
                 "id": "SCN-ADP-NTF",
@@ -12234,6 +14437,16 @@
                     "ns": "http://fedramp.gov/ns/oscal",
                     "value": "2026-06-24T00:00:00Z",
                     "remarks": "Official launch of the FedRAMP Consolidated Rules for 2026."
+                  },
+                  {
+                    "name": "timeframe_type",
+                    "ns": "http://fedramp.gov/ns/oscal",
+                    "value": "bizdays"
+                  },
+                  {
+                    "name": "timeframe_num",
+                    "ns": "http://fedramp.gov/ns/oscal",
+                    "value": "10"
                   }
                 ],
                 "parts": [
@@ -12285,7 +14498,55 @@
           },
           {
             "id": "FRR-SCN-RTR",
-            "title": "FRR-SCN-RTR",
+            "title": "Routine Recurring Changes",
+            "props": [
+              {
+                "name": "applicability-type",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "20x"
+              },
+              {
+                "name": "applicability-type",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Rev5"
+              },
+              {
+                "name": "applicability-path",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Program"
+              },
+              {
+                "name": "applicability-path",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Agency"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "B"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "C"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "D"
+              },
+              {
+                "name": "affects",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Providers"
+              }
+            ],
+            "parts": [
+              {
+                "name": "overview",
+                "prose": "These rules apply to all routine recurring significant changes."
+              }
+            ],
             "controls": [
               {
                 "id": "SCN-RTR-NNR",
@@ -12340,7 +14601,55 @@
           },
           {
             "id": "FRR-SCN-TRF",
-            "title": "FRR-SCN-TRF",
+            "title": "Transformative Changes",
+            "props": [
+              {
+                "name": "applicability-type",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "20x"
+              },
+              {
+                "name": "applicability-type",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Rev5"
+              },
+              {
+                "name": "applicability-path",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Program"
+              },
+              {
+                "name": "applicability-path",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Agency"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "B"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "C"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "D"
+              },
+              {
+                "name": "affects",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Providers"
+              }
+            ],
+            "parts": [
+              {
+                "name": "overview",
+                "prose": "These rules apply to all transformative significant changes."
+              }
+            ],
             "controls": [
               {
                 "id": "SCN-TRF-NIP",
@@ -12370,6 +14679,16 @@
                     "ns": "http://fedramp.gov/ns/oscal",
                     "value": "2026-06-24T00:00:00Z",
                     "remarks": "Official launch of the FedRAMP Consolidated Rules for 2026."
+                  },
+                  {
+                    "name": "timeframe_type",
+                    "ns": "http://fedramp.gov/ns/oscal",
+                    "value": "bizdays"
+                  },
+                  {
+                    "name": "timeframe_num",
+                    "ns": "http://fedramp.gov/ns/oscal",
+                    "value": "30"
                   }
                 ],
                 "parts": [
@@ -12428,6 +14747,16 @@
                     "ns": "http://fedramp.gov/ns/oscal",
                     "value": "2026-06-24T00:00:00Z",
                     "remarks": "Official launch of the FedRAMP Consolidated Rules for 2026."
+                  },
+                  {
+                    "name": "timeframe_type",
+                    "ns": "http://fedramp.gov/ns/oscal",
+                    "value": "bizdays"
+                  },
+                  {
+                    "name": "timeframe_num",
+                    "ns": "http://fedramp.gov/ns/oscal",
+                    "value": "10"
                   }
                 ],
                 "parts": [
@@ -12486,6 +14815,16 @@
                     "ns": "http://fedramp.gov/ns/oscal",
                     "value": "2026-06-24T00:00:00Z",
                     "remarks": "Official launch of the FedRAMP Consolidated Rules for 2026."
+                  },
+                  {
+                    "name": "timeframe_type",
+                    "ns": "http://fedramp.gov/ns/oscal",
+                    "value": "bizdays"
+                  },
+                  {
+                    "name": "timeframe_num",
+                    "ns": "http://fedramp.gov/ns/oscal",
+                    "value": "5"
                   }
                 ],
                 "parts": [
@@ -12544,6 +14883,16 @@
                     "ns": "http://fedramp.gov/ns/oscal",
                     "value": "2026-06-24T00:00:00Z",
                     "remarks": "Official launch of the FedRAMP Consolidated Rules for 2026."
+                  },
+                  {
+                    "name": "timeframe_type",
+                    "ns": "http://fedramp.gov/ns/oscal",
+                    "value": "bizdays"
+                  },
+                  {
+                    "name": "timeframe_num",
+                    "ns": "http://fedramp.gov/ns/oscal",
+                    "value": "5"
                   }
                 ],
                 "parts": [
@@ -12608,6 +14957,16 @@
                     "ns": "http://fedramp.gov/ns/oscal",
                     "value": "2026-06-24T00:00:00Z",
                     "remarks": "Official launch of the FedRAMP Consolidated Rules for 2026."
+                  },
+                  {
+                    "name": "timeframe_type",
+                    "ns": "http://fedramp.gov/ns/oscal",
+                    "value": "bizdays"
+                  },
+                  {
+                    "name": "timeframe_num",
+                    "ns": "http://fedramp.gov/ns/oscal",
+                    "value": "30"
                   }
                 ],
                 "parts": [
@@ -12722,7 +15081,22 @@
         "props": [
           {
             "name": "label",
-            "value": "FRR-SDR"
+            "value": "SDR"
+          },
+          {
+            "name": "status",
+            "ns": "http://fedramp.gov/ns/oscal",
+            "value": "stable"
+          },
+          {
+            "name": "web_name",
+            "ns": "http://fedramp.gov/ns/oscal",
+            "value": "security-decision-record"
+          },
+          {
+            "name": "tag",
+            "ns": "http://fedramp.gov/ns/oscal",
+            "value": "materials"
           }
         ],
         "parts": [
@@ -12735,7 +15109,55 @@
         "groups": [
           {
             "id": "FRR-SDR-CSO",
-            "title": "FRR-SDR-CSO",
+            "title": "General Provider Responsibilities",
+            "props": [
+              {
+                "name": "applicability-type",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "20x"
+              },
+              {
+                "name": "applicability-type",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Rev5"
+              },
+              {
+                "name": "applicability-path",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Program"
+              },
+              {
+                "name": "applicability-path",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Agency"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "B"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "C"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "D"
+              },
+              {
+                "name": "affects",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Providers"
+              }
+            ],
+            "parts": [
+              {
+                "name": "overview",
+                "prose": "These rules apply to providers for FedRAMP Certifications of any type."
+              }
+            ],
             "controls": [
               {
                 "id": "SDR-CSO-FRR",
@@ -12834,8 +15256,8 @@
             ]
           },
           {
-            "id": "FRR-SDR-20x-CSX",
-            "title": "FRR-SDR-20x-CSX",
+            "id": "FRR-SDR-CSX",
+            "title": "FRR-SDR-CSX",
             "controls": [
               {
                 "id": "SDR-CSX-KSI",
@@ -13051,8 +15473,8 @@
             ]
           },
           {
-            "id": "FRR-SDR-rev5-CSF",
-            "title": "FRR-SDR-rev5-CSF",
+            "id": "FRR-SDR-CSF",
+            "title": "FRR-SDR-CSF",
             "controls": [
               {
                 "id": "SDR-CSF-CTF",
@@ -13108,7 +15530,22 @@
         "props": [
           {
             "name": "label",
-            "value": "FRR-VDR"
+            "value": "VDR"
+          },
+          {
+            "name": "status",
+            "ns": "http://fedramp.gov/ns/oscal",
+            "value": "stable"
+          },
+          {
+            "name": "web_name",
+            "ns": "http://fedramp.gov/ns/oscal",
+            "value": "vulnerability-detection-and-response"
+          },
+          {
+            "name": "tag",
+            "ns": "http://fedramp.gov/ns/oscal",
+            "value": "boundary"
           }
         ],
         "parts": [
@@ -13121,7 +15558,55 @@
         "groups": [
           {
             "id": "FRR-VDR-CSO",
-            "title": "FRR-VDR-CSO",
+            "title": "General Provider Responsibilities",
+            "props": [
+              {
+                "name": "applicability-type",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "20x"
+              },
+              {
+                "name": "applicability-type",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Rev5"
+              },
+              {
+                "name": "applicability-path",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Program"
+              },
+              {
+                "name": "applicability-path",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Agency"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "B"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "C"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "D"
+              },
+              {
+                "name": "affects",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Providers"
+              }
+            ],
+            "parts": [
+              {
+                "name": "overview",
+                "prose": "These rules apply to all providers with FedRAMP Certifications of any type."
+              }
+            ],
             "controls": [
               {
                 "id": "VDR-CSO-DET",
@@ -13484,7 +15969,55 @@
           },
           {
             "id": "FRR-VDR-TFR",
-            "title": "FRR-VDR-TFR",
+            "title": "Timeframes",
+            "props": [
+              {
+                "name": "applicability-type",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "20x"
+              },
+              {
+                "name": "applicability-type",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Rev5"
+              },
+              {
+                "name": "applicability-path",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Program"
+              },
+              {
+                "name": "applicability-path",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Agency"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "B"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "C"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "D"
+              },
+              {
+                "name": "affects",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Providers"
+              }
+            ],
+            "parts": [
+              {
+                "name": "overview",
+                "prose": "These rules apply to timeframes for vulnerability detection and response."
+              }
+            ],
             "controls": [
               {
                 "id": "VDR-TFR-NMV",
@@ -13574,6 +16107,16 @@
                         "name": "force",
                         "ns": "http://fedramp.gov/ns/oscal",
                         "value": "SHOULD"
+                      },
+                      {
+                        "name": "timeframe_type",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "months"
+                      },
+                      {
+                        "name": "timeframe_num",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "3"
                       }
                     ],
                     "parts": [
@@ -13601,6 +16144,16 @@
                         "name": "force",
                         "ns": "http://fedramp.gov/ns/oscal",
                         "value": "SHOULD"
+                      },
+                      {
+                        "name": "timeframe_type",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "months"
+                      },
+                      {
+                        "name": "timeframe_num",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "1"
                       }
                     ],
                     "parts": [
@@ -13628,6 +16181,16 @@
                         "name": "force",
                         "ns": "http://fedramp.gov/ns/oscal",
                         "value": "SHOULD"
+                      },
+                      {
+                        "name": "timeframe_type",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "days"
+                      },
+                      {
+                        "name": "timeframe_num",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "14"
                       }
                     ],
                     "parts": [
@@ -13655,6 +16218,16 @@
                         "name": "force",
                         "ns": "http://fedramp.gov/ns/oscal",
                         "value": "SHOULD"
+                      },
+                      {
+                        "name": "timeframe_type",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "days"
+                      },
+                      {
+                        "name": "timeframe_num",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "7"
                       }
                     ],
                     "parts": [
@@ -13717,6 +16290,16 @@
                         "name": "force",
                         "ns": "http://fedramp.gov/ns/oscal",
                         "value": "SHOULD"
+                      },
+                      {
+                        "name": "timeframe_type",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "months"
+                      },
+                      {
+                        "name": "timeframe_num",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "6"
                       }
                     ],
                     "parts": [
@@ -13744,6 +16327,16 @@
                         "name": "force",
                         "ns": "http://fedramp.gov/ns/oscal",
                         "value": "SHOULD"
+                      },
+                      {
+                        "name": "timeframe_type",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "months"
+                      },
+                      {
+                        "name": "timeframe_num",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "6"
                       }
                     ],
                     "parts": [
@@ -13771,6 +16364,16 @@
                         "name": "force",
                         "ns": "http://fedramp.gov/ns/oscal",
                         "value": "SHOULD"
+                      },
+                      {
+                        "name": "timeframe_type",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "months"
+                      },
+                      {
+                        "name": "timeframe_num",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "1"
                       }
                     ],
                     "parts": [
@@ -13798,6 +16401,16 @@
                         "name": "force",
                         "ns": "http://fedramp.gov/ns/oscal",
                         "value": "SHOULD"
+                      },
+                      {
+                        "name": "timeframe_type",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "months"
+                      },
+                      {
+                        "name": "timeframe_num",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "1"
                       }
                     ],
                     "parts": [
@@ -14033,6 +16646,13 @@
                     "remarks": "Official launch of the FedRAMP Consolidated Rules for 2026."
                   }
                 ],
+                "links": [
+                  {
+                    "href": "https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk",
+                    "rel": "reference",
+                    "text": "CISA BOD 26-04"
+                  }
+                ],
                 "parts": [
                   {
                     "id": "VDR-TFR-KEV_smt",
@@ -14091,6 +16711,16 @@
                         "name": "force",
                         "ns": "http://fedramp.gov/ns/oscal",
                         "value": "SHOULD"
+                      },
+                      {
+                        "name": "timeframe_type",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "days"
+                      },
+                      {
+                        "name": "timeframe_num",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "14"
                       }
                     ],
                     "parts": [
@@ -14118,6 +16748,16 @@
                         "name": "force",
                         "ns": "http://fedramp.gov/ns/oscal",
                         "value": "SHOULD"
+                      },
+                      {
+                        "name": "timeframe_type",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "days"
+                      },
+                      {
+                        "name": "timeframe_num",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "7"
                       }
                     ],
                     "parts": [
@@ -14145,6 +16785,16 @@
                         "name": "force",
                         "ns": "http://fedramp.gov/ns/oscal",
                         "value": "SHOULD"
+                      },
+                      {
+                        "name": "timeframe_type",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "days"
+                      },
+                      {
+                        "name": "timeframe_num",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "3"
                       }
                     ],
                     "parts": [
@@ -14172,6 +16822,16 @@
                         "name": "force",
                         "ns": "http://fedramp.gov/ns/oscal",
                         "value": "SHOULD"
+                      },
+                      {
+                        "name": "timeframe_type",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "days"
+                      },
+                      {
+                        "name": "timeframe_num",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "1"
                       }
                     ],
                     "parts": [
@@ -14183,13 +16843,7 @@
                     ]
                   }
                 ]
-              }
-            ]
-          },
-          {
-            "id": "FRR-VDR-20x-TFR",
-            "title": "FRR-VDR-20x-TFR",
-            "controls": [
+              },
               {
                 "id": "VDR-TFR-MVX",
                 "title": "Persistent Machine Verification and Validation for 20x",
@@ -14240,6 +16894,16 @@
                         "name": "force",
                         "ns": "http://fedramp.gov/ns/oscal",
                         "value": "SHOULD"
+                      },
+                      {
+                        "name": "timeframe_type",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "months"
+                      },
+                      {
+                        "name": "timeframe_num",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "1"
                       }
                     ],
                     "parts": [
@@ -14267,6 +16931,16 @@
                         "name": "force",
                         "ns": "http://fedramp.gov/ns/oscal",
                         "value": "MUST"
+                      },
+                      {
+                        "name": "timeframe_type",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "days"
+                      },
+                      {
+                        "name": "timeframe_num",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "7"
                       }
                     ],
                     "parts": [
@@ -14294,6 +16968,16 @@
                         "name": "force",
                         "ns": "http://fedramp.gov/ns/oscal",
                         "value": "MUST"
+                      },
+                      {
+                        "name": "timeframe_type",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "days"
+                      },
+                      {
+                        "name": "timeframe_num",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "3"
                       }
                     ],
                     "parts": [
@@ -14305,13 +16989,7 @@
                     ]
                   }
                 ]
-              }
-            ]
-          },
-          {
-            "id": "FRR-VDR-rev5-TFR",
-            "title": "FRR-VDR-rev5-TFR",
-            "controls": [
+              },
               {
                 "id": "VDR-TFR-MVF",
                 "title": "Persistent Machine Verification and Validation for Rev5",
@@ -14362,6 +17040,16 @@
                         "name": "force",
                         "ns": "http://fedramp.gov/ns/oscal",
                         "value": "SHOULD"
+                      },
+                      {
+                        "name": "timeframe_type",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "months"
+                      },
+                      {
+                        "name": "timeframe_num",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "1"
                       }
                     ],
                     "parts": [
@@ -14389,6 +17077,16 @@
                         "name": "force",
                         "ns": "http://fedramp.gov/ns/oscal",
                         "value": "MUST"
+                      },
+                      {
+                        "name": "timeframe_type",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "months"
+                      },
+                      {
+                        "name": "timeframe_num",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "1"
                       }
                     ],
                     "parts": [
@@ -14416,6 +17114,16 @@
                         "name": "force",
                         "ns": "http://fedramp.gov/ns/oscal",
                         "value": "MUST"
+                      },
+                      {
+                        "name": "timeframe_type",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "months"
+                      },
+                      {
+                        "name": "timeframe_num",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "1"
                       }
                     ],
                     "parts": [
@@ -14438,7 +17146,22 @@
         "props": [
           {
             "name": "label",
-            "value": "FRR-VER"
+            "value": "VER"
+          },
+          {
+            "name": "status",
+            "ns": "http://fedramp.gov/ns/oscal",
+            "value": "stable"
+          },
+          {
+            "name": "web_name",
+            "ns": "http://fedramp.gov/ns/oscal",
+            "value": "vulnerability-evaluation-and-reporting"
+          },
+          {
+            "name": "tag",
+            "ns": "http://fedramp.gov/ns/oscal",
+            "value": "assurance"
           }
         ],
         "parts": [
@@ -14451,7 +17174,55 @@
         "groups": [
           {
             "id": "FRR-VER-FRP",
-            "title": "FRR-VER-FRP",
+            "title": "FedRAMP Responsibilities",
+            "props": [
+              {
+                "name": "applicability-type",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "20x"
+              },
+              {
+                "name": "applicability-type",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Rev5"
+              },
+              {
+                "name": "applicability-path",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Program"
+              },
+              {
+                "name": "applicability-path",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Agency"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "B"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "C"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "D"
+              },
+              {
+                "name": "affects",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "FedRAMP"
+              }
+            ],
+            "parts": [
+              {
+                "name": "overview",
+                "prose": "These rules apply to FedRAMP when setting expectations for specific cloud service providers."
+              }
+            ],
             "controls": [
               {
                 "id": "VER-FRP-ARP",
@@ -14533,7 +17304,55 @@
           },
           {
             "id": "FRR-VER-AGM",
-            "title": "FRR-VER-AGM",
+            "title": "Agency Guidance",
+            "props": [
+              {
+                "name": "applicability-type",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "20x"
+              },
+              {
+                "name": "applicability-type",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Rev5"
+              },
+              {
+                "name": "applicability-path",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Program"
+              },
+              {
+                "name": "applicability-path",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Agency"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "B"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "C"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "D"
+              },
+              {
+                "name": "affects",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Agencies"
+              }
+            ],
+            "parts": [
+              {
+                "name": "overview",
+                "prose": "These rules for agencies apply to all agencies using a FedRAMP Certification."
+              }
+            ],
             "controls": [
               {
                 "id": "VER-AGM-RVR",
@@ -14620,7 +17439,55 @@
           },
           {
             "id": "FRR-VER-EVA",
-            "title": "FRR-VER-EVA",
+            "title": "Evaluation",
+            "props": [
+              {
+                "name": "applicability-type",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "20x"
+              },
+              {
+                "name": "applicability-type",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Rev5"
+              },
+              {
+                "name": "applicability-path",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Program"
+              },
+              {
+                "name": "applicability-path",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Agency"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "B"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "C"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "D"
+              },
+              {
+                "name": "affects",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Providers"
+              }
+            ],
+            "parts": [
+              {
+                "name": "overview",
+                "prose": "These rules apply to the evaluation of vulnerabilities."
+              }
+            ],
             "controls": [
               {
                 "id": "VER-EVA-ELX",
@@ -14742,7 +17609,13 @@
                   {
                     "id": "VER-EVA-EPA_smt",
                     "name": "statement",
-                    "prose": "Providers MUST evaluate detected vulnerabilities, considering the context of the cloud service offering, to estimate the potential agency impact of exploitation on government customers AND assign one of the following Potential Agency Impact N-ratings (PAIN):"
+                    "prose": "Providers MUST evaluate detected vulnerabilities, considering the context of the cloud service offering, to estimate the potential agency impact of exploitation on government customers AND assign one of the following Potential Agency Impact N-ratings (PAIN):",
+                    "parts": [
+                      {
+                        "name": "item",
+                        "prose": "- **N1**: Exploitation could be expected to have minimal customer effects on one or more agencies that use the cloud service offering.\n- **N2**: Exploitation could be expected to have narrow customer effects on one or more agencies that use the cloud service offering.\n- **N3**: Exploitation could be expected to have a disruptive customer effect on one agency that uses the cloud service offering.\n- **N4**: Exploitation could be expected to have a debilitating customer effect on one agency that uses the cloud service offering OR a disruptive customer effect on more than one federal agency that uses the cloud service offering.\n- **N5**: Exploitation could be expected to have a debilitating customer effect on more than one agency that uses the cloud service offering."
+                      }
+                    ]
                   }
                 ]
               },
@@ -14908,7 +17781,55 @@
           },
           {
             "id": "FRR-VER-RPT",
-            "title": "FRR-VER-RPT",
+            "title": "Reporting",
+            "props": [
+              {
+                "name": "applicability-type",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "20x"
+              },
+              {
+                "name": "applicability-type",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Rev5"
+              },
+              {
+                "name": "applicability-path",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Program"
+              },
+              {
+                "name": "applicability-path",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Agency"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "B"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "C"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "D"
+              },
+              {
+                "name": "affects",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Providers"
+              }
+            ],
+            "parts": [
+              {
+                "name": "overview",
+                "prose": "These rules apply to reporting related to vulnerability detection and response."
+              }
+            ],
             "controls": [
               {
                 "id": "VER-RPT-PER",
@@ -15217,7 +18138,55 @@
           },
           {
             "id": "FRR-VER-TFR",
-            "title": "FRR-VER-TFR",
+            "title": "Timeframes",
+            "props": [
+              {
+                "name": "applicability-type",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "20x"
+              },
+              {
+                "name": "applicability-type",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Rev5"
+              },
+              {
+                "name": "applicability-path",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Program"
+              },
+              {
+                "name": "applicability-path",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Agency"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "B"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "C"
+              },
+              {
+                "name": "applicability-class",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "D"
+              },
+              {
+                "name": "affects",
+                "ns": "http://fedramp.gov/ns/oscal",
+                "value": "Providers"
+              }
+            ],
+            "parts": [
+              {
+                "name": "overview",
+                "prose": "These rules apply to timeframes for vulnerability detection and response."
+              }
+            ],
             "controls": [
               {
                 "id": "VER-TFR-MHR",
@@ -15247,6 +18216,16 @@
                     "ns": "http://fedramp.gov/ns/oscal",
                     "value": "2026-06-24T00:00:00Z",
                     "remarks": "Official launch of the FedRAMP Consolidated Rules for 2026."
+                  },
+                  {
+                    "name": "timeframe_type",
+                    "ns": "http://fedramp.gov/ns/oscal",
+                    "value": "months"
+                  },
+                  {
+                    "name": "timeframe_num",
+                    "ns": "http://fedramp.gov/ns/oscal",
+                    "value": "1"
                   }
                 ],
                 "parts": [
@@ -15305,6 +18284,16 @@
                     "ns": "http://fedramp.gov/ns/oscal",
                     "value": "2026-06-24T00:00:00Z",
                     "remarks": "Official launch of the FedRAMP Consolidated Rules for 2026."
+                  },
+                  {
+                    "name": "timeframe_type",
+                    "ns": "http://fedramp.gov/ns/oscal",
+                    "value": "days"
+                  },
+                  {
+                    "name": "timeframe_num",
+                    "ns": "http://fedramp.gov/ns/oscal",
+                    "value": "192"
                   }
                 ],
                 "parts": [
@@ -15371,6 +18360,16 @@
                         "name": "force",
                         "ns": "http://fedramp.gov/ns/oscal",
                         "value": "MAY"
+                      },
+                      {
+                        "name": "timeframe_type",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "months"
+                      },
+                      {
+                        "name": "timeframe_num",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "1"
                       }
                     ],
                     "parts": [
@@ -15418,6 +18417,16 @@
                         "name": "force",
                         "ns": "http://fedramp.gov/ns/oscal",
                         "value": "SHOULD"
+                      },
+                      {
+                        "name": "timeframe_type",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "months"
+                      },
+                      {
+                        "name": "timeframe_num",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "1"
                       }
                     ],
                     "parts": [
@@ -15469,6 +18478,16 @@
                         "name": "force",
                         "ns": "http://fedramp.gov/ns/oscal",
                         "value": "SHOULD"
+                      },
+                      {
+                        "name": "timeframe_type",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "days"
+                      },
+                      {
+                        "name": "timeframe_num",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "14"
                       }
                     ],
                     "parts": [
@@ -15520,6 +18539,16 @@
                         "name": "force",
                         "ns": "http://fedramp.gov/ns/oscal",
                         "value": "SHOULD"
+                      },
+                      {
+                        "name": "timeframe_type",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "days"
+                      },
+                      {
+                        "name": "timeframe_num",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "7"
                       }
                     ],
                     "parts": [
@@ -15606,6 +18635,16 @@
                         "name": "force",
                         "ns": "http://fedramp.gov/ns/oscal",
                         "value": "SHOULD"
+                      },
+                      {
+                        "name": "timeframe_type",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "days"
+                      },
+                      {
+                        "name": "timeframe_num",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "14"
                       }
                     ],
                     "parts": [
@@ -15633,6 +18672,16 @@
                         "name": "force",
                         "ns": "http://fedramp.gov/ns/oscal",
                         "value": "SHOULD"
+                      },
+                      {
+                        "name": "timeframe_type",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "days"
+                      },
+                      {
+                        "name": "timeframe_num",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "7"
                       }
                     ],
                     "parts": [
@@ -15660,6 +18709,16 @@
                         "name": "force",
                         "ns": "http://fedramp.gov/ns/oscal",
                         "value": "SHOULD"
+                      },
+                      {
+                        "name": "timeframe_type",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "days"
+                      },
+                      {
+                        "name": "timeframe_num",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "5"
                       }
                     ],
                     "parts": [
@@ -15687,6 +18746,16 @@
                         "name": "force",
                         "ns": "http://fedramp.gov/ns/oscal",
                         "value": "SHOULD"
+                      },
+                      {
+                        "name": "timeframe_type",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "days"
+                      },
+                      {
+                        "name": "timeframe_num",
+                        "ns": "http://fedramp.gov/ns/oscal",
+                        "value": "2"
                       }
                     ],
                     "parts": [
@@ -17359,6 +20428,22 @@
           }
         ]
       }
-    ]
+    ],
+    "back-matter": {
+      "resources": [
+        {
+          "uuid": "ffffffff-0000-4000-a000-000000000001",
+          "title": "NIST SP 800-53 Rev 5",
+          "rlinks": [
+            {
+              "href": "https://raw.githubusercontent.com/usnistgov/oscal-content/refs/heads/main/nist.gov/SP800-53/rev5/json/NIST_SP-800-53_rev5_catalog.json"
+            },
+            {
+              "href": "https://doi.org/10.6028/NIST.SP.800-53r5"
+            }
+          ]
+        }
+      ]
+    }
   }
 }
