@@ -1,12 +1,19 @@
 {
   "profile": {
-    "uuid": "0a9a59a2-dd29-4f1b-b863-360291e535cc",
+    "uuid": "775e3397-f2af-4b17-99e7-79ec4760eaf9",
     "metadata": {
       "title": "FedRAMP Rev 5 \u2014 Tailoring",
       "published": "2026-07-06T00:00:00Z",
-      "last-modified": "2026-09-04T03:46:03Z",
+      "last-modified": "2026-09-08T02:49:11Z",
       "version": "2026.07.06.01",
       "oscal-version": "1.2.3",
+      "props": [
+        {
+          "name": "presentation-id",
+          "ns": "http://cybercraft.app/ns/oscal",
+          "value": "fedramp-cr26"
+        }
+      ],
       "links": [
         {
           "href": "https://raw.githubusercontent.com/FedRAMP/rules/main/fedramp-consolidated-rules.json",
@@ -20,7 +27,7 @@
     },
     "imports": [
       {
-        "href": "#f2b1972e-e000-4f0c-937f-5de37795b5f5",
+        "href": "#4edb42df-5a9b-4296-9c89-992dfd9c784c",
         "include-controls": [
           {
             "with-ids": [
@@ -1431,7 +1438,7 @@
     "back-matter": {
       "resources": [
         {
-          "uuid": "f2b1972e-e000-4f0c-937f-5de37795b5f5",
+          "uuid": "4edb42df-5a9b-4296-9c89-992dfd9c784c",
           "title": "NIST SP 800-53 Revision 5",
           "rlinks": [
             {

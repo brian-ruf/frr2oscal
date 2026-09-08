@@ -15,7 +15,8 @@ Constants:
     ALTERNATE_URL (str): Alternate (human-facing) FedRAMP URL added to metadata links.
     SOURCE_LOCAL (str): Local cache path for the downloaded JSON.
     FRR_NS (str): FedRAMP namespace URI used in OSCAL props.
-    NIST_800_53_REV5_URL (str): NIST SP 800-53 Rev 5 OSCAL catalog URL.
+    NIST_800_53_REV5_URL (str): NIST SP 800-53 Rev 5 OSCAL catalog URL (GitHub raw).
+    NIST_800_53_REV5_DOI_URL (str): NIST SP 800-53 Rev 5 canonical DOI URL.
     CATALOG_HREF (str): Relative filename for the FedRAMP OSCAL catalog,
         used as the href in profile import statements.
     TAILORING_PROFILE_NAME (str): Key and filename stem for the Rev5 tailoring profile.
@@ -30,6 +31,7 @@ Constants:
     PROFILE_OUTPUT_STEM (str): Output path stem prefix for profile files.
     PROFILE_FORMATS (tuple): Supported output formats for profiles.
     UNHANDLED_OUTPUT (str): Path to write any unrecognized rule keys.
+    CYBERCRAFT_NAMESPACE (str): Cybercraft extension namespace URI used in OSCAL props.
 """
 
 import argparse
@@ -44,17 +46,28 @@ from oscal import Catalog, Profile
 
 SOURCE_URL = "https://raw.githubusercontent.com/FedRAMP/rules/main/fedramp-consolidated-rules.json"
 ALTERNATE_URL = "https://www.fedramp.gov/2026/"
+
+# Stable UUIDs for the four catalog parties.
+_PARTY_UUID_FEDRAMP = "aaaaaaaa-0000-4000-a000-000000000001"
+_PARTY_UUID_CSP     = "aaaaaaaa-0000-4000-a000-000000000002"
+_PARTY_UUID_AO      = "aaaaaaaa-0000-4000-a000-000000000003"
+_PARTY_UUID_AGENCY  = "aaaaaaaa-0000-4000-a000-000000000004"
 SOURCE_LOCAL = os.path.join(
     os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
     "data", "raw", "fedramp-consolidated-rules.json",
 )
 
 FRR_NS = "http://fedramp.gov/ns/oscal"
+CYBERCRAFT_NAMESPACE = "http://cybercraft.app/ns/oscal"
 
 NIST_800_53_REV5_URL = (
     "https://raw.githubusercontent.com/usnistgov/oscal-content"
     "/refs/heads/main/nist.gov/SP800-53/rev5/json/NIST_SP-800-53_rev5_catalog.json"
 )
+NIST_800_53_REV5_DOI_URL = "https://doi.org/10.6028/NIST.SP.800-53r5"
+
+# Stable UUID for the catalog back-matter resource referencing NIST SP 800-53 Rev 5.
+_NIST_800_53_REV5_RESOURCE_UUID = "ffffffff-0000-4000-a000-000000000001"
 
 CATALOG_HREF = "FedRAMP_2026_OSCAL_catalog.json"
 
@@ -97,6 +110,7 @@ _HANDLED_RULE_KEYS = frozenset({
     "corrective_actions", "examples", "schema", "following_information", "updated",
     "following_information_bullets", "reference", "reference_url",
     "effective_date", "timeframe_type", "timeframe_num",
+    "controls",
 })
 _HANDLED_VARIES_RULE_KEYS = frozenset({
     "name", "related", "affects", "varies_by_class",
@@ -104,6 +118,7 @@ _HANDLED_VARIES_RULE_KEYS = frozenset({
     "corrective_actions", "examples", "schema", "following_information", "updated",
     "following_information_bullets", "reference", "reference_url",
     "effective_date", "timeframe_type", "timeframe_num",
+    "controls",
 })
 _HANDLED_CLASS_KEYS = frozenset({
     "statement", "force", "related", "note", "notes", "artifacts",
@@ -404,6 +419,29 @@ def _reference_link(rule: dict) -> list:
     if ref_text:
         link["text"] = ref_text
     return [link]
+
+
+def _nist_control_links(rule: dict) -> list:
+    """Return links for each NIST SP 800-53 control ID cited in the rule's 'controls' array.
+
+    Each link references the catalog back-matter resource for NIST SP 800-53 Rev 5
+    via a UUID fragment href, with the control ID stored in 'resource-fragment'.
+
+    Args:
+        rule (dict, required): Rule dict from the FRR JSON source.
+
+    Returns:
+        list: List of OSCAL link dicts (may be empty).
+    """
+    result = []
+    for ctrl_id in (rule.get("controls") or []):
+        result.append({
+            "rel": "related",
+            "href": f"#{_NIST_800_53_REV5_RESOURCE_UUID}",
+            "resource-fragment": ctrl_id,
+            "text": f"NIST SP 800-53 Rev 5 {ctrl_id.upper()}",
+        })
+    return result
 
 
 def _extension_props(rule: dict) -> list:
@@ -845,6 +883,7 @@ def _build_frr_simple_control(
         for rid in (rule.get("related") or [])
     ]
     links.extend(_reference_link(rule))
+    links.extend(_nist_control_links(rule))
 
     danger = rule.get("danger", "")
     statement = rule.get("statement", "")
@@ -910,6 +949,7 @@ def _build_frr_varies_control(
         for rid in (rule.get("related") or [])
     ]
     links.extend(_reference_link(rule))
+    links.extend(_nist_control_links(rule))
     props = [{"name": "path", "value": path, "ns": FRR_NS}]
     for affect in (rule.get("affects") or []):
         props.append({"name": "affects", "value": affect, "ns": FRR_NS})
@@ -1019,59 +1059,156 @@ def _build_frr_control(
         _build_frr_simple_control(catalog, parent_id, rule_id, rule, path=path)
 
 
-_PATH_SUFFIX: dict = {"20x": "20X Path", "rev5": "Rev 5 Path"}
-
-
 def _build_frr_subset(
     catalog: Catalog, parent_id: str, frr_key: str,
-    subset_key: str, subset_val: dict, path: str = "all"
+    subset_key: str, subset_val: dict, path: str = "all",
+    existing_groups: set | None = None,
 ) -> None:
-    """Create a child group for one FRR subset and populate its controls.
+    """Populate a subset group with controls from one FRR data scope entry.
 
-    For the 'all' scope the ID is 'FRR-{key}-{subset}' and the title equals
-    the ID. For '20x' and 'rev5' scopes the path qualifier is appended to keep
-    IDs human-readable and collision-free: ID is 'FRR-{key}-{subset}-{path}'
-    and the title is 'FRR-{key}-{subset} 20X Path' or 'FRR-{key}-{subset} Rev 5 Path'.
-    The purpose overview part is added via catalog.add_part() with its title set
-    directly, so it persists in the catalog's internal state.
+    Controls from all scopes ('all', '20x', 'rev5') are added to the same group
+    (id 'FRR-{frr_key}-{subset_key}'). The scope is recorded as a 'path' prop on
+    each control. The target group is expected to exist already, having been created
+    by _build_frr_subset_groups(). If it was not pre-created (i.e., subset_key was
+    absent from info.subsets), a minimal fallback group is created and its ID is
+    added to existing_groups to prevent duplicate creation on subsequent scope passes.
 
     Args:
         catalog (Catalog, required): The OSCAL catalog being built.
         parent_id (str, required): ID of the parent FRR ruleset group.
         frr_key (str, required): Top-level FRR key (e.g. 'AFC').
         subset_key (str, required): Subset key within the scope (e.g. 'FRP').
-        subset_val (dict, required): Subset data dict.
+        subset_val (dict, required): Subset data dict (keyed by rule ID or 'info').
         path (str, optional): Data scope ('all', '20x', or 'rev5'). Defaults to 'all'.
+        existing_groups (set | None, optional): Group IDs already created by
+            _build_frr_subset_groups(). Updated in-place when a fallback group is
+            created so subsequent scope passes for the same key skip re-creation.
+            Defaults to None (treated as empty set).
     """
+    if existing_groups is None:
+        existing_groups = set()
+
     base_id = f"FRR-{frr_key}-{subset_key}"
-    if path == "all":
-        child_id = base_id
-        child_title = base_id
-    else:
-        child_id = f"{base_id}-{path}"
-        child_title = f"{base_id} {_PATH_SUFFIX.get(path, path)}"
 
-    info = subset_val.get("info", {})
-    purpose = info.get("purpose", "")
+    if base_id not in existing_groups:
+        info = subset_val.get("info", {})
+        purpose = info.get("purpose", "")
+        new_group = catalog.create_control_group(
+            parent_id=parent_id,
+            id=base_id,
+            title=base_id,
+            overview=purpose,
+        )
+        if new_group is None:
+            return
+        _STATS["groups"] += 1
+        existing_groups.add(base_id)
 
-    child_group = catalog.create_control_group(
-        parent_id=parent_id,
-        id=child_id,
-        title=child_title,
-    )
-    if child_group is None:
-        return
-
-    _STATS["groups"] += 1
-    if purpose:
-        catalog.add_part(child_id, "overview", title="Purpose", prose=purpose)
-
-    _emit(f"  {child_id} ", end="")
+    _emit(f"  {base_id} ", end="")
     for rule_id, rule in subset_val.items():
         if rule_id == "info" or not isinstance(rule, dict):
             continue
-        _build_frr_control(catalog, child_id, rule_id, rule, path=path)
+        _build_frr_control(catalog, base_id, rule_id, rule, path=path)
     _emit()
+
+
+def _build_frr_subset_groups(
+    catalog: Catalog, group_id: str, info: dict
+) -> set:
+    """Create a child group for each entry in info['subsets'].
+
+    Each subset entry becomes an OSCAL group whose title is 'SUBSET: {name}'.
+    The optional 'description' field populates an 'overview' part. Applicability
+    fields (types, paths, classes, affects) are stored as FedRAMP-namespace props.
+    These groups establish the container structure that _build_frr_subset() later
+    fills with controls.
+
+    Args:
+        catalog (Catalog, required): The OSCAL catalog being built.
+        group_id (str, required): ID of the parent ruleset group (e.g. 'FRR-AFC').
+        info (dict, required): The 'info' block from an FRR ruleset dict.
+
+    Returns:
+        set: IDs of the subset groups successfully created.
+    """
+    subsets = info.get("subsets") or {}
+    created: set = set()
+    for subset_key, subset_meta in subsets.items():
+        if not isinstance(subset_meta, dict):
+            continue
+        child_id = f"{group_id}-{subset_key}"
+        title = subset_meta.get('name', subset_key)
+        description = subset_meta.get("description", "")
+        applicability = subset_meta.get("applicability") or {}
+
+        props: list = []
+        for atype in (applicability.get("types") or []):
+            props.append({"name": "applicability-type", "value": atype, "ns": FRR_NS})
+        for apath in (applicability.get("paths") or []):
+            props.append({"name": "applicability-path", "value": apath, "ns": FRR_NS})
+        for aclass in (applicability.get("classes") or []):
+            props.append({"name": "applicability-class", "value": aclass, "ns": FRR_NS})
+        for affect in (applicability.get("affects") or []):
+            props.append({"name": "affects", "value": affect, "ns": FRR_NS})
+
+        child_group = catalog.create_control_group(
+            parent_id=group_id,
+            id=child_id,
+            title=title,
+            props=props,
+            overview=description,
+        )
+        if child_group is None:
+            continue
+        _STATS["groups"] += 1
+        created.add(child_id)
+
+    return created
+
+
+def _add_catalog_contacts(catalog: Catalog) -> None:
+    """Add roles, parties, and responsible-parties to the catalog metadata.
+
+    Creates four roles (fedramp, system-owner, assessor, agency), four matching
+    parties (FedRAMP PMO, Cloud Service Provider, Assessing Organization,
+    Federal Agency), and four responsible-party entries linking each role to its
+    party.  Party UUIDs are stable module-level constants.
+
+    Args:
+        catalog (Catalog, required): The OSCAL catalog to annotate.
+    """
+    roles = [
+        {"id": "fedramp",      "title": "FedRAMP"},
+        {"id": "system-owner", "title": "System Owner"},
+        {"id": "assessor",     "title": "Assessor"},
+        {"id": "agency",       "title": "Agency"},
+    ]
+    for role in roles:
+        catalog.append_child("metadata/roles", role)
+
+    parties = [
+        {
+            "uuid": _PARTY_UUID_FEDRAMP,
+            "type": "organization",
+            "name": "FedRAMP PMO",
+            "email-addresses": ["info@fedramp.gov"],
+            "links": [{"rel": "website", "href": "https://www.fedramp.gov"}],
+        },
+        {"uuid": _PARTY_UUID_CSP,    "type": "organization", "name": "Cloud Service Provider"},
+        {"uuid": _PARTY_UUID_AO,     "type": "organization", "name": "Assessing Organization"},
+        {"uuid": _PARTY_UUID_AGENCY, "type": "organization", "name": "Federal Agency"},
+    ]
+    for party in parties:
+        catalog.append_child("metadata/parties", party)
+
+    resp_parties = [
+        {"role-id": "fedramp",      "party-uuids": [_PARTY_UUID_FEDRAMP]},
+        {"role-id": "system-owner", "party-uuids": [_PARTY_UUID_CSP]},
+        {"role-id": "assessor",     "party-uuids": [_PARTY_UUID_AO]},
+        {"role-id": "agency",       "party-uuids": [_PARTY_UUID_AGENCY]},
+    ]
+    for rp in resp_parties:
+        catalog.append_child("metadata/responsible-parties", rp)
 
 
 def _assert_single_status_prop(props: list, control_id: str) -> None:
@@ -1107,7 +1244,10 @@ def _build_frr_ruleset(
     directly, so it persists in the catalog's internal state.
 
     The group's label prop is set to info.short_name (the abbreviated ruleset
-    code). If a status value is present in info, it is stored as a 'status' prop.
+    code). If status, web_name, or tag values are present in info, each is
+    stored as a FedRAMP-namespace prop.  Each entry in info.subsets becomes a
+    child group via _build_frr_subset_groups, establishing the container structure
+    before data controls are added.
 
     Args:
         catalog (Catalog, required): The OSCAL catalog being built.
@@ -1119,9 +1259,17 @@ def _build_frr_ruleset(
     title = info.get("name", frr_key)
     purpose = info.get("purpose", "")
     short_name = info.get("short_name", frr_key)
-    status = info.get("status", "")
+    status   = info.get("status", "")
+    web_name = info.get("web_name", "")
+    tag      = info.get("tag", "")
 
-    extra_props = [{"name": "status", "ns": FRR_NS, "value": status}] if status else []
+    extra_props: list = []
+    if status:
+        extra_props.append({"name": "status",   "ns": FRR_NS, "value": status})
+    if web_name:
+        extra_props.append({"name": "web_name", "ns": FRR_NS, "value": web_name})
+    if tag:
+        extra_props.append({"name": "tag",      "ns": FRR_NS, "value": tag})
 
     group = catalog.create_control_group(
         parent_id="[root]",
@@ -1137,11 +1285,16 @@ def _build_frr_ruleset(
     if purpose:
         catalog.add_part(group_id, "overview", title="Purpose", prose=purpose)
 
+    created_subset_groups = _build_frr_subset_groups(catalog, group_id, info)
+
     _emit(f"\n{title}")
     data_block = frr_val.get("data", {})
     for scope in ("all", "20x", "rev5"):
         for subset_key, subset_val in data_block.get(scope, {}).items():
-            _build_frr_subset(catalog, group_id, frr_key, subset_key, subset_val, path=scope)
+            _build_frr_subset(
+                catalog, group_id, frr_key, subset_key, subset_val,
+                path=scope, existing_groups=created_subset_groups,
+            )
 
 
 def _build_frr(catalog: Catalog, data: dict) -> None:
@@ -1323,6 +1476,17 @@ def build_catalog(data: dict) -> Catalog:
     })
     catalog.append_child("metadata/links", {"href": SOURCE_URL, "rel": "canonical"})
     catalog.append_child("metadata/links", {"href": ALTERNATE_URL, "rel": "alternate"})
+    catalog.append_child("metadata/props", {"name": "presentation-id", "ns": CYBERCRAFT_NAMESPACE, "value": "fedramp-cr26"})
+    _add_catalog_contacts(catalog)
+
+    catalog.append_resource(
+        uuid=_NIST_800_53_REV5_RESOURCE_UUID,
+        title="NIST SP 800-53 Rev 5",
+        rlinks=[
+            {"href": NIST_800_53_REV5_URL},
+            {"href": NIST_800_53_REV5_DOI_URL},
+        ],
+    )
 
     _build_frr(catalog, data)
     _build_ksi(catalog, data)
@@ -1380,6 +1544,7 @@ def build_profiles(data: dict) -> dict:
         })
         p.append_child("metadata/links", {"href": SOURCE_URL, "rel": "canonical"})
         p.append_child("metadata/links", {"href": ALTERNATE_URL, "rel": "alternate"})
+        p.append_child("metadata/props", {"name": "presentation-id", "ns": CYBERCRAFT_NAMESPACE, "value": "fedramp-cr26"})
         return p
 
     def _set_frr_import(p: Profile, key: str) -> None:
