@@ -1,9 +1,9 @@
 catalog:
-  uuid: 5e030f89-393b-41e4-9f08-0944da36f919
+  uuid: 01529fc1-b33d-4989-97e1-84e49532b8ba
   metadata:
     title: FedRAMP Consolidated Rules for 2026
     published: '2026-07-06T00:00:00Z'
-    last-modified: '2026-09-08T02:49:10Z'
+    last-modified: '2026-10-13T21:27:11Z'
     version: 2026.07.06.01
     oscal-version: 1.2.3
     props:

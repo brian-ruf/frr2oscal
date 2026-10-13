@@ -1,8 +1,8 @@
-<catalog xmlns="http://csrc.nist.gov/ns/oscal/1.0" uuid="5e030f89-393b-41e4-9f08-0944da36f919">
+<catalog xmlns="http://csrc.nist.gov/ns/oscal/1.0" uuid="01529fc1-b33d-4989-97e1-84e49532b8ba">
   <metadata>
     <title>FedRAMP Consolidated Rules for 2026</title>
     <published>2026-07-06T00:00:00Z</published>
-    <last-modified>2026-09-08T02:49:10Z</last-modified>
+    <last-modified>2026-10-13T21:27:11Z</last-modified>
     <version>2026.07.06.01</version>
     <oscal-version>1.2.3</oscal-version>
     <prop name="presentation-id" ns="http://cybercraft.app/ns/oscal" value="fedramp-cr26" />

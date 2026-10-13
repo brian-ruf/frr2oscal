@@ -42,19 +42,19 @@
     {
       "contactType": "Security",
       "contactName": "Meridian Security Operations",
-      "contactEmail": "security@meridiancloud.example",
+      "contactEmail": "security@meridiancloud.example.com",
       "contactPhone": "703-555-0142"
     },
     {
       "contactType": "Sales",
       "contactName": "Meridian Federal Sales",
-      "contactEmail": "fedsales@meridiancloud.example",
+      "contactEmail": "fedsales@meridiancloud.example.com",
       "contactPhone": "703-555-0198"
     },
     {
       "contactType": "Primary",
       "contactName": "Dana Whitfield, VP of Compliance",
-      "contactEmail": "dana.whitfield@meridiancloud.example",
+      "contactEmail": "dana.whitfield@meridiancloud.example.com",
       "contactPhone": "703-555-0101"
     }
   ],

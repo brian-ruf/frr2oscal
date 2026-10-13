@@ -30,7 +30,7 @@ All four files validate cleanly against FedRAMP's published JSON Schemas (`fedra
 
 **`sdr_20x.json`** — Security Decision Record containing:
 - **`fedRampRequirements`** — 6 sample entries against shared FRR rules (`MAS-CSO-IIR`, `MAS-CSO-FLO`, `MAS-CSO-TPR`, `VDR-CSO-DET`, `CCM-OCR-AVL`, `SCN-CSO-INF`)
-- **`keySecurityIndicators`** — 6 sample KSIs (`KSI-IAM-APM`, `KSI-IAM-JIT`, `KSI-SVC-SIN`, `KSI-MLA-OSM`, `KSI-CNA-RNT`, `KSI-INR-RIR`), each with implementation, validation, assessment, tests, and evidence
+- **`keySecurityIndicators`** — 7 sample KSIs (`KSI-IAM-APM`, `KSI-IAM-JIT`, `KSI-IAM-AAM`, `KSI-SVC-SIN`, `KSI-MLA-OSM`, `KSI-CNA-RNT`, `KSI-INR-RIR`), each with implementation, validation, assessment, tests, and evidence. `KSI-IAM-AAM` is modeled on the OSCAL Foundation TFG's reference example and explicitly demonstrates quantitative pass/fail thresholds, timing definitions, direct/deterministic data classification, and non-repudiation validation per the TFG guiding principles.
 
 Note the `VDR-CSO-DET` and `CCM-OCR-AVL` entries reflect 20x's tighter cadence — continuous authenticated scanning, and an Ongoing Certification Report every 2 weeks (the Class C `CPO-CSX-CPM` maintenance requirement).
 
@@ -49,6 +49,8 @@ No `keySecurityIndicators` array — not applicable to this path.
 ---
 
 ## What the Comparison Actually Shows
+
+**The 20x CPO now carries a second certified third-party resource** (`FR3084716259`) — the FedRAMP-certified identity provider that drives the automated IAM lifecycle workflows underpinning `KSI-IAM-AAM`. The Rev5 CPO does not reflect this addition; the two CPOs are otherwise identical.
 
 **The CPO is nearly identical across both paths.** The only difference between `cpo_20x.json` and `cpo_rev5.json` is the `certificationType` field and the `nextOngoingCertificationReportDate` (reflecting each path's different maintenance cadence). Everything else — service identification, contacts, third-party resources, certified services — is the same content, because it describes the CSO itself, not the certification methodology.
 
