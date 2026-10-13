@@ -1,0 +1,74 @@
+{
+  "assessment-plan": {
+    "uuid": "580d089c-2b54-47b6-9ef0-99fa70391103",
+    "metadata": {
+      "title": "FedRAMP Assessment Plan",
+      "last-modified": "2026-09-17T18:04:32Z",
+      "version": "1.0",
+      "oscal-version": "1.2.3",
+      "props": [
+        {
+          "name": "presentation-id",
+          "ns": "http://cybercraft.app/ns/oscal",
+          "value": "fedramp-cr26"
+        }
+      ],
+      "roles": [
+        {
+          "id": "assessor",
+          "title": "Independent Assessor"
+        }
+      ]
+    },
+    "import-ssp": {
+      "href": "fr3391847502-ssp.json"
+    },
+    "reviewed-controls": {
+      "control-selections": [
+        {
+          "include-controls": [
+            {
+              "control-id": "MAS-CSO-IIR"
+            },
+            {
+              "control-id": "MAS-CSO-FLO"
+            },
+            {
+              "control-id": "MAS-CSO-TPR"
+            },
+            {
+              "control-id": "VDR-CSO-DET"
+            },
+            {
+              "control-id": "CCM-OCR-AVL"
+            },
+            {
+              "control-id": "SCN-CSO-INF"
+            },
+            {
+              "control-id": "KSI-IAM-APM"
+            },
+            {
+              "control-id": "KSI-IAM-JIT"
+            },
+            {
+              "control-id": "KSI-IAM-AAM"
+            },
+            {
+              "control-id": "KSI-SVC-SIN"
+            },
+            {
+              "control-id": "KSI-MLA-OSM"
+            },
+            {
+              "control-id": "KSI-CNA-RNT"
+            },
+            {
+              "control-id": "KSI-INR-RIR"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -147,6 +147,42 @@
       ]
     },
     {
+      "ksiId": "KSI-IAM-AAM",
+      "ksiImplementationStatus": "Implemented",
+      "ksiImplementation": [
+        "All MSW user accounts, service accounts, roles, and groups are provisioned and deprovisioned exclusively through automated SCIM-based workflows integrated with the corporate HR system and the FedRAMP-certified identity provider (FR3084716259). Account creation is triggered by HR onboarding events or an authorized individual's approval of a license agreement or Rules of Behavior. Privilege modifications require documented manager approval within the workflow before the change is executed. Disablement occurs automatically within 1 business hour of an offboarding trigger or an authorized revocation event. Deletion follows a mandatory 35-day hold after disablement.",
+        "Every lifecycle event — creation, privilege modification, disablement, and deletion — generates a structured, timestamped log entry written by the IAM workflow system and forwarded in near-real-time to the tamper-resistant SIEM via the same high-integrity pipeline described under KSI-MLA-OSM. Lifecycle logs are classified as direct, system-generated data, making all resulting evidence deterministic rather than probabilistic."
+      ],
+      "ksiValidation": [
+        "A monthly automated query of the IAM workflow system produces a lifecycle coverage report stating the total count of lifecycle events in the period and the count of any events not processed through the automated workflow (manual exceptions). The pass threshold is 100% automated handling with zero manual exceptions; any exception triggers a security incident and a root-cause analysis.",
+        "A quarterly automated reconciliation compares the SIEM's ingested IAM event count against the identity provider's native event counter. A discrepancy greater than 0% constitutes a finding against the non-repudiation requirement."
+      ],
+      "ksiAssessment": [
+        "Assessor reviewed 90 days of IAM workflow lifecycle coverage reports during the FY26 annual assessment, confirming 100% of account lifecycle events were processed through the automated workflow with zero manual exceptions recorded.",
+        "Assessor independently sampled 25 privilege-modification workflow records and confirmed that a manager-approval record with a timestamp predating the privilege change existed in the workflow audit trail for each sampled event.",
+        "Assessor verified the Q2 2026 SIEM-to-identity-provider reconciliation report, confirming a 0% discrepancy across 2,341 IAM events, satisfying the non-repudiation requirement."
+      ],
+      "ksiTests": [
+        "Monthly automated query of IAM workflow system for lifecycle event coverage rate (pass criterion: 100% automated, 0 manual exceptions)",
+        "Quarterly automated reconciliation of SIEM IAM event count against identity provider native event counter (pass criterion: 0% discrepancy)",
+        "Simulated offboarding event injected into HR system to confirm automated disablement occurs within 1 business hour of trigger"
+      ],
+      "ksiEvidence": [
+        {
+          "evidenceType": "Report",
+          "evidenceDescription": "IAM workflow lifecycle coverage report, August 2026 — 847 lifecycle events, 100% automated, 0 manual exceptions",
+          "evidenceLocation": "https://trust.meridiancloud.example/evidence/iam-aam-coverage-2026-08.csv",
+          "lastUpdated": "2026-08-31"
+        },
+        {
+          "evidenceType": "Report",
+          "evidenceDescription": "SIEM-to-identity-provider event reconciliation report, Q3 2026 — 0% discrepancy across 2,341 events",
+          "evidenceLocation": "https://trust.meridiancloud.example/evidence/iam-aam-reconciliation-2026-q3.pdf",
+          "lastUpdated": "2026-09-07"
+        }
+      ]
+    },
+    {
       "ksiId": "KSI-SVC-SIN",
       "ksiImplementationStatus": "Implemented",
       "ksiImplementation": [

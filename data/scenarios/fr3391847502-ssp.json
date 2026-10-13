@@ -1,0 +1,768 @@
+{
+  "system-security-plan": {
+    "uuid": "92b12bd1-8741-4b42-abeb-3b81013decc5",
+    "metadata": {
+      "title": "Meridian Secure Workspace \u2014 System Security Plan (20x)",
+      "last-modified": "2026-09-17T18:04:32Z",
+      "version": "1.0",
+      "oscal-version": "1.2.3",
+      "props": [
+        {
+          "name": "presentation-id",
+          "ns": "http://cybercraft.app/ns/oscal",
+          "value": "fedramp-cr26"
+        }
+      ],
+      "roles": [
+        {
+          "id": "system-owner",
+          "title": "System Owner"
+        },
+        {
+          "id": "prepared-by",
+          "title": "Prepared By"
+        },
+        {
+          "id": "security-poc",
+          "title": "Security Point of Contact"
+        },
+        {
+          "id": "sales-poc",
+          "title": "Sales Point of Contact"
+        },
+        {
+          "id": "assessor",
+          "title": "Independent Assessor"
+        },
+        {
+          "id": "fedramp",
+          "title": "FedRAMP"
+        },
+        {
+          "id": "provider",
+          "title": "Service Provider"
+        }
+      ],
+      "parties": [
+        {
+          "uuid": "3ff1dba6-b405-491e-ab18-efdefc6afac5",
+          "type": "organization",
+          "name": "Meridian Cloud Solutions, Inc.",
+          "external-ids": [
+            {
+              "scheme": "https://fedramp.gov",
+              "id": "FR3391847502"
+            },
+            {
+              "scheme": "https://www.sam.gov",
+              "id": "MC7K9XQ2P4L8"
+            }
+          ]
+        },
+        {
+          "uuid": "248fba79-2793-4607-b3c3-b58e198329d3",
+          "type": "person",
+          "name": "Meridian Security Operations",
+          "email-addresses": [
+            "security@meridiancloud.example.com"
+          ],
+          "telephone-numbers": [
+            {
+              "number": "7035550142"
+            }
+          ],
+          "member-of-organizations": [
+            "3ff1dba6-b405-491e-ab18-efdefc6afac5"
+          ]
+        },
+        {
+          "uuid": "837e8326-3b04-4b1d-aa59-426077319c6e",
+          "type": "person",
+          "name": "Meridian Federal Sales",
+          "email-addresses": [
+            "fedsales@meridiancloud.example.com"
+          ],
+          "telephone-numbers": [
+            {
+              "number": "7035550198"
+            }
+          ],
+          "member-of-organizations": [
+            "3ff1dba6-b405-491e-ab18-efdefc6afac5"
+          ]
+        },
+        {
+          "uuid": "84ba4e2e-ff52-47ab-8d78-2b3829907f9b",
+          "type": "person",
+          "name": "Dana Whitfield, VP of Compliance",
+          "email-addresses": [
+            "dana.whitfield@meridiancloud.example.com"
+          ],
+          "telephone-numbers": [
+            {
+              "number": "7035550101"
+            }
+          ],
+          "member-of-organizations": [
+            "3ff1dba6-b405-491e-ab18-efdefc6afac5"
+          ]
+        },
+        {
+          "uuid": "0f121600-3bbe-488c-b1c5-8f43f5e7844e",
+          "type": "organization",
+          "name": "Ironclad Assessment Partners, LLC",
+          "external-ids": [
+            {
+              "scheme": "https://fedramp.gov/assessor",
+              "id": "104822"
+            }
+          ]
+        },
+        {
+          "uuid": "77e0e2c8-2560-4b3f-a3a7-a5a19f645f7f",
+          "type": "organization",
+          "name": "FedRAMP PMO",
+          "links": [
+            {
+              "href": "https://www.fedramp.gov",
+              "rel": "website"
+            }
+          ],
+          "email-addresses": [
+            "info@fedramp.gov"
+          ]
+        },
+        {
+          "uuid": "660c1152-815d-4acf-91e0-332fff1c45e2",
+          "type": "organization",
+          "name": "Twilio SendGrid"
+        },
+        {
+          "uuid": "d943780d-d368-4e13-a76b-e2afadb472e6",
+          "type": "organization",
+          "name": "FR2210093344",
+          "external-ids": [
+            {
+              "scheme": "https://fedramp.gov",
+              "id": "FR2210093344"
+            }
+          ],
+          "links": [
+            {
+              "href": "https://marketplace.fedramp.gov/products/FR2210093344",
+              "rel": "authorization"
+            }
+          ]
+        },
+        {
+          "uuid": "c1764038-5d1c-4fb2-9baa-6c7cc4cc9cd5",
+          "type": "organization",
+          "name": "FR3084716259",
+          "external-ids": [
+            {
+              "scheme": "https://fedramp.gov",
+              "id": "FR3084716259"
+            }
+          ],
+          "links": [
+            {
+              "href": "https://marketplace.fedramp.gov/products/FR3084716259",
+              "rel": "authorization"
+            }
+          ]
+        }
+      ],
+      "responsible-parties": [
+        {
+          "role-id": "system-owner",
+          "party-uuids": [
+            "84ba4e2e-ff52-47ab-8d78-2b3829907f9b"
+          ]
+        },
+        {
+          "role-id": "prepared-by",
+          "party-uuids": [
+            "3ff1dba6-b405-491e-ab18-efdefc6afac5"
+          ]
+        },
+        {
+          "role-id": "security-poc",
+          "party-uuids": [
+            "248fba79-2793-4607-b3c3-b58e198329d3"
+          ]
+        },
+        {
+          "role-id": "sales-poc",
+          "party-uuids": [
+            "837e8326-3b04-4b1d-aa59-426077319c6e"
+          ]
+        },
+        {
+          "role-id": "assessor",
+          "party-uuids": [
+            "0f121600-3bbe-488c-b1c5-8f43f5e7844e"
+          ]
+        },
+        {
+          "role-id": "fedramp",
+          "party-uuids": [
+            "77e0e2c8-2560-4b3f-a3a7-a5a19f645f7f"
+          ]
+        }
+      ]
+    },
+    "import-profile": {
+      "href": "#fce1488e-f656-4a38-beec-32165e4b3c2e"
+    },
+    "system-characteristics": {
+      "system-ids": [
+        {
+          "identifier-type": "https://fedramp.gov",
+          "id": "FR3391847502"
+        }
+      ],
+      "system-name": "Meridian Secure Workspace",
+      "description": "Meridian Secure Workspace (MSW) is a cloud-native SaaS collaboration and document-management platform built on a FedRAMP Certified underlying IaaS platform. MSW provides real-time document co-authoring, secure messaging, and workflow automation for federal agency teams.",
+      "props": [
+        {
+          "name": "certification-type",
+          "ns": "https://fedramp.gov/ns/oscal",
+          "value": "20x"
+        },
+        {
+          "name": "service-type",
+          "ns": "https://fedramp.gov/ns/oscal",
+          "value": "SaaS"
+        },
+        {
+          "name": "deployment-model",
+          "ns": "https://fedramp.gov/ns/oscal",
+          "value": "Government Community Cloud"
+        },
+        {
+          "name": "business-category",
+          "ns": "https://fedramp.gov/ns/oscal",
+          "value": "Collaboration"
+        },
+        {
+          "name": "business-category",
+          "ns": "https://fedramp.gov/ns/oscal",
+          "value": "Content Management System (CMS)"
+        },
+        {
+          "name": "next-ongoing-certification-report-date",
+          "ns": "https://fedramp.gov/ns/oscal",
+          "value": "2026-10-14"
+        }
+      ],
+      "links": [
+        {
+          "href": "https://www.meridiancloud.example/msw",
+          "rel": "website"
+        },
+        {
+          "href": "https://www.meridiancloud.example/assets/msw-logo.png",
+          "rel": "logo"
+        },
+        {
+          "href": "https://trust.meridiancloud.example",
+          "rel": "trust-center"
+        },
+        {
+          "href": "https://trust.meridiancloud.example/scg",
+          "rel": "secure-configuration-guidance"
+        },
+        {
+          "href": "https://trust.meridiancloud.example/assessments",
+          "rel": "assessment-reports",
+          "text": "Independent assessment materials, including the most recent annual independent assessment summary."
+        }
+      ],
+      "security-sensitivity-level": "moderate",
+      "system-information": {
+        "information-types": [
+          {
+            "uuid": "ccc7e514-857c-4b42-b004-aaaa830c5b2c",
+            "title": "Meridian Secure Workspace",
+            "description": "Meridian Secure Workspace (MSW) is a cloud-native SaaS collaboration and document-management platform built on a FedRAMP Certified underlying IaaS platform. MSW provides real-time document co-authoring, secure messaging, and workflow automation for federal agency teams.",
+            "categorizations": [
+              {
+                "system": "https://doi.org/10.6028/NIST.SP.800-60v2r1",
+                "information-type-ids": [
+                  "C.3.5.8"
+                ]
+              }
+            ],
+            "confidentiality-impact": {
+              "base": "moderate"
+            },
+            "integrity-impact": {
+              "base": "moderate"
+            },
+            "availability-impact": {
+              "base": "moderate"
+            }
+          }
+        ]
+      },
+      "security-impact-level": {
+        "security-objective-confidentiality": "moderate",
+        "security-objective-integrity": "moderate",
+        "security-objective-availability": "moderate"
+      },
+      "status": {
+        "state": "operational"
+      },
+      "authorization-boundary": {
+        "description": "Meridian Secure Workspace operates within the boundary described in the CPO. See the trust center for a complete boundary and data-flow diagram."
+      }
+    },
+    "system-implementation": {
+      "leveraged-authorizations": [
+        {
+          "uuid": "179e6b24-6b47-46e1-85e2-6a778219cae6",
+          "title": "FR2210093344",
+          "party-uuid": "d943780d-d368-4e13-a76b-e2afadb472e6",
+          "date-authorized": "2026-09-17"
+        },
+        {
+          "uuid": "f2be7244-8bac-4cf7-88ff-82a5f564b645",
+          "title": "FR3084716259",
+          "party-uuid": "c1764038-5d1c-4fb2-9baa-6c7cc4cc9cd5",
+          "date-authorized": "2026-09-17"
+        }
+      ],
+      "users": [
+        {
+          "uuid": "62780be8-f34e-4101-8fa9-0acc9aa1581a",
+          "title": "Dana Whitfield, VP of Compliance",
+          "props": [
+            {
+              "name": "type",
+              "value": "internal"
+            }
+          ],
+          "role-ids": [
+            "system-owner"
+          ]
+        }
+      ],
+      "components": [
+        {
+          "uuid": "e10e885a-d69e-4525-acee-c322ba8754b1",
+          "type": "this-system",
+          "title": "Meridian Secure Workspace",
+          "description": "Meridian Secure Workspace (MSW) is a cloud-native SaaS collaboration and document-management platform built on a FedRAMP Certified underlying IaaS platform. MSW provides real-time document co-authoring, secure messaging, and workflow automation for federal agency teams.",
+          "status": {
+            "state": "operational"
+          }
+        },
+        {
+          "uuid": "9a95932a-4c29-45dd-a0e0-a01aad555ec9",
+          "type": "software",
+          "title": "Document Co-Authoring",
+          "description": "Real-time collaborative document editing with version history and audit trail.",
+          "props": [
+            {
+              "name": "date-available",
+              "ns": "https://fedramp.gov/ns/oscal",
+              "value": "2025-03-01"
+            }
+          ],
+          "status": {
+            "state": "operational"
+          }
+        },
+        {
+          "uuid": "46f1a57b-2b02-4b95-a4f8-f561cd956cd7",
+          "type": "software",
+          "title": "Secure Messaging",
+          "description": "End-to-end encrypted messaging and file sharing between authenticated tenant users.",
+          "props": [
+            {
+              "name": "date-available",
+              "ns": "https://fedramp.gov/ns/oscal",
+              "value": "2025-03-01"
+            }
+          ],
+          "status": {
+            "state": "operational"
+          }
+        },
+        {
+          "uuid": "0d61d11f-9baa-411e-950c-0636d5f7b325",
+          "type": "software",
+          "title": "Workflow Automation",
+          "description": "Configurable approval-routing and task-automation engine for document workflows.",
+          "props": [
+            {
+              "name": "date-available",
+              "ns": "https://fedramp.gov/ns/oscal",
+              "value": "2025-09-15"
+            }
+          ],
+          "status": {
+            "state": "operational"
+          }
+        },
+        {
+          "uuid": "33768f88-654b-4932-8fdd-9500a79db7ae",
+          "type": "interconnection",
+          "title": "SendGrid Email Delivery API",
+          "description": "Outbound transactional email notifications only (no federal data content); connection is outbound-only and does not process or store CUI.",
+          "links": [
+            {
+              "href": "https://sendgrid.com",
+              "rel": "website"
+            }
+          ],
+          "status": {
+            "state": "operational"
+          },
+          "responsible-roles": [
+            {
+              "role-id": "provider",
+              "party-uuids": [
+                "660c1152-815d-4acf-91e0-332fff1c45e2"
+              ]
+            }
+          ]
+        },
+        {
+          "uuid": "fa158674-1c00-44b0-8893-7a3ad83a8607",
+          "type": "system",
+          "title": "FR2210093344",
+          "description": "Underlying IaaS platform providing compute, block storage, and virtual networking for all MSW production workloads.",
+          "props": [
+            {
+              "name": "leveraged-authorization-uuid",
+              "value": "179e6b24-6b47-46e1-85e2-6a778219cae6"
+            }
+          ],
+          "status": {
+            "state": "operational"
+          }
+        },
+        {
+          "uuid": "3298bae1-f575-4798-ab36-0e49f8cd332e",
+          "type": "system",
+          "title": "FR3084716259",
+          "description": "Identity provider and automated IAM provisioning platform. Handles the full MSW account lifecycle \u2014 creation, privilege modification, disablement, and deletion \u2014 via SCIM-based automated workflows integrated with the corporate HR system. All lifecycle events generate structured audit log entries forwarded to the centralized SIEM.",
+          "props": [
+            {
+              "name": "leveraged-authorization-uuid",
+              "value": "f2be7244-8bac-4cf7-88ff-82a5f564b645"
+            }
+          ],
+          "status": {
+            "state": "operational"
+          }
+        }
+      ]
+    },
+    "control-implementation": {
+      "description": "Meridian Secure Workspace implements the applicable FedRAMP CR26 rules and security requirements as described in the Security Decision Record.",
+      "implemented-requirements": [
+        {
+          "uuid": "08fa6873-437d-4ea8-ba1a-a2ee91bbe8cd",
+          "control-id": "MAS-CSO-IIR",
+          "props": [
+            {
+              "name": "implementation-status",
+              "ns": "https://fedramp.gov/ns/oscal",
+              "value": "implemented"
+            }
+          ],
+          "by-components": [
+            {
+              "component-uuid": "e10e885a-d69e-4525-acee-c322ba8754b1",
+              "uuid": "6a5c74ff-891e-4763-825e-c90f04e6100a",
+              "description": "Meridian maintains an automated asset inventory pipeline that queries the underlying IaaS platform's resource-tagging API every 4 hours to enumerate all compute, storage, and network resources within the MSW authorization boundary.",
+              "implementation-status": {
+                "state": "implemented"
+              }
+            }
+          ],
+          "remarks": "The inventory pipeline's output is reconciled weekly against the cloud provider's billing/usage export as an independent cross-check for untagged or orphaned resources."
+        },
+        {
+          "uuid": "a9f158b2-d43f-4a10-ae98-e473c66b0ec9",
+          "control-id": "MAS-CSO-FLO",
+          "props": [
+            {
+              "name": "implementation-status",
+              "ns": "https://fedramp.gov/ns/oscal",
+              "value": "implemented"
+            }
+          ],
+          "by-components": [
+            {
+              "component-uuid": "e10e885a-d69e-4525-acee-c322ba8754b1",
+              "uuid": "917eb72a-16a9-4bec-a284-c92ab80e15bb",
+              "description": "Data flows between the MSW application tier, database tier, and the underlying IaaS platform are documented in the Certification Package Overview's information-flow repository, with each flow tagged with a security category of Moderate.",
+              "implementation-status": {
+                "state": "implemented"
+              }
+            }
+          ],
+          "remarks": "Flow documentation is regenerated automatically from network policy configuration (security groups / firewall rules) on every production deployment to prevent drift between documented and actual flows."
+        },
+        {
+          "uuid": "80db6d3b-e3fc-43f9-9943-f308cd8de1f1",
+          "control-id": "MAS-CSO-TPR",
+          "props": [
+            {
+              "name": "implementation-status",
+              "ns": "https://fedramp.gov/ns/oscal",
+              "value": "implemented"
+            }
+          ],
+          "by-components": [
+            {
+              "component-uuid": "e10e885a-d69e-4525-acee-c322ba8754b1",
+              "uuid": "dd85e410-ba09-40f8-a33e-2ba35c201dfb",
+              "description": "The single third-party information resource in scope (the underlying IaaS platform) is identified in the Certification Package Overview along with its FedRAMP Certification status; the outbound-only email delivery dependency is documented as a non-certified third-party resource with a documented use-case justification.",
+              "implementation-status": {
+                "state": "implemented"
+              }
+            }
+          ],
+          "remarks": "Third-party resource list is reviewed quarterly by the compliance team against the current vendor inventory."
+        },
+        {
+          "uuid": "afbb5d71-5e49-41f5-a751-1a9552791986",
+          "control-id": "VDR-CSO-DET",
+          "props": [
+            {
+              "name": "implementation-status",
+              "ns": "https://fedramp.gov/ns/oscal",
+              "value": "implemented"
+            }
+          ],
+          "by-components": [
+            {
+              "component-uuid": "e10e885a-d69e-4525-acee-c322ba8754b1",
+              "uuid": "7da91edc-6d6e-4142-9380-2b21617798d5",
+              "description": "Authenticated vulnerability scanning is performed continuously across 100% of the MSW authorization boundary using an agent-based scanning tool integrated with the asset inventory pipeline.",
+              "implementation-status": {
+                "state": "implemented"
+              }
+            }
+          ],
+          "remarks": "Scan coverage is validated weekly by reconciling scan results against the current asset inventory to identify any unscanned assets."
+        },
+        {
+          "uuid": "6e1152dd-5aaf-4b00-b759-084762589850",
+          "control-id": "CCM-OCR-AVL",
+          "props": [
+            {
+              "name": "implementation-status",
+              "ns": "https://fedramp.gov/ns/oscal",
+              "value": "implemented"
+            }
+          ],
+          "by-components": [
+            {
+              "component-uuid": "e10e885a-d69e-4525-acee-c322ba8754b1",
+              "uuid": "60c349e5-1df8-4695-96d7-6cd39144ad65",
+              "description": "Meridian publishes an Ongoing Certification Report to the trust center every 2 weeks, consistent with the 20x Class C maintenance cadence, summarizing certification data changes, accepted vulnerabilities, and reportable incidents for the period.",
+              "implementation-status": {
+                "state": "implemented"
+              }
+            }
+          ],
+          "remarks": "Report publication is tracked via an internal compliance calendar with automated reminders; a missed publication triggers an internal escalation."
+        },
+        {
+          "uuid": "0622fbae-6e7e-4742-9152-0b8388dcd197",
+          "control-id": "SCN-CSO-INF",
+          "props": [
+            {
+              "name": "implementation-status",
+              "ns": "https://fedramp.gov/ns/oscal",
+              "value": "implemented"
+            }
+          ],
+          "by-components": [
+            {
+              "component-uuid": "e10e885a-d69e-4525-acee-c322ba8754b1",
+              "uuid": "63e9c58a-9bc9-482f-974e-9d1390b4b3a0",
+              "description": "Significant Change Notifications include, at minimum, a description of the change, its effective date, an assessment of impact to Key Security Indicators, and any affected third-party information resources, delivered via the trust center notification mechanism.",
+              "implementation-status": {
+                "state": "implemented"
+              }
+            }
+          ],
+          "remarks": "A sample Significant Change Notification is retained in the trust center's assessment-reports repository for reference."
+        },
+        {
+          "uuid": "4d750ac3-732e-423e-80b6-7066f4f654a2",
+          "control-id": "KSI-IAM-APM",
+          "props": [
+            {
+              "name": "implementation-status",
+              "ns": "https://fedramp.gov/ns/oscal",
+              "value": "implemented"
+            }
+          ],
+          "by-components": [
+            {
+              "component-uuid": "e10e885a-d69e-4525-acee-c322ba8754b1",
+              "uuid": "5765b40b-c74f-4c38-850b-3e5be0ff9a2e",
+              "description": "All MSW user accounts authenticate via WebAuthn-based passwordless credentials (platform or roaming authenticators) as the primary method; accounts unable to use passwordless methods fall back to a strong password combined with phishing-resistant MFA (FIDO2 security key).",
+              "implementation-status": {
+                "state": "implemented"
+              }
+            }
+          ],
+          "remarks": "The identity provider's per-user authenticator-type report is reviewed monthly to confirm passwordless/phishing-resistant coverage remains above the internal 95% target."
+        },
+        {
+          "uuid": "f6e526bb-d9d1-40b3-bc5e-2f2a9e2dcb20",
+          "control-id": "KSI-IAM-JIT",
+          "props": [
+            {
+              "name": "implementation-status",
+              "ns": "https://fedramp.gov/ns/oscal",
+              "value": "implemented"
+            }
+          ],
+          "by-components": [
+            {
+              "component-uuid": "e10e885a-d69e-4525-acee-c322ba8754b1",
+              "uuid": "c1788237-a5f6-4c9f-a7d9-9d37c0f980c2",
+              "description": "Administrative access to production infrastructure requires just-in-time role activation through the cloud provider's privileged-access-management service, with a maximum session duration of 1 hour and mandatory justification entry.",
+              "implementation-status": {
+                "state": "implemented"
+              }
+            }
+          ],
+          "remarks": "PAM activation logs are reviewed weekly for sessions exceeding typical duration or lacking justification text."
+        },
+        {
+          "uuid": "b9e304ea-0358-4731-9533-7e7ddd0cbb51",
+          "control-id": "KSI-IAM-AAM",
+          "props": [
+            {
+              "name": "implementation-status",
+              "ns": "https://fedramp.gov/ns/oscal",
+              "value": "implemented"
+            }
+          ],
+          "by-components": [
+            {
+              "component-uuid": "e10e885a-d69e-4525-acee-c322ba8754b1",
+              "uuid": "a7276a27-8fb7-4508-8d2d-0b14d76f2418",
+              "description": "All MSW user accounts, service accounts, roles, and groups are provisioned and deprovisioned exclusively through automated SCIM-based workflows integrated with the corporate HR system and the FedRAMP-certified identity provider (FR3084716259). Account creation is triggered by HR onboarding events or an authorized individual's approval of a license agreement or Rules of Behavior. Privilege modifications require documented manager approval within the workflow before the change is executed. Disablement occurs automatically within 1 business hour of an offboarding trigger or an authorized revocation event. Deletion follows a mandatory 35-day hold after disablement.\n\nEvery lifecycle event \u2014 creation, privilege modification, disablement, and deletion \u2014 generates a structured, timestamped log entry written by the IAM workflow system and forwarded in near-real-time to the tamper-resistant SIEM via the same high-integrity pipeline described under KSI-MLA-OSM. Lifecycle logs are classified as direct, system-generated data, making all resulting evidence deterministic rather than probabilistic.",
+              "implementation-status": {
+                "state": "implemented"
+              }
+            }
+          ],
+          "remarks": "A monthly automated query of the IAM workflow system produces a lifecycle coverage report stating the total count of lifecycle events in the period and the count of any events not processed through the automated workflow (manual exceptions). The pass threshold is 100% automated handling with zero manual exceptions; any exception triggers a security incident and a root-cause analysis.\n\nA quarterly automated reconciliation compares the SIEM's ingested IAM event count against the identity provider's native event counter. A discrepancy greater than 0% constitutes a finding against the non-repudiation requirement."
+        },
+        {
+          "uuid": "db25418d-dac8-497c-bd5f-a3e25caddc61",
+          "control-id": "KSI-SVC-SIN",
+          "props": [
+            {
+              "name": "implementation-status",
+              "ns": "https://fedramp.gov/ns/oscal",
+              "value": "implemented"
+            }
+          ],
+          "by-components": [
+            {
+              "component-uuid": "e10e885a-d69e-4525-acee-c322ba8754b1",
+              "uuid": "8ac9cd73-4c9c-4a0a-b101-47cc09561580",
+              "description": "All data in transit is encrypted using TLS 1.2 or higher; all data at rest, including database volumes and object storage, is encrypted using AES-256 with keys managed through the cloud provider's FIPS 140-3 validated key management service.",
+              "implementation-status": {
+                "state": "implemented"
+              }
+            }
+          ],
+          "remarks": "Automated configuration scanning confirms encryption-at-rest is enabled on 100% of storage resources on every deployment pipeline run."
+        },
+        {
+          "uuid": "97c4b101-32b9-4aba-8d54-bb19c430c367",
+          "control-id": "KSI-MLA-OSM",
+          "props": [
+            {
+              "name": "implementation-status",
+              "ns": "https://fedramp.gov/ns/oscal",
+              "value": "implemented"
+            }
+          ],
+          "by-components": [
+            {
+              "component-uuid": "e10e885a-d69e-4525-acee-c322ba8754b1",
+              "uuid": "c6a5ea19-e997-4e6a-974e-a36d1dd40acc",
+              "description": "All application, infrastructure, and identity-provider logs are forwarded in near-real-time to a centralized, tamper-resistant SIEM with a 13-month retention period.",
+              "implementation-status": {
+                "state": "implemented"
+              }
+            }
+          ],
+          "remarks": "Log-forwarding agent health is monitored continuously, with automated alerting on any host that stops forwarding logs for more than 15 minutes."
+        },
+        {
+          "uuid": "de0c5b14-0ab3-4acf-a13b-1fd26c64a8d2",
+          "control-id": "KSI-CNA-RNT",
+          "props": [
+            {
+              "name": "implementation-status",
+              "ns": "https://fedramp.gov/ns/oscal",
+              "value": "implemented"
+            }
+          ],
+          "by-components": [
+            {
+              "component-uuid": "e10e885a-d69e-4525-acee-c322ba8754b1",
+              "uuid": "c59f27c1-ec7b-4bdd-b5c6-a21223a0aa55",
+              "description": "Network traffic between application tiers is restricted using security groups that default-deny all traffic except explicitly allow-listed ports and protocols documented in the Certification Package Overview.",
+              "implementation-status": {
+                "state": "implemented"
+              }
+            }
+          ],
+          "remarks": "Security group configurations are scanned nightly against the documented allow-list; any drift generates an automated alert to the security operations team."
+        },
+        {
+          "uuid": "e583574d-47c1-40c0-a215-799d06b5ce48",
+          "control-id": "KSI-INR-RIR",
+          "props": [
+            {
+              "name": "implementation-status",
+              "ns": "https://fedramp.gov/ns/oscal",
+              "value": "implemented"
+            }
+          ],
+          "by-components": [
+            {
+              "component-uuid": "e10e885a-d69e-4525-acee-c322ba8754b1",
+              "uuid": "2e13af0e-3655-4a04-937c-9d34ee5d0a49",
+              "description": "Meridian follows a documented incident handling process that includes detection, containment, eradication, and reporting to affected federal customers and FedRAMP within required timeframes.",
+              "implementation-status": {
+                "state": "implemented"
+              }
+            }
+          ],
+          "remarks": "The incident response process was exercised via a tabletop simulation in Q2 2026; findings were incorporated into an updated runbook."
+        }
+      ]
+    },
+    "back-matter": {
+      "resources": [
+        {
+          "uuid": "fce1488e-f656-4a38-beec-32165e4b3c2e",
+          "title": "FedRAMP 20X \u2014 Class C Profile",
+          "rlinks": [
+            {
+              "href": "https://raw.githubusercontent.com/brian-ruf/frr2oscal/refs/heads/main/data/OSCAL/FedRAMP_2026_OSCAL_profile_20X-C.json"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

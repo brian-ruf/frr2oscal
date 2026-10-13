@@ -28,7 +28,7 @@ keywords = ["oscal", "nist", "security", "compliance", "automation", "catalog", 
 
 dependencies = [
     "loguru          >= 0.7.3",
-    "oscal           >= 3.2.2", 
+    "oscal           == 3.2.2", 
     "ruf-common      >= 2.1.0",
 ]
 

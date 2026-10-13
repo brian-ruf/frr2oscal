@@ -1,15 +1,15 @@
-<profile xmlns="http://csrc.nist.gov/ns/oscal/1.0" uuid="0d424572-a9fc-4fd0-bc23-15a368f33696">
+<profile xmlns="http://csrc.nist.gov/ns/oscal/1.0" uuid="5f1ef619-138a-49d8-81e4-b361e6b0f953">
   <metadata>
     <title>FedRAMP 20X — Class D</title>
     <published>2026-07-06T00:00:00Z</published>
-    <last-modified>2026-09-08T02:49:11Z</last-modified>
+    <last-modified>2026-10-13T21:27:13Z</last-modified>
     <version>2026.07.06.01</version>
     <oscal-version>1.2.3</oscal-version>
     <prop name="presentation-id" ns="http://cybercraft.app/ns/oscal" value="fedramp-cr26" />
     <link href="https://raw.githubusercontent.com/FedRAMP/rules/main/fedramp-consolidated-rules.json" rel="canonical" />
     <link href="https://www.fedramp.gov/2026/" rel="alternate" />
   </metadata>
-  <import href="#9acad526-89fb-48aa-bd2f-6eb092aa6311">
+  <import href="#025945b1-7c2b-46ec-b7e6-5ccd853da51c">
     <include-controls>
       <with-id>AFC-CSO-ACK</with-id>
       <with-id>AFC-CSO-CRA</with-id>
@@ -297,7 +297,7 @@
     <as-is>true</as-is>
   </merge>
   <back-matter>
-    <resource uuid="9acad526-89fb-48aa-bd2f-6eb092aa6311">
+    <resource uuid="025945b1-7c2b-46ec-b7e6-5ccd853da51c">
       <title>FedRAMP Consolidated Rules OSCAL Catalog</title>
       <rlink href="FedRAMP_2026_OSCAL_catalog.json" media-type="application/json" />
     </resource>

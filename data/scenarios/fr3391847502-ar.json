@@ -1,0 +1,481 @@
+{
+  "assessment-results": {
+    "uuid": "820aed20-db00-4d13-ae5a-bff3892f323d",
+    "metadata": {
+      "title": "FedRAMP Assessment Results",
+      "last-modified": "2026-09-17T18:04:32Z",
+      "version": "1.0",
+      "oscal-version": "1.2.3",
+      "props": [
+        {
+          "name": "presentation-id",
+          "ns": "http://cybercraft.app/ns/oscal",
+          "value": "fedramp-cr26"
+        }
+      ],
+      "roles": [
+        {
+          "id": "assessor",
+          "title": "Independent Assessor"
+        },
+        {
+          "id": "system-owner",
+          "title": "System Owner"
+        }
+      ]
+    },
+    "import-ap": {
+      "href": "fr3391847502-ap.json"
+    },
+    "results": [
+      {
+        "uuid": "96041fd9-11c8-4c3a-ae81-f2bb6f625d51",
+        "title": "Annual Assessment",
+        "description": "Independent assessment results for the FedRAMP certification package.",
+        "start": "2026-09-17T18:04:32Z",
+        "end": "2026-09-07T23:59:59Z",
+        "reviewed-controls": {
+          "control-selections": [
+            {
+              "include-all": {}
+            }
+          ]
+        },
+        "observations": [
+          {
+            "uuid": "54c77d0f-7ebe-4349-984a-28354a217477",
+            "title": "Assessment of MAS-CSO-IIR",
+            "description": "The independent assessor sampled the automated inventory against a manual resource enumeration during the FY26 annual assessment and found no discrepancies.",
+            "methods": [
+              "EXAMINE"
+            ],
+            "types": [
+              "finding"
+            ],
+            "collected": "2026-09-07T00:00:00Z"
+          },
+          {
+            "uuid": "e6452b35-09b7-4bba-b8e6-1e437d84838d",
+            "title": "Assessment of MAS-CSO-FLO",
+            "description": "Assessor confirmed via network configuration review that documented flows match observed traffic patterns during the FY26 annual assessment.",
+            "methods": [
+              "EXAMINE"
+            ],
+            "types": [
+              "finding"
+            ],
+            "collected": "2026-09-07T00:00:00Z"
+          },
+          {
+            "uuid": "d2874e2e-e9d4-4f3a-92ac-f8dd10af11d6",
+            "title": "Assessment of MAS-CSO-TPR",
+            "description": "Assessor verified the underlying IaaS platform's FedRAMP Certification status directly against the FedRAMP Marketplace during the FY26 annual assessment.",
+            "methods": [
+              "EXAMINE"
+            ],
+            "types": [
+              "finding"
+            ],
+            "collected": "2026-09-07T00:00:00Z"
+          },
+          {
+            "uuid": "40f57cf4-2a43-4575-8710-57eb901b96c4",
+            "title": "Assessment of VDR-CSO-DET",
+            "description": "Assessor reviewed 90 days of scan coverage reports during the FY26 annual assessment and confirmed continuous full-boundary coverage with no unscanned assets identified.",
+            "methods": [
+              "EXAMINE"
+            ],
+            "types": [
+              "finding"
+            ],
+            "collected": "2026-09-07T00:00:00Z"
+          },
+          {
+            "uuid": "1bbf67bb-7531-44f0-8afa-233fbf7a9b04",
+            "title": "Assessment of CCM-OCR-AVL",
+            "description": "Assessor confirmed a consistent 2-week publication cadence by reviewing the trust center's report history for the trailing 6 months.",
+            "methods": [
+              "EXAMINE"
+            ],
+            "types": [
+              "finding"
+            ],
+            "collected": "2026-09-07T00:00:00Z"
+          },
+          {
+            "uuid": "8ee3141f-e823-482a-9f74-a0f5cc6f84c7",
+            "title": "Assessment of SCN-CSO-INF",
+            "description": "Assessor reviewed the most recent Significant Change Notification during the FY26 annual assessment and confirmed it contained all required elements.",
+            "methods": [
+              "EXAMINE"
+            ],
+            "types": [
+              "finding"
+            ],
+            "collected": "2026-09-07T00:00:00Z"
+          },
+          {
+            "uuid": "c7f07b1b-22e4-4740-9c41-77e3cec3f5a4",
+            "title": "Assessment of KSI-IAM-APM",
+            "description": "Assessor queried the identity provider's authenticator report directly during the FY26 annual assessment and independently confirmed 97% passwordless/phishing-resistant coverage across active accounts.",
+            "methods": [
+              "EXAMINE",
+              "TEST"
+            ],
+            "types": [
+              "finding"
+            ],
+            "relevant-evidence": [
+              {
+                "href": "https://trust.meridiancloud.example/evidence/iam-apm-2026-07.pdf",
+                "description": "Identity provider authenticator-coverage report, July 2026"
+              }
+            ],
+            "collected": "2026-07-15T00:00:00Z"
+          },
+          {
+            "uuid": "9c1bb25b-765d-4c3a-ab25-f904fab47510",
+            "title": "Assessment of KSI-IAM-JIT",
+            "description": "Assessor sampled 30 days of PAM activation logs during the FY26 annual assessment and confirmed all elevated sessions were time-bound and justified.",
+            "methods": [
+              "EXAMINE",
+              "TEST"
+            ],
+            "types": [
+              "finding"
+            ],
+            "relevant-evidence": [
+              {
+                "href": "https://trust.meridiancloud.example/evidence/iam-jit-2026-07.csv",
+                "description": "PAM activation log export, June-July 2026"
+              }
+            ],
+            "collected": "2026-07-20T00:00:00Z"
+          },
+          {
+            "uuid": "46b04f40-c1d6-427d-b41e-3c73d810414e",
+            "title": "Assessment of KSI-IAM-AAM",
+            "description": "Assessor reviewed 90 days of IAM workflow lifecycle coverage reports during the FY26 annual assessment, confirming 100% of account lifecycle events were processed through the automated workflow with zero manual exceptions recorded.\n\nAssessor independently sampled 25 privilege-modification workflow records and confirmed that a manager-approval record with a timestamp predating the privilege change existed in the workflow audit trail for each sampled event.\n\nAssessor verified the Q2 2026 SIEM-to-identity-provider reconciliation report, confirming a 0% discrepancy across 2,341 IAM events, satisfying the non-repudiation requirement.",
+            "methods": [
+              "EXAMINE",
+              "TEST"
+            ],
+            "types": [
+              "finding"
+            ],
+            "relevant-evidence": [
+              {
+                "href": "https://trust.meridiancloud.example/evidence/iam-aam-coverage-2026-08.csv",
+                "description": "IAM workflow lifecycle coverage report, August 2026 \u2014 847 lifecycle events, 100% automated, 0 manual exceptions"
+              },
+              {
+                "href": "https://trust.meridiancloud.example/evidence/iam-aam-reconciliation-2026-q3.pdf",
+                "description": "SIEM-to-identity-provider event reconciliation report, Q3 2026 \u2014 0% discrepancy across 2,341 events"
+              }
+            ],
+            "collected": "2026-09-07T00:00:00Z"
+          },
+          {
+            "uuid": "5d7c5a0b-04e8-4992-981e-75b7e3f72614",
+            "title": "Assessment of KSI-SVC-SIN",
+            "description": "Assessor reviewed configuration scan results and independently spot-checked 3 storage resources during the FY26 annual assessment, confirming encryption was enabled and using validated cryptographic modules.",
+            "methods": [
+              "EXAMINE",
+              "TEST"
+            ],
+            "types": [
+              "finding"
+            ],
+            "relevant-evidence": [
+              {
+                "href": "https://trust.meridiancloud.example/evidence/svc-sin-2026-07.json",
+                "description": "Storage encryption configuration scan output, July 2026"
+              }
+            ],
+            "collected": "2026-07-22T00:00:00Z"
+          },
+          {
+            "uuid": "46c26dfb-409f-4a28-a5d0-c79c011c2be1",
+            "title": "Assessment of KSI-MLA-OSM",
+            "description": "Assessor confirmed SIEM ingestion coverage across a sample of infrastructure components and reviewed retention configuration during the FY26 annual assessment.",
+            "methods": [
+              "EXAMINE",
+              "TEST"
+            ],
+            "types": [
+              "finding"
+            ],
+            "relevant-evidence": [
+              {
+                "href": "https://trust.meridiancloud.example/evidence/mla-osm-2026-07.json",
+                "description": "SIEM retention policy configuration export"
+              }
+            ],
+            "collected": "2026-07-10T00:00:00Z"
+          },
+          {
+            "uuid": "f791b0b3-e218-4bf3-b702-750c90ba6f99",
+            "title": "Assessment of KSI-CNA-RNT",
+            "description": "Assessor reviewed security group configurations and the nightly drift-detection alert history during the FY26 annual assessment and found no unresolved drift incidents.",
+            "methods": [
+              "EXAMINE",
+              "TEST"
+            ],
+            "types": [
+              "finding"
+            ],
+            "relevant-evidence": [
+              {
+                "href": "https://trust.meridiancloud.example/evidence/cna-rnt-2026-07.json",
+                "description": "Security group configuration export and drift-detection log, July 2026"
+              }
+            ],
+            "collected": "2026-07-24T00:00:00Z"
+          },
+          {
+            "uuid": "9bd6b186-1355-4f97-9041-5f737e434302",
+            "title": "Assessment of KSI-INR-RIR",
+            "description": "Assessor reviewed the Q2 2026 tabletop simulation report and confirmed the incident reporting timeline met FedRAMP requirements.",
+            "methods": [
+              "EXAMINE",
+              "TEST"
+            ],
+            "types": [
+              "finding"
+            ],
+            "relevant-evidence": [
+              {
+                "href": "https://trust.meridiancloud.example/evidence/inr-rir-2026-q2.pdf",
+                "description": "Q2 2026 incident response tabletop exercise after-action summary"
+              }
+            ],
+            "collected": "2026-06-30T00:00:00Z"
+          }
+        ],
+        "findings": [
+          {
+            "uuid": "28c9da55-9016-4d05-bf79-2cb56ed2beb0",
+            "title": "MAS-CSO-IIR \u2014 Assessor Finding",
+            "description": "The independent assessor sampled the automated inventory against a manual resource enumeration during the FY26 annual assessment and found no discrepancies.",
+            "target": {
+              "type": "objective-id",
+              "target-id": "MAS-CSO-IIR",
+              "status": {
+                "state": "satisfied"
+              }
+            },
+            "related-observations": [
+              {
+                "observation-uuid": "54c77d0f-7ebe-4349-984a-28354a217477"
+              }
+            ]
+          },
+          {
+            "uuid": "994e02b0-2ddb-4681-8399-36cc0844fea4",
+            "title": "MAS-CSO-FLO \u2014 Assessor Finding",
+            "description": "Assessor confirmed via network configuration review that documented flows match observed traffic patterns during the FY26 annual assessment.",
+            "target": {
+              "type": "objective-id",
+              "target-id": "MAS-CSO-FLO",
+              "status": {
+                "state": "satisfied"
+              }
+            },
+            "related-observations": [
+              {
+                "observation-uuid": "e6452b35-09b7-4bba-b8e6-1e437d84838d"
+              }
+            ]
+          },
+          {
+            "uuid": "bb69c291-7c76-4c5e-bfe4-755657ce7f0b",
+            "title": "MAS-CSO-TPR \u2014 Assessor Finding",
+            "description": "Assessor verified the underlying IaaS platform's FedRAMP Certification status directly against the FedRAMP Marketplace during the FY26 annual assessment.",
+            "target": {
+              "type": "objective-id",
+              "target-id": "MAS-CSO-TPR",
+              "status": {
+                "state": "satisfied"
+              }
+            },
+            "related-observations": [
+              {
+                "observation-uuid": "d2874e2e-e9d4-4f3a-92ac-f8dd10af11d6"
+              }
+            ]
+          },
+          {
+            "uuid": "4d317e36-847f-48bd-af16-1136dacd3028",
+            "title": "VDR-CSO-DET \u2014 Assessor Finding",
+            "description": "Assessor reviewed 90 days of scan coverage reports during the FY26 annual assessment and confirmed continuous full-boundary coverage with no unscanned assets identified.",
+            "target": {
+              "type": "objective-id",
+              "target-id": "VDR-CSO-DET",
+              "status": {
+                "state": "satisfied"
+              }
+            },
+            "related-observations": [
+              {
+                "observation-uuid": "40f57cf4-2a43-4575-8710-57eb901b96c4"
+              }
+            ]
+          },
+          {
+            "uuid": "a891d2e0-6584-4692-8b73-daaf07032422",
+            "title": "CCM-OCR-AVL \u2014 Assessor Finding",
+            "description": "Assessor confirmed a consistent 2-week publication cadence by reviewing the trust center's report history for the trailing 6 months.",
+            "target": {
+              "type": "objective-id",
+              "target-id": "CCM-OCR-AVL",
+              "status": {
+                "state": "satisfied"
+              }
+            },
+            "related-observations": [
+              {
+                "observation-uuid": "1bbf67bb-7531-44f0-8afa-233fbf7a9b04"
+              }
+            ]
+          },
+          {
+            "uuid": "29c29ab9-8c94-4589-affe-d4ee97792fd6",
+            "title": "SCN-CSO-INF \u2014 Assessor Finding",
+            "description": "Assessor reviewed the most recent Significant Change Notification during the FY26 annual assessment and confirmed it contained all required elements.",
+            "target": {
+              "type": "objective-id",
+              "target-id": "SCN-CSO-INF",
+              "status": {
+                "state": "satisfied"
+              }
+            },
+            "related-observations": [
+              {
+                "observation-uuid": "8ee3141f-e823-482a-9f74-a0f5cc6f84c7"
+              }
+            ]
+          },
+          {
+            "uuid": "b300b62b-8526-446e-b018-223ae24b3385",
+            "title": "KSI-IAM-APM \u2014 Assessor Finding",
+            "description": "Assessor queried the identity provider's authenticator report directly during the FY26 annual assessment and independently confirmed 97% passwordless/phishing-resistant coverage across active accounts.",
+            "target": {
+              "type": "objective-id",
+              "target-id": "KSI-IAM-APM",
+              "status": {
+                "state": "satisfied"
+              }
+            },
+            "related-observations": [
+              {
+                "observation-uuid": "c7f07b1b-22e4-4740-9c41-77e3cec3f5a4"
+              }
+            ]
+          },
+          {
+            "uuid": "5b0b1fc9-a1ef-45cc-863d-14ffde6dbbb7",
+            "title": "KSI-IAM-JIT \u2014 Assessor Finding",
+            "description": "Assessor sampled 30 days of PAM activation logs during the FY26 annual assessment and confirmed all elevated sessions were time-bound and justified.",
+            "target": {
+              "type": "objective-id",
+              "target-id": "KSI-IAM-JIT",
+              "status": {
+                "state": "satisfied"
+              }
+            },
+            "related-observations": [
+              {
+                "observation-uuid": "9c1bb25b-765d-4c3a-ab25-f904fab47510"
+              }
+            ]
+          },
+          {
+            "uuid": "3794252b-a91c-42ea-a907-b578d89c237c",
+            "title": "KSI-IAM-AAM \u2014 Assessor Finding",
+            "description": "Assessor reviewed 90 days of IAM workflow lifecycle coverage reports during the FY26 annual assessment, confirming 100% of account lifecycle events were processed through the automated workflow with zero manual exceptions recorded.\n\nAssessor independently sampled 25 privilege-modification workflow records and confirmed that a manager-approval record with a timestamp predating the privilege change existed in the workflow audit trail for each sampled event.\n\nAssessor verified the Q2 2026 SIEM-to-identity-provider reconciliation report, confirming a 0% discrepancy across 2,341 IAM events, satisfying the non-repudiation requirement.",
+            "target": {
+              "type": "objective-id",
+              "target-id": "KSI-IAM-AAM",
+              "status": {
+                "state": "satisfied"
+              }
+            },
+            "related-observations": [
+              {
+                "observation-uuid": "46b04f40-c1d6-427d-b41e-3c73d810414e"
+              }
+            ]
+          },
+          {
+            "uuid": "ee3e90d8-2ca8-4ee5-8cb7-c95c3a92cd65",
+            "title": "KSI-SVC-SIN \u2014 Assessor Finding",
+            "description": "Assessor reviewed configuration scan results and independently spot-checked 3 storage resources during the FY26 annual assessment, confirming encryption was enabled and using validated cryptographic modules.",
+            "target": {
+              "type": "objective-id",
+              "target-id": "KSI-SVC-SIN",
+              "status": {
+                "state": "satisfied"
+              }
+            },
+            "related-observations": [
+              {
+                "observation-uuid": "5d7c5a0b-04e8-4992-981e-75b7e3f72614"
+              }
+            ]
+          },
+          {
+            "uuid": "7c0acf3c-8e63-4379-acd9-09a636fffdca",
+            "title": "KSI-MLA-OSM \u2014 Assessor Finding",
+            "description": "Assessor confirmed SIEM ingestion coverage across a sample of infrastructure components and reviewed retention configuration during the FY26 annual assessment.",
+            "target": {
+              "type": "objective-id",
+              "target-id": "KSI-MLA-OSM",
+              "status": {
+                "state": "satisfied"
+              }
+            },
+            "related-observations": [
+              {
+                "observation-uuid": "46c26dfb-409f-4a28-a5d0-c79c011c2be1"
+              }
+            ]
+          },
+          {
+            "uuid": "7d4145cd-ae1e-4d74-b201-b4d99c407be6",
+            "title": "KSI-CNA-RNT \u2014 Assessor Finding",
+            "description": "Assessor reviewed security group configurations and the nightly drift-detection alert history during the FY26 annual assessment and found no unresolved drift incidents.",
+            "target": {
+              "type": "objective-id",
+              "target-id": "KSI-CNA-RNT",
+              "status": {
+                "state": "satisfied"
+              }
+            },
+            "related-observations": [
+              {
+                "observation-uuid": "f791b0b3-e218-4bf3-b702-750c90ba6f99"
+              }
+            ]
+          },
+          {
+            "uuid": "301d0179-9a92-4101-9d00-517b9bf17573",
+            "title": "KSI-INR-RIR \u2014 Assessor Finding",
+            "description": "Assessor reviewed the Q2 2026 tabletop simulation report and confirmed the incident reporting timeline met FedRAMP requirements.",
+            "target": {
+              "type": "objective-id",
+              "target-id": "KSI-INR-RIR",
+              "status": {
+                "state": "satisfied"
+              }
+            },
+            "related-observations": [
+              {
+                "observation-uuid": "9bd6b186-1355-4f97-9041-5f737e434302"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
