@@ -33,7 +33,8 @@ fi
 
 # ── Build ────────────────────────────────────────────────────
 echo "[RUN] Running Converter ..."
-python -m frr2oscal
+# use --refresh to force reaquisition of the FedRAMP Rules JSON file
+python -m frr2oscal --refresh
 
 
 echo ""

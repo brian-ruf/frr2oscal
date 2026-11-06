@@ -1,11 +1,11 @@
 {
   "profile": {
-    "uuid": "d204f6e1-ecee-4ebe-83c3-d7fb65bde110",
+    "uuid": "2812a159-9231-46c8-83e7-38016c77d098",
     "metadata": {
       "title": "FedRAMP Rev 5 \u2014 Tailoring",
-      "published": "2026-07-06T00:00:00Z",
-      "last-modified": "2026-10-13T21:27:14Z",
-      "version": "2026.07.06.01",
+      "published": "2026-11-02T00:00:00Z",
+      "last-modified": "2026-11-06T14:54:17Z",
+      "version": "2026.11.02.01",
       "oscal-version": "1.2.3",
       "props": [
         {
@@ -23,11 +23,12 @@
           "href": "https://www.fedramp.gov/2026/",
           "rel": "alternate"
         }
-      ]
+      ],
+      "remarks": "Acquired 2026-11-06T14:54:09Z"
     },
     "imports": [
       {
-        "href": "#5cc17aff-80aa-4eb1-99a8-e961c8676d21",
+        "href": "#66abb774-ad84-44db-a016-89a8eb953931",
         "include-controls": [
           {
             "with-ids": [
@@ -1438,7 +1439,7 @@
     "back-matter": {
       "resources": [
         {
-          "uuid": "5cc17aff-80aa-4eb1-99a8-e961c8676d21",
+          "uuid": "66abb774-ad84-44db-a016-89a8eb953931",
           "title": "NIST SP 800-53 Revision 5",
           "rlinks": [
             {

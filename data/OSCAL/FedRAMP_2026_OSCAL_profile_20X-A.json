@@ -1,11 +1,11 @@
 {
   "profile": {
-    "uuid": "b4e3833e-1114-4031-8a8c-cd14f5652b73",
+    "uuid": "f00c8a1c-21dd-44e4-82f4-1cc308a83b83",
     "metadata": {
       "title": "FedRAMP 20X \u2014 Class A",
-      "published": "2026-07-06T00:00:00Z",
-      "last-modified": "2026-10-13T21:27:13Z",
-      "version": "2026.07.06.01",
+      "published": "2026-11-02T00:00:00Z",
+      "last-modified": "2026-11-06T14:54:16Z",
+      "version": "2026.11.02.01",
       "oscal-version": "1.2.3",
       "props": [
         {
@@ -23,11 +23,12 @@
           "href": "https://www.fedramp.gov/2026/",
           "rel": "alternate"
         }
-      ]
+      ],
+      "remarks": "Acquired 2026-11-06T14:54:09Z"
     },
     "imports": [
       {
-        "href": "#ff7a6a68-ddbe-4884-8253-fbb3fbccde70",
+        "href": "#45ae32bc-d88f-4117-9a98-fd1eaeecb7e5",
         "include-controls": [
           {
             "with-ids": [
@@ -135,7 +136,6 @@
               "FRC-CSO-PKG",
               "FRC-CSO-POP",
               "FRC-CSX-MAS",
-              "FRC-CSX-MOT-a",
               "FRC-CSX-VVK-a",
               "FRC-CSX-VVR-a",
               "IEC-CSO-AIR",
@@ -325,7 +325,7 @@
     "back-matter": {
       "resources": [
         {
-          "uuid": "ff7a6a68-ddbe-4884-8253-fbb3fbccde70",
+          "uuid": "45ae32bc-d88f-4117-9a98-fd1eaeecb7e5",
           "title": "FedRAMP Consolidated Rules OSCAL Catalog",
           "rlinks": [
             {

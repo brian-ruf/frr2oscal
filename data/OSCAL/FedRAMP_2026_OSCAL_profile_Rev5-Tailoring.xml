@@ -1,15 +1,18 @@
-<profile xmlns="http://csrc.nist.gov/ns/oscal/1.0" uuid="d204f6e1-ecee-4ebe-83c3-d7fb65bde110">
+<profile xmlns="http://csrc.nist.gov/ns/oscal/1.0" uuid="2812a159-9231-46c8-83e7-38016c77d098">
   <metadata>
     <title>FedRAMP Rev 5 — Tailoring</title>
-    <published>2026-07-06T00:00:00Z</published>
-    <last-modified>2026-10-13T21:27:14Z</last-modified>
-    <version>2026.07.06.01</version>
+    <published>2026-11-02T00:00:00Z</published>
+    <last-modified>2026-11-06T14:54:17Z</last-modified>
+    <version>2026.11.02.01</version>
     <oscal-version>1.2.3</oscal-version>
     <prop name="presentation-id" ns="http://cybercraft.app/ns/oscal" value="fedramp-cr26" />
     <link href="https://raw.githubusercontent.com/FedRAMP/rules/main/fedramp-consolidated-rules.json" rel="canonical" />
     <link href="https://www.fedramp.gov/2026/" rel="alternate" />
+    <remarks>
+      <p>Acquired 2026-11-06T14:54:09Z</p>
+    </remarks>
   </metadata>
-  <import href="#5cc17aff-80aa-4eb1-99a8-e961c8676d21">
+  <import href="#66abb774-ad84-44db-a016-89a8eb953931">
     <include-controls>
       <with-id>ac-1</with-id>
       <with-id>ac-10</with-id>
@@ -922,7 +925,7 @@
     </alter>
   </modify>
   <back-matter>
-    <resource uuid="5cc17aff-80aa-4eb1-99a8-e961c8676d21">
+    <resource uuid="66abb774-ad84-44db-a016-89a8eb953931">
       <title>NIST SP 800-53 Revision 5</title>
       <rlink href="https://raw.githubusercontent.com/usnistgov/oscal-content/refs/heads/main/nist.gov/SP800-53/rev5/json/NIST_SP-800-53_rev5_catalog.json" media-type="application/json" />
     </resource>

@@ -1,5 +1,7 @@
 [
   "terms",
   "notification",
+  "timeframe_num_min",
+  "timeframe_num_max",
   "pain_timeframes"
 ]

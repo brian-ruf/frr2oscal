@@ -59,11 +59,11 @@ Each top-level key in `FRR` (pattern `^[A-Z]{3}$`) becomes a top-level
 | `web_name` | ✓ | string | → `group.props[name=web_name, ns=FRR_NS].value` (FedRAMP extension) |
 | `status` | ✓ | `"stable"` \| `"placeholder"` \| `"empty"` | → `group.props[name=status, ns=FRR_NS].value` (FedRAMP extension) |
 | `tag` | — | string | → `group.props[name=tag, ns=FRR_NS].value` (FedRAMP extension) |
-| `effective` | ✓ (or `20x`+`rev5`) | `effective_entry` | **NOT MAPPED** — effective date and status for the ruleset |
+| `effective` | ✓ (or `20x`+`rev5`) | `effective_entry` | → `group.props` (FedRAMP namespace, `class=all`); see §2.4 |
 | `subsets` | — | `frr_info_subsets` | Mapped as child controls — subset metadata (names, descriptions, applicability); see §2.3 |
-| `flows` | — | array | **NOT MAPPED** — process-flow relationships |
-| `20x` | ✓ (when no top-level `effective`) | `frr_document_info_certification` | **NOT MAPPED** — 20x-specific effective dates and subset overrides |
-| `rev5` | ✓ (when no top-level `effective`) | `frr_document_info_certification` | **NOT MAPPED** — Rev5-specific effective dates and subset overrides |
+| `flows` | ✓ | array of flow objects | JSON converted to Mermaid `flowchart TD`, rendered to SVG via mermaid.ink, stored as base64 back-matter resource; `group.links[rel=diagram]` added per flow; see §2.5 |
+| `20x` | ✓ (when no top-level `effective`) | `frr_document_info_certification` | `20x.effective` → `group.props` (`class=twentyx`); see §2.4. `20x.flows` → back-matter + `group.links`; see §2.5. `20x.subsets` **NOT MAPPED** |
+| `rev5` | ✓ (when no top-level `effective`) | `frr_document_info_certification` | `rev5.effective` → `group.props` (`class=rev5`); see §2.4. `rev5.flows` → back-matter + `group.links`; see §2.5. `rev5.subsets` **NOT MAPPED** |
 
 ### 2.3 `FRR.{key}.info.subsets` (`frr_info_subsets`)
 
@@ -80,6 +80,71 @@ ruleset group (id = `FRR-{key}-{subset-key}`).
 | `{subset-key}.applicability.paths` | ✓ | `["Program"` \| `"Agency"]` | → one `control.props[name=applicability-path, ns=FRR_NS]` per item |
 | `{subset-key}.applicability.classes` | ✓ | `["A"…"D"]` | → one `control.props[name=applicability-class, ns=FRR_NS]` per item |
 | `{subset-key}.applicability.affects` | ✓ | `affected_party[]` | → one `control.props[name=affects, ns=FRR_NS]` per item |
+
+### 2.4 `effective_entry` → FedRAMP-namespace props
+
+An `effective_entry` object is flattened into a set of props on the parent
+group. All props share the name prefix `effective-`; the OSCAL `class`
+attribute distinguishes which cert scope the entry belongs to:
+
+| Location | Prop `class` |
+|---|---|
+| `info.effective` | `all` |
+| `info.20x.effective` | `twentyx` |
+| `info.rev5.effective` | `rev5` |
+
+Each field in the `effective_entry` maps to one prop
+(`name = effective-{path}`, `ns = http://fedramp.gov/ns/oscal`):
+
+| Schema field path | Prop name | Value notes |
+|---|---|---|
+| `is` | `effective-is` | String as-is (`"required"` \| `"optional"` \| `"no"`) |
+| `current_status` | `effective-current_status` | String as-is |
+| `signup_url` | `effective-signup_url` | String as-is |
+| `comments` | `effective-comments` | JSON-serialised array |
+| `warnings` | `effective-warnings` | JSON-serialised array |
+| `date.obtain` | `effective-date-obtain` | Date converted to OSCAL dateTime (`T00:00:00Z`) |
+| `date.maintain` | `effective-date-maintain` | Date converted to OSCAL dateTime |
+| `date.optional_adoption` | `effective-date-optional_adoption` | Date converted to OSCAL dateTime |
+| `date.grace.default` | `effective-date-grace-default` | Date converted to OSCAL dateTime |
+| `date.grace.until_next_assessment` | `effective-date-grace-until_next_assessment` | Boolean serialised as `"true"` or `"false"` |
+
+Only fields that are present and non-`None` in the source object produce a prop.
+The mutual-exclusion constraint (either `effective` OR `20x`+`rev5`) is enforced
+by the schema; the code passes empty dicts for absent locations so absent entries
+produce no props.
+
+---
+
+### 2.5 `flows` → back-matter resource + group link
+
+Each entry in a `flows` array (from `info.flows`, `info.20x.flows`, or
+`info.rev5.flows`) is treated as a Mermaid-compatible process-flow graph and
+converted as follows:
+
+1. **JSON → Mermaid** (`_flow_to_mermaid`): The `nodes` and `edges` arrays are
+   rendered into a `flowchart TD` block.  Node shapes follow the `type` field:
+   `start`/`end` → `([text])`, `decision` → `{text}`, all others → `[text]`.
+2. **Mermaid → SVG** (`_mermaid_to_svg`): The Mermaid text is base64url-encoded
+   and sent to the `mermaid.ink` public render API.  If rendering fails the flow
+   is silently skipped.
+3. **Back-matter resource**: The SVG is base64-encoded and stored as an OSCAL
+   back-matter resource:
+   - `uuid` — deterministic UUID derived from `(frr_key, scope, flow_index)`.
+   - `title` — taken from `flow.activity`; falls back to `"Flow {n}"`.
+   - `description` — taken from `flow.description` when present.
+   - `base64.filename` — `FRR-{key}-{scope}-flow-{n}.svg` (scope omitted for
+     top-level flows).
+   - `base64.media-type` — `image/svg+xml`.
+   - `base64.value` — base64-encoded SVG bytes.
+4. **Group link**: A link is added to the parent group:
+   - `rel` — `"diagram"`
+   - `href` — `#{resource_uuid}`
+   - `text` — the flow activity name.
+
+Multiple flows in one block each produce their own resource and link.  Flows
+across all three scope locations (`info`, `20x`, `rev5`) are processed
+independently; all resulting links are merged onto the same group.
 
 ---
 

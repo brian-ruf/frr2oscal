@@ -1,11 +1,11 @@
 {
   "profile": {
-    "uuid": "970660a9-e4b2-4d25-9b5e-07c49bad3439",
+    "uuid": "d78f6534-8d33-41de-99d4-1ae6cced7467",
     "metadata": {
       "title": "FedRAMP Rev 5 \u2014 Class D",
-      "published": "2026-07-06T00:00:00Z",
-      "last-modified": "2026-10-13T21:27:14Z",
-      "version": "2026.07.06.01",
+      "published": "2026-11-02T00:00:00Z",
+      "last-modified": "2026-11-06T14:54:17Z",
+      "version": "2026.11.02.01",
       "oscal-version": "1.2.3",
       "props": [
         {
@@ -23,11 +23,12 @@
           "href": "https://www.fedramp.gov/2026/",
           "rel": "alternate"
         }
-      ]
+      ],
+      "remarks": "Acquired 2026-11-06T14:54:09Z"
     },
     "imports": [
       {
-        "href": "#f4629637-f780-432b-aefb-94bec9fd3bc1",
+        "href": "#803f0c81-5bc5-45b7-a7a7-47e30eb4e7b6",
         "include-controls": [
           {
             "with-ids": [
@@ -273,7 +274,7 @@
         ]
       },
       {
-        "href": "#4f02842c-ea7f-4c2a-87eb-a11e5b39cbf8",
+        "href": "#58f41113-ca5a-4fed-ab85-4fcdb3fe6888",
         "include-controls": [
           {
             "with-ids": [
@@ -727,7 +728,7 @@
               "parts": [
                 {
                   "name": "guidance",
-                  "prose": "Authenticators must be compliant with NIST SP 800-63-3 Digital Identity Guidelines IAL, AAL, FAL level 3. Link https://pages.nist.gov/800-63-3\n\nIA-5 Guidance: SP 800-63C Section 6.2.3 Encrypted Assertion requires that authentication assertions be encrypted when passed through third parties, such as a browser. For example, a SAML assertion can be encrypted using XML-Encryption, or an OpenID Connect ID Token can be encrypted using JSON Web Encryption (JWE)."
+                  "prose": "Authenticators must be compliant with the most recent NIST Digital Identity Guidelines IAL, AAL, FAL level 3.\n\nIA-5 Guidance: FedRAMP requires that authentication assertions be encrypted when passed through third parties, such as a browser. For example, a SAML assertion can be encrypted using XML-Encryption, or an OpenID Connect ID Token can be encrypted using JSON Web Encryption (JWE)."
                 }
               ]
             }
@@ -738,7 +739,7 @@
     "back-matter": {
       "resources": [
         {
-          "uuid": "f4629637-f780-432b-aefb-94bec9fd3bc1",
+          "uuid": "803f0c81-5bc5-45b7-a7a7-47e30eb4e7b6",
           "title": "FedRAMP Consolidated Rules OSCAL Catalog",
           "rlinks": [
             {
@@ -748,7 +749,7 @@
           ]
         },
         {
-          "uuid": "4f02842c-ea7f-4c2a-87eb-a11e5b39cbf8",
+          "uuid": "58f41113-ca5a-4fed-ab85-4fcdb3fe6888",
           "title": "FedRAMP Rev 5 Tailoring Profile",
           "rlinks": [
             {
