@@ -1,8 +1,8 @@
 # FedRAMP Rules (FRR) to OSCAL
 
-This parses the JSON file published by FedRAMP containing the FedRAMP Rules and associated content. It creates an OSCAL Catalog with the FedRAMP Rules and FedRAMP Profiles for 20x Class A, B, C and D as well as Rev 5 Class B, C and D. (FedRAMP does not make Class A available under the Rev 5 path.) A Rev 5 Tailoring profile is also produced; the Rev 5 class profiles import it rather than the NIST catalog directly.
+This parses the [JSON file published by FedRAMP](https://raw.githubusercontent.com/FedRAMP/rules/main/fedramp-consolidated-rules.json) containing the FedRAMP Rules and associated content. It creates an OSCAL Catalog with the FedRAMP Rules and FedRAMP Profiles for 20x Class A, B, C and D as well as Rev 5 Class B, C and D. (FedRAMP does not make Class A available under the Rev 5 path.) A Rev 5 Tailoring profile is also produced; the Rev 5 class profiles import it rather than the NIST catalog directly.
 
-![Hierarchy Diagram](./docs/assets/20x_Diagrams.png)
+![Hierarchy Diagram](./docs/assets/CR26_Catalog_Profile_Hierarchy.png)
 
 ## WORK IN PROGRESS  
 

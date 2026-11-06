@@ -1,15 +1,18 @@
-<profile xmlns="http://csrc.nist.gov/ns/oscal/1.0" uuid="970660a9-e4b2-4d25-9b5e-07c49bad3439">
+<profile xmlns="http://csrc.nist.gov/ns/oscal/1.0" uuid="d78f6534-8d33-41de-99d4-1ae6cced7467">
   <metadata>
     <title>FedRAMP Rev 5 — Class D</title>
-    <published>2026-07-06T00:00:00Z</published>
-    <last-modified>2026-10-13T21:27:14Z</last-modified>
-    <version>2026.07.06.01</version>
+    <published>2026-11-02T00:00:00Z</published>
+    <last-modified>2026-11-06T14:54:17Z</last-modified>
+    <version>2026.11.02.01</version>
     <oscal-version>1.2.3</oscal-version>
     <prop name="presentation-id" ns="http://cybercraft.app/ns/oscal" value="fedramp-cr26" />
     <link href="https://raw.githubusercontent.com/FedRAMP/rules/main/fedramp-consolidated-rules.json" rel="canonical" />
     <link href="https://www.fedramp.gov/2026/" rel="alternate" />
+    <remarks>
+      <p>Acquired 2026-11-06T14:54:09Z</p>
+    </remarks>
   </metadata>
-  <import href="#f4629637-f780-432b-aefb-94bec9fd3bc1">
+  <import href="#803f0c81-5bc5-45b7-a7a7-47e30eb4e7b6">
     <include-controls>
       <with-id>AFC-CSO-ACK</with-id>
       <with-id>AFC-CSO-CRA</with-id>
@@ -250,7 +253,7 @@
       <with-id>VER-TFR-NRI-d</with-id>
     </include-controls>
   </import>
-  <import href="#4f02842c-ea7f-4c2a-87eb-a11e5b39cbf8">
+  <import href="#58f41113-ca5a-4fed-ab85-4fcdb3fe6888">
     <include-controls>
       <with-id>ac-1</with-id>
       <with-id>ac-10</with-id>
@@ -680,18 +683,18 @@
     <alter control-id="ia-5">
       <add position="ending">
         <part name="guidance">
-          <p>Authenticators must be compliant with NIST SP 800-63-3 Digital Identity Guidelines IAL, AAL, FAL level 3. Link https://pages.nist.gov/800-63-3</p>
-          <p>IA-5 Guidance: SP 800-63C Section 6.2.3 Encrypted Assertion requires that authentication assertions be encrypted when passed through third parties, such as a browser. For example, a SAML assertion can be encrypted using XML-Encryption, or an OpenID Connect ID Token can be encrypted using JSON Web Encryption (JWE).</p>
+          <p>Authenticators must be compliant with the most recent NIST Digital Identity Guidelines IAL, AAL, FAL level 3.</p>
+          <p>IA-5 Guidance: FedRAMP requires that authentication assertions be encrypted when passed through third parties, such as a browser. For example, a SAML assertion can be encrypted using XML-Encryption, or an OpenID Connect ID Token can be encrypted using JSON Web Encryption (JWE).</p>
         </part>
       </add>
     </alter>
   </modify>
   <back-matter>
-    <resource uuid="f4629637-f780-432b-aefb-94bec9fd3bc1">
+    <resource uuid="803f0c81-5bc5-45b7-a7a7-47e30eb4e7b6">
       <title>FedRAMP Consolidated Rules OSCAL Catalog</title>
       <rlink href="FedRAMP_2026_OSCAL_catalog.json" media-type="application/json" />
     </resource>
-    <resource uuid="4f02842c-ea7f-4c2a-87eb-a11e5b39cbf8">
+    <resource uuid="58f41113-ca5a-4fed-ab85-4fcdb3fe6888">
       <title>FedRAMP Rev 5 Tailoring Profile</title>
       <rlink href="FedRAMP_2026_OSCAL_profile_Rev5-Tailoring.json" media-type="application/json" />
     </resource>

@@ -8,6 +8,7 @@ and integration-level control creation using a real Catalog object.
 import json
 import sys
 import os
+import tempfile
 
 import pytest
 
@@ -17,6 +18,8 @@ _repo_root  = os.path.dirname(_tests_dir)
 sys.path.insert(0, os.path.join(_repo_root, "src"))
 
 import frr2oscal
+from unittest.mock import patch
+
 from frr2oscal import (
     CYBERCRAFT_NAMESPACE,
     FRR_NS,
@@ -33,6 +36,7 @@ from frr2oscal import (
     _add_artifact_parts,
     _add_catalog_contacts,
     _add_extra_parts,
+    _add_flow_resources,
     _add_following_information,
     _add_following_information_bullets,
     _add_frr_to_profiles,
@@ -45,14 +49,18 @@ from frr2oscal import (
     _collect_ctl_param_ids,
     _ctl_id_to_oscal,
     _date_to_datetime,
+    _effective_entry_props,
     _extension_props,
+    _flow_to_mermaid,
     _guidance_part,
+    _infer_group_label,
     _nist_control_links,
     _notes_text,
     _profile_keys_for,
     _reference_link,
     _reset_profile_tracking,
     _rev5_ctrl_to_oscal,
+    _set_group_label,
     _track_unhandled,
     _updated_props,
 )
@@ -85,10 +93,14 @@ def _find_control(cat: Catalog, ctrl_id: str) -> dict:
     return {}
 
 
-def _prop_value(props: list, name: str, *, ns: str = "") -> str | None:
-    """Find a prop by name (and optional ns) and return its value."""
+def _prop_value(props: list, name: str, *, ns: str = "", class_val: str = "") -> str | None:
+    """Find a prop by name (and optional ns/class) and return its value."""
     for p in props:
-        if p.get("name") == name and (not ns or p.get("ns") == ns):
+        if (
+            p.get("name") == name
+            and (not ns or p.get("ns") == ns)
+            and (not class_val or p.get("class") == class_val)
+        ):
             return p.get("value")
     return None
 
@@ -1514,6 +1526,601 @@ class TestCollectCtlParamIds:
         assert ids == []
 
 
+# ── _effective_entry_props ────────────────────────────────────────────────────
+
+class TestEffectiveEntryProps:
+    def _names(self, props: list) -> list:
+        return [p["name"] for p in props]
+
+    def test_empty_entry_returns_empty(self):
+        assert _effective_entry_props({}) == []
+
+    def test_is_field_mapped(self):
+        props = _effective_entry_props({"is": "required"})
+        assert any(p["name"] == "effective-is" and p["value"] == "required" for p in props)
+
+    def test_current_status_field_mapped(self):
+        props = _effective_entry_props({"current_status": "Live"})
+        assert any(p["name"] == "effective-current_status" and p["value"] == "Live" for p in props)
+
+    def test_signup_url_field_mapped(self):
+        props = _effective_entry_props({"signup_url": "https://fedramp.gov/signup"})
+        assert any(p["name"] == "effective-signup_url" for p in props)
+
+    def test_comments_json_serialised(self):
+        props = _effective_entry_props({"comments": ["note one", "note two"]})
+        import json as _json
+        p = next(x for x in props if x["name"] == "effective-comments")
+        assert _json.loads(p["value"]) == ["note one", "note two"]
+
+    def test_warnings_json_serialised(self):
+        props = _effective_entry_props({"warnings": ["heads up"]})
+        import json as _json
+        p = next(x for x in props if x["name"] == "effective-warnings")
+        assert _json.loads(p["value"]) == ["heads up"]
+
+    def test_date_obtain_converted_to_datetime(self):
+        props = _effective_entry_props({"date": {"obtain": "2026-01-05"}})
+        p = next(x for x in props if x["name"] == "effective-date-obtain")
+        assert p["value"] == "2026-01-05T00:00:00Z"
+
+    def test_date_maintain_converted_to_datetime(self):
+        props = _effective_entry_props({"date": {"obtain": "2026-01-05", "maintain": "2026-07-01", "grace": {"default": "2026-07-01", "until_next_assessment": False}}})
+        p = next(x for x in props if x["name"] == "effective-date-maintain")
+        assert p["value"] == "2026-07-01T00:00:00Z"
+
+    def test_date_optional_adoption_mapped(self):
+        props = _effective_entry_props({"date": {"obtain": "2026-01-05", "maintain": "2026-01-05", "optional_adoption": "2026-01-01", "grace": {"default": "2026-07-01", "until_next_assessment": False}}})
+        p = next(x for x in props if x["name"] == "effective-date-optional_adoption")
+        assert p["value"] == "2026-01-01T00:00:00Z"
+
+    def test_grace_default_converted_to_datetime(self):
+        props = _effective_entry_props(
+            {"date": {"obtain": "2026-01-05", "maintain": "2026-01-05", "grace": {"default": "2026-07-01", "until_next_assessment": False}}},
+        )
+        p = next(x for x in props if x["name"] == "effective-date-grace-default")
+        assert p["value"] == "2026-07-01T00:00:00Z"
+
+    def test_grace_until_next_assessment_false_serialised_as_false(self):
+        props = _effective_entry_props(
+            {"date": {"obtain": "2026-01-05", "maintain": "2026-01-05", "grace": {"default": "2026-07-01", "until_next_assessment": False}}},
+        )
+        p = next(x for x in props if x["name"] == "effective-date-grace-until_next_assessment")
+        assert p["value"] == "false"
+
+    def test_grace_until_next_assessment_true_serialised_as_true(self):
+        props = _effective_entry_props(
+            {"date": {"obtain": "2026-01-05", "maintain": "2026-01-05", "grace": {"default": "2026-07-01", "until_next_assessment": True}}},
+        )
+        p = next(x for x in props if x["name"] == "effective-date-grace-until_next_assessment")
+        assert p["value"] == "true"
+
+    def test_all_props_use_frr_namespace(self):
+        entry = {
+            "is": "required",
+            "current_status": "Live",
+            "date": {
+                "obtain": "2026-01-05",
+                "maintain": "2026-01-05",
+                "grace": {"default": "2026-07-01", "until_next_assessment": False},
+            },
+        }
+        props = _effective_entry_props(entry)
+        assert all(p["ns"] == FRR_NS for p in props)
+
+    def test_all_prop_names_start_with_effective(self):
+        entry = {
+            "is": "required",
+            "date": {
+                "obtain": "2026-01-05",
+                "maintain": "2026-01-05",
+                "grace": {"default": "2026-07-01", "until_next_assessment": False},
+            },
+        }
+        for scope in ("all", "twentyx", "rev5"):
+            props = _effective_entry_props(entry, scope=scope)
+            assert all(p["name"].startswith("effective-") for p in props)
+
+    def test_scope_all_sets_class_all(self):
+        props = _effective_entry_props({"is": "required"})
+        assert all(p.get("class") == "all" for p in props)
+
+    def test_scope_twentyx_sets_class_twentyx(self):
+        props = _effective_entry_props({"is": "required"}, scope="twentyx")
+        assert all(p.get("class") == "twentyx" for p in props)
+
+    def test_scope_rev5_sets_class_rev5(self):
+        props = _effective_entry_props({"is": "required"}, scope="rev5")
+        assert all(p.get("class") == "rev5" for p in props)
+
+    def test_absent_date_fields_not_included(self):
+        props = _effective_entry_props({"is": "no"})
+        names = [p["name"] for p in props]
+        assert "effective-date-obtain" not in names
+        assert "effective-date-maintain" not in names
+        assert "effective-date-grace-default" not in names
+
+    def test_absent_scalar_fields_not_included(self):
+        props = _effective_entry_props({"is": "optional"})
+        names = [p["name"] for p in props]
+        assert "effective-current_status" not in names
+        assert "effective-signup_url" not in names
+        assert "effective-comments" not in names
+        assert "effective-warnings" not in names
+
+
+# ── _flow_to_mermaid ─────────────────────────────────────────────────────────
+
+class TestFlowToMermaid:
+    def _minimal_flow(self) -> dict:
+        return {
+            "activity": "Test Flow",
+            "nodes": {
+                "Start": "start",
+                "Decide": "decision",
+                "Work": "process",
+                "Done": "end",
+            },
+            "steps": [
+                {"from": "Start", "to": "Decide"},
+                {"from": "Decide", "to": "Work", "description": "Yes"},
+                {"from": "Decide", "to": "Done", "description": "No"},
+                {"from": "Work", "to": "Done"},
+            ],
+        }
+
+    def test_output_starts_with_flowchart_td(self):
+        result = _flow_to_mermaid(self._minimal_flow())
+        assert result.startswith("flowchart TD")
+
+    def test_start_node_uses_stadium_shape(self):
+        result = _flow_to_mermaid(self._minimal_flow())
+        assert '(["Start"])' in result
+
+    def test_end_node_uses_stadium_shape(self):
+        result = _flow_to_mermaid(self._minimal_flow())
+        assert '(["Done"])' in result
+
+    def test_decision_node_uses_diamond_shape(self):
+        result = _flow_to_mermaid(self._minimal_flow())
+        assert '{"Decide"}' in result
+
+    def test_process_node_uses_rectangle_shape(self):
+        result = _flow_to_mermaid(self._minimal_flow())
+        assert '["Work"]' in result
+
+    def test_unlabelled_edge_uses_arrow(self):
+        result = _flow_to_mermaid(self._minimal_flow())
+        lines = result.splitlines()
+        arrow_lines = [l for l in lines if "-->" in l and "|" not in l]
+        assert len(arrow_lines) >= 1
+
+    def test_labelled_edge_includes_description(self):
+        result = _flow_to_mermaid(self._minimal_flow())
+        assert '"Yes"' in result
+        assert '"No"' in result
+
+    def test_labelled_edge_syntax(self):
+        result = _flow_to_mermaid(self._minimal_flow())
+        assert '-->|"Yes"|' in result
+
+    def test_node_names_mapped_to_safe_ids(self):
+        result = _flow_to_mermaid(self._minimal_flow())
+        lines = result.splitlines()
+        node_lines = [l for l in lines if l.strip().startswith("N")]
+        assert all(l.strip().startswith("N") for l in node_lines)
+
+    def test_double_quote_in_label_escaped(self):
+        flow = {
+            "nodes": {"Say \"hello\"": "process"},
+            "steps": [],
+        }
+        result = _flow_to_mermaid(flow)
+        assert "#quot;" in result
+        assert 'Say "hello"' not in result
+
+    def test_undeclared_step_node_added_as_rectangle(self):
+        flow = {
+            "nodes": {"A": "start"},
+            "steps": [{"from": "A", "to": "Undeclared node"}],
+        }
+        result = _flow_to_mermaid(flow)
+        assert '["Undeclared node"]' in result
+
+    def test_duplicate_edges_deduplicated(self):
+        flow = {
+            "nodes": {"A": "process", "B": "process"},
+            "steps": [
+                {"from": "A", "to": "B"},
+                {"from": "A", "to": "B"},
+            ],
+        }
+        result = _flow_to_mermaid(flow)
+        arrow_count = result.count("-->")
+        assert arrow_count == 1
+
+    def test_empty_flow_returns_flowchart_td(self):
+        result = _flow_to_mermaid({})
+        assert result.strip() == "flowchart TD"
+
+    def test_step_with_missing_from_skipped(self):
+        flow = {
+            "nodes": {"B": "process"},
+            "steps": [{"to": "B"}],
+        }
+        result = _flow_to_mermaid(flow)
+        assert "-->" not in result
+
+    def test_step_with_missing_to_skipped(self):
+        flow = {
+            "nodes": {"A": "process"},
+            "steps": [{"from": "A"}],
+        }
+        result = _flow_to_mermaid(flow)
+        assert "-->" not in result
+
+    def test_unknown_node_type_defaults_to_rectangle(self):
+        flow = {
+            "nodes": {"X": "unknown_type"},
+            "steps": [],
+        }
+        result = _flow_to_mermaid(flow)
+        assert '["X"]' in result
+
+
+# ── _add_flow_resources ───────────────────────────────────────────────────────
+
+_FAKE_SVG = '<svg xmlns="http://www.w3.org/2000/svg"><text>test</text></svg>'
+
+
+class TestAddFlowResources:
+    def setup_method(self):
+        frr2oscal._STATS["groups"] = 0
+        frr2oscal._STATS["controls"] = 0
+        frr2oscal._VERBOSE = False
+        _reset_profile_tracking()
+
+    def _minimal_flow(self) -> dict:
+        return {
+            "activity": "Test Activity",
+            "description": "A test workflow.",
+            "nodes": {"A": "start", "B": "end"},
+            "steps": [{"from": "A", "to": "B"}],
+        }
+
+    def _cat(self) -> Catalog:
+        return Catalog.new(title="T", version="0.1")
+
+    def test_empty_flows_returns_empty_links(self):
+        with patch("frr2oscal._mermaid_to_svg", return_value=_FAKE_SVG):
+            links = _add_flow_resources(self._cat(), [], "AFC")
+        assert links == []
+
+    def test_one_flow_returns_one_link(self):
+        with patch("frr2oscal._mermaid_to_svg", return_value=_FAKE_SVG):
+            links = _add_flow_resources(self._cat(), [self._minimal_flow()], "AFC")
+        assert len(links) == 1
+
+    def test_link_rel_is_diagram(self):
+        with patch("frr2oscal._mermaid_to_svg", return_value=_FAKE_SVG):
+            links = _add_flow_resources(self._cat(), [self._minimal_flow()], "AFC")
+        assert links[0]["rel"] == "diagram"
+
+    def test_link_text_is_activity(self):
+        with patch("frr2oscal._mermaid_to_svg", return_value=_FAKE_SVG):
+            links = _add_flow_resources(self._cat(), [self._minimal_flow()], "AFC")
+        assert links[0]["text"] == "Test Activity"
+
+    def test_link_href_is_hash_uuid(self):
+        with patch("frr2oscal._mermaid_to_svg", return_value=_FAKE_SVG):
+            links = _add_flow_resources(self._cat(), [self._minimal_flow()], "AFC")
+        assert links[0]["href"].startswith("#")
+        uuid_part = links[0]["href"][1:]
+        import re
+        assert re.match(r"^[0-9a-f-]{36}$", uuid_part)
+
+    def test_resource_uuid_is_deterministic(self):
+        with patch("frr2oscal._mermaid_to_svg", return_value=_FAKE_SVG):
+            links1 = _add_flow_resources(self._cat(), [self._minimal_flow()], "AFC")
+            links2 = _add_flow_resources(self._cat(), [self._minimal_flow()], "AFC")
+        assert links1[0]["href"] == links2[0]["href"]
+
+    def test_different_key_gives_different_uuid(self):
+        with patch("frr2oscal._mermaid_to_svg", return_value=_FAKE_SVG):
+            links_afc = _add_flow_resources(self._cat(), [self._minimal_flow()], "AFC")
+            links_iec = _add_flow_resources(self._cat(), [self._minimal_flow()], "IEC")
+        assert links_afc[0]["href"] != links_iec[0]["href"]
+
+    def test_scope_gives_different_uuid(self):
+        with patch("frr2oscal._mermaid_to_svg", return_value=_FAKE_SVG):
+            links_top = _add_flow_resources(self._cat(), [self._minimal_flow()], "AFC", scope="")
+            links_twentyx = _add_flow_resources(self._cat(), [self._minimal_flow()], "AFC", scope="twentyx")
+        assert links_top[0]["href"] != links_twentyx[0]["href"]
+
+    def test_failed_svg_returns_no_link(self):
+        with patch("frr2oscal._mermaid_to_svg", return_value=None):
+            links = _add_flow_resources(self._cat(), [self._minimal_flow()], "AFC")
+        assert links == []
+
+    def test_resource_added_to_back_matter(self):
+        cat = self._cat()
+        with patch("frr2oscal._mermaid_to_svg", return_value=_FAKE_SVG):
+            _add_flow_resources(cat, [self._minimal_flow()], "AFC")
+        raw = json.loads(cat.dumps("json"))
+        resources = raw.get("catalog", {}).get("back-matter", {}).get("resources", [])
+        assert len(resources) == 1
+
+    def test_resource_title_is_activity(self):
+        cat = self._cat()
+        with patch("frr2oscal._mermaid_to_svg", return_value=_FAKE_SVG):
+            _add_flow_resources(cat, [self._minimal_flow()], "AFC")
+        raw = json.loads(cat.dumps("json"))
+        res = raw["catalog"]["back-matter"]["resources"][0]
+        assert res["title"] == "Test Activity"
+
+    def test_resource_has_base64_block(self):
+        cat = self._cat()
+        with patch("frr2oscal._mermaid_to_svg", return_value=_FAKE_SVG):
+            _add_flow_resources(cat, [self._minimal_flow()], "AFC")
+        raw = json.loads(cat.dumps("json"))
+        res = raw["catalog"]["back-matter"]["resources"][0]
+        assert "base64" in res
+
+    def test_resource_media_type_is_svg(self):
+        cat = self._cat()
+        with patch("frr2oscal._mermaid_to_svg", return_value=_FAKE_SVG):
+            _add_flow_resources(cat, [self._minimal_flow()], "AFC")
+        raw = json.loads(cat.dumps("json"))
+        b64 = raw["catalog"]["back-matter"]["resources"][0]["base64"]
+        assert b64["media-type"] == "image/svg+xml"
+
+    def test_resource_value_is_base64_of_svg(self):
+        import base64 as _b64
+        cat = self._cat()
+        with patch("frr2oscal._mermaid_to_svg", return_value=_FAKE_SVG):
+            _add_flow_resources(cat, [self._minimal_flow()], "AFC")
+        raw = json.loads(cat.dumps("json"))
+        b64_value = raw["catalog"]["back-matter"]["resources"][0]["base64"]["value"]
+        decoded = _b64.b64decode(b64_value).decode("utf-8")
+        assert decoded == _FAKE_SVG
+
+    def test_resource_filename_contains_frr_key(self):
+        cat = self._cat()
+        with patch("frr2oscal._mermaid_to_svg", return_value=_FAKE_SVG):
+            _add_flow_resources(cat, [self._minimal_flow()], "AFC")
+        raw = json.loads(cat.dumps("json"))
+        filename = raw["catalog"]["back-matter"]["resources"][0]["base64"]["filename"]
+        assert "AFC" in filename
+
+    def test_scope_prefix_in_filename(self):
+        cat = self._cat()
+        with patch("frr2oscal._mermaid_to_svg", return_value=_FAKE_SVG):
+            _add_flow_resources(cat, [self._minimal_flow()], "AFC", scope="twentyx")
+        raw = json.loads(cat.dumps("json"))
+        filename = raw["catalog"]["back-matter"]["resources"][0]["base64"]["filename"]
+        assert "twentyx" in filename
+
+    def test_description_stored_on_resource(self):
+        cat = self._cat()
+        with patch("frr2oscal._mermaid_to_svg", return_value=_FAKE_SVG):
+            _add_flow_resources(cat, [self._minimal_flow()], "AFC")
+        raw = json.loads(cat.dumps("json"))
+        res = raw["catalog"]["back-matter"]["resources"][0]
+        assert res.get("description") == "A test workflow."
+
+    def test_multiple_flows_produce_multiple_resources_and_links(self):
+        flows = [self._minimal_flow(), {**self._minimal_flow(), "activity": "Second Flow"}]
+        cat = self._cat()
+        with patch("frr2oscal._mermaid_to_svg", return_value=_FAKE_SVG):
+            links = _add_flow_resources(cat, flows, "AFC")
+        assert len(links) == 2
+        raw = json.loads(cat.dumps("json"))
+        resources = raw["catalog"]["back-matter"]["resources"]
+        assert len(resources) == 2
+
+
+# ── _build_frr_ruleset: flow links ───────────────────────────────────────────
+
+class TestBuildFrrRulesetFlowLinks:
+    def setup_method(self):
+        frr2oscal._STATS["groups"] = 0
+        frr2oscal._STATS["controls"] = 0
+        frr2oscal._VERBOSE = False
+        frr2oscal.UNHANDLED.clear()
+        _reset_profile_tracking()
+
+    def _minimal_flow(self) -> dict:
+        return {
+            "activity": "Test Diagram",
+            "nodes": {"A": "start", "B": "end"},
+            "steps": [{"from": "A", "to": "B"}],
+        }
+
+    def _build_and_get_group(self, frr_val: dict, frr_key: str = "TST") -> dict:
+        cat = Catalog.new(title="T", version="0.1")
+        with patch("frr2oscal._mermaid_to_svg", return_value=_FAKE_SVG):
+            frr2oscal._build_frr_ruleset(cat, frr_key, frr_val)
+        raw = json.loads(cat.dumps("json"))
+        return raw["catalog"]["groups"][0]
+
+    def test_flow_produces_diagram_link_on_group(self):
+        frr_val = {
+            "info": {"name": "Test", "flows": [self._minimal_flow()]},
+            "data": {},
+        }
+        group = self._build_and_get_group(frr_val)
+        diagram_links = [lk for lk in group.get("links", []) if lk.get("rel") == "diagram"]
+        assert len(diagram_links) == 1
+
+    def test_diagram_link_href_points_to_back_matter(self):
+        frr_val = {
+            "info": {"name": "Test", "flows": [self._minimal_flow()]},
+            "data": {},
+        }
+        cat = Catalog.new(title="T", version="0.1")
+        with patch("frr2oscal._mermaid_to_svg", return_value=_FAKE_SVG):
+            frr2oscal._build_frr_ruleset(cat, "TST", frr_val)
+        raw = json.loads(cat.dumps("json"))
+        group = raw["catalog"]["groups"][0]
+        link_href = group["links"][0]["href"]
+        resource_uuids = {
+            r["uuid"]
+            for r in raw.get("catalog", {}).get("back-matter", {}).get("resources", [])
+        }
+        assert link_href[1:] in resource_uuids
+
+    def test_diagram_link_text_is_activity(self):
+        frr_val = {
+            "info": {"name": "Test", "flows": [self._minimal_flow()]},
+            "data": {},
+        }
+        group = self._build_and_get_group(frr_val)
+        link = next(lk for lk in group["links"] if lk.get("rel") == "diagram")
+        assert link["text"] == "Test Diagram"
+
+    def test_no_flows_means_no_diagram_links(self):
+        frr_val = {"info": {"name": "Test"}, "data": {}}
+        group = self._build_and_get_group(frr_val)
+        assert not any(lk.get("rel") == "diagram" for lk in group.get("links", []))
+
+    def test_cert_20x_flows_produce_diagram_links(self):
+        frr_val = {
+            "info": {
+                "name": "Test",
+                "20x": {"effective": {"is": "required"}, "flows": [self._minimal_flow()]},
+                "rev5": {"effective": {"is": "required"}},
+            },
+            "data": {},
+        }
+        group = self._build_and_get_group(frr_val)
+        diagram_links = [lk for lk in group.get("links", []) if lk.get("rel") == "diagram"]
+        assert len(diagram_links) == 1
+
+    def test_failed_svg_means_no_diagram_links(self):
+        frr_val = {
+            "info": {"name": "Test", "flows": [self._minimal_flow()]},
+            "data": {},
+        }
+        cat = Catalog.new(title="T", version="0.1")
+        with patch("frr2oscal._mermaid_to_svg", return_value=None):
+            frr2oscal._build_frr_ruleset(cat, "TST", frr_val)
+        raw = json.loads(cat.dumps("json"))
+        group = raw["catalog"]["groups"][0]
+        assert not any(lk.get("rel") == "diagram" for lk in group.get("links", []))
+
+
+# ── _build_frr_ruleset: effective props ───────────────────────────────────────
+
+class TestBuildFrrRulesetEffectiveProps:
+    def setup_method(self):
+        frr2oscal._STATS["groups"] = 0
+        frr2oscal._STATS["controls"] = 0
+        frr2oscal._VERBOSE = False
+        frr2oscal.UNHANDLED.clear()
+        _reset_profile_tracking()
+
+    def _minimal_effective(self) -> dict:
+        return {
+            "is": "required",
+            "current_status": "Consolidated Rules for 2026",
+            "date": {
+                "obtain": "2026-01-05",
+                "maintain": "2026-01-05",
+                "grace": {"default": "2026-07-01", "until_next_assessment": False},
+            },
+        }
+
+    def _top_group_props(self, info_extra: dict) -> list:
+        cat = Catalog.new(title="T", version="0.1")
+        frr_val = {
+            "info": {"name": "Test Ruleset", "short_name": "TST", **info_extra},
+            "data": {},
+        }
+        frr2oscal._build_frr_ruleset(cat, "TST", frr_val)
+        data = json.loads(cat.dumps("json"))
+        return data["catalog"]["groups"][0].get("props", [])
+
+    def test_top_level_effective_is_prop(self):
+        props = self._top_group_props({"effective": self._minimal_effective()})
+        assert _prop_value(props, "effective-is", ns=FRR_NS) == "required"
+
+    def test_top_level_effective_current_status_prop(self):
+        props = self._top_group_props({"effective": self._minimal_effective()})
+        assert _prop_value(props, "effective-current_status", ns=FRR_NS) == "Consolidated Rules for 2026"
+
+    def test_top_level_effective_date_obtain_prop(self):
+        props = self._top_group_props({"effective": self._minimal_effective()})
+        assert _prop_value(props, "effective-date-obtain", ns=FRR_NS) == "2026-01-05T00:00:00Z"
+
+    def test_top_level_effective_date_grace_default_prop(self):
+        props = self._top_group_props({"effective": self._minimal_effective()})
+        assert _prop_value(props, "effective-date-grace-default", ns=FRR_NS) == "2026-07-01T00:00:00Z"
+
+    def test_top_level_effective_grace_until_next_assessment_false(self):
+        props = self._top_group_props({"effective": self._minimal_effective()})
+        assert _prop_value(props, "effective-date-grace-until_next_assessment", ns=FRR_NS) == "false"
+
+    def test_no_effective_means_no_effective_props(self):
+        props = self._top_group_props({})
+        names = [p["name"] for p in props]
+        assert not any(n.startswith("effective-") for n in names)
+
+    def test_cert_20x_effective_is_prop(self):
+        props = self._top_group_props({
+            "20x": {"effective": self._minimal_effective()},
+            "rev5": {"effective": self._minimal_effective()},
+        })
+        assert _prop_value(props, "effective-is", ns=FRR_NS, class_val="twentyx") == "required"
+
+    def test_cert_rev5_effective_is_prop(self):
+        props = self._top_group_props({
+            "20x": {"effective": self._minimal_effective()},
+            "rev5": {"effective": {"is": "optional"}},
+        })
+        assert _prop_value(props, "effective-is", ns=FRR_NS, class_val="rev5") == "optional"
+
+    def test_cert_20x_effective_date_obtain_prop(self):
+        eff = {**self._minimal_effective(), "date": {
+            "obtain": "2026-07-04",
+            "maintain": "2027-01-01",
+            "grace": {"default": "2027-01-01", "until_next_assessment": True},
+        }}
+        props = self._top_group_props({
+            "20x": {"effective": eff},
+            "rev5": {"effective": {"is": "no"}},
+        })
+        assert _prop_value(props, "effective-date-obtain", ns=FRR_NS, class_val="twentyx") == "2026-07-04T00:00:00Z"
+
+    def test_cert_20x_and_rev5_do_not_set_all_scoped_effective_props(self):
+        """When only cert-scoped effective entries exist, no prop with class='all' is set."""
+        props = self._top_group_props({
+            "20x": {"effective": self._minimal_effective()},
+            "rev5": {"effective": {"is": "required"}},
+        })
+        assert not any(
+            p["name"].startswith("effective-") and p.get("class") == "all"
+            for p in props
+        )
+
+    def test_optional_adoption_prop_written_when_present(self):
+        eff = {
+            "is": "required",
+            "date": {
+                "obtain": "2026-07-04",
+                "maintain": "2026-07-04",
+                "optional_adoption": "2026-07-04",
+                "grace": {"default": "2026-07-04", "until_next_assessment": False},
+            },
+        }
+        props = self._top_group_props({"effective": eff})
+        assert _prop_value(props, "effective-date-optional_adoption", ns=FRR_NS) == "2026-07-04T00:00:00Z"
+
+    def test_effective_props_all_use_frr_namespace(self):
+        props = self._top_group_props({"effective": self._minimal_effective()})
+        eff_props = [p for p in props if p["name"].startswith("effective-")]
+        assert all(p["ns"] == FRR_NS for p in eff_props)
+
+
 class TestBuildProfiles:
     def setup_method(self):
         _reset_profile_tracking()
@@ -2164,3 +2771,359 @@ class TestCybercraftExtension:
             assert prop is not None and prop["ns"] == CYBERCRAFT_NAMESPACE, (
                 f"Profile '{name}' presentation-id namespace mismatch"
             )
+
+
+# ── load_rules: details capture and persistence ───────────────────────────────
+
+class TestLoadRulesDetails:
+    """Test load_rules() provenance capture and _details.json persistence."""
+
+    _SAMPLE_RULES = {
+        "info": {
+            "title": "FedRAMP Rules",
+            "version": "2026.01.01",
+            "description": "test",
+            "last_updated": "2026-01-01",
+        },
+        "FRR": {},
+        "KSI": {},
+        "CTL": {},
+    }
+    _LAST_MODIFIED = "Thu, 01 Jan 2026 00:00:00 GMT"
+
+    def _fake_headers(self) -> dict:
+        """Return a minimal mapping that mimics urllib response headers."""
+        return {"Last-Modified": self._LAST_MODIFIED}
+
+    def test_download_returns_tuple(self, tmp_path):
+        """load_rules() returns a (data, details) tuple on successful download."""
+        local = str(tmp_path / "rules.json")
+
+        def _side_effect(url, path):
+            with open(path, "w") as fh:
+                json.dump(self._SAMPLE_RULES, fh)
+            return path, self._fake_headers()
+
+        with patch("urllib.request.urlretrieve", side_effect=_side_effect):
+            result = frr2oscal.load_rules(url="http://fake", local_path=local)
+        assert isinstance(result, tuple) and len(result) == 2
+
+    def test_download_details_github_last_modified(self, tmp_path):
+        """details dict captures GitHub Last-Modified header on download."""
+        local = str(tmp_path / "rules.json")
+
+        def _side_effect(url, path):
+            with open(path, "w") as fh:
+                json.dump(self._SAMPLE_RULES, fh)
+            return path, self._fake_headers()
+
+        with patch("urllib.request.urlretrieve", side_effect=_side_effect):
+            _data, details = frr2oscal.load_rules(url="http://fake", local_path=local)
+        assert details["github_last_modified"] == self._LAST_MODIFIED
+
+    def test_download_details_acquired_is_iso_timestamp(self, tmp_path):
+        """details dict records an ISO 8601 UTC acquisition timestamp."""
+        local = str(tmp_path / "rules.json")
+
+        def _side_effect(url, path):
+            with open(path, "w") as fh:
+                json.dump(self._SAMPLE_RULES, fh)
+            return path, self._fake_headers()
+
+        with patch("urllib.request.urlretrieve", side_effect=_side_effect):
+            _data, details = frr2oscal.load_rules(url="http://fake", local_path=local)
+        acquired = details.get("acquired", "")
+        assert acquired.endswith("Z") and "T" in acquired
+
+    def test_download_writes_details_json(self, tmp_path):
+        """A _details.json companion file is written alongside the cached JSON."""
+        local = str(tmp_path / "rules.json")
+        details_path = str(tmp_path / "rules_details.json")
+
+        def _side_effect(url, path):
+            with open(path, "w") as fh:
+                json.dump(self._SAMPLE_RULES, fh)
+            return path, self._fake_headers()
+
+        with patch("urllib.request.urlretrieve", side_effect=_side_effect):
+            frr2oscal.load_rules(url="http://fake", local_path=local)
+        assert os.path.isfile(details_path)
+        with open(details_path) as fh:
+            saved = json.load(fh)
+        assert saved["github_last_modified"] == self._LAST_MODIFIED
+
+    def test_cached_load_reads_details_json(self, tmp_path):
+        """When the JSON is already cached, load_rules() loads the companion details file."""
+        local = str(tmp_path / "rules.json")
+        details_path = str(tmp_path / "rules_details.json")
+        with open(local, "w") as fh:
+            json.dump(self._SAMPLE_RULES, fh)
+        saved_details = {
+            "github_last_modified": self._LAST_MODIFIED,
+            "acquired": "2026-01-02T00:00:00Z",
+        }
+        with open(details_path, "w") as fh:
+            json.dump(saved_details, fh)
+        _data, details = frr2oscal.load_rules(url="http://fake", local_path=local)
+        assert details["github_last_modified"] == self._LAST_MODIFIED
+        assert details["acquired"] == "2026-01-02T00:00:00Z"
+
+    def test_cached_json_without_details_file_triggers_redownload(self, tmp_path):
+        """When cached JSON exists but _details.json is absent, a fresh download is performed."""
+        local = str(tmp_path / "rules.json")
+        with open(local, "w") as fh:
+            json.dump(self._SAMPLE_RULES, fh)
+        # No _details.json — should trigger a re-download.
+        download_count = []
+
+        def _side_effect(url, path):
+            download_count.append(1)
+            with open(path, "w") as fh:
+                json.dump(self._SAMPLE_RULES, fh)
+            return path, self._fake_headers()
+
+        with patch("urllib.request.urlretrieve", side_effect=_side_effect):
+            _data, details = frr2oscal.load_rules(url="http://fake", local_path=local)
+        assert len(download_count) == 1, "Expected exactly one re-download"
+        assert details.get("github_last_modified") == self._LAST_MODIFIED
+
+
+# ── build_catalog: provenance remarks ────────────────────────────────────────
+
+class TestBuildCatalogProvenance:
+    """Test that build_catalog() embeds provenance in metadata.remarks."""
+
+    def _minimal_data(self):
+        return {
+            "info": {
+                "title": "T",
+                "version": "0.1",
+                "description": "Base description.",
+                "last_updated": "2026-01-01",
+            },
+            "FRR": {},
+            "KSI": {},
+            "CTL": {},
+        }
+
+    def _remarks(self, details=None) -> str:
+        catalog = frr2oscal.build_catalog(self._minimal_data(), details)
+        raw = json.loads(catalog.dumps("json"))
+        return raw.get("catalog", {}).get("metadata", {}).get("remarks", "")
+
+    def test_no_details_uses_description_only(self):
+        assert self._remarks() == "Base description."
+
+    def test_details_appends_github_last_modified(self):
+        details = {"github_last_modified": "Mon, 01 Jan 2026 00:00:00 GMT", "acquired": ""}
+        assert "Last published update from the FedRAMP PMO Mon, 01 Jan 2026 00:00:00 GMT" in self._remarks(details)
+
+    def test_details_appends_acquired(self):
+        details = {"github_last_modified": "", "acquired": "2026-01-02T12:00:00Z"}
+        assert "Acquired 2026-01-02T12:00:00Z" in self._remarks(details)
+
+    def test_details_both_fields_in_remarks(self):
+        details = {
+            "github_last_modified": "Mon, 01 Jan 2026 00:00:00 GMT",
+            "acquired": "2026-01-02T12:00:00Z",
+        }
+        remarks = self._remarks(details)
+        assert "Last published update from the FedRAMP PMO" in remarks
+        assert "Acquired 2026-01-02T12:00:00Z" in remarks
+
+    def test_description_precedes_provenance(self):
+        details = {
+            "github_last_modified": "Mon, 01 Jan 2026 00:00:00 GMT",
+            "acquired": "2026-01-02T12:00:00Z",
+        }
+        remarks = self._remarks(details)
+        assert remarks.index("Base description.") < remarks.index("Last published update")
+
+
+# ── build_profiles: provenance remarks ───────────────────────────────────────
+
+class TestBuildProfilesProvenance:
+    """Test that build_profiles() embeds provenance in each profile's metadata.remarks."""
+
+    def setup_method(self):
+        frr2oscal._STATS["groups"] = 0
+        frr2oscal._STATS["controls"] = 0
+        frr2oscal.UNHANDLED.clear()
+        _reset_profile_tracking()
+        _add_frr_to_profiles("CTRL-1", "all")
+        _add_nist_to_profiles("AC-20", "rev5")
+
+    def _minimal_data(self):
+        return {
+            "info": {"title": "T", "version": "0.1", "description": "", "last_updated": "2026-01-01"},
+            "FRR": {},
+            "KSI": {},
+            "CTL": {},
+        }
+
+    def _all_remarks(self, details=None) -> dict:
+        profiles = frr2oscal.build_profiles(self._minimal_data(), details)
+        result = {}
+        for name, profile in profiles.items():
+            raw = json.loads(profile.dumps("json"))
+            result[name] = raw.get("profile", {}).get("metadata", {}).get("remarks", "")
+        return result
+
+    def test_no_details_no_remarks(self):
+        for name, remarks in self._all_remarks().items():
+            assert remarks == "", f"Profile '{name}' should have no remarks without details"
+
+    def test_details_adds_provenance_to_all_profiles(self):
+        details = {
+            "github_last_modified": "Mon, 01 Jan 2026 00:00:00 GMT",
+            "acquired": "2026-01-02T12:00:00Z",
+        }
+        for name, remarks in self._all_remarks(details).items():
+            assert "Last published update from the FedRAMP PMO" in remarks, (
+                f"Profile '{name}' missing provenance"
+            )
+            assert "Acquired 2026-01-02T12:00:00Z" in remarks, (
+                f"Profile '{name}' missing acquired timestamp"
+            )
+
+
+# ── _infer_group_label ────────────────────────────────────────────────────────
+
+class TestInferGroupLabel:
+    """Tests for _infer_group_label()."""
+
+    def test_common_prefix_returned(self):
+        assert _infer_group_label(["CDM-AGM-001", "CDM-AGM-002", "CDM-AGM-003"]) == "CDM-AGM"
+
+    def test_single_id(self):
+        assert _infer_group_label(["CDM-AGM-001"]) == "CDM-AGM"
+
+    def test_empty_list_returns_none(self):
+        assert _infer_group_label([]) is None
+
+    def test_differing_prefixes_returns_none(self):
+        assert _infer_group_label(["CDM-AGM-001", "CDM-FRP-001"]) is None
+
+    def test_id_without_hyphen_returns_none(self):
+        assert _infer_group_label(["CDMAGM001"]) is None
+
+    def test_mixed_with_hyphenless_returns_none(self):
+        assert _infer_group_label(["CDM-AGM-001", "CDMAGM002"]) is None
+
+    def test_two_segment_id_strips_last(self):
+        # "CDM-001" → prefix "CDM"
+        assert _infer_group_label(["CDM-001", "CDM-002"]) == "CDM"
+
+    def test_deep_prefix_three_segments(self):
+        assert _infer_group_label(["A-B-C-001", "A-B-C-002"]) == "A-B-C"
+
+
+# ── _set_group_label ──────────────────────────────────────────────────────────
+
+class TestSetGroupLabel:
+    """Tests for _set_group_label() applied to real catalog groups."""
+
+    def _catalog_with_nested_group(self) -> Catalog:
+        cat = Catalog.new(title="T", version="0.1")
+        cat.create_control_group(parent_id="[root]", id="grp-top", title="Top")
+        cat.create_control_group(parent_id="grp-top", id="grp-sub", title="Sub")
+        return cat
+
+    def _get_group_label(self, cat: Catalog, group_id: str) -> str | None:
+        raw = json.loads(cat.dumps("json"))
+        def _find(groups):
+            for g in groups:
+                if g.get("id") == group_id:
+                    for p in g.get("props", []):
+                        if p.get("name") == "label":
+                            return p.get("value")
+                    return None
+                result = _find(g.get("groups", []))
+                if result is not None:
+                    return result
+            return None
+        return _find(raw.get("catalog", {}).get("groups", []))
+
+    def test_sets_label_on_nested_group(self):
+        cat = self._catalog_with_nested_group()
+        _set_group_label(cat, "grp-sub", "SUB-LABEL")
+        assert self._get_group_label(cat, "grp-sub") == "SUB-LABEL"
+
+    def test_sets_label_on_top_level_group(self):
+        cat = self._catalog_with_nested_group()
+        _set_group_label(cat, "grp-top", "TOP-LABEL")
+        assert self._get_group_label(cat, "grp-top") == "TOP-LABEL"
+
+    def test_updates_existing_label(self):
+        cat = Catalog.new(title="T", version="0.1")
+        cat.create_control_group(parent_id="[root]", id="grp", title="G", label="OLD")
+        _set_group_label(cat, "grp", "NEW")
+        assert self._get_group_label(cat, "grp") == "NEW"
+
+    def test_nonexistent_group_is_noop(self):
+        cat = self._catalog_with_nested_group()
+        _set_group_label(cat, "grp-missing", "X")  # must not raise
+        assert self._get_group_label(cat, "grp-missing") is None
+
+
+# ── integration: 2nd-level group label inference via build_catalog ────────────
+
+class TestSubsetGroupLabelInference:
+    """Integration test: build_catalog() infers labels for 2nd-level groups."""
+
+    def _make_data(self):
+        return {
+            "info": {"title": "T", "version": "0.1", "description": "", "last_updated": "2026-01-01"},
+            "FRR": {
+                "CDM": {
+                    "info": {
+                        "name": "Collaborative Continuous Monitoring",
+                        "short_name": "CCM",
+                        "subsets": {
+                            "AGM": {"name": "Agency Guidance"},
+                        },
+                    },
+                    "data": {
+                        "all": {
+                            "AGM": {
+                                "CDM-AGM-001": {"name": "Rule 1", "statement": "s1"},
+                                "CDM-AGM-002": {"name": "Rule 2", "statement": "s2"},
+                            },
+                        },
+                    },
+                }
+            },
+            "KSI": {},
+            "CTL": {},
+        }
+
+    def _get_group_label(self, cat: Catalog, group_id: str) -> str | None:
+        raw = json.loads(cat.dumps("json"))
+        def _find(groups):
+            for g in groups:
+                if g.get("id") == group_id:
+                    for p in g.get("props", []):
+                        if p.get("name") == "label":
+                            return p.get("value")
+                    return None
+                result = _find(g.get("groups", []))
+                if result is not None:
+                    return result
+            return None
+        return _find(raw.get("catalog", {}).get("groups", []))
+
+    def test_subset_group_gets_inferred_label(self):
+        frr2oscal._STATS["groups"] = 0
+        frr2oscal._STATS["controls"] = 0
+        frr2oscal.UNHANDLED.clear()
+        _reset_profile_tracking()
+        cat = frr2oscal.build_catalog(self._make_data())
+        assert self._get_group_label(cat, "FRR-CDM-AGM") == "CDM-AGM"
+
+    def test_top_level_group_label_unchanged(self):
+        frr2oscal._STATS["groups"] = 0
+        frr2oscal._STATS["controls"] = 0
+        frr2oscal.UNHANDLED.clear()
+        _reset_profile_tracking()
+        cat = frr2oscal.build_catalog(self._make_data())
+        assert self._get_group_label(cat, "FRR-CDM") == "CCM"

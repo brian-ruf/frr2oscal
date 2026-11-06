@@ -1,10 +1,10 @@
 profile:
-  uuid: 5f1ef619-138a-49d8-81e4-b361e6b0f953
+  uuid: ceeeae90-27e3-4f38-b76b-de062a1f4590
   metadata:
     title: "FedRAMP 20X \u2014 Class D"
-    published: '2026-07-06T00:00:00Z'
-    last-modified: '2026-10-13T21:27:13Z'
-    version: 2026.07.06.01
+    published: '2026-11-02T00:00:00Z'
+    last-modified: '2026-11-06T14:54:16Z'
+    version: 2026.11.02.01
     oscal-version: 1.2.3
     props:
     - name: presentation-id
@@ -15,8 +15,9 @@ profile:
       rel: canonical
     - href: https://www.fedramp.gov/2026/
       rel: alternate
+    remarks: Acquired 2026-11-06T14:54:09Z
   imports:
-  - href: '#025945b1-7c2b-46ec-b7e6-5ccd853da51c'
+  - href: '#72f9df1f-1706-410e-87b6-8d7ddd174b47'
     include-controls:
     - with-ids:
       - AFC-CSO-ACK
@@ -123,7 +124,6 @@ profile:
       - FRC-CSO-PKG
       - FRC-CSO-POP
       - FRC-CSX-MAS
-      - FRC-CSX-MOT-d
       - FRC-CSX-VVK-d
       - FRC-CSX-VVR-d
       - IEC-CSO-AIR
@@ -304,7 +304,7 @@ profile:
     as-is: true
   back-matter:
     resources:
-    - uuid: 025945b1-7c2b-46ec-b7e6-5ccd853da51c
+    - uuid: 72f9df1f-1706-410e-87b6-8d7ddd174b47
       title: FedRAMP Consolidated Rules OSCAL Catalog
       rlinks:
       - href: FedRAMP_2026_OSCAL_catalog.json

@@ -1,15 +1,18 @@
-<profile xmlns="http://csrc.nist.gov/ns/oscal/1.0" uuid="c99de701-fdf0-474a-96ea-699ec75cd8b3">
+<profile xmlns="http://csrc.nist.gov/ns/oscal/1.0" uuid="d89082ec-7650-4804-924f-42e56f336679">
   <metadata>
     <title>FedRAMP 20X — Class C</title>
-    <published>2026-07-06T00:00:00Z</published>
-    <last-modified>2026-10-13T21:27:13Z</last-modified>
-    <version>2026.07.06.01</version>
+    <published>2026-11-02T00:00:00Z</published>
+    <last-modified>2026-11-06T14:54:16Z</last-modified>
+    <version>2026.11.02.01</version>
     <oscal-version>1.2.3</oscal-version>
     <prop name="presentation-id" ns="http://cybercraft.app/ns/oscal" value="fedramp-cr26" />
     <link href="https://raw.githubusercontent.com/FedRAMP/rules/main/fedramp-consolidated-rules.json" rel="canonical" />
     <link href="https://www.fedramp.gov/2026/" rel="alternate" />
+    <remarks>
+      <p>Acquired 2026-11-06T14:54:09Z</p>
+    </remarks>
   </metadata>
-  <import href="#d9d82787-09ce-4b5c-83e3-ce43070c65cd">
+  <import href="#99b7a34c-96dd-4a46-a658-ed431ff07aae">
     <include-controls>
       <with-id>AFC-CSO-ACK</with-id>
       <with-id>AFC-CSO-CRA</with-id>
@@ -115,7 +118,6 @@
       <with-id>FRC-CSO-PKG</with-id>
       <with-id>FRC-CSO-POP</with-id>
       <with-id>FRC-CSX-MAS</with-id>
-      <with-id>FRC-CSX-MOT-c</with-id>
       <with-id>FRC-CSX-VVK-c</with-id>
       <with-id>FRC-CSX-VVR-c</with-id>
       <with-id>IEC-CSO-AIR</with-id>
@@ -303,7 +305,7 @@
     <as-is>true</as-is>
   </merge>
   <back-matter>
-    <resource uuid="d9d82787-09ce-4b5c-83e3-ce43070c65cd">
+    <resource uuid="99b7a34c-96dd-4a46-a658-ed431ff07aae">
       <title>FedRAMP Consolidated Rules OSCAL Catalog</title>
       <rlink href="FedRAMP_2026_OSCAL_catalog.json" media-type="application/json" />
     </resource>

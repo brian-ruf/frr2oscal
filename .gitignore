@@ -19,7 +19,9 @@ dist/
 *.sqlite3
 *.log
 *.env
+.env
 *.DS_Store
 *.lnk
 HOLD/
 OLD/
+

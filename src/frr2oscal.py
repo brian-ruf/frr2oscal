@@ -6,7 +6,12 @@ those messages. Pass --refresh to force a fresh download of the source JSON
 even when a local copy exists.
 
 The source JSON is cached locally in data/raw/ on first download and reused
-on subsequent runs to avoid repeated network requests.
+on subsequent runs to avoid repeated network requests.  A companion
+``fedramp-consolidated-rules_details.json`` file is written alongside the
+cached JSON on every successful download, recording the GitHub Last-Modified
+timestamp and the local acquisition time; it is loaded on subsequent runs so
+that provenance data is always available regardless of whether a fresh
+download was performed.
 
 Source: https://github.com/FedRAMP/rules
 
@@ -14,7 +19,11 @@ Constants:
     SOURCE_URL (str): Remote URL for the FedRAMP consolidated-rules JSON.
     ALTERNATE_URL (str): Alternate (human-facing) FedRAMP URL added to metadata links.
     SOURCE_LOCAL (str): Local cache path for the downloaded JSON.
+    SOURCE_DETAILS (str): Local cache path for the companion provenance JSON.
     FRR_NS (str): FedRAMP namespace URI used in OSCAL props.
+    MERMAID_INK_URL (str): mermaid.ink API URL template used to render Mermaid diagrams
+        as SVG. The placeholder ``{encoded}`` is replaced with the base64url-encoded
+        Mermaid source text at call time.
     NIST_800_53_REV5_URL (str): NIST SP 800-53 Rev 5 OSCAL catalog URL (GitHub raw).
     NIST_800_53_REV5_DOI_URL (str): NIST SP 800-53 Rev 5 canonical DOI URL.
     CATALOG_HREF (str): Relative filename for the FedRAMP OSCAL catalog,
@@ -35,11 +44,13 @@ Constants:
 """
 
 import argparse
+import base64
 import json
 import os
 import sys
 import urllib.error
 import urllib.request
+import uuid
 from datetime import datetime, timezone
 
 from oscal import Catalog, Profile
@@ -56,9 +67,15 @@ SOURCE_LOCAL = os.path.join(
     os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
     "data", "raw", "fedramp-consolidated-rules.json",
 )
+SOURCE_DETAILS = os.path.splitext(SOURCE_LOCAL)[0] + "_details.json"
 
 FRR_NS = "http://fedramp.gov/ns/oscal"
 CYBERCRAFT_NAMESPACE = "http://cybercraft.app/ns/oscal"
+
+MERMAID_INK_URL = "https://mermaid.ink/svg/{encoded}"
+
+# Stable UUID namespace for deterministic flow-diagram resource UUIDs.
+_FLOW_UUID_NAMESPACE = uuid.UUID("a89f0000-0000-4000-a000-000000000001")
 
 NIST_800_53_REV5_URL = (
     "https://raw.githubusercontent.com/usnistgov/oscal-content"
@@ -146,12 +163,17 @@ def load_rules(
     url: str = SOURCE_URL,
     local_path: str = SOURCE_LOCAL,
     refresh: bool = False,
-) -> dict | None:
+) -> tuple[dict, dict] | None:
     """Load FedRAMP consolidated rules, downloading to local_path if not cached.
 
     When refresh is True a fresh download is attempted regardless of whether a
     local copy exists. The download is written to a temporary file first so that
     a failed refresh never corrupts an existing local copy.
+
+    On a successful download the GitHub ``Last-Modified`` response header and
+    the local acquisition timestamp are saved to a companion ``_details.json``
+    file alongside *local_path*.  On subsequent runs the companion file is
+    loaded so that provenance data is always available without re-downloading.
 
     Args:
         url (str, optional): Remote URL to fetch the rules JSON from.
@@ -162,18 +184,31 @@ def load_rules(
             if a local file is already present. Defaults to False.
 
     Returns:
-        dict: Parsed rules data, or None if the file could not be loaded.
+        tuple[dict, dict]: A ``(data, details)`` pair where *data* is the parsed
+            rules and *details* contains ``github_last_modified`` and ``acquired``
+            keys; or None if the file could not be loaded.
     """
+    details_path = os.path.splitext(local_path)[0] + "_details.json"
     has_local = os.path.isfile(local_path)
+    has_details = os.path.isfile(details_path)
+    details: dict = {}
 
-    if refresh or not has_local:
+    if refresh or not has_local or not has_details:
         os.makedirs(os.path.dirname(local_path), exist_ok=True)
         tmp_path = local_path + ".tmp"
         print(f"Downloading rules from {url} ...")
         try:
-            urllib.request.urlretrieve(url, tmp_path)
+            _tmp_file, headers = urllib.request.urlretrieve(url, tmp_path)
+            acquired = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+            github_last_modified = headers.get("Last-Modified", "")
             os.replace(tmp_path, local_path)
             has_local = True
+            details = {
+                "github_last_modified": github_last_modified,
+                "acquired": acquired,
+            }
+            with open(details_path, "w", encoding="utf-8") as fh:
+                json.dump(details, fh, indent=2)
             print(f"Saved to {local_path}")
         except urllib.error.HTTPError as exc:
             _remove_if_exists(tmp_path)
@@ -188,8 +223,12 @@ def load_rules(
             if not has_local:
                 return None
 
+    if not details and os.path.isfile(details_path):
+        with open(details_path, encoding="utf-8") as fh:
+            details = json.load(fh)
+
     with open(local_path, encoding="utf-8") as f:
-        return json.load(f)
+        return json.load(f), details
 
 
 def _remove_if_exists(path: str) -> None:
@@ -463,6 +502,94 @@ def _extension_props(rule: dict) -> list:
         if val is not None:
             str_val = json.dumps(val, ensure_ascii=False) if isinstance(val, dict) else str(val)
             result.append({"name": key, "ns": FRR_NS, "value": str_val})
+    return result
+
+
+def _effective_entry_props(entry: dict, scope: str = "all") -> list:
+    """Return FedRAMP-namespace props for an effective_entry dict on an FRR ruleset group.
+
+    All props use the name prefix 'effective-'; the OSCAL 'class' attribute
+    distinguishes which cert scope the entry belongs to: 'all' for the top-level
+    info.effective block, '20x' for info.20x.effective, and 'rev5' for
+    info.rev5.effective.
+
+    Scalar fields map to a single prop each. Boolean fields are serialised as
+    'true' or 'false'. Array fields (comments, warnings) are JSON-serialised so
+    the entire array is stored in one prop value. Date fields under 'date' are
+    converted to OSCAL dateTime format. The nested grace period object produces
+    two props ('effective-date-grace-default' and
+    'effective-date-grace-until_next_assessment').
+
+    Prop name mapping (class='all' example):
+      is                               → effective-is                          (class=all)
+      current_status                   → effective-current_status              (class=all)
+      signup_url                       → effective-signup_url                  (class=all)
+      comments                         → effective-comments  (JSON array)      (class=all)
+      warnings                         → effective-warnings  (JSON array)      (class=all)
+      date.obtain                      → effective-date-obtain                 (class=all)
+      date.maintain                    → effective-date-maintain               (class=all)
+      date.optional_adoption           → effective-date-optional_adoption      (class=all)
+      date.grace.default               → effective-date-grace-default          (class=all)
+      date.grace.until_next_assessment → effective-date-grace-until_next_assessment (class=all)
+
+    Args:
+        entry (dict, required): effective_entry dict from an FRR info block.
+            Pass an empty dict (or {}) when the entry is absent.
+        scope (str, optional): OSCAL prop class value identifying the cert scope.
+            One of 'all' (top-level info.effective), '20x', or 'rev5'. Defaults
+            to 'all'.
+
+    Returns:
+        list: List of OSCAL prop dicts in the FedRAMP namespace (may be empty).
+    """
+    if not entry:
+        return []
+    result = []
+
+    for field in ("is", "current_status", "signup_url"):
+        val = entry.get(field)
+        if val is not None:
+            result.append({"name": f"effective-{field}", "ns": FRR_NS, "class": scope, "value": str(val)})
+
+    for field in ("comments", "warnings"):
+        val = entry.get(field)
+        if val is not None:
+            result.append({
+                "name": f"effective-{field}",
+                "ns": FRR_NS,
+                "class": scope,
+                "value": json.dumps(val, ensure_ascii=False),
+            })
+
+    date = entry.get("date") or {}
+    for field in ("obtain", "maintain", "optional_adoption"):
+        val = date.get(field)
+        if val is not None:
+            result.append({
+                "name": f"effective-date-{field}",
+                "ns": FRR_NS,
+                "class": scope,
+                "value": _date_to_datetime(val),
+            })
+
+    grace = date.get("grace") or {}
+    val = grace.get("default")
+    if val is not None:
+        result.append({
+            "name": "effective-date-grace-default",
+            "ns": FRR_NS,
+            "class": scope,
+            "value": _date_to_datetime(val),
+        })
+    val = grace.get("until_next_assessment")
+    if val is not None:
+        result.append({
+            "name": "effective-date-grace-until_next_assessment",
+            "ns": FRR_NS,
+            "class": scope,
+            "value": str(val).lower(),
+        })
+
     return result
 
 
@@ -1166,6 +1293,64 @@ def _build_frr_subset_groups(
     return created
 
 
+def _infer_group_label(rule_ids: list) -> str | None:
+    """Infer a group label from control IDs by stripping their trailing sequence segment.
+
+    Expects each rule ID to have the form ``PREFIX-NNN`` (e.g. ``CDM-AGM-001``).
+    Returns the common prefix if every ID in the list agrees; returns None if the
+    list is empty, if any ID has no hyphen, or if IDs disagree on the prefix.
+
+    Args:
+        rule_ids (list, required): Control IDs from the group's controls.
+
+    Returns:
+        str | None: The inferred label prefix, or None if it cannot be determined.
+    """
+    if not rule_ids:
+        return None
+    prefixes = set()
+    for rid in rule_ids:
+        if "-" not in rid:
+            return None
+        prefixes.add(rid.rsplit("-", 1)[0])
+    return prefixes.pop() if len(prefixes) == 1 else None
+
+
+def _set_group_label(catalog: Catalog, group_id: str, label: str) -> None:
+    """Add or update the label prop on an existing catalog group.
+
+    Navigates ``catalog._dict`` directly because no public API exists for
+    post-creation prop updates on groups.  Inserts the label prop at position 0
+    so it appears first in the props list, consistent with how
+    ``create_control_group`` builds new groups with labels.
+
+    Args:
+        catalog (Catalog, required): The OSCAL catalog containing the group.
+        group_id (str, required): ID of the group to update.
+        label (str, required): Label value to set.
+    """
+    root_groups = catalog._dict.get("catalog", {}).get("groups", [])
+
+    def _find(groups: list) -> dict | None:
+        for g in groups:
+            if g.get("id") == group_id:
+                return g
+            found = _find(g.get("groups", []))
+            if found is not None:
+                return found
+        return None
+
+    group = _find(root_groups)
+    if group is None:
+        return
+    props = group.setdefault("props", [])
+    for p in props:
+        if p.get("name") == "label":
+            p["value"] = label
+            return
+    props.insert(0, {"name": "label", "value": label})
+
+
 def _add_catalog_contacts(catalog: Catalog) -> None:
     """Add roles, parties, and responsible-parties to the catalog metadata.
 
@@ -1235,6 +1420,173 @@ def _assert_single_status_prop(props: list, control_id: str) -> None:
         )
 
 
+def _flow_to_mermaid(flow: dict) -> str:
+    """Convert a single flow dict to a Mermaid flowchart string.
+
+    The ``nodes`` dict maps node names to types ('start', 'end', 'decision',
+    'process'). Each type is translated to the corresponding Mermaid node shape.
+    The ``steps`` list provides directed edges; the optional ``description``
+    field on each step becomes an edge label. Nodes referenced in steps but
+    absent from ``nodes`` are emitted as unlabelled rectangles. Node names are
+    mapped to short safe IDs (N0, N1, …) so that spaces and punctuation in the
+    original names do not break the Mermaid syntax.
+
+    Args:
+        flow (dict, required): A single flow object from an FRR info.flows array.
+
+    Returns:
+        str: Mermaid flowchart source text (``flowchart TD`` direction).
+    """
+    _shape = {
+        "start":    ("([", "])"),
+        "end":      ("([", "])"),
+        "decision": ("{",  "}"),
+        "process":  ("[",  "]"),
+    }
+
+    nodes: dict = flow.get("nodes") or {}
+    steps: list = flow.get("steps") or []
+
+    node_ids: dict[str, str] = {}
+    for i, name in enumerate(nodes):
+        node_ids[name] = f"N{i}"
+    idx = len(node_ids)
+    for step in steps:
+        for key in ("from", "to"):
+            name = (step.get(key) or "").strip()
+            if name and name not in node_ids:
+                node_ids[name] = f"N{idx}"
+                idx += 1
+
+    lines = ["flowchart TD"]
+
+    declared: set = set()
+    for node_name, node_type in nodes.items():
+        sid = node_ids[node_name]
+        ob, cb = _shape.get(node_type, ("[", "]"))
+        label = node_name.replace('"', "#quot;")
+        lines.append(f'    {sid}{ob}"{label}"{cb}')
+        declared.add(node_name)
+
+    for step in steps:
+        for key in ("from", "to"):
+            name = (step.get(key) or "").strip()
+            if name and name not in declared:
+                sid = node_ids[name]
+                label = name.replace('"', "#quot;")
+                lines.append(f'    {sid}["{label}"]')
+                declared.add(name)
+
+    seen: set = set()
+    for step in steps:
+        from_name = (step.get("from") or "").strip()
+        to_name   = (step.get("to")   or "").strip()
+        if not from_name or not to_name:
+            continue
+        desc = (step.get("description") or "").strip()
+        from_id = node_ids.get(from_name, "")
+        to_id   = node_ids.get(to_name,   "")
+        if not from_id or not to_id:
+            continue
+        if desc:
+            escaped = desc.replace('"', "#quot;")
+            edge = f'    {from_id} -->|"{escaped}"| {to_id}'
+        else:
+            edge = f'    {from_id} --> {to_id}'
+        if edge not in seen:
+            lines.append(edge)
+            seen.add(edge)
+
+    return "\n".join(lines)
+
+
+def _mermaid_to_svg(mermaid_text: str) -> str | None:
+    """Render Mermaid diagram source to SVG via the mermaid.ink public API.
+
+    Encodes the source as base64url and calls MERMAID_INK_URL. Returns the
+    raw SVG string on success, or None on any network or HTTP error.
+
+    Args:
+        mermaid_text (str, required): Mermaid source text (e.g. from _flow_to_mermaid).
+
+    Returns:
+        str | None: SVG markup string, or None if rendering failed.
+    """
+    encoded = base64.urlsafe_b64encode(mermaid_text.encode("utf-8")).decode("ascii")
+    url = MERMAID_INK_URL.format(encoded=encoded)
+    try:
+        req = urllib.request.Request(url, headers={"User-Agent": "frr2oscal/1.0"})
+        with urllib.request.urlopen(req, timeout=15) as resp:
+            return resp.read().decode("utf-8")
+    except (urllib.error.HTTPError, urllib.error.URLError, OSError) as exc:
+        print(f"WARNING: Could not render Mermaid diagram — {exc}")
+        return None
+
+
+def _add_flow_resources(
+    catalog: Catalog, flows: list, frr_key: str, scope: str = ""
+) -> list:
+    """Convert a flows list to SVG back-matter resources and return diagram link dicts.
+
+    For each flow, the JSON is converted to Mermaid text, rendered to SVG via
+    _mermaid_to_svg, and stored as a base64-encoded back-matter resource.  A
+    link dict with rel='diagram' is collected for each successfully rendered
+    flow and returned for the caller to attach to the parent group.
+
+    Resource UUIDs are derived deterministically from the FRR key, scope, and
+    flow index so that repeated runs produce stable catalogs.
+
+    Args:
+        catalog (Catalog, required): The OSCAL catalog being built.
+        flows (list, required): The flows array from an FRR info (or cert) block.
+        frr_key (str, required): Top-level FRR key (e.g. 'AFC'), used in filenames.
+        scope (str, optional): Cert scope qualifier ('20x' or 'rev5') used in
+            filenames. Empty string for the top-level info block. Defaults to ''.
+
+    Returns:
+        list: OSCAL link dicts (rel='diagram', href='#uuid', text=activity) for
+            each flow that was successfully rendered; may be empty.
+    """
+    if not flows:
+        return []
+
+    file_prefix = f"FRR-{frr_key}-{scope}-" if scope else f"FRR-{frr_key}-"
+    links: list = []
+
+    for i, flow in enumerate(flows):
+        activity    = (flow.get("activity") or f"Flow {i + 1}").strip()
+        description = (flow.get("description") or "").strip()
+
+        mermaid_text = _flow_to_mermaid(flow)
+        svg = _mermaid_to_svg(mermaid_text)
+        if svg is None:
+            continue
+
+        resource_uuid = str(uuid.uuid5(_FLOW_UUID_NAMESPACE, f"{frr_key}/{scope}/{i}"))
+        b64_value     = base64.b64encode(svg.encode("utf-8")).decode("ascii")
+        filename      = f"{file_prefix}flow-{i + 1}.svg"
+
+        catalog.append_resource(
+            uuid=resource_uuid,
+            title=activity,
+            description=description,
+        )
+        # append_resource does not yet support base64 payloads; inject directly.
+        catalog._dict[catalog.model]["back-matter"]["resources"][-1]["base64"] = {
+            "filename":   filename,
+            "media-type": "image/svg+xml",
+            "value":      b64_value,
+        }
+
+        links.append({
+            "rel":  "diagram",
+            "href": f"#{resource_uuid}",
+            "text": activity,
+        })
+
+    return links
+
+
 def _build_frr_ruleset(
     catalog: Catalog, frr_key: str, frr_val: dict
 ) -> None:
@@ -1248,6 +1600,11 @@ def _build_frr_ruleset(
     stored as a FedRAMP-namespace prop.  Each entry in info.subsets becomes a
     child group via _build_frr_subset_groups, establishing the container structure
     before data controls are added.
+
+    Flows (info.flows, info.20x.flows, info.rev5.flows) are converted to Mermaid
+    diagrams, rendered to SVG via _mermaid_to_svg, and stored as base64-encoded
+    back-matter resources.  A link with rel='diagram' for each successfully
+    rendered flow is attached to the group.
 
     Args:
         catalog (Catalog, required): The OSCAL catalog being built.
@@ -1271,12 +1628,30 @@ def _build_frr_ruleset(
     if tag:
         extra_props.append({"name": "tag",      "ns": FRR_NS, "value": tag})
 
+    extra_props.extend(_effective_entry_props(info.get("effective") or {}))
+    extra_props.extend(_effective_entry_props(
+        (info.get("20x") or {}).get("effective") or {}, scope="twentyx"
+    ))
+    extra_props.extend(_effective_entry_props(
+        (info.get("rev5") or {}).get("effective") or {}, scope="rev5"
+    ))
+
+    flow_links: list = []
+    flow_links.extend(_add_flow_resources(catalog, info.get("flows") or [], frr_key))
+    flow_links.extend(_add_flow_resources(
+        catalog, (info.get("20x") or {}).get("flows") or [], frr_key, scope="twentyx"
+    ))
+    flow_links.extend(_add_flow_resources(
+        catalog, (info.get("rev5") or {}).get("flows") or [], frr_key, scope="rev5"
+    ))
+
     group = catalog.create_control_group(
         parent_id="[root]",
         id=group_id,
         title=title,
         label=short_name,
         props=extra_props,
+        links=flow_links,
     )
     if group is None:
         return
@@ -1294,6 +1669,27 @@ def _build_frr_ruleset(
             _build_frr_subset(
                 catalog, group_id, frr_key, subset_key, subset_val,
                 path=scope, existing_groups=created_subset_groups,
+            )
+
+    # Infer and assign labels for 2nd-level (subset) groups from control IDs.
+    subset_rule_ids: dict = {}
+    for scope in ("all", "20x", "rev5"):
+        for subset_key, subset_val in data_block.get(scope, {}).items():
+            rule_ids = [
+                rid for rid, v in subset_val.items()
+                if rid != "info" and isinstance(v, dict)
+            ]
+            subset_rule_ids.setdefault(subset_key, []).extend(rule_ids)
+
+    for subset_key, rule_ids in subset_rule_ids.items():
+        base_id = f"FRR-{frr_key}-{subset_key}"
+        inferred = _infer_group_label(rule_ids)
+        if inferred:
+            _set_group_label(catalog, base_id, inferred)
+        elif rule_ids:
+            print(
+                f"WARNING: Cannot infer label for group {base_id} — "
+                f"control IDs do not share a common prefix: {rule_ids[:5]!r}"
             )
 
 
@@ -1440,7 +1836,7 @@ def _build_ksi(catalog: Catalog, data: dict) -> None:
 # Catalog builder
 # =============================================================================
 
-def build_catalog(data: dict) -> Catalog:
+def build_catalog(data: dict, details: dict | None = None) -> Catalog:
     """Create an OSCAL Catalog from the FedRAMP consolidated-rules JSON.
 
     Resets profile tracking state, then populates the catalog with FRR rules
@@ -1450,10 +1846,16 @@ def build_catalog(data: dict) -> Catalog:
 
     Args:
         data (dict, required): The full parsed FedRAMP consolidated-rules JSON.
+        details (dict, optional): Provenance dict with ``github_last_modified``
+            and ``acquired`` keys as returned by :func:`load_rules`.  When
+            provided the values are appended to ``metadata.remarks``.
+            Defaults to None.
 
     Returns:
         Catalog: The populated OSCAL catalog.
     """
+    details = details or {}
+
     global _STATS
     _STATS = {"groups": 0, "controls": 0}
     _reset_profile_tracking()
@@ -1465,12 +1867,22 @@ def build_catalog(data: dict) -> Catalog:
     published    = _date_to_datetime(info.get("last_updated", ""))
     now          = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
+    provenance_lines = []
+    if details.get("github_last_modified"):
+        provenance_lines.append(
+            f"Last published update from the FedRAMP PMO {details['github_last_modified']}"
+        )
+    if details.get("acquired"):
+        provenance_lines.append(f"Acquired {details['acquired']}")
+    provenance = "\n".join(provenance_lines)
+    remarks = "\n\n".join(filter(None, [description, provenance]))
+
     catalog = Catalog.new(title=title, version=version)
 
     catalog.set_metadata({
         "title":         title,
         "version":       version,
-        "remarks":       description,
+        "remarks":       remarks,
         "published":     published,
         "last-modified": now,
     })
@@ -1498,7 +1910,7 @@ def build_catalog(data: dict) -> Catalog:
 # Profile builder
 # =============================================================================
 
-def build_profiles(data: dict) -> dict:
+def build_profiles(data: dict, details: dict | None = None) -> dict:
     """Create seven OSCAL profiles from the accumulated profile tracking state.
 
     Must be called after build_catalog() so that _PROFILE_FRR and _PROFILE_NIST
@@ -1513,14 +1925,29 @@ def build_profiles(data: dict) -> dict:
     Args:
         data (dict, required): The full parsed FedRAMP consolidated-rules JSON,
             used to populate profile metadata (version, published).
+        details (dict, optional): Provenance dict with ``github_last_modified``
+            and ``acquired`` keys as returned by :func:`load_rules`.  When
+            provided the values are written to each profile's ``metadata.remarks``.
+            Defaults to None.
 
     Returns:
         dict: Mapping of profile name (str) to Profile instance.
     """
+    details = details or {}
+
     info = data.get("info", {})
     version   = info.get("version", "")
     published = _date_to_datetime(info.get("last_updated", ""))
     now       = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+
+    provenance_lines = []
+    if details.get("github_last_modified"):
+        provenance_lines.append(
+            f"Last published update from the FedRAMP PMO {details['github_last_modified']}"
+        )
+    if details.get("acquired"):
+        provenance_lines.append(f"Acquired {details['acquired']}")
+    provenance = "\n".join(provenance_lines)
 
     profile_titles = {
         "20X-A":  "FedRAMP 20X — Class A",
@@ -1536,12 +1963,15 @@ def build_profiles(data: dict) -> dict:
 
     def _make_profile(key: str, title: str) -> Profile:
         p = Profile.new(title=title, version=version)
-        p.set_metadata({
+        meta = {
             "title":         title,
             "version":       version,
             "published":     published,
             "last-modified": now,
-        })
+        }
+        if provenance:
+            meta["remarks"] = provenance
+        p.set_metadata(meta)
         p.append_child("metadata/links", {"href": SOURCE_URL, "rel": "canonical"})
         p.append_child("metadata/links", {"href": ALTERNATE_URL, "rel": "alternate"})
         p.append_child("metadata/props", {"name": "presentation-id", "ns": CYBERCRAFT_NAMESPACE, "value": "fedramp-cr26"})
@@ -1627,13 +2057,14 @@ def main() -> None:
     args = parser.parse_args()
     _VERBOSE = not args.silent
 
-    data = load_rules(refresh=args.refresh)
-    if data is None:
+    result = load_rules(refresh=args.refresh)
+    if result is None:
         sys.exit(1)
+    data, details = result
 
     print_metadata(data)
 
-    catalog = build_catalog(data)
+    catalog = build_catalog(data, details)
 
     _emit("\n" + "=" * 72)
     _emit("Summary")
@@ -1649,7 +2080,7 @@ def main() -> None:
         else:
             print(f"ERROR: Failed to write catalog to: {path}")
 
-    profiles = build_profiles(data)
+    profiles = build_profiles(data, details)
     for profile_key, profile in profiles.items():
         for fmt in PROFILE_FORMATS:
             path = f"{PROFILE_OUTPUT_STEM}{profile_key}.{fmt}"
