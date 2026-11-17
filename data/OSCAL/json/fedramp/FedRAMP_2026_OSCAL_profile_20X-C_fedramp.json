@@ -1,0 +1,77 @@
+{
+  "profile": {
+    "uuid": "9ff99e78-71ac-414c-9e9c-f993cecc5c14",
+    "metadata": {
+      "title": "FedRAMP 20X \u2014 Class C",
+      "published": "2026-11-02T00:00:00Z",
+      "last-modified": "2026-11-17T04:10:55Z",
+      "version": "2026.11.02.01",
+      "oscal-version": "1.2.3",
+      "props": [
+        {
+          "name": "presentation-id",
+          "ns": "http://cybercraft.app/ns/oscal",
+          "value": "fedramp-cr26"
+        }
+      ],
+      "links": [
+        {
+          "href": "https://raw.githubusercontent.com/FedRAMP/rules/main/fedramp-consolidated-rules.json",
+          "rel": "canonical"
+        },
+        {
+          "href": "https://www.fedramp.gov/2026/",
+          "rel": "alternate"
+        }
+      ],
+      "remarks": "Acquired 2026-11-06T14:54:09Z"
+    },
+    "imports": [
+      {
+        "href": "#8d3360db-163a-41d9-830e-ecb21f2eb730",
+        "include-controls": [
+          {
+            "with-ids": [
+              "AFC-FRP-CDS",
+              "AFC-FRP-COR",
+              "AFC-FRP-ERT",
+              "AFC-FRP-PNT",
+              "AFC-FRP-RPM",
+              "AFC-FRP-RQA",
+              "AFC-FRP-UFS",
+              "AFC-FRP-VRE",
+              "IEC-FRP-ORV",
+              "MKT-FRP-SOF",
+              "REC-FRP-DRD",
+              "REC-FRP-FOC",
+              "REC-FRP-RAO",
+              "SCN-FRP-CAP",
+              "VER-FRP-ADV",
+              "VER-FRP-ARP"
+            ]
+          }
+        ]
+      }
+    ],
+    "merge": {
+      "combine": {
+        "method": "use-first"
+      },
+      "as-is": true
+    },
+    "back-matter": {
+      "resources": [
+        {
+          "uuid": "8d3360db-163a-41d9-830e-ecb21f2eb730",
+          "title": "FedRAMP Consolidated Rules OSCAL Catalog",
+          "rlinks": [
+            {
+              "href": "../FedRAMP_2026_OSCAL_catalog.json",
+              "media-type": "application/json"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

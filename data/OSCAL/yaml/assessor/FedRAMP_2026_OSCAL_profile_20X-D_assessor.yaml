@@ -1,0 +1,56 @@
+profile:
+  uuid: 47857ea1-f293-45b6-8b7d-b17a22c29e2e
+  metadata:
+    title: "FedRAMP 20X \u2014 Class D"
+    published: '2026-11-02T00:00:00Z'
+    last-modified: '2026-11-17T04:10:57Z'
+    version: 2026.11.02.01
+    oscal-version: 1.2.3
+    props:
+    - name: presentation-id
+      ns: http://cybercraft.app/ns/oscal
+      value: fedramp-cr26
+    links:
+    - href: https://raw.githubusercontent.com/FedRAMP/rules/main/fedramp-consolidated-rules.json
+      rel: canonical
+    - href: https://www.fedramp.gov/2026/
+      rel: alternate
+    remarks: Acquired 2026-11-06T14:54:09Z
+  imports:
+  - href: '#38c18723-e3c0-4f6e-be15-cdc192066e05'
+    include-controls:
+    - with-ids:
+      - IVV-IAS-EPX
+      - IVV-IAS-OSA
+      - IVV-IAS-SHA
+      - IVV-IAS-SUM
+      - IVV-IAS-VEF
+      - IVV-IAS-VIM
+      - IVV-IAS-VIP
+      - MKT-IAS-LRQ
+      - MKT-IAS-OFR
+      - MKT-IAS-WEB
+      - REC-IAS-ACC
+      - REC-IAS-ADA
+      - REC-IAS-AFI
+      - REC-IAS-ANR
+      - REC-IAS-CAP
+      - REC-IAS-CFI
+      - REC-IAS-INV
+      - REC-IAS-PSC
+      - REC-IAS-PST
+      - REC-IAS-RAR
+      - REC-IAS-RAS
+      - REC-IAS-RQU
+      - REC-IAS-SEP
+  merge:
+    combine:
+      method: use-first
+    as-is: true
+  back-matter:
+    resources:
+    - uuid: 38c18723-e3c0-4f6e-be15-cdc192066e05
+      title: FedRAMP Consolidated Rules OSCAL Catalog
+      rlinks:
+      - href: ../FedRAMP_2026_OSCAL_catalog.yaml
+        media-type: application/yaml

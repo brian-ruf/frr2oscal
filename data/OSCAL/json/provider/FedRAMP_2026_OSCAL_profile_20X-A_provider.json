@@ -1,0 +1,154 @@
+{
+  "profile": {
+    "uuid": "6c250013-7176-447a-86c0-a28f1d218532",
+    "metadata": {
+      "title": "FedRAMP 20X \u2014 Class A",
+      "published": "2026-11-02T00:00:00Z",
+      "last-modified": "2026-11-17T04:10:54Z",
+      "version": "2026.11.02.01",
+      "oscal-version": "1.2.3",
+      "props": [
+        {
+          "name": "presentation-id",
+          "ns": "http://cybercraft.app/ns/oscal",
+          "value": "fedramp-cr26"
+        }
+      ],
+      "links": [
+        {
+          "href": "https://raw.githubusercontent.com/FedRAMP/rules/main/fedramp-consolidated-rules.json",
+          "rel": "canonical"
+        },
+        {
+          "href": "https://www.fedramp.gov/2026/",
+          "rel": "alternate"
+        }
+      ],
+      "remarks": "Acquired 2026-11-06T14:54:09Z"
+    },
+    "imports": [
+      {
+        "href": "#ea097631-5546-4e72-9e13-a9ac699f5b69",
+        "include-controls": [
+          {
+            "with-ids": [
+              "CCM-QTR-MTG-a",
+              "CDS-CSO-AVR-a",
+              "CDS-CSO-PSM-a",
+              "CMU-CSO-UVM-a",
+              "CPO-CSO-OSA-a",
+              "CPO-CSX-CPM-a",
+              "FRC-APP-AFC",
+              "FRC-APP-FCP",
+              "FRC-APP-FIA-a",
+              "FRC-APP-MLF",
+              "FRC-APP-NTP",
+              "FRC-APP-USA",
+              "FRC-CLA-ASF",
+              "FRC-CLA-EAM",
+              "FRC-CLA-IVV",
+              "FRC-CLA-MFR",
+              "FRC-CLA-OFR",
+              "FRC-CLA-RFR",
+              "FRC-CSO-FCP",
+              "FRC-CSO-JSN",
+              "FRC-CSO-MRA",
+              "FRC-CSO-PKG",
+              "FRC-CSO-POP",
+              "FRC-CSX-MAS",
+              "FRC-CSX-VVK-a",
+              "FRC-CSX-VVR-a",
+              "IEC-CSO-FIR-a",
+              "IEC-CSO-IIR-a",
+              "IEC-CSO-OIR-a",
+              "IVV-CSO-FIA-a",
+              "IVV-CSX-AIA-a",
+              "KSI-CED-RAT",
+              "KSI-CMT-LMC",
+              "KSI-CMT-RMV",
+              "KSI-CMT-RVP",
+              "KSI-CMT-VTD",
+              "KSI-CNA-DFP",
+              "KSI-CNA-EIS",
+              "KSI-CNA-IBP",
+              "KSI-CNA-MAT",
+              "KSI-CNA-OFA",
+              "KSI-CNA-RNT",
+              "KSI-CNA-RVP",
+              "KSI-CNA-ULN",
+              "KSI-IAM-AAM",
+              "KSI-IAM-APM",
+              "KSI-IAM-ELP",
+              "KSI-IAM-JIT",
+              "KSI-IAM-SNU",
+              "KSI-IAM-SUS",
+              "KSI-INR-AAR",
+              "KSI-INR-RIR",
+              "KSI-INR-RPI",
+              "KSI-MLA-ALA",
+              "KSI-MLA-EVC",
+              "KSI-MLA-LET",
+              "KSI-MLA-OSM",
+              "KSI-MLA-RVL",
+              "KSI-PIY-GIV",
+              "KSI-PIY-RES",
+              "KSI-PIY-RIS",
+              "KSI-PIY-RSD",
+              "KSI-PIY-RVD",
+              "KSI-RPL-ABO",
+              "KSI-RPL-ARP",
+              "KSI-RPL-RRO",
+              "KSI-RPL-TRC",
+              "KSI-SCR-MIT",
+              "KSI-SCR-MON",
+              "KSI-SVC-ACM",
+              "KSI-SVC-ASM",
+              "KSI-SVC-EIS",
+              "KSI-SVC-PRR",
+              "KSI-SVC-RUD",
+              "KSI-SVC-SIN",
+              "KSI-SVC-VCM",
+              "KSI-SVC-VRI",
+              "MKT-CSO-MLR",
+              "MKT-CSO-PML",
+              "MKT-IIP-AGU",
+              "MKT-IIP-DCP",
+              "MKT-IIP-DLA",
+              "SDR-CSX-KMT-a",
+              "SDR-CSX-KSI",
+              "VDR-TFR-MVX-a",
+              "VDR-TFR-PCD-a",
+              "VDR-TFR-PDD-a",
+              "VDR-TFR-PSD-a",
+              "VDR-TFR-PVR-a",
+              "VER-TFR-EVU-a",
+              "VER-TFR-IRI-a",
+              "VER-TFR-MRH-a",
+              "VER-TFR-NRI-a"
+            ]
+          }
+        ]
+      }
+    ],
+    "merge": {
+      "combine": {
+        "method": "use-first"
+      },
+      "as-is": true
+    },
+    "back-matter": {
+      "resources": [
+        {
+          "uuid": "ea097631-5546-4e72-9e13-a9ac699f5b69",
+          "title": "FedRAMP Consolidated Rules OSCAL Catalog",
+          "rlinks": [
+            {
+              "href": "../FedRAMP_2026_OSCAL_catalog.json",
+              "media-type": "application/json"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

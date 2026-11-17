@@ -1,0 +1,33 @@
+<profile xmlns="http://csrc.nist.gov/ns/oscal/1.0" uuid="58b3d4b1-afa8-4a65-b51b-c74262f07a75">
+  <metadata>
+    <title>FedRAMP 20X — Class A</title>
+    <published>2026-11-02T00:00:00Z</published>
+    <last-modified>2026-11-17T04:10:56Z</last-modified>
+    <version>2026.11.02.01</version>
+    <oscal-version>1.2.3</oscal-version>
+    <prop name="presentation-id" ns="http://cybercraft.app/ns/oscal" value="fedramp-cr26" />
+    <link href="https://raw.githubusercontent.com/FedRAMP/rules/main/fedramp-consolidated-rules.json" rel="canonical" />
+    <link href="https://www.fedramp.gov/2026/" rel="alternate" />
+    <remarks>
+      <p>Acquired 2026-11-06T14:54:09Z</p>
+    </remarks>
+  </metadata>
+  <import href="#c887a3ad-06ff-4c7f-95e4-f56f2d33015a">
+    <include-controls>
+      <with-id>MKT-FRP-SOF</with-id>
+      <with-id>REC-FRP-DRD</with-id>
+      <with-id>REC-FRP-FOC</with-id>
+      <with-id>REC-FRP-RAO</with-id>
+    </include-controls>
+  </import>
+  <merge>
+    <combine method="use-first" />
+    <as-is>true</as-is>
+  </merge>
+  <back-matter>
+    <resource uuid="c887a3ad-06ff-4c7f-95e4-f56f2d33015a">
+      <title>FedRAMP Consolidated Rules OSCAL Catalog</title>
+      <rlink href="../FedRAMP_2026_OSCAL_catalog.xml" media-type="application/xml" />
+    </resource>
+  </back-matter>
+</profile>

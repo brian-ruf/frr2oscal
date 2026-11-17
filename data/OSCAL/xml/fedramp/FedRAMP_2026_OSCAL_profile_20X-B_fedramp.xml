@@ -1,0 +1,45 @@
+<profile xmlns="http://csrc.nist.gov/ns/oscal/1.0" uuid="c2e31f3c-808d-4c42-861b-dcc894e16ff1">
+  <metadata>
+    <title>FedRAMP 20X — Class B</title>
+    <published>2026-11-02T00:00:00Z</published>
+    <last-modified>2026-11-17T04:10:56Z</last-modified>
+    <version>2026.11.02.01</version>
+    <oscal-version>1.2.3</oscal-version>
+    <prop name="presentation-id" ns="http://cybercraft.app/ns/oscal" value="fedramp-cr26" />
+    <link href="https://raw.githubusercontent.com/FedRAMP/rules/main/fedramp-consolidated-rules.json" rel="canonical" />
+    <link href="https://www.fedramp.gov/2026/" rel="alternate" />
+    <remarks>
+      <p>Acquired 2026-11-06T14:54:09Z</p>
+    </remarks>
+  </metadata>
+  <import href="#65c6c1d2-3f56-4e10-9959-0562dffdec96">
+    <include-controls>
+      <with-id>AFC-FRP-CDS</with-id>
+      <with-id>AFC-FRP-COR</with-id>
+      <with-id>AFC-FRP-ERT</with-id>
+      <with-id>AFC-FRP-PNT</with-id>
+      <with-id>AFC-FRP-RPM</with-id>
+      <with-id>AFC-FRP-RQA</with-id>
+      <with-id>AFC-FRP-UFS</with-id>
+      <with-id>AFC-FRP-VRE</with-id>
+      <with-id>IEC-FRP-ORV</with-id>
+      <with-id>MKT-FRP-SOF</with-id>
+      <with-id>REC-FRP-DRD</with-id>
+      <with-id>REC-FRP-FOC</with-id>
+      <with-id>REC-FRP-RAO</with-id>
+      <with-id>SCN-FRP-CAP</with-id>
+      <with-id>VER-FRP-ADV</with-id>
+      <with-id>VER-FRP-ARP</with-id>
+    </include-controls>
+  </import>
+  <merge>
+    <combine method="use-first" />
+    <as-is>true</as-is>
+  </merge>
+  <back-matter>
+    <resource uuid="65c6c1d2-3f56-4e10-9959-0562dffdec96">
+      <title>FedRAMP Consolidated Rules OSCAL Catalog</title>
+      <rlink href="../FedRAMP_2026_OSCAL_catalog.xml" media-type="application/xml" />
+    </resource>
+  </back-matter>
+</profile>

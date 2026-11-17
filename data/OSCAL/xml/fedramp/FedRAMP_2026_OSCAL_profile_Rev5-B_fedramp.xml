@@ -1,0 +1,218 @@
+<profile xmlns="http://csrc.nist.gov/ns/oscal/1.0" uuid="5ebc8037-9829-4985-81c6-950b4bfc16dd">
+  <metadata>
+    <title>FedRAMP Rev 5 — Class B</title>
+    <published>2026-11-02T00:00:00Z</published>
+    <last-modified>2026-11-17T04:10:56Z</last-modified>
+    <version>2026.11.02.01</version>
+    <oscal-version>1.2.3</oscal-version>
+    <prop name="presentation-id" ns="http://cybercraft.app/ns/oscal" value="fedramp-cr26" />
+    <link href="https://raw.githubusercontent.com/FedRAMP/rules/main/fedramp-consolidated-rules.json" rel="canonical" />
+    <link href="https://www.fedramp.gov/2026/" rel="alternate" />
+    <remarks>
+      <p>Acquired 2026-11-06T14:54:09Z</p>
+    </remarks>
+  </metadata>
+  <import href="#e8661f87-cda5-4e3d-bbcd-4fffe1ce53e6">
+    <include-controls>
+      <with-id>AFC-FRP-CDS</with-id>
+      <with-id>AFC-FRP-COR</with-id>
+      <with-id>AFC-FRP-ERT</with-id>
+      <with-id>AFC-FRP-PNT</with-id>
+      <with-id>AFC-FRP-RPM</with-id>
+      <with-id>AFC-FRP-RQA</with-id>
+      <with-id>AFC-FRP-UFS</with-id>
+      <with-id>AFC-FRP-VRE</with-id>
+      <with-id>IEC-FRP-ORV</with-id>
+      <with-id>MKT-FRP-SOF</with-id>
+      <with-id>REC-FRP-DRD</with-id>
+      <with-id>REC-FRP-FOC</with-id>
+      <with-id>REC-FRP-RAO</with-id>
+      <with-id>SCN-FRP-CAP</with-id>
+      <with-id>VER-FRP-ADV</with-id>
+      <with-id>VER-FRP-ARP</with-id>
+    </include-controls>
+  </import>
+  <import href="#5e02c591-6c4c-4cb6-8bce-24136046692d">
+    <include-controls>
+      <with-id>ac-1</with-id>
+      <with-id>ac-14</with-id>
+      <with-id>ac-17</with-id>
+      <with-id>ac-18</with-id>
+      <with-id>ac-19</with-id>
+      <with-id>ac-2</with-id>
+      <with-id>ac-20</with-id>
+      <with-id>ac-22</with-id>
+      <with-id>ac-3</with-id>
+      <with-id>ac-7</with-id>
+      <with-id>ac-8</with-id>
+      <with-id>at-1</with-id>
+      <with-id>at-2</with-id>
+      <with-id>at-2.2</with-id>
+      <with-id>at-3</with-id>
+      <with-id>at-4</with-id>
+      <with-id>au-1</with-id>
+      <with-id>au-11</with-id>
+      <with-id>au-12</with-id>
+      <with-id>au-2</with-id>
+      <with-id>au-3</with-id>
+      <with-id>au-4</with-id>
+      <with-id>au-5</with-id>
+      <with-id>au-6</with-id>
+      <with-id>au-8</with-id>
+      <with-id>au-9</with-id>
+      <with-id>ca-1</with-id>
+      <with-id>ca-2</with-id>
+      <with-id>ca-2.1</with-id>
+      <with-id>ca-3</with-id>
+      <with-id>ca-6</with-id>
+      <with-id>ca-7</with-id>
+      <with-id>ca-7.4</with-id>
+      <with-id>ca-8</with-id>
+      <with-id>ca-9</with-id>
+      <with-id>cm-1</with-id>
+      <with-id>cm-10</with-id>
+      <with-id>cm-11</with-id>
+      <with-id>cm-2</with-id>
+      <with-id>cm-4</with-id>
+      <with-id>cm-5</with-id>
+      <with-id>cm-6</with-id>
+      <with-id>cm-7</with-id>
+      <with-id>cm-8</with-id>
+      <with-id>cp-1</with-id>
+      <with-id>cp-10</with-id>
+      <with-id>cp-2</with-id>
+      <with-id>cp-3</with-id>
+      <with-id>cp-4</with-id>
+      <with-id>cp-9</with-id>
+      <with-id>ia-1</with-id>
+      <with-id>ia-11</with-id>
+      <with-id>ia-2</with-id>
+      <with-id>ia-2.1</with-id>
+      <with-id>ia-2.12</with-id>
+      <with-id>ia-2.2</with-id>
+      <with-id>ia-2.8</with-id>
+      <with-id>ia-4</with-id>
+      <with-id>ia-5</with-id>
+      <with-id>ia-5.1</with-id>
+      <with-id>ia-6</with-id>
+      <with-id>ia-7</with-id>
+      <with-id>ia-8</with-id>
+      <with-id>ia-8.1</with-id>
+      <with-id>ia-8.2</with-id>
+      <with-id>ia-8.4</with-id>
+      <with-id>ir-1</with-id>
+      <with-id>ir-2</with-id>
+      <with-id>ir-4</with-id>
+      <with-id>ir-5</with-id>
+      <with-id>ir-6</with-id>
+      <with-id>ir-7</with-id>
+      <with-id>ir-8</with-id>
+      <with-id>ma-1</with-id>
+      <with-id>ma-2</with-id>
+      <with-id>ma-4</with-id>
+      <with-id>ma-5</with-id>
+      <with-id>mp-1</with-id>
+      <with-id>mp-2</with-id>
+      <with-id>mp-6</with-id>
+      <with-id>mp-7</with-id>
+      <with-id>pe-1</with-id>
+      <with-id>pe-12</with-id>
+      <with-id>pe-13</with-id>
+      <with-id>pe-14</with-id>
+      <with-id>pe-15</with-id>
+      <with-id>pe-16</with-id>
+      <with-id>pe-2</with-id>
+      <with-id>pe-3</with-id>
+      <with-id>pe-6</with-id>
+      <with-id>pe-8</with-id>
+      <with-id>pl-1</with-id>
+      <with-id>pl-10</with-id>
+      <with-id>pl-11</with-id>
+      <with-id>pl-2</with-id>
+      <with-id>pl-4</with-id>
+      <with-id>pl-4.1</with-id>
+      <with-id>pl-8</with-id>
+      <with-id>ps-1</with-id>
+      <with-id>ps-2</with-id>
+      <with-id>ps-3</with-id>
+      <with-id>ps-4</with-id>
+      <with-id>ps-5</with-id>
+      <with-id>ps-6</with-id>
+      <with-id>ps-7</with-id>
+      <with-id>ps-8</with-id>
+      <with-id>ps-9</with-id>
+      <with-id>ra-1</with-id>
+      <with-id>ra-2</with-id>
+      <with-id>ra-3</with-id>
+      <with-id>ra-3.1</with-id>
+      <with-id>ra-5</with-id>
+      <with-id>ra-5.11</with-id>
+      <with-id>ra-5.2</with-id>
+      <with-id>ra-7</with-id>
+      <with-id>sa-1</with-id>
+      <with-id>sa-2</with-id>
+      <with-id>sa-22</with-id>
+      <with-id>sa-3</with-id>
+      <with-id>sa-4</with-id>
+      <with-id>sa-4.10</with-id>
+      <with-id>sa-5</with-id>
+      <with-id>sa-8</with-id>
+      <with-id>sa-9</with-id>
+      <with-id>sc-1</with-id>
+      <with-id>sc-12</with-id>
+      <with-id>sc-13</with-id>
+      <with-id>sc-15</with-id>
+      <with-id>sc-20</with-id>
+      <with-id>sc-21</with-id>
+      <with-id>sc-22</with-id>
+      <with-id>sc-28</with-id>
+      <with-id>sc-28.1</with-id>
+      <with-id>sc-39</with-id>
+      <with-id>sc-5</with-id>
+      <with-id>sc-7</with-id>
+      <with-id>sc-8</with-id>
+      <with-id>sc-8.1</with-id>
+      <with-id>si-1</with-id>
+      <with-id>si-12</with-id>
+      <with-id>si-2</with-id>
+      <with-id>si-3</with-id>
+      <with-id>si-4</with-id>
+      <with-id>si-5</with-id>
+      <with-id>sr-1</with-id>
+      <with-id>sr-10</with-id>
+      <with-id>sr-11</with-id>
+      <with-id>sr-11.1</with-id>
+      <with-id>sr-11.2</with-id>
+      <with-id>sr-12</with-id>
+      <with-id>sr-2</with-id>
+      <with-id>sr-2.1</with-id>
+      <with-id>sr-3</with-id>
+      <with-id>sr-5</with-id>
+      <with-id>sr-8</with-id>
+    </include-controls>
+  </import>
+  <merge>
+    <combine method="use-first" />
+    <as-is>true</as-is>
+  </merge>
+  <modify>
+    <alter control-id="ia-5">
+      <add position="ending">
+        <part name="guidance">
+          <p>Authenticators must be compliant with the most recent NIST Digital Identity Guidelines IAL, AAL, FAL level 1.</p>
+          <p>IA-5 Guidance: FedRAMP requires that authentication assertions be encrypted when passed through third parties, such as a browser. For example, a SAML assertion can be encrypted using XML-Encryption, or an OpenID Connect ID Token can be encrypted using JSON Web Encryption (JWE).</p>
+        </part>
+      </add>
+    </alter>
+  </modify>
+  <back-matter>
+    <resource uuid="e8661f87-cda5-4e3d-bbcd-4fffe1ce53e6">
+      <title>FedRAMP Consolidated Rules OSCAL Catalog</title>
+      <rlink href="../FedRAMP_2026_OSCAL_catalog.xml" media-type="application/xml" />
+    </resource>
+    <resource uuid="5e02c591-6c4c-4cb6-8bce-24136046692d">
+      <title>FedRAMP Rev 5 Tailoring Profile</title>
+      <rlink href="../FedRAMP_2026_OSCAL_profile_Rev5-Tailoring.xml" media-type="application/xml" />
+    </resource>
+  </back-matter>
+</profile>

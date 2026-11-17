@@ -21,6 +21,7 @@ import frr2oscal
 from unittest.mock import patch
 
 from frr2oscal import (
+    AUDIENCE_FOLDERS,
     CYBERCRAFT_NAMESPACE,
     FRR_NS,
     NIST_800_53_REV5_DOI_URL,
@@ -28,6 +29,7 @@ from frr2oscal import (
     PROFILE_NAMES,
     TAILORING_HREF,
     TAILORING_PROFILE_NAME,
+    _CTRL_AFFECTS,
     _NIST_800_53_REV5_RESOURCE_UUID,
     _PARTY_UUID_FEDRAMP,
     _PARTY_UUID_CSP,
@@ -728,6 +730,53 @@ class TestBuildFrrVariesControl:
         assert notes is not None
         assert "Important note." in notes["prose"]
 
+    def test_child_inherits_affects_from_parent_rule(self):
+        cat = _catalog_with_group()
+        rule = {
+            "name": "Rule",
+            "affects": ["Providers"],
+            "varies_by_class": {"a": {"statement": "A."}, "b": {"statement": "B."}},
+        }
+        frr2oscal._build_frr_varies_control(cat, "grp", "RULE-08", rule)
+        data = self._get_catalog_json(cat)
+        parent = next(c for c in data["catalog"]["groups"][0]["controls"] if c["id"] == "RULE-08")
+        for child in parent["controls"]:
+            assert _prop_value(child.get("props", []), "affects", ns=FRR_NS) == "Providers"
+
+    def test_child_inherits_multiple_affects(self):
+        cat = _catalog_with_group()
+        rule = {
+            "name": "Rule",
+            "affects": ["Providers", "Assessors"],
+            "varies_by_class": {"a": {"statement": "A."}},
+        }
+        frr2oscal._build_frr_varies_control(cat, "grp", "RULE-09", rule)
+        data = self._get_catalog_json(cat)
+        parent = next(c for c in data["catalog"]["groups"][0]["controls"] if c["id"] == "RULE-09")
+        child = parent["controls"][0]
+        child_affects = [
+            p["value"] for p in child.get("props", [])
+            if p["name"] == "affects" and p.get("ns") == FRR_NS
+        ]
+        assert "Providers" in child_affects
+        assert "Assessors" in child_affects
+
+    def test_child_no_affects_when_rule_has_none(self):
+        cat = _catalog_with_group()
+        rule = {
+            "name": "Rule",
+            "varies_by_class": {"a": {"statement": "A."}},
+        }
+        frr2oscal._build_frr_varies_control(cat, "grp", "RULE-10", rule)
+        data = self._get_catalog_json(cat)
+        parent = next(c for c in data["catalog"]["groups"][0]["controls"] if c["id"] == "RULE-10")
+        child = parent["controls"][0]
+        child_affects = [
+            p for p in child.get("props", [])
+            if p["name"] == "affects"
+        ]
+        assert child_affects == []
+
 
 # ── Catalog-integrated: _build_frr_subset + _build_frr_ruleset ───────────────
 
@@ -823,6 +872,65 @@ class TestBuildFrrSubset:
                                     {"TST-001": {"name": "R", "statement": "S."}},
                                     path="all", existing_groups=existing)
         assert "FRR-TST-SUB" in existing
+
+    def test_applicable_classes_bcd_excludes_20x_a(self):
+        """Simple controls in a B/C/D-only subset are not added to 20X-A."""
+        cat = Catalog.new(title="T", version="0.1")
+        cat.create_control_group(parent_id="[root]", id="FRR-TST", title="Test")
+        frr2oscal._build_frr_subset(
+            cat, "FRR-TST", "TST", "SUB",
+            {"TST-001": {"name": "R", "statement": "S.", "force": "MUST"}},
+            path="all", applicable_classes=["B", "C", "D"],
+        )
+        assert "TST-001" not in frr2oscal._PROFILE_FRR["20X-A"]
+        assert "TST-001" in frr2oscal._PROFILE_FRR["20X-B"]
+        assert "TST-001" in frr2oscal._PROFILE_FRR["20X-C"]
+        assert "TST-001" in frr2oscal._PROFILE_FRR["20X-D"]
+
+    def test_applicable_classes_a_only_in_20x_a(self):
+        """Simple controls in a Class-A-only subset appear only in 20X-A."""
+        cat = Catalog.new(title="T", version="0.1")
+        cat.create_control_group(parent_id="[root]", id="FRR-TST", title="Test")
+        frr2oscal._build_frr_subset(
+            cat, "FRR-TST", "TST", "SUB",
+            {"TST-CLA": {"name": "R", "statement": "S.", "force": "MUST"}},
+            path="all", applicable_classes=["A"],
+        )
+        assert "TST-CLA" in frr2oscal._PROFILE_FRR["20X-A"]
+        for name in ("20X-B", "20X-C", "20X-D", "Rev5-B", "Rev5-C", "Rev5-D"):
+            assert "TST-CLA" not in frr2oscal._PROFILE_FRR[name]
+
+    def test_applicable_classes_none_no_restriction(self):
+        """No applicable_classes means all profiles for the path receive the control."""
+        cat = Catalog.new(title="T", version="0.1")
+        cat.create_control_group(parent_id="[root]", id="FRR-TST", title="Test")
+        frr2oscal._build_frr_subset(
+            cat, "FRR-TST", "TST", "SUB",
+            {"TST-ALL": {"name": "R", "statement": "S.", "force": "MUST"}},
+            path="all", applicable_classes=None,
+        )
+        for name in PROFILE_NAMES:
+            assert "TST-ALL" in frr2oscal._PROFILE_FRR[name]
+
+    def test_varies_by_class_ignores_applicable_classes(self):
+        """varies_by_class child profiles are driven by their class key, not applicable_classes."""
+        cat = Catalog.new(title="T", version="0.1")
+        cat.create_control_group(parent_id="[root]", id="FRR-TST", title="Test")
+        rule = {
+            "name": "Varies",
+            "varies_by_class": {
+                "a": {"statement": "Class A."},
+                "b": {"statement": "Class B."},
+            },
+        }
+        frr2oscal._build_frr_subset(
+            cat, "FRR-TST", "TST", "SUB",
+            {"TST-VBC": rule},
+            path="all", applicable_classes=["B", "C", "D"],
+        )
+        # Class A variant exists in source → goes to 20X-A regardless of subset class list
+        assert "TST-VBC-a" in frr2oscal._PROFILE_FRR["20X-A"]
+        assert "TST-VBC-b" in frr2oscal._PROFILE_FRR["20X-B"]
 
 
 class TestAssertSingleStatusProp:
@@ -999,6 +1107,62 @@ class TestBuildFrrRuleset:
         props = top_group.get("props", [])
         assert not any(p.get("name") == "status" for p in props)
 
+    def test_subset_bcd_classes_excludes_20x_a(self):
+        """Controls in a B/C/D-only subset must not appear in the 20X-A profile."""
+        cat = Catalog.new(title="T", version="0.1")
+        frr_val = {
+            "info": {
+                "name": "Test Ruleset",
+                "subsets": {
+                    "SUB": {
+                        "name": "Sub",
+                        "applicability": {"classes": ["B", "C", "D"]},
+                    }
+                },
+            },
+            "data": {
+                "all": {"SUB": {"TST-BCD": {"name": "R", "statement": "S.", "force": "MUST"}}},
+            },
+        }
+        frr2oscal._build_frr_ruleset(cat, "TST", frr_val)
+        assert "TST-BCD" not in frr2oscal._PROFILE_FRR["20X-A"]
+        assert "TST-BCD" in frr2oscal._PROFILE_FRR["20X-B"]
+
+    def test_subset_a_only_classes_only_20x_a(self):
+        """Controls in a Class-A-only subset appear only in 20X-A."""
+        cat = Catalog.new(title="T", version="0.1")
+        frr_val = {
+            "info": {
+                "name": "Test Ruleset",
+                "subsets": {
+                    "CLA": {
+                        "name": "Class A Only",
+                        "applicability": {"classes": ["A"]},
+                    }
+                },
+            },
+            "data": {
+                "all": {"CLA": {"TST-CLA-R": {"name": "R", "statement": "S.", "force": "MUST"}}},
+            },
+        }
+        frr2oscal._build_frr_ruleset(cat, "TST", frr_val)
+        assert "TST-CLA-R" in frr2oscal._PROFILE_FRR["20X-A"]
+        for name in ("20X-B", "20X-C", "20X-D", "Rev5-B", "Rev5-C", "Rev5-D"):
+            assert "TST-CLA-R" not in frr2oscal._PROFILE_FRR[name]
+
+    def test_subset_no_info_entry_no_class_restriction(self):
+        """Subsets absent from info.subsets (e.g. CSX) apply to all classes for the path."""
+        cat = Catalog.new(title="T", version="0.1")
+        frr_val = {
+            "info": {"name": "Test Ruleset", "subsets": {}},
+            "data": {
+                "20x": {"CSX": {"TST-CSX-R": {"name": "R", "statement": "S.", "force": "MUST"}}},
+            },
+        }
+        frr2oscal._build_frr_ruleset(cat, "TST", frr_val)
+        for name in ("20X-A", "20X-B", "20X-C", "20X-D"):
+            assert "TST-CSX-R" in frr2oscal._PROFILE_FRR[name]
+
 
 # ── _rev5_ctrl_to_oscal ───────────────────────────────────────────────────────
 
@@ -1058,6 +1222,38 @@ class TestProfileKeysFor:
         keys = _profile_keys_for("rev5", "a")
         assert keys == []
 
+    # applicable_classes filtering
+    def test_applicable_classes_bcd_excludes_20x_a(self):
+        keys = _profile_keys_for("all", applicable_classes=["B", "C", "D"])
+        assert "20X-A" not in keys
+        assert set(keys) == {"20X-B", "20X-C", "20X-D", "Rev5-B", "Rev5-C", "Rev5-D"}
+
+    def test_applicable_classes_a_only_returns_20x_a(self):
+        keys = _profile_keys_for("all", applicable_classes=["A"])
+        assert keys == ["20X-A"]
+
+    def test_applicable_classes_abcd_no_filtering(self):
+        keys = _profile_keys_for("all", applicable_classes=["A", "B", "C", "D"])
+        assert set(keys) == set(PROFILE_NAMES)
+
+    def test_applicable_classes_empty_list_no_filtering(self):
+        keys = _profile_keys_for("all", applicable_classes=[])
+        assert set(keys) == set(PROFILE_NAMES)
+
+    def test_applicable_classes_none_no_filtering(self):
+        keys = _profile_keys_for("all", applicable_classes=None)
+        assert set(keys) == set(PROFILE_NAMES)
+
+    def test_applicable_classes_bcd_with_20x_path(self):
+        keys = _profile_keys_for("20x", applicable_classes=["B", "C", "D"])
+        assert set(keys) == {"20X-B", "20X-C", "20X-D"}
+        assert "20X-A" not in keys
+
+    def test_applicable_classes_lowercase_accepted(self):
+        keys = _profile_keys_for("all", applicable_classes=["b", "c", "d"])
+        assert "20X-A" not in keys
+        assert "20X-B" in keys
+
 
 # ── _reset_profile_tracking / _add_frr_to_profiles / _add_nist_to_profiles ───
 
@@ -1094,6 +1290,23 @@ class TestProfileTracking:
         assert "CTRL-4" in frr2oscal._PROFILE_FRR["Rev5-B"]
         assert "CTRL-4" not in frr2oscal._PROFILE_FRR["20X-A"]
         assert "CTRL-4" not in frr2oscal._PROFILE_FRR["20X-C"]
+
+    def test_add_frr_applicable_classes_bcd_excludes_20x_a(self):
+        _add_frr_to_profiles("CTRL-5", "all", applicable_classes=["B", "C", "D"])
+        assert "CTRL-5" not in frr2oscal._PROFILE_FRR["20X-A"]
+        for name in ("20X-B", "20X-C", "20X-D", "Rev5-B", "Rev5-C", "Rev5-D"):
+            assert "CTRL-5" in frr2oscal._PROFILE_FRR[name]
+
+    def test_add_frr_applicable_classes_a_only(self):
+        _add_frr_to_profiles("CTRL-6", "all", applicable_classes=["A"])
+        assert "CTRL-6" in frr2oscal._PROFILE_FRR["20X-A"]
+        for name in ("20X-B", "20X-C", "20X-D", "Rev5-B", "Rev5-C", "Rev5-D"):
+            assert "CTRL-6" not in frr2oscal._PROFILE_FRR[name]
+
+    def test_add_frr_applicable_classes_empty_no_filtering(self):
+        _add_frr_to_profiles("CTRL-7", "all", applicable_classes=[])
+        for name in PROFILE_NAMES:
+            assert "CTRL-7" in frr2oscal._PROFILE_FRR[name]
 
     def test_add_nist_rev5_no_class_populates_three_rev5_profiles(self):
         _add_nist_to_profiles("AC-06 (01)", "rev5")
@@ -1203,6 +1416,34 @@ class TestBuildKsi:
     def test_empty_ksi_section_does_not_crash(self):
         cat = Catalog.new(title="T", version="0.1")
         frr2oscal._build_ksi(cat, {})  # no KSI key
+
+    def test_simple_indicator_has_affects_providers(self):
+        cat = Catalog.new(title="T", version="0.1")
+        frr2oscal._build_ksi(cat, self._make_data())
+        data = json.loads(cat.dumps("json"))
+        ksi_group = next(g for g in data["catalog"]["groups"] if g["id"] == "KSI")
+        tst_group = next(g for g in ksi_group["groups"] if g["id"] == "KSI-TST")
+        ctrl = next(c for c in tst_group["controls"] if c["id"] == "KSI-TST-IND")
+        assert _prop_value(ctrl.get("props", []), "affects", ns=FRR_NS) == "Providers"
+
+    def test_varies_parent_has_affects_providers(self):
+        cat = Catalog.new(title="T", version="0.1")
+        frr2oscal._build_ksi(cat, self._make_data(varies=True))
+        data = json.loads(cat.dumps("json"))
+        ksi_group = next(g for g in data["catalog"]["groups"] if g["id"] == "KSI")
+        tst_group = next(g for g in ksi_group["groups"] if g["id"] == "KSI-TST")
+        parent = next(c for c in tst_group["controls"] if c["id"] == "KSI-TST-VBC")
+        assert _prop_value(parent.get("props", []), "affects", ns=FRR_NS) == "Providers"
+
+    def test_varies_children_have_affects_providers(self):
+        cat = Catalog.new(title="T", version="0.1")
+        frr2oscal._build_ksi(cat, self._make_data(varies=True))
+        data = json.loads(cat.dumps("json"))
+        ksi_group = next(g for g in data["catalog"]["groups"] if g["id"] == "KSI")
+        tst_group = next(g for g in ksi_group["groups"] if g["id"] == "KSI-TST")
+        parent = next(c for c in tst_group["controls"] if c["id"] == "KSI-TST-VBC")
+        for child in parent.get("controls", []):
+            assert _prop_value(child.get("props", []), "affects", ns=FRR_NS) == "Providers"
 
 
 # ── rev5_controls_list inline processing ─────────────────────────────────────
@@ -2226,6 +2467,120 @@ class TestBuildProfiles:
             alternate = [lk for lk in links if lk.get("rel") == "alternate"]
             assert alternate, f"No alternate link in metadata of profile '{name}'"
             assert alternate[0]["href"] == frr2oscal.ALTERNATE_URL
+
+    def test_audience_filter_excludes_non_matching_controls(self):
+        frr2oscal._CTRL_AFFECTS["CTRL-1"] = ["Providers"]
+        frr2oscal._CTRL_AFFECTS["KSI-X"] = ["Providers"]
+        profiles = frr2oscal.build_profiles(self._make_data(), audience="Assessors")
+        raw = json.loads(profiles["20X-A"].dumps("json"))
+        imports = raw.get("profile", {}).get("imports", [])
+        # With no matching Assessors controls, include_all should be used (empty frr_ids)
+        for imp in imports:
+            selection = imp.get("include-controls", [])
+            if selection:
+                ids = selection[0].get("with-ids", [])
+                assert "CTRL-1" not in ids
+                assert "KSI-X" not in ids
+
+    def test_audience_filter_includes_matching_controls(self):
+        frr2oscal._CTRL_AFFECTS["CTRL-1"] = ["Providers"]
+        frr2oscal._CTRL_AFFECTS["KSI-X"] = ["Providers"]
+        profiles = frr2oscal.build_profiles(self._make_data(), audience="Providers")
+        raw = json.loads(profiles["20X-A"].dumps("json"))
+        imports = raw.get("profile", {}).get("imports", [])
+        all_ids = []
+        for imp in imports:
+            for sel in imp.get("include-controls", []):
+                all_ids.extend(sel.get("with-ids", []))
+        assert "CTRL-1" in all_ids
+
+    def test_catalog_href_override_in_import(self):
+        frr2oscal._CTRL_AFFECTS["CTRL-1"] = ["Providers"]
+        profiles = frr2oscal.build_profiles(
+            self._make_data(),
+            catalog_href="../FedRAMP_2026_OSCAL_catalog.json",
+        )
+        raw = json.loads(profiles["20X-A"].dumps("json"))
+        bm_hrefs = self._back_matter_hrefs(raw)
+        assert any("../FedRAMP_2026_OSCAL_catalog.json" in h for h in bm_hrefs)
+
+    def test_tailoring_href_override_in_rev5_import(self):
+        frr2oscal._CTRL_AFFECTS["CTRL-1"] = ["Providers"]
+        profiles = frr2oscal.build_profiles(
+            self._make_data(),
+            tailoring_href="../FedRAMP_2026_OSCAL_profile_Rev5-Tailoring.json",
+        )
+        raw = json.loads(profiles["Rev5-B"].dumps("json"))
+        bm_hrefs = self._back_matter_hrefs(raw)
+        assert any("../FedRAMP_2026_OSCAL_profile_Rev5-Tailoring.json" in h for h in bm_hrefs)
+
+
+class TestCtrlAffectsTracking:
+    """Tests for _CTRL_AFFECTS population during catalog build."""
+
+    def setup_method(self):
+        frr2oscal._STATS["groups"] = 0
+        frr2oscal._STATS["controls"] = 0
+        frr2oscal._VERBOSE = False
+        _reset_profile_tracking()
+
+    def test_simple_control_records_affects(self):
+        cat = _catalog_with_group()
+        rule = {"name": "R", "statement": "S.", "force": "MUST", "affects": ["Providers"]}
+        frr2oscal._build_frr_simple_control(cat, "grp", "CTRL-01", rule)
+        assert frr2oscal._CTRL_AFFECTS.get("CTRL-01") == ["Providers"]
+
+    def test_simple_control_multiple_affects(self):
+        cat = _catalog_with_group()
+        rule = {"name": "R", "statement": "S.", "force": "MUST", "affects": ["Providers", "Assessors"]}
+        frr2oscal._build_frr_simple_control(cat, "grp", "CTRL-02", rule)
+        assert frr2oscal._CTRL_AFFECTS.get("CTRL-02") == ["Providers", "Assessors"]
+
+    def test_simple_control_no_affects_records_empty(self):
+        cat = _catalog_with_group()
+        rule = {"name": "R", "statement": "S.", "force": "MUST"}
+        frr2oscal._build_frr_simple_control(cat, "grp", "CTRL-03", rule)
+        assert frr2oscal._CTRL_AFFECTS.get("CTRL-03") == []
+
+    def test_varies_parent_records_affects(self):
+        cat = _catalog_with_group()
+        rule = {"name": "R", "varies_by_class": {"a": {"statement": "A."}}, "affects": ["Agencies"]}
+        frr2oscal._build_frr_varies_control(cat, "grp", "CTRL-04", rule)
+        assert frr2oscal._CTRL_AFFECTS.get("CTRL-04") == ["Agencies"]
+
+    def test_varies_child_inherits_affects(self):
+        cat = _catalog_with_group()
+        rule = {"name": "R", "varies_by_class": {"a": {"statement": "A."}, "b": {"statement": "B."}}, "affects": ["Providers"]}
+        frr2oscal._build_frr_varies_control(cat, "grp", "CTRL-05", rule)
+        assert frr2oscal._CTRL_AFFECTS.get("CTRL-05-a") == ["Providers"]
+        assert frr2oscal._CTRL_AFFECTS.get("CTRL-05-b") == ["Providers"]
+
+    def test_ksi_simple_indicator_records_providers(self):
+        cat = Catalog.new(title="T", version="0.1")
+        frr2oscal._build_ksi(cat, {
+            "KSI": {"TST": {"id": "KSI-TST", "name": "T", "indicators": {
+                "KSI-TST-X": {"name": "X", "statement": "S.", "controls": [], "updated": []}
+            }}}
+        })
+        assert frr2oscal._CTRL_AFFECTS.get("KSI-TST-X") == ["Providers"]
+
+    def test_reset_clears_ctrl_affects(self):
+        frr2oscal._CTRL_AFFECTS["SOME-ID"] = ["Providers"]
+        _reset_profile_tracking()
+        assert frr2oscal._CTRL_AFFECTS == {}
+
+
+class TestAudienceFolders:
+    def test_all_expected_audiences_present(self):
+        assert "Providers" in AUDIENCE_FOLDERS
+        assert "Assessors" in AUDIENCE_FOLDERS
+        assert "Agencies" in AUDIENCE_FOLDERS
+        assert "FedRAMP" in AUDIENCE_FOLDERS
+        assert "Advisors" in AUDIENCE_FOLDERS
+
+    def test_folder_names_are_lowercase(self):
+        for folder in AUDIENCE_FOLDERS.values():
+            assert folder == folder.lower()
 
 
 class TestBuildCatalogCanonicalLink:

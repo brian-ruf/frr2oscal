@@ -1,0 +1,52 @@
+<profile xmlns="http://csrc.nist.gov/ns/oscal/1.0" uuid="5babace6-e48d-4f09-9a6e-9b2e66ad4a08">
+  <metadata>
+    <title>FedRAMP 20X — Class C</title>
+    <published>2026-11-02T00:00:00Z</published>
+    <last-modified>2026-11-17T04:10:56Z</last-modified>
+    <version>2026.11.02.01</version>
+    <oscal-version>1.2.3</oscal-version>
+    <prop name="presentation-id" ns="http://cybercraft.app/ns/oscal" value="fedramp-cr26" />
+    <link href="https://raw.githubusercontent.com/FedRAMP/rules/main/fedramp-consolidated-rules.json" rel="canonical" />
+    <link href="https://www.fedramp.gov/2026/" rel="alternate" />
+    <remarks>
+      <p>Acquired 2026-11-06T14:54:09Z</p>
+    </remarks>
+  </metadata>
+  <import href="#c176d609-0d4f-4dcc-8914-d5b39f8029f1">
+    <include-controls>
+      <with-id>IVV-IAS-EPX</with-id>
+      <with-id>IVV-IAS-OSA</with-id>
+      <with-id>IVV-IAS-SHA</with-id>
+      <with-id>IVV-IAS-SUM</with-id>
+      <with-id>IVV-IAS-VEF</with-id>
+      <with-id>IVV-IAS-VIM</with-id>
+      <with-id>IVV-IAS-VIP</with-id>
+      <with-id>MKT-IAS-LRQ</with-id>
+      <with-id>MKT-IAS-OFR</with-id>
+      <with-id>MKT-IAS-WEB</with-id>
+      <with-id>REC-IAS-ACC</with-id>
+      <with-id>REC-IAS-ADA</with-id>
+      <with-id>REC-IAS-AFI</with-id>
+      <with-id>REC-IAS-ANR</with-id>
+      <with-id>REC-IAS-CAP</with-id>
+      <with-id>REC-IAS-CFI</with-id>
+      <with-id>REC-IAS-INV</with-id>
+      <with-id>REC-IAS-PSC</with-id>
+      <with-id>REC-IAS-PST</with-id>
+      <with-id>REC-IAS-RAR</with-id>
+      <with-id>REC-IAS-RAS</with-id>
+      <with-id>REC-IAS-RQU</with-id>
+      <with-id>REC-IAS-SEP</with-id>
+    </include-controls>
+  </import>
+  <merge>
+    <combine method="use-first" />
+    <as-is>true</as-is>
+  </merge>
+  <back-matter>
+    <resource uuid="c176d609-0d4f-4dcc-8914-d5b39f8029f1">
+      <title>FedRAMP Consolidated Rules OSCAL Catalog</title>
+      <rlink href="../FedRAMP_2026_OSCAL_catalog.xml" media-type="application/xml" />
+    </resource>
+  </back-matter>
+</profile>

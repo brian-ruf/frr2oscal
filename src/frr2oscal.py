@@ -26,19 +26,20 @@ Constants:
         Mermaid source text at call time.
     NIST_800_53_REV5_URL (str): NIST SP 800-53 Rev 5 OSCAL catalog URL (GitHub raw).
     NIST_800_53_REV5_DOI_URL (str): NIST SP 800-53 Rev 5 canonical DOI URL.
-    CATALOG_HREF (str): Relative filename for the FedRAMP OSCAL catalog,
-        used as the href in profile import statements.
+    CATALOG_HREF (str): Default relative href for the FedRAMP OSCAL catalog,
+        used as the import href in profile statements when no override is supplied.
     TAILORING_PROFILE_NAME (str): Key and filename stem for the Rev5 tailoring profile.
-    TAILORING_HREF (str): Relative filename for the Rev5 tailoring profile,
-        used as the href in Rev5 class-profile import statements.
+    TAILORING_HREF (str): Default relative href for the Rev5 tailoring profile,
+        used as the import href in Rev5 class-profile statements when no override is supplied.
     NIST_LOCAL (str): Local cache path for the downloaded NIST SP 800-53 Rev 5 catalog.
-    CATALOG_OUTPUT_STEM (str): Output path stem for the OSCAL catalog
-        (extension added per format).
-    CATALOG_FORMATS (tuple): Supported output formats for the catalog.
+    OSCAL_OUTPUT_DIR (str): Root output directory for all generated OSCAL files.
+    CATALOG_FILENAME (str): Base filename stem (no extension) for the OSCAL catalog.
+    TAILORING_FILENAME (str): Base filename stem (no extension) for the Rev5 tailoring profile.
+    OUTPUT_FORMATS (tuple): Supported output formats; a subfolder is created per format.
     PROFILE_NAMES (tuple): Ordered class-based profile identifiers (7 total).
         The Rev5 tailoring profile is produced alongside these but not listed here.
-    PROFILE_OUTPUT_STEM (str): Output path stem prefix for profile files.
-    PROFILE_FORMATS (tuple): Supported output formats for profiles.
+    AUDIENCE_FOLDERS (dict): Maps each source-data ``affects`` value to its output
+        subfolder name within a format directory (e.g. ``"Providers" → "provider"``).
     UNHANDLED_OUTPUT (str): Path to write any unrecognized rule keys.
     CYBERCRAFT_NAMESPACE (str): Cybercraft extension namespace URI used in OSCAL props.
 """
@@ -96,22 +97,25 @@ NIST_LOCAL = os.path.join(
     "data", "raw", "NIST_SP-800-53_rev5_catalog.json",
 )
 
-CATALOG_OUTPUT_STEM = os.path.join(
-    os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
-    "data", "OSCAL", "FedRAMP_2026_OSCAL_catalog",
-)
-CATALOG_FORMATS = ("json", "xml", "yaml")
+_BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+OSCAL_OUTPUT_DIR = os.path.join(_BASE_DIR, "data", "OSCAL")
+CATALOG_FILENAME   = "FedRAMP_2026_OSCAL_catalog"
+TAILORING_FILENAME = f"FedRAMP_2026_OSCAL_profile_{TAILORING_PROFILE_NAME}"
+OUTPUT_FORMATS = ("json", "xml", "yaml")
 
 # PROFILE_NAMES lists the seven class-based profiles tracked in _PROFILE_FRR/_PROFILE_NIST.
 # The eighth profile (Rev5-Tailoring) is derived from the union of the Rev5 NIST sets and
 # is not tracked separately.
 PROFILE_NAMES = ("20X-A", "20X-B", "20X-C", "20X-D", "Rev5-B", "Rev5-C", "Rev5-D")
 
-PROFILE_OUTPUT_STEM = os.path.join(
-    os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
-    "data", "OSCAL", "FedRAMP_2026_OSCAL_profile_",
-)
-PROFILE_FORMATS = ("json", "xml", "yaml")
+# Maps source-data 'affects' values to their output subfolder names within a format directory.
+AUDIENCE_FOLDERS: dict = {
+    "Providers": "provider",
+    "Assessors": "assessor",
+    "Agencies":  "agency",
+    "FedRAMP":   "fedramp",
+    "Advisors":  "advisor",
+}
 
 UNHANDLED: list = []
 
@@ -149,10 +153,13 @@ _VERBOSE: bool = True
 _STATS: dict = {"groups": 0, "controls": 0}
 
 # Profile control-selection tracking — reset by _reset_profile_tracking().
-# _PROFILE_FRR: profile_key → set of FedRAMP catalog control IDs to include.
-# _PROFILE_NIST: profile_key → set of NIST OSCAL control IDs to include (Rev5 only).
+# _PROFILE_FRR:    profile_key → set of FedRAMP catalog control IDs to include.
+# _PROFILE_NIST:   profile_key → set of NIST OSCAL control IDs to include (Rev5 only).
+# _CTRL_AFFECTS:   control_id → list of audience strings from the source 'affects' field;
+#                  used by build_profiles() to build audience-specific profiles.
 _PROFILE_FRR: dict = {}
 _PROFILE_NIST: dict = {}
+_CTRL_AFFECTS: dict = {}
 
 
 # =============================================================================
@@ -629,12 +636,14 @@ def _add_extra_parts(catalog: Catalog, ctrl_id: str, rule: dict) -> None:
 def _reset_profile_tracking() -> None:
     """Reset profile control-selection tracking for a fresh catalog build.
 
-    Clears and re-initialises the module-level _PROFILE_FRR and _PROFILE_NIST
-    dicts so that repeated calls to build_catalog() start from a clean state.
+    Clears and re-initialises the module-level _PROFILE_FRR, _PROFILE_NIST, and
+    _CTRL_AFFECTS dicts so that repeated calls to build_catalog() start from a
+    clean state.
     """
-    global _PROFILE_FRR, _PROFILE_NIST
+    global _PROFILE_FRR, _PROFILE_NIST, _CTRL_AFFECTS
     _PROFILE_FRR = {name: set() for name in PROFILE_NAMES}
     _PROFILE_NIST = {"Rev5-B": set(), "Rev5-C": set(), "Rev5-D": set()}
+    _CTRL_AFFECTS = {}
 
 
 def _rev5_ctrl_to_oscal(ctrl_id: str) -> str:
@@ -714,7 +723,11 @@ def _ctl_id_to_oscal(ctl_id: str) -> str:
     return "-".join(result)
 
 
-def _profile_keys_for(path: str, class_key: str = None) -> list:
+def _profile_keys_for(
+    path: str,
+    class_key: str = None,
+    applicable_classes: list | None = None,
+) -> list:
     """Return the profile keys that should receive a control given path and class.
 
     For simple controls (no class_key):
@@ -727,47 +740,70 @@ def _profile_keys_for(path: str, class_key: str = None) -> list:
     - path '20x'  → matching 20X-{class} only
     - path 'rev5' → matching Rev5-{class} only
 
+    When applicable_classes is a non-empty list the result is further filtered so
+    that only profiles whose trailing class letter appears in applicable_classes
+    are returned.  An empty list (or None) means no class restriction.
+
     Args:
         path (str, required): Data scope: 'all', '20x', or 'rev5'.
         class_key (str, optional): Class letter (e.g. 'a', 'b', 'c', 'd').
             When None the control is treated as class-agnostic. Defaults to None.
+        applicable_classes (list, optional): Subset-level class restriction from
+            info.subsets[key].applicability.classes (e.g. ['B', 'C', 'D']).
+            When non-empty, profiles whose class letter is absent from this list
+            are excluded. Defaults to None (no restriction).
 
     Returns:
         list: Profile key strings from PROFILE_NAMES that match the criteria.
     """
     if class_key is None:
         if path == "all":
-            return list(PROFILE_NAMES)
-        if path == "20x":
-            return ["20X-A", "20X-B", "20X-C", "20X-D"]
-        return ["Rev5-B", "Rev5-C", "Rev5-D"]
+            result = list(PROFILE_NAMES)
+        elif path == "20x":
+            result = ["20X-A", "20X-B", "20X-C", "20X-D"]
+        else:
+            result = ["Rev5-B", "Rev5-C", "Rev5-D"]
+    else:
+        cls = class_key.upper()
+        result = []
+        if path in ("all", "20x"):
+            key = f"20X-{cls}"
+            if key in PROFILE_NAMES:
+                result.append(key)
+        if path in ("all", "rev5"):
+            key = f"Rev5-{cls}"
+            if key in PROFILE_NAMES:
+                result.append(key)
 
-    cls = class_key.upper()
-    result = []
-    if path in ("all", "20x"):
-        key = f"20X-{cls}"
-        if key in PROFILE_NAMES:
-            result.append(key)
-    if path in ("all", "rev5"):
-        key = f"Rev5-{cls}"
-        if key in PROFILE_NAMES:
-            result.append(key)
+    if applicable_classes:
+        upper = {c.upper() for c in applicable_classes}
+        result = [k for k in result if k.rsplit("-", 1)[-1] in upper]
+
     return result
 
 
-def _add_frr_to_profiles(ctrl_id: str, path: str, class_key: str = None) -> None:
+def _add_frr_to_profiles(
+    ctrl_id: str,
+    path: str,
+    class_key: str = None,
+    applicable_classes: list | None = None,
+) -> None:
     """Register a FedRAMP catalog control ID in the appropriate profiles.
 
     Adds ctrl_id to the _PROFILE_FRR set for each profile determined by
-    _profile_keys_for(path, class_key).
+    _profile_keys_for(path, class_key, applicable_classes).
 
     Args:
         ctrl_id (str, required): OSCAL control identifier from the FedRAMP catalog.
         path (str, required): Data scope: 'all', '20x', or 'rev5'.
         class_key (str, optional): Class letter for a varies_by_class variant.
             Defaults to None (class-agnostic).
+        applicable_classes (list, optional): Subset-level class restriction from
+            info.subsets[key].applicability.classes.  When non-empty, only profiles
+            whose class letter is in this list receive the control.
+            Defaults to None (no restriction).
     """
-    for profile_key in _profile_keys_for(path, class_key):
+    for profile_key in _profile_keys_for(path, class_key, applicable_classes):
         _PROFILE_FRR[profile_key].add(ctrl_id)
 
 
@@ -978,7 +1014,8 @@ def _load_nist_param_ids(refresh: bool = False) -> frozenset:
 
 def _build_frr_simple_control(
     catalog: Catalog, parent_id: str, ctrl_id: str,
-    rule: dict, label: str = "", path: str = "all"
+    rule: dict, label: str = "", path: str = "all",
+    applicable_classes: list | None = None,
 ) -> None:
     """Create a single OSCAL control from a rule dict.
 
@@ -994,6 +1031,10 @@ def _build_frr_simple_control(
         rule (dict, required): Rule data dict from the FRR JSON source.
         label (str, optional): Label prop value. Defaults to ctrl_id.
         path (str, optional): Data scope ('all', '20x', or 'rev5'). Defaults to 'all'.
+        applicable_classes (list, optional): Subset-level class restriction from
+            info.subsets[key].applicability.classes.  When non-empty, only profiles
+            whose class letter is in this list receive the control.
+            Defaults to None (no restriction).
     """
     label = label or ctrl_id
 
@@ -1030,7 +1071,8 @@ def _build_frr_simple_control(
 
     _STATS["controls"] += 1
     _emit_dot()
-    _add_frr_to_profiles(ctrl_id, path)
+    _CTRL_AFFECTS[ctrl_id] = list(rule.get("affects") or [])
+    _add_frr_to_profiles(ctrl_id, path, applicable_classes=applicable_classes)
 
     if danger:
         catalog.add_part(ctrl_id, "guidance", title="Danger", prose=danger)
@@ -1062,7 +1104,8 @@ def _build_frr_varies_control(
     class variant is created as a nested child control via catalog.create_control()
     with parent_id=rule_id, so all mutations persist in the catalog's internal state.
     Each successfully created class-variant child is registered in the appropriate
-    profiles via _add_frr_to_profiles.
+    profiles via _add_frr_to_profiles. Child controls inherit ``affects`` props
+    from the parent rule.
 
     Args:
         catalog (Catalog, required): The OSCAL catalog being built.
@@ -1097,6 +1140,7 @@ def _build_frr_varies_control(
 
     _STATS["controls"] += 1
     _emit_dot()
+    _CTRL_AFFECTS[rule_id] = list(rule.get("affects") or [])
 
     notes = _notes_text(rule)
     if notes:
@@ -1119,6 +1163,8 @@ def _build_frr_varies_control(
         child_props = [{"name": "path", "value": path, "ns": FRR_NS}]
         if class_data.get("force"):
             child_props.append({"name": "force", "value": class_data["force"], "ns": FRR_NS})
+        for affect in (rule.get("affects") or []):
+            child_props.append({"name": "affects", "value": affect, "ns": FRR_NS})
         child_props.extend(_extension_props(class_data))
         child_links = [
             {"rel": "related", "href": f"#{rid}"}
@@ -1139,6 +1185,7 @@ def _build_frr_varies_control(
 
         _STATS["controls"] += 1
         _emit_dot()
+        _CTRL_AFFECTS[child_id] = list(rule.get("affects") or [])
         _add_frr_to_profiles(child_id, path, class_key)
 
         child_notes = _notes_text(class_data)
@@ -1166,12 +1213,17 @@ def _build_frr_varies_control(
 
 
 def _build_frr_control(
-    catalog: Catalog, parent_id: str, rule_id: str, rule: dict, path: str = "all"
+    catalog: Catalog, parent_id: str, rule_id: str, rule: dict, path: str = "all",
+    applicable_classes: list | None = None,
 ) -> None:
     """Dispatch to the appropriate builder for a single FRR rule entry.
 
     Rules with a 'varies_by_class' key become a control whose class variants
     are nested as child controls. All other rules become a single control.
+
+    applicable_classes is passed to _build_frr_simple_control only. For
+    varies_by_class rules the class set is determined by the variant keys
+    themselves, which already encode per-class applicability.
 
     Args:
         catalog (Catalog, required): The OSCAL catalog being built.
@@ -1179,17 +1231,25 @@ def _build_frr_control(
         rule_id (str, required): Identifier for this rule.
         rule (dict, required): Rule data dict from the FRR JSON source.
         path (str, optional): Data scope ('all', '20x', or 'rev5'). Defaults to 'all'.
+        applicable_classes (list, optional): Subset-level class restriction from
+            info.subsets[key].applicability.classes.  Passed through to
+            _build_frr_simple_control; ignored for varies_by_class rules.
+            Defaults to None (no restriction).
     """
     if rule.get("varies_by_class"):
         _build_frr_varies_control(catalog, parent_id, rule_id, rule, path=path)
     else:
-        _build_frr_simple_control(catalog, parent_id, rule_id, rule, path=path)
+        _build_frr_simple_control(
+            catalog, parent_id, rule_id, rule, path=path,
+            applicable_classes=applicable_classes,
+        )
 
 
 def _build_frr_subset(
     catalog: Catalog, parent_id: str, frr_key: str,
     subset_key: str, subset_val: dict, path: str = "all",
     existing_groups: set | None = None,
+    applicable_classes: list | None = None,
 ) -> None:
     """Populate a subset group with controls from one FRR data scope entry.
 
@@ -1211,6 +1271,11 @@ def _build_frr_subset(
             _build_frr_subset_groups(). Updated in-place when a fallback group is
             created so subsequent scope passes for the same key skip re-creation.
             Defaults to None (treated as empty set).
+        applicable_classes (list, optional): Subset-level class restriction from
+            info.subsets[key].applicability.classes (e.g. ['B', 'C', 'D']).
+            Passed to each _build_frr_control call so that simple rules are only
+            registered in profiles for the listed classes.  An empty list or None
+            means no restriction. Defaults to None.
     """
     if existing_groups is None:
         existing_groups = set()
@@ -1235,7 +1300,10 @@ def _build_frr_subset(
     for rule_id, rule in subset_val.items():
         if rule_id == "info" or not isinstance(rule, dict):
             continue
-        _build_frr_control(catalog, base_id, rule_id, rule, path=path)
+        _build_frr_control(
+            catalog, base_id, rule_id, rule, path=path,
+            applicable_classes=applicable_classes,
+        )
     _emit()
 
 
@@ -1664,11 +1732,15 @@ def _build_frr_ruleset(
 
     _emit(f"\n{title}")
     data_block = frr_val.get("data", {})
+    subsets_meta = info.get("subsets") or {}
     for scope in ("all", "20x", "rev5"):
         for subset_key, subset_val in data_block.get(scope, {}).items():
+            subset_info = subsets_meta.get(subset_key) or {}
+            applicable_classes = (subset_info.get("applicability") or {}).get("classes") or []
             _build_frr_subset(
                 catalog, group_id, frr_key, subset_key, subset_val,
                 path=scope, existing_groups=created_subset_groups,
+                applicable_classes=applicable_classes,
             )
 
     # Infer and assign labels for 2nd-level (subset) groups from control IDs.
@@ -1719,7 +1791,8 @@ def _build_ksi_indicator(
     Simple indicators become a single control added to all four 20X profiles.
     Indicators with varies_by_class become a parent control (added to all four
     20X profiles) whose class-variant children are added only to the matching
-    20X profile (e.g. class 'b' → 20X-B).
+    20X profile (e.g. class 'b' → 20X-B). All KSI controls and their
+    class-variant children carry an ``affects: Providers`` prop.
 
     Args:
         catalog (Catalog, required): The OSCAL catalog being built.
@@ -1730,6 +1803,7 @@ def _build_ksi_indicator(
     name = ind_data.get("name", ind_id)
     statement = ind_data.get("statement", "")
     props = _updated_props(ind_data)
+    props.append({"name": "affects", "value": "Providers", "ns": FRR_NS})
     vbc = ind_data.get("varies_by_class")
 
     if vbc:
@@ -1746,6 +1820,7 @@ def _build_ksi_indicator(
 
         _STATS["controls"] += 1
         _emit_dot()
+        _CTRL_AFFECTS[ind_id] = ["Providers"]
         _add_frr_to_profiles(ind_id, "20x")
 
         for class_key, class_data in vbc.items():
@@ -1759,12 +1834,14 @@ def _build_ksi_indicator(
                 title=class_label,
                 label=class_label,
                 statements=[child_stmt] if child_stmt else [],
+                props=[{"name": "affects", "value": "Providers", "ns": FRR_NS}],
             )
             if child_ctrl is None:
                 continue
 
             _STATS["controls"] += 1
             _emit_dot()
+            _CTRL_AFFECTS[child_id] = ["Providers"]
             _add_frr_to_profiles(child_id, "20x", class_key)
     else:
         ctrl = catalog.create_control(
@@ -1780,6 +1857,7 @@ def _build_ksi_indicator(
 
         _STATS["controls"] += 1
         _emit_dot()
+        _CTRL_AFFECTS[ind_id] = ["Providers"]
         _add_frr_to_profiles(ind_id, "20x")
 
 
@@ -1910,17 +1988,32 @@ def build_catalog(data: dict, details: dict | None = None) -> Catalog:
 # Profile builder
 # =============================================================================
 
-def build_profiles(data: dict, details: dict | None = None) -> dict:
-    """Create seven OSCAL profiles from the accumulated profile tracking state.
+def build_profiles(
+    data: dict,
+    details: dict | None = None,
+    *,
+    catalog_href: str = CATALOG_HREF,
+    tailoring_href: str = TAILORING_HREF,
+    audience: str | None = None,
+) -> dict:
+    """Create OSCAL profiles from the accumulated profile tracking state.
 
-    Must be called after build_catalog() so that _PROFILE_FRR and _PROFILE_NIST
-    are populated. Returns a dict mapping profile name → Profile instance.
+    Must be called after build_catalog() so that _PROFILE_FRR, _PROFILE_NIST,
+    and _CTRL_AFFECTS are populated. Returns a dict mapping profile name →
+    Profile instance.
 
     Profile layout:
-    - 20X-A, 20X-B, 20X-C, 20X-D: import the FedRAMP catalog (CATALOG_HREF)
+    - 20X-A, 20X-B, 20X-C, 20X-D: import the FedRAMP catalog (catalog_href)
       with the control IDs registered for that profile.
     - Rev5-B, Rev5-C, Rev5-D: import the FedRAMP catalog AND the NIST SP 800-53
-      Rev 5 catalog (NIST_800_53_REV5_URL) with the IDs registered for each.
+      Rev 5 tailoring profile (tailoring_href) with the IDs registered for each.
+    - Rev5-Tailoring: imports the NIST catalog directly; always included regardless
+      of the audience parameter.
+
+    When ``audience`` is supplied the control IDs for each class profile are
+    restricted to controls whose ``affects`` prop matches that audience string
+    (as recorded in _CTRL_AFFECTS).  The Rev5-Tailoring profile is unaffected by
+    this filter — it is always returned as-is.
 
     Args:
         data (dict, required): The full parsed FedRAMP consolidated-rules JSON,
@@ -1929,6 +2022,15 @@ def build_profiles(data: dict, details: dict | None = None) -> dict:
             and ``acquired`` keys as returned by :func:`load_rules`.  When
             provided the values are written to each profile's ``metadata.remarks``.
             Defaults to None.
+        catalog_href (str, optional): Import href written into profile statements
+            pointing at the FedRAMP OSCAL catalog.  Defaults to CATALOG_HREF.
+        tailoring_href (str, optional): Import href written into Rev5 class-profile
+            statements pointing at the Rev5 tailoring profile.  Defaults to
+            TAILORING_HREF.
+        audience (str, optional): When set, restricts each class profile's FRR
+            control selection to controls whose ``affects`` list contains this
+            string (e.g. ``"Providers"``, ``"Assessors"``).  Defaults to None
+            (all controls included).
 
     Returns:
         dict: Mapping of profile name (str) to Profile instance.
@@ -1977,13 +2079,19 @@ def build_profiles(data: dict, details: dict | None = None) -> dict:
         p.append_child("metadata/props", {"name": "presentation-id", "ns": CYBERCRAFT_NAMESPACE, "value": "fedramp-cr26"})
         return p
 
+    def _filtered_frr_ids(key: str) -> list:
+        all_ids = _PROFILE_FRR.get(key, set())
+        if audience:
+            return sorted(cid for cid in all_ids if audience in _CTRL_AFFECTS.get(cid, []))
+        return sorted(all_ids)
+
     def _set_frr_import(p: Profile, key: str) -> None:
-        frr_ids = sorted(_PROFILE_FRR.get(key, set()))
-        p.add_import(CATALOG_HREF, title="FedRAMP Consolidated Rules OSCAL Catalog")
+        frr_ids = _filtered_frr_ids(key)
+        p.add_import(catalog_href, title="FedRAMP Consolidated Rules OSCAL Catalog")
         if frr_ids:
-            p.set_import_selection(CATALOG_HREF, include_controls=[{"with-ids": frr_ids}])
+            p.set_import_selection(catalog_href, include_controls=[{"with-ids": frr_ids}])
         else:
-            p.set_import_selection(CATALOG_HREF, include_all={})
+            p.set_import_selection(catalog_href, include_all={})
 
     # --- 20X profiles: import FedRAMP catalog only ---
     for key in ("20X-A", "20X-B", "20X-C", "20X-D"):
@@ -1994,6 +2102,7 @@ def build_profiles(data: dict, details: dict | None = None) -> dict:
     # --- Rev5 Tailoring profile ---
     # Imports the NIST catalog with the union of all Rev5 class control IDs.
     # Carries all non-varies CTL set-parameters and guidance alters.
+    # This profile is audience-agnostic; audience filtering does not apply.
     nist_union = sorted(
         _PROFILE_NIST.get("Rev5-B", set())
         | _PROFILE_NIST.get("Rev5-C", set())
@@ -2018,11 +2127,11 @@ def build_profiles(data: dict, details: dict | None = None) -> dict:
         _set_frr_import(p, key)
 
         nist_ids = sorted(_PROFILE_NIST.get(key, set()))
-        p.add_import(TAILORING_HREF, title="FedRAMP Rev 5 Tailoring Profile")
+        p.add_import(tailoring_href, title="FedRAMP Rev 5 Tailoring Profile")
         if nist_ids:
-            p.set_import_selection(TAILORING_HREF, include_controls=[{"with-ids": nist_ids}])
+            p.set_import_selection(tailoring_href, include_controls=[{"with-ids": nist_ids}])
         else:
-            p.set_import_selection(TAILORING_HREF, include_all={})
+            p.set_import_selection(tailoring_href, include_all={})
 
         profiles[key] = p
 
@@ -2073,21 +2182,54 @@ def main() -> None:
     _emit("=" * 72)
 
     _emit()
-    for fmt in CATALOG_FORMATS:
-        path = f"{CATALOG_OUTPUT_STEM}.{fmt}"
-        if catalog.dump(path, format=fmt, pretty_print=True):
-            _emit(f"Catalog written to:  {path}")
+    for fmt in OUTPUT_FORMATS:
+        # Catalog → data/OSCAL/{fmt}/
+        cat_dir  = os.path.join(OSCAL_OUTPUT_DIR, fmt)
+        cat_path = os.path.join(cat_dir, f"{CATALOG_FILENAME}.{fmt}")
+        os.makedirs(cat_dir, exist_ok=True)
+        if catalog.dump(cat_path, format=fmt, pretty_print=True):
+            _emit(f"Catalog written to:  {cat_path}")
         else:
-            print(f"ERROR: Failed to write catalog to: {path}")
+            print(f"ERROR: Failed to write catalog to: {cat_path}")
 
-    profiles = build_profiles(data, details)
-    for profile_key, profile in profiles.items():
-        for fmt in PROFILE_FORMATS:
-            path = f"{PROFILE_OUTPUT_STEM}{profile_key}.{fmt}"
-            if profile.dump(path, format=fmt, pretty_print=True):
-                _emit(f"Profile written to:  {path}")
+        # Hrefs are relative from the audience subfolder (one level below format dir).
+        cat_href  = f"../{CATALOG_FILENAME}.{fmt}"
+        tail_href = f"../{TAILORING_FILENAME}.{fmt}"
+
+        # Tailoring profile (audience-agnostic) → data/OSCAL/{fmt}/
+        # Build once per format and extract the tailoring entry.
+        base_profiles = build_profiles(data, details, catalog_href=cat_href, tailoring_href=tail_href)
+        tailoring = base_profiles.get(TAILORING_PROFILE_NAME)
+        if tailoring:
+            tail_path = os.path.join(cat_dir, f"{TAILORING_FILENAME}.{fmt}")
+            if tailoring.dump(tail_path, format=fmt, pretty_print=True):
+                _emit(f"Tailoring written to: {tail_path}")
             else:
-                print(f"ERROR: Failed to write profile to: {path}")
+                print(f"ERROR: Failed to write tailoring profile to: {tail_path}")
+
+        # Audience-specific profiles → data/OSCAL/{fmt}/{audience_folder}/
+        for audience, folder in AUDIENCE_FOLDERS.items():
+            aud_profiles = build_profiles(
+                data, details,
+                catalog_href=cat_href,
+                tailoring_href=tail_href,
+                audience=audience,
+            )
+            aud_dir = os.path.join(OSCAL_OUTPUT_DIR, fmt, folder)
+            wrote_any = False
+            for profile_key, profile in aud_profiles.items():
+                if profile_key == TAILORING_PROFILE_NAME:
+                    continue
+                filename = f"FedRAMP_2026_OSCAL_profile_{profile_key}_{folder}.{fmt}"
+                path = os.path.join(aud_dir, filename)
+                os.makedirs(aud_dir, exist_ok=True)
+                if profile.dump(path, format=fmt, pretty_print=True):
+                    _emit(f"Profile written to:  {path}")
+                    wrote_any = True
+                else:
+                    print(f"ERROR: Failed to write profile to: {path}")
+            if not wrote_any:
+                _emit(f"  (no {fmt}/{folder} profiles produced)")
 
     # Validate CTL parameter IDs against the NIST SP 800-53 catalog.
     _emit()

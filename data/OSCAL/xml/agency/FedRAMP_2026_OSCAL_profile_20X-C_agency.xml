@@ -1,0 +1,53 @@
+<profile xmlns="http://csrc.nist.gov/ns/oscal/1.0" uuid="85409464-cee0-4991-b6c6-9836b76307ae">
+  <metadata>
+    <title>FedRAMP 20X — Class C</title>
+    <published>2026-11-02T00:00:00Z</published>
+    <last-modified>2026-11-17T04:10:56Z</last-modified>
+    <version>2026.11.02.01</version>
+    <oscal-version>1.2.3</oscal-version>
+    <prop name="presentation-id" ns="http://cybercraft.app/ns/oscal" value="fedramp-cr26" />
+    <link href="https://raw.githubusercontent.com/FedRAMP/rules/main/fedramp-consolidated-rules.json" rel="canonical" />
+    <link href="https://www.fedramp.gov/2026/" rel="alternate" />
+    <remarks>
+      <p>Acquired 2026-11-06T14:54:09Z</p>
+    </remarks>
+  </metadata>
+  <import href="#cd18814b-d3e3-4d50-b35e-6362ddc729e8">
+    <include-controls>
+      <with-id>AGU-AGC-AIP</with-id>
+      <with-id>AGU-AGC-GRC</with-id>
+      <with-id>AGU-AGC-LIA</with-id>
+      <with-id>AGU-AGC-NAA</with-id>
+      <with-id>AGU-AGC-NAI</with-id>
+      <with-id>AGU-AGC-NAR</with-id>
+      <with-id>AGU-AGC-SIN</with-id>
+      <with-id>AGU-AGC-TPP</with-id>
+      <with-id>AGU-AGC-WKG</with-id>
+      <with-id>AGU-SPN-MRC</with-id>
+      <with-id>AGU-USE-ABU</with-id>
+      <with-id>AGU-USE-AFR</with-id>
+      <with-id>AGU-USE-CLA</with-id>
+      <with-id>AGU-USE-DSO</with-id>
+      <with-id>AGU-USE-NFC</with-id>
+      <with-id>AGU-USE-NPC</with-id>
+      <with-id>AGU-USE-RCF</with-id>
+      <with-id>AGU-USE-RIR</with-id>
+      <with-id>AGU-USE-ROR</with-id>
+      <with-id>AGU-USE-RSG</with-id>
+      <with-id>CCM-AGM-CSC</with-id>
+      <with-id>CCM-AGM-ROR</with-id>
+      <with-id>VER-AGM-MAP</with-id>
+      <with-id>VER-AGM-RVR</with-id>
+    </include-controls>
+  </import>
+  <merge>
+    <combine method="use-first" />
+    <as-is>true</as-is>
+  </merge>
+  <back-matter>
+    <resource uuid="cd18814b-d3e3-4d50-b35e-6362ddc729e8">
+      <title>FedRAMP Consolidated Rules OSCAL Catalog</title>
+      <rlink href="../FedRAMP_2026_OSCAL_catalog.xml" media-type="application/xml" />
+    </resource>
+  </back-matter>
+</profile>

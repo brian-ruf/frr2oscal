@@ -1,0 +1,48 @@
+<profile xmlns="http://csrc.nist.gov/ns/oscal/1.0" uuid="d61c3cba-b06b-48fe-af00-99339debaec1">
+  <metadata>
+    <title>FedRAMP 20X — Class A</title>
+    <published>2026-11-02T00:00:00Z</published>
+    <last-modified>2026-11-17T04:10:56Z</last-modified>
+    <version>2026.11.02.01</version>
+    <oscal-version>1.2.3</oscal-version>
+    <prop name="presentation-id" ns="http://cybercraft.app/ns/oscal" value="fedramp-cr26" />
+    <link href="https://raw.githubusercontent.com/FedRAMP/rules/main/fedramp-consolidated-rules.json" rel="canonical" />
+    <link href="https://www.fedramp.gov/2026/" rel="alternate" />
+    <remarks>
+      <p>Acquired 2026-11-06T14:54:09Z</p>
+    </remarks>
+  </metadata>
+  <import href="#d156ea4b-7743-4d9a-a518-1515ca6aaf0e">
+    <include-controls>
+      <with-id>AGU-AGC-AIP</with-id>
+      <with-id>AGU-AGC-GRC</with-id>
+      <with-id>AGU-AGC-LIA</with-id>
+      <with-id>AGU-AGC-NAA</with-id>
+      <with-id>AGU-AGC-NAI</with-id>
+      <with-id>AGU-AGC-NAR</with-id>
+      <with-id>AGU-AGC-SIN</with-id>
+      <with-id>AGU-AGC-TPP</with-id>
+      <with-id>AGU-AGC-WKG</with-id>
+      <with-id>AGU-USE-ABU</with-id>
+      <with-id>AGU-USE-AFR</with-id>
+      <with-id>AGU-USE-CLA</with-id>
+      <with-id>AGU-USE-DSO</with-id>
+      <with-id>AGU-USE-NFC</with-id>
+      <with-id>AGU-USE-NPC</with-id>
+      <with-id>AGU-USE-RCF</with-id>
+      <with-id>AGU-USE-RIR</with-id>
+      <with-id>AGU-USE-ROR</with-id>
+      <with-id>AGU-USE-RSG</with-id>
+    </include-controls>
+  </import>
+  <merge>
+    <combine method="use-first" />
+    <as-is>true</as-is>
+  </merge>
+  <back-matter>
+    <resource uuid="d156ea4b-7743-4d9a-a518-1515ca6aaf0e">
+      <title>FedRAMP Consolidated Rules OSCAL Catalog</title>
+      <rlink href="../FedRAMP_2026_OSCAL_catalog.xml" media-type="application/xml" />
+    </resource>
+  </back-matter>
+</profile>
